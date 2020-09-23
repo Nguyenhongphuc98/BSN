@@ -7,17 +7,17 @@
 
 import Foundation
 
-class User {
-    
-    var username: String
-    
-    var displayname: String
-    
-    var avatar: String
-    
-    var gender: Gender
-    
-    init() {
+public class User {
+
+    public var username: String
+
+    public var displayname: String
+
+    public var avatar: String
+
+    public var gender: Gender
+
+    public init() {
         username = "phucnh@gmail.com"
         displayname = "Hồng Phúc"
         avatar = "avatar"
@@ -25,13 +25,13 @@ class User {
     }
 }
 
-enum Gender {
-    
+public enum Gender {
+
     case male
-    
+
     case female
-    
+
     case other
-    
+
     case unknown
 }

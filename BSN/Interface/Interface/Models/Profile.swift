@@ -7,17 +7,17 @@
 
 import Foundation
 
-class Profile {
+public class Profile {
     
-    var user: User
+    public var user: User
     
-    var location: String
+    public var location: String
     
-    var cover: String
+    public var cover: String
     
-    var description: String
+    public var description: String
     
-    init() {
+    public init() {
         user = User()
         location = "Dĩ An, Bình Dương"
         cover = "cover"

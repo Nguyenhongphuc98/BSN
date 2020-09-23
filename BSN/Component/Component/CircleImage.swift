@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct CircleImage: View {
+public struct CircleImage: View {
     
     var image: String = "avatar"
     
     var diameter: CGFloat = 50
     
-    var body: some View {
+    public var body: some View {
         Image(image)
             .resizable()
             .frame(width: diameter, height: diameter)
@@ -21,23 +21,39 @@ struct CircleImage: View {
     }
 }
 
-struct CircleImageOptions: View {
+public struct CircleImageOptions: View {
     
-    var image: String = "avatar"
+    var image: String
     
-    var strokeColor: Color = Color._primary
+    var strokeColor: Color
     
-    var strokeWidth: CGFloat = 3
+    var strokeWidth: CGFloat
     
-    var diameter: CGFloat = 50
+    var diameter: CGFloat
     
-    var hasShadow: Bool = false
+    var hasShadow: Bool
     
-    var shadowx: CGFloat = 1
+    var shadowx: CGFloat
     
-    var shadowy: CGFloat = 1
+    var shadowy: CGFloat
     
-    var body: some View {
+    public init(image: String = "avatar",
+         strokeColor: Color = Color.primary, strokeWidth: CGFloat = 3,
+         diameter: CGFloat = 50,
+         hasShadow: Bool = false,
+         shadowx: CGFloat = 1,
+         shadowy: CGFloat = 1) {
+        
+        self.image = image
+        self.strokeColor = strokeColor
+        self.strokeWidth = strokeWidth
+        self.diameter = diameter
+        self.hasShadow = hasShadow
+        self.shadowx = shadowx
+        self.shadowy = shadowy
+    }
+    
+    public var body: some View {
         CircleImage(image: image, diameter: diameter)
             .addStroke(color: strokeColor, width: strokeWidth)
             .addShadow(shadow: true, dx: shadowx, dy: shadowy)

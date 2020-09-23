@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Interface
+import Component
 
 struct ProfileView: View {
     
@@ -24,7 +26,7 @@ struct ProfileView: View {
                             .font(.custom("Pattaya-Regular", size: 25))
                         
                         HStack {
-                            Image(systemName: "location.circle")
+                            Image(systemName: "mappin.and.ellipse")
                             
                             Text(viewModel.profile.location)
                                 .font(.custom("Roboto-Light", size: 18))
