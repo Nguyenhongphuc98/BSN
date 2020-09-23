@@ -12,6 +12,8 @@ import Component
 struct ProfileView: View {
     
     @ObservedObject var viewModel: ProfileViewModel = ProfileViewModel.shared
+
+    @State var showPosts: Bool = true
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -45,6 +47,16 @@ struct ProfileView: View {
                 
                 Text(viewModel.profile.description)
                     .font(.custom("Roboto-LightItalic", size: 18))
+                
+                HStack {
+                    BButton(isActive: $showPosts) {
+                        Text("Bài viết")
+                    }
+                    
+                    BButton(isActive: $showPosts, invert: true) {
+                        Text("Tủ sách")
+                    }
+                }
                 
                 Spacer()
             }
