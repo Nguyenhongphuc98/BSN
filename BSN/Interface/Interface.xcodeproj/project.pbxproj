@@ -13,6 +13,12 @@
 		84AA960B251B469F0029BB1E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA960A251B469F0029BB1E /* User.swift */; };
 		84AA961B251B47640029BB1E /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA961A251B47640029BB1E /* Account.swift */; };
 		84AA9621251B480C0029BB1E /* ItemContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA9620251B480C0029BB1E /* ItemContent.swift */; };
+		84AA967D251F92530029BB1E /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84AA967C251F92530029BB1E /* Media.xcassets */; };
+		84AA9681251F928A0029BB1E /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA9680251F928A0029BB1E /* ProfileView.swift */; };
+		84AA9685251F96320029BB1E /* StaticVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA9684251F96320029BB1E /* StaticVariable.swift */; };
+		84AA9689251F96CC0029BB1E /* BButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA9688251F96CC0029BB1E /* BButton.swift */; };
+		84AA968D251F96F70029BB1E /* FullRadiusShadowButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA968C251F96F70029BB1E /* FullRadiusShadowButtonStyle.swift */; };
+		84AA9697251F99470029BB1E /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA9696251F99470029BB1E /* CircleImage.swift */; };
 		84FA99002518616E00CB92CB /* Interface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FA98F62518616E00CB92CB /* Interface.framework */; };
 		84FA99052518616E00CB92CB /* InterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA99042518616E00CB92CB /* InterfaceTests.swift */; };
 		84FA99072518616E00CB92CB /* Interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 84FA98F92518616E00CB92CB /* Interface.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -36,6 +42,12 @@
 		84AA960A251B469F0029BB1E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		84AA961A251B47640029BB1E /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		84AA9620251B480C0029BB1E /* ItemContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemContent.swift; sourceTree = "<group>"; };
+		84AA967C251F92530029BB1E /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		84AA9680251F928A0029BB1E /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		84AA9684251F96320029BB1E /* StaticVariable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticVariable.swift; sourceTree = "<group>"; };
+		84AA9688251F96CC0029BB1E /* BButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BButton.swift; sourceTree = "<group>"; };
+		84AA968C251F96F70029BB1E /* FullRadiusShadowButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRadiusShadowButtonStyle.swift; sourceTree = "<group>"; };
+		84AA9696251F99470029BB1E /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
 		84FA98F62518616E00CB92CB /* Interface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Interface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FA98F92518616E00CB92CB /* Interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Interface.h; sourceTree = "<group>"; };
 		84FA98FA2518616E00CB92CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -68,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				84AA95AA251AF0980029BB1E /* Components */,
+				84AA9680251F928A0029BB1E /* ProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -76,6 +89,8 @@
 			isa = PBXGroup;
 			children = (
 				84AA9620251B480C0029BB1E /* ItemContent.swift */,
+				84AA9688251F96CC0029BB1E /* BButton.swift */,
+				84AA968C251F96F70029BB1E /* FullRadiusShadowButtonStyle.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -98,33 +113,12 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		84AA95BA251AFBF70029BB1E /* Resource */ = {
-			isa = PBXGroup;
-			children = (
-				84AA95BC251AFC0C0029BB1E /* Fonts */,
-				84AA95BB251AFC010029BB1E /* Images */,
-			);
-			path = Resource;
-			sourceTree = "<group>";
-		};
-		84AA95BB251AFC010029BB1E /* Images */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Images;
-			sourceTree = "<group>";
-		};
-		84AA95BC251AFC0C0029BB1E /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Fonts;
-			sourceTree = "<group>";
-		};
 		84AA95C3251B01B70029BB1E /* Helper */ = {
 			isa = PBXGroup;
 			children = (
 				84AA95C4251B01C80029BB1E /* ColorExtension.swift */,
+				84AA9684251F96320029BB1E /* StaticVariable.swift */,
+				84AA9696251F99470029BB1E /* CircleImage.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -132,6 +126,7 @@
 		84FA98EC2518616E00CB92CB = {
 			isa = PBXGroup;
 			children = (
+				84AA967C251F92530029BB1E /* Media.xcassets */,
 				84FA98F82518616E00CB92CB /* Interface */,
 				84FA99032518616E00CB92CB /* InterfaceTests */,
 				84FA98F72518616E00CB92CB /* Products */,
@@ -151,7 +146,6 @@
 			isa = PBXGroup;
 			children = (
 				84AA95C3251B01B70029BB1E /* Helper */,
-				84AA95BA251AFBF70029BB1E /* Resource */,
 				84AA95B9251AFBF00029BB1E /* Models */,
 				84AA95B8251AFBE60029BB1E /* ViewModels */,
 				84AA95A9251AF08D0029BB1E /* Views */,
@@ -263,6 +257,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84AA967D251F92530029BB1E /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,10 +275,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84AA9681251F928A0029BB1E /* ProfileView.swift in Sources */,
+				84AA968D251F96F70029BB1E /* FullRadiusShadowButtonStyle.swift in Sources */,
 				84AA9621251B480C0029BB1E /* ItemContent.swift in Sources */,
 				84AA95EF251B45320029BB1E /* ProfileViewModel.swift in Sources */,
 				84AA95F3251B453F0029BB1E /* Profile.swift in Sources */,
+				84AA9697251F99470029BB1E /* CircleImage.swift in Sources */,
+				84AA9685251F96320029BB1E /* StaticVariable.swift in Sources */,
 				84FA99182518619900CB92CB /* Launch.swift in Sources */,
+				84AA9689251F96CC0029BB1E /* BButton.swift in Sources */,
 				84AA95C5251B01C80029BB1E /* ColorExtension.swift in Sources */,
 				84AA960B251B469F0029BB1E /* User.swift in Sources */,
 				84AA961B251B47640029BB1E /* Account.swift in Sources */,

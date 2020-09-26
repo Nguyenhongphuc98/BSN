@@ -6,20 +6,21 @@
 //
 
 import SwiftUI
-import Interface
 import Component
 
-struct ProfileView: View {
+public struct ProfileView: View {
     
     @ObservedObject var viewModel: ProfileViewModel = ProfileViewModel.shared
 
     @State var showPosts: Bool = true
     
-    var body: some View {
+    public init() { }
+    
+    public var body: some View {
         ZStack(alignment: .leading) {
             VStack {
                 // Cover
-                Image(viewModel.profile.cover)
+                Image(viewModel.profile.cover, bundle: interfaceBundle)
                     .resizable()
                     .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                     .frame(height: 200)
