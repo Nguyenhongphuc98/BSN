@@ -18,49 +18,59 @@ struct ProfileView: View {
     var body: some View {
         ZStack(alignment: .leading) {
             VStack {
+                // Cover
                 Image(viewModel.profile.cover)
                     .resizable()
+                    .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                     .frame(height: 200)
+                    .clipped()
                 
+                // Name and description
                 HStack {
                     VStack(alignment: .leading) {
                         Text(viewModel.profile.user.displayname)
-                            .font(.custom("Pattaya-Regular", size: 25))
+                            .font(.custom("Pattaya-Regular", size: 18))
                         
                         HStack {
                             Image(systemName: "mappin.and.ellipse")
                             
                             Text(viewModel.profile.location)
-                                .font(.custom("Roboto-Light", size: 18))
+                                .font(.custom("Roboto-Light", size: 13))
                                 
                         }
                         
                         Rectangle()
                             .fill(Color.gray)
-                            .frame(width: 80, height: 3)
+                            .frame(width: 50, height: 2)
                             .padding(.vertical)
                     }
-                    .padding()
+                    .padding(.top)
+                    .padding(.horizontal)
                     
                     Spacer()
                 }
                 
                 Text(viewModel.profile.description)
-                    .font(.custom("Roboto-LightItalic", size: 18))
+                    .font(.custom("Roboto-LightItalic", size: 13))
                 
+                // Action button
                 HStack {
                     BButton(isActive: $showPosts) {
                         Text("Bài viết")
+                            .font(.custom("Roboto-Bold", size: 18))
                     }
                     
                     BButton(isActive: $showPosts, invert: true) {
                         Text("Tủ sách")
+                            .font(.custom("Roboto-Bold", size: 18))
                     }
                 }
+                .padding()
                 
                 Spacer()
             }
             
+            // Avatar
             VStack() {
                 CircleImageOptions(image: viewModel.profile.user.avatar, diameter: 80)
                     .padding(.top, 135)

@@ -11,7 +11,7 @@ class RootViewModel: ObservableObject {
     
     static var shared: RootViewModel = RootViewModel()
     
-    @Published var selectedIndex: Int = 0
+    @Published var selectedIndex: Int = 4
     
     @Published var logined: Bool = true
 }

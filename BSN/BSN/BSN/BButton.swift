@@ -18,7 +18,7 @@ struct BButton<Content: View>: View {
     var body: some View {
         Button {
             self.isActive.toggle()
-            print("did click tu sach")
+            print("did click BButton")
         } label: {
             builder()
         }
