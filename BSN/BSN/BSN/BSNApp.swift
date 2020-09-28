@@ -19,7 +19,7 @@ struct BSNApp: App {
     var body: some Scene {
         WindowGroup {
             TabView(selection: $viewModel.selectedIndex) {
-                ProfileView()
+                NewsFeedView()
                     .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .news) }
                     .tag(0)
                 
