@@ -19,8 +19,8 @@ public class Profile {
     
     public init() {
         user = User()
-        location = "Dĩ An, Bình Dương"
+        location = "Linh Trung, Thủ Đức"
         cover = "cover"
-        description = "Luôn chân thành, lắng nghe và học hỏi"
+        description = "Đọc sách có thể không giàu, nhưng không đọc, chắc chắn nghèo!"
     }
 }

@@ -19,7 +19,7 @@ public class User {
 
     public init() {
         username = "phucnh@gmail.com"
-        displayname = "Hồng Phúc"
+        displayname = "Nguyễn Phúc Thiên Kim"
         avatar = "avatar"
         gender = .male
     }

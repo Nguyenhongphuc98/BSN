@@ -15,8 +15,7 @@ public struct ProfileView: View {
     @State var showPosts: Bool = true
     
     public init() { }
-    
-    public var body: some View {
+        public var body: some View {
         ZStack(alignment: .leading) {
             VStack {
                 // Cover
@@ -53,6 +52,8 @@ public struct ProfileView: View {
                 
                 Text(viewModel.profile.description)
                     .font(.custom("Roboto-LightItalic", size: 13))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
                 
                 // Action button
                 HStack {
@@ -60,7 +61,7 @@ public struct ProfileView: View {
                         Text("Bài viết")
                             .font(.custom("Roboto-Bold", size: 18))
                     }
-                    
+
                     BButton(isActive: $showPosts, invert: true) {
                         Text("Tủ sách")
                             .font(.custom("Roboto-Bold", size: 18))
@@ -79,7 +80,6 @@ public struct ProfileView: View {
                 
                 Spacer()
             }
-            
         }
         .edgesIgnoringSafeArea(.all)
     }
