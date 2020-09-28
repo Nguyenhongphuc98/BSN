@@ -30,6 +30,7 @@ struct NewsFeedCard: View {
                     .padding(.horizontal)
                     .padding(.vertical, 2)
                     .background(RoundedRectangle(cornerRadius: 9).fill(Color.init(hex: 0x59C3FF)))
+                    .padding(.top, 3)
                     .padding(.bottom)
                 
                 Spacer()
@@ -46,12 +47,14 @@ struct NewsFeedCard: View {
             if model.quote != nil {
                 Text("\"\(model.quote!)\"")
                     .font(.custom("Roboto-MediumItalic", size: 12))
+                    .multilineTextAlignment(.center)
                     .padding(3)
             }
             
             // Content
             Text(model.content)
                 .font(.custom("Roboto-Light", size: 13))
+                .lineLimit(nil)
                 .padding(2)
             
             // Photo

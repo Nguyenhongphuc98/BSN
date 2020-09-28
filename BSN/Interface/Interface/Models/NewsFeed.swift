@@ -34,13 +34,13 @@ class NewsFeed: ObservableObject {
     
     init() {
         owner = User()
-        postTime = Date()
+        postTime = randomDate()
         category = .skill
         content = "Một cuốn sách với mình khá hay. Mình đã phải ngạc nhiên trước kho kiến thức khổng lồ và chi tiết có trong sách. Đặc biệt là kiến thức về sự phát triển của Ai Cập mấy nghìn năm về trước. Mặc dù là sách về tôn giáo, tâm linh nhưng tác giả đã dùng từ ngữ rất dễ hiểu. Làm mình rất hứng thú mỗi khi đọc. Rất cảm ơn tác giả đã viết ra cuốn sách hay và ý nghĩa như vậy. Một câu mình rất thích là \"Nhân quả đừng đợi thấy mới tin\""
         
         let r = Int.random(in: 1...2)
         if r == 1 {
-            quote = "Nhân quả đừng đợi thấy mới tin"
+            quote = "Nhân quả đừng đợi thấy mới tin."
         } else {
             photo = "news1"
         }
