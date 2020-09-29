@@ -28,13 +28,13 @@ public struct ProfileView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(viewModel.profile.user.displayname)
-                            .font(.custom("Pattaya-Regular", size: 18))
+                            .pattayaRegular(size: 18)
                         
                         HStack {
                             Image(systemName: "mappin.and.ellipse")
                             
                             Text(viewModel.profile.location)
-                                .font(.custom("Roboto-Light", size: 13))
+                                .robontoLight(size: 13)
                                 
                         }
                         
@@ -50,7 +50,7 @@ public struct ProfileView: View {
                 }
                 
                 Text(viewModel.profile.description)
-                    .font(.custom("Roboto-LightItalic", size: 13))
+                    .robontoLightItalic(size: 13)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                 
@@ -58,12 +58,12 @@ public struct ProfileView: View {
                 HStack {
                     BButton(isActive: $showPosts) {
                         Text("Bài viết")
-                            .font(.custom("Roboto-Bold", size: 18))
+                            .robontoBold(size: 18)
                     }
 
                     BButton(isActive: $showPosts, invert: true) {
                         Text("Tủ sách")
-                            .font(.custom("Roboto-Bold", size: 18))
+                            .robontoBold(size: 18)
                     }
                 }
                 .padding()

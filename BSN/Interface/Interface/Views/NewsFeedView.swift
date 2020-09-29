@@ -11,7 +11,9 @@ public struct NewsFeedView: View {
     
     @EnvironmentObject var rootModel: RootViewModel
     
-    @State var isLoadingNews: Bool = false
+    @StateObject var viewModel: NewsFeedViewModel = NewsFeedViewModel()
+    
+    @State private var presentCPV: Bool = false
     
     public init() {
         
@@ -30,6 +32,12 @@ public struct NewsFeedView: View {
             }
             .padding(.top, 30)
             .padding(.horizontal)
+            .onTapGesture {
+                self.presentCPV.toggle()
+            }
+            .fullScreenCover(isPresented: $presentCPV) {
+                CreatePostView()
+            }
             
             Separator()
             
@@ -39,12 +47,9 @@ public struct NewsFeedView: View {
                     VStack {
                         NewsFeedCard(model: news)
                             .onAppear(perform: {
-                                let thresholdIndex = fakeNews.index(fakeNews.endIndex, offsetBy: -2)
-                                if fakeNews.firstIndex(where: { $0.id == news.id }) == thresholdIndex {
-                                    print("reached \(news.id)")
-                                    self.isLoadingNews = true
-                                }
+                                self.viewModel.loadMoreIfNeeded(item: news)
                             })
+                        
                         Separator()
                     }
                 }
@@ -56,7 +61,7 @@ public struct NewsFeedView: View {
             .onAppear(perform: self.viewDidAppear)
             
             // Loading view
-            if isLoadingNews {
+            if viewModel.isLoadingNews {
                 Loading()
             }
         }
