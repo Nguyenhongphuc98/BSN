@@ -25,6 +25,7 @@
 		84411A252523331D00AE31D8 /* BoundTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84411A242523331D00AE31D8 /* BoundTracking.swift */; };
 		84411A29252337C900AE31D8 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84411A28252337C900AE31D8 /* ViewExtension.swift */; };
 		84411A2D2523409E00AE31D8 /* TextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84411A2C2523409E00AE31D8 /* TextExtension.swift */; };
+		845DB4BA252369950019C29B /* StrokeBorderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DB4B9252369950019C29B /* StrokeBorderStyle.swift */; };
 		847BBAC62521EEB900E0500D /* RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847BBAC52521EEB900E0500D /* RootViewModel.swift */; };
 		84AA95C5251B01C80029BB1E /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA95C4251B01C80029BB1E /* ColorExtension.swift */; };
 		84AA95EF251B45320029BB1E /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA95EE251B45320029BB1E /* ProfileViewModel.swift */; };
@@ -86,6 +87,7 @@
 		84411A242523331D00AE31D8 /* BoundTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundTracking.swift; sourceTree = "<group>"; };
 		84411A28252337C900AE31D8 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		84411A2C2523409E00AE31D8 /* TextExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextExtension.swift; sourceTree = "<group>"; };
+		845DB4B9252369950019C29B /* StrokeBorderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeBorderStyle.swift; sourceTree = "<group>"; };
 		847BBAC52521EEB900E0500D /* RootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewModel.swift; sourceTree = "<group>"; };
 		84AA95C4251B01C80029BB1E /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		84AA95EE251B45320029BB1E /* ProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				84AA9688251F96CC0029BB1E /* BButton.swift */,
 				84AA968C251F96F70029BB1E /* FullRadiusShadowButtonStyle.swift */,
 				8414F25625219B7E003CF799 /* StickyButton.swift */,
+				845DB4B9252369950019C29B /* StrokeBorderStyle.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				84411A052523208000AE31D8 /* NewsFeedViewModel.swift in Sources */,
 				84411A252523331D00AE31D8 /* BoundTracking.swift in Sources */,
 				844119FD2522E80500AE31D8 /* EdgeInsetsExtension.swift in Sources */,
+				845DB4BA252369950019C29B /* StrokeBorderStyle.swift in Sources */,
 				8414F25B2521A1B1003CF799 /* IntExension.swift in Sources */,
 				84AA95F3251B453F0029BB1E /* Profile.swift in Sources */,
 				84AA9697251F99470029BB1E /* CircleImage.swift in Sources */,

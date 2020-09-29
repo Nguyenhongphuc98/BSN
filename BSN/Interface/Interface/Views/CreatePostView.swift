@@ -20,8 +20,49 @@ struct CreatePostView: View {
                 
                 QuoteEditor(message: $viewModel.quote)
                 
-                TextEditor(text: $viewModel.content)
-                    .frame(maxHeight: 60)
+                EditorWithPlaceHolder(text: $viewModel.content, placeHolder: "Chia sẻ cảm xúc của bạn ngay nào", forceground: .black, font: "Roboto-Regular")
+                    .padding()
+                
+                HStack {
+                    Button {
+                        print("did tap")
+                    } label: {
+                        HStack {
+                            Image(systemName: "books.vertical")
+                                .frame(width: 21, height: 21)
+                            
+                            Text("Chọn chủ đề")
+                                .robotoMedium(size: 11)
+                        }
+                    }
+                    .buttonStyle(StrokeBorderStyle())
+                    
+                    Button {
+                        print("did tap")
+                    } label: {
+                        HStack {
+                            Image(systemName: "quote.bubble")
+                                .frame(width: 21, height: 21)
+                            
+                            Text("Thêm trích dẫn")
+                                .robotoMedium(size: 11)
+                        }
+                    }
+                    .buttonStyle(StrokeBorderStyle())
+                    
+                    Button {
+                        print("did tap")
+                    } label: {
+                        HStack {
+                            Image(systemName: "photo")
+                                .frame(width: 21, height: 21)
+                            
+                            Text("Thêm ảnh")
+                                .robotoMedium(size: 11)
+                        }
+                    }
+                    .buttonStyle(StrokeBorderStyle())
+                }
                 
                 Spacer()
             }

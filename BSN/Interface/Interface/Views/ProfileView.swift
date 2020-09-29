@@ -34,7 +34,7 @@ public struct ProfileView: View {
                             Image(systemName: "mappin.and.ellipse")
                             
                             Text(viewModel.profile.location)
-                                .robontoLight(size: 13)
+                                .robotoLight(size: 13)
                                 
                         }
                         
@@ -50,7 +50,7 @@ public struct ProfileView: View {
                 }
                 
                 Text(viewModel.profile.description)
-                    .robontoLightItalic(size: 13)
+                    .robotoLightItalic(size: 13)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                 
@@ -58,12 +58,12 @@ public struct ProfileView: View {
                 HStack {
                     BButton(isActive: $showPosts) {
                         Text("Bài viết")
-                            .robontoBold(size: 18)
+                            .robotoBold(size: 18)
                     }
 
                     BButton(isActive: $showPosts, invert: true) {
                         Text("Tủ sách")
-                            .robontoBold(size: 18)
+                            .robotoBold(size: 18)
                     }
                 }
                 .padding()

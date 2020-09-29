@@ -20,7 +20,7 @@ struct QuoteEditor: View {
             EditorWithPlaceHolder(text: $message, placeHolder: "Để lại trích dẫn yêu thích")
                 .frame(height: 70)
         }
-        .padding(.horizontal, 20)
+        .padding(.leading, 30)
     }
 }
 
@@ -38,19 +38,32 @@ struct EditorWithPlaceHolder: View {
     
     var placeHolder: String
     
+    var forcegroundColor: Color
+    
+    var font: String
+    
+    init(text: Binding<String>, placeHolder: String,
+         forceground: Color = .init(hex: 0x868686),
+         font: String = "Roboto-Bold") {
+        
+        self._text = text
+        self.placeHolder = placeHolder
+        self.forcegroundColor = forceground
+        self.font = font
+    }
+    
     var body: some View {
         ZStack(alignment: .topLeading) {
             TextEditor(text: self.$text)
-                .robontoBold(size: 13)
-                .foregroundColor(.init(hex: 0x868686))
+                .bFont(name: font, size: 13)
+                .foregroundColor(forcegroundColor)
             
             if text == "" {
                 Text(placeHolder)
-                    .robontoBold(size: 13)
+                    .bFont(name: font, size: 13)
                     .foregroundColor(.gray)
                     .padding(4)
                     .padding(.top, 6)
-                    .allowsHitTesting(false)
             }
         }
     }
