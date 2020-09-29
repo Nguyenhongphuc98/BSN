@@ -13,6 +13,8 @@ struct CreatePostView: View {
     
     @ObservedObject var viewModel: CreatePostViewModel = CreatePostViewModel()
     
+    @State var showCategory: Bool = false
+    
     var body: some View {
         ZStack {
             VStack {
@@ -25,17 +27,25 @@ struct CreatePostView: View {
                 
                 HStack {
                     Button {
+                        self.showCategory.toggle()
                         print("did tap")
                     } label: {
                         HStack {
                             Image(systemName: "books.vertical")
                                 .frame(width: 21, height: 21)
                             
-                            Text("Chọn chủ đề")
+                            Text(viewModel.category == fakeCategory[0] ? "Chọn chủ đề" : viewModel.category)
                                 .robotoMedium(size: 11)
                         }
+                        .foregroundColor(viewModel.category == fakeCategory[0] ? .black : .blue)
                     }
                     .buttonStyle(StrokeBorderStyle())
+                    .sheet(isPresented: $showCategory) {
+                        BookCategoryView { (category) in
+                            self.viewModel.category = category
+                            print("Did tap: \(category)")
+                        }
+                    }
                     
                     Button {
                         print("did tap")

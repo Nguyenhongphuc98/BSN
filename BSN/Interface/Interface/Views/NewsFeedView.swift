@@ -54,9 +54,6 @@ public struct NewsFeedView: View {
                     }
                 }
                 .listRowInsets(.zero)
-                .listRowBackground(Color.white)
-                
-                
             }
             .onAppear(perform: self.viewDidAppear)
             
