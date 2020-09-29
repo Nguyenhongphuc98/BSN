@@ -11,6 +11,8 @@ public struct NewsFeedView: View {
     
     @EnvironmentObject var rootModel: RootViewModel
     
+    @State var isLoadingNews: Bool = false
+    
     public init() {
         
     }
@@ -31,18 +33,32 @@ public struct NewsFeedView: View {
             
             Separator()
             
+            // News feed
             List {
                 ForEach(fakeNews) { news in
                     VStack {
                         NewsFeedCard(model: news)
+                            .onAppear(perform: {
+                                let thresholdIndex = fakeNews.index(fakeNews.endIndex, offsetBy: -2)
+                                if fakeNews.firstIndex(where: { $0.id == news.id }) == thresholdIndex {
+                                    print("reached \(news.id)")
+                                    self.isLoadingNews = true
+                                }
+                            })
                         Separator()
                     }
                 }
                 .listRowInsets(.zero)
                 .listRowBackground(Color.white)
+                
+                
             }
-            //.background(Color.init(hex: 0xECE7E7))
             .onAppear(perform: self.viewDidAppear)
+            
+            // Loading view
+            if isLoadingNews {
+                Loading()
+            }
         }
         
     }

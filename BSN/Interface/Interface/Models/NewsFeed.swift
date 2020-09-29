@@ -53,3 +53,10 @@ class NewsFeed: ObservableObject, Identifiable {
         numComment = 5
     }
 }
+
+extension NewsFeed: Equatable {
+    
+    static func == (lhs: NewsFeed, rhs: NewsFeed) -> Bool {
+        return lhs.id == rhs.id
+    }
+}

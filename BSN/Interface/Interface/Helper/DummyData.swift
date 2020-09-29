@@ -42,4 +42,4 @@ func randomDate() -> Date {
     return date
 }
 
-let fakeNews = [NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed()]
+let fakeNews = [NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed()]
