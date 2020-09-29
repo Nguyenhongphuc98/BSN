@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Interface
-import Component
 
 @main
 struct BSNApp: App {
@@ -20,6 +19,7 @@ struct BSNApp: App {
         WindowGroup {
             TabView(selection: $viewModel.selectedIndex) {
                 NewsFeedView()
+                    .environmentObject(viewModel)
                     .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .news) }
                     .tag(0)
                 

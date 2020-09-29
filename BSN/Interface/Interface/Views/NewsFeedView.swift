@@ -9,17 +9,46 @@ import SwiftUI
 
 public struct NewsFeedView: View {
     
+    @EnvironmentObject var rootModel: RootViewModel
+    
     public init() {
         
     }
     
     public var body: some View {
         VStack {
-            NewsFeedCard(model: NewsFeed())
-            NewsFeedCard(model: NewsFeed())
-            NewsFeedCard(model: NewsFeed())
+            // What's on your mind
+            HStack() {
+                CircleImage(image: rootModel.currentUser.avatar, diameter: 47)
+                
+                Text("Viết một thảo luận mới")
+                    .font(.custom("Roboto-Bold", size: 13))
+                
+                Spacer()
+            }
+            .padding(.top, 30)
+            .padding(.horizontal)
+            
+            Separator()
+            
+            List {
+                ForEach(fakeNews) { news in
+                    VStack {
+                        NewsFeedCard(model: news)
+                        Separator()
+                    }
+                }
+                .listRowInsets(.zero)
+                .listRowBackground(Color.white)
+            }
+            //.background(Color.init(hex: 0xECE7E7))
+            .onAppear(perform: self.viewDidAppear)
         }
-        .background(Color.init(hex: 0xECE7E7))
+        
+    }
+    
+    func viewDidAppear() {
+        print("view appear")
     }
 }
 

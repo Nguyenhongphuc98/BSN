@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Component
 
 public struct ProfileView: View {
     

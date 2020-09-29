@@ -7,13 +7,13 @@
 
 import Foundation
 
-class Account {
+public class Account {
     
     var username: String
     
     var password: String
     
-    init() {
+    public init() {
         username = ""
         password = ""
     }

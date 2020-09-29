@@ -12,7 +12,9 @@ enum PostCategory: String {
     case politic
 }
 
-class NewsFeed: ObservableObject {
+class NewsFeed: ObservableObject, Identifiable {
+    
+    var id: String
     
     var owner: User
     
@@ -33,6 +35,7 @@ class NewsFeed: ObservableObject {
     var numComment: Int
     
     init() {
+        id = UUID().uuidString
         owner = User()
         postTime = randomDate()
         category = .skill

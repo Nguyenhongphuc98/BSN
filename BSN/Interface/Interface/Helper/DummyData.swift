@@ -41,3 +41,5 @@ func randomDate() -> Date {
     //print("\(formatter.string(from: date)) : \(date.timeIntervalSinceNow.stringTime)")
     return date
 }
+
+let fakeNews = [NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed(), NewsFeed()]

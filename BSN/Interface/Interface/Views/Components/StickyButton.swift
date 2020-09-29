@@ -71,5 +71,6 @@ struct StickyImageButton: View {
             Image(systemName: isActive ? active : normal)
                 .foregroundColor(color)
         })
+        .buttonStyle(PlainButtonStyle())
     }
 }
