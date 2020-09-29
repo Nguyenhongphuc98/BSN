@@ -28,6 +28,7 @@
 		845DB4BA252369950019C29B /* StrokeBorderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DB4B9252369950019C29B /* StrokeBorderStyle.swift */; };
 		845DB4C4252374190019C29B /* BookCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DB4C3252374190019C29B /* BookCategoryView.swift */; };
 		845DB4C8252377B90019C29B /* BookCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DB4C7252377B90019C29B /* BookCategoryViewModel.swift */; };
+		845DB4CC25237ED20019C29B /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DB4CB25237ED20019C29B /* ImagePicker.swift */; };
 		847BBAC62521EEB900E0500D /* RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847BBAC52521EEB900E0500D /* RootViewModel.swift */; };
 		84AA95C5251B01C80029BB1E /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA95C4251B01C80029BB1E /* ColorExtension.swift */; };
 		84AA95EF251B45320029BB1E /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA95EE251B45320029BB1E /* ProfileViewModel.swift */; };
@@ -92,6 +93,7 @@
 		845DB4B9252369950019C29B /* StrokeBorderStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeBorderStyle.swift; sourceTree = "<group>"; };
 		845DB4C3252374190019C29B /* BookCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCategoryView.swift; sourceTree = "<group>"; };
 		845DB4C7252377B90019C29B /* BookCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCategoryViewModel.swift; sourceTree = "<group>"; };
+		845DB4CB25237ED20019C29B /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		847BBAC52521EEB900E0500D /* RootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewModel.swift; sourceTree = "<group>"; };
 		84AA95C4251B01C80029BB1E /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		84AA95EE251B45320029BB1E /* ProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				844119F82522E77D00AE31D8 /* Seperator.swift */,
 				84411A002522EB8D00AE31D8 /* Loading.swift */,
 				84411A152523310B00AE31D8 /* QuoteEditor.swift */,
+				845DB4CB25237ED20019C29B /* ImagePicker.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				845DB4BA252369950019C29B /* StrokeBorderStyle.swift in Sources */,
 				8414F25B2521A1B1003CF799 /* IntExension.swift in Sources */,
 				84AA95F3251B453F0029BB1E /* Profile.swift in Sources */,
+				845DB4CC25237ED20019C29B /* ImagePicker.swift in Sources */,
 				84AA9697251F99470029BB1E /* CircleImage.swift in Sources */,
 				8414F2672521D7EA003CF799 /* DummyData.swift in Sources */,
 				84AA9685251F96320029BB1E /* StaticVariable.swift in Sources */,

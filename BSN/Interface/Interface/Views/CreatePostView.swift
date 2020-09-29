@@ -17,17 +17,14 @@ struct CreatePostView: View {
     
     @State var showQuote: Bool = false
     
+    @State var showPhotoPicker: Bool = false
+    
     var body: some View {
         ZStack {
             VStack {
                 header
                 
-                if showQuote {
-                    QuoteEditor(message: $viewModel.quote)
-                }
-                
-                EditorWithPlaceHolder(text: $viewModel.content, placeHolder: "Chia sẻ cảm xúc của bạn ngay nào", forceground: .black, font: "Roboto-Regular")
-                    .padding()
+                editor
                 
                 HStack {
                     Button {
@@ -74,6 +71,7 @@ struct CreatePostView: View {
                     
                     Button {
                         print("did tap")
+                        showPhotoPicker.toggle()
                     } label: {
                         HStack {
                             Image(systemName: "photo")
@@ -84,6 +82,9 @@ struct CreatePostView: View {
                         }
                     }
                     .buttonStyle(StrokeBorderStyle())
+                    .sheet(isPresented: $showPhotoPicker) {
+                        ImagePicker(picker: $showPhotoPicker, img_Data: $viewModel.photo)
+                    }
                 }
                 
                 Spacer()
@@ -122,6 +123,37 @@ struct CreatePostView: View {
             
             Text("Tạo một bài viết")
                 .font(.custom("Roboto-Bold", size: 13))
+        }
+    }
+    
+    var editor: some View {
+        VStack {
+            if showQuote {
+                QuoteEditor(message: $viewModel.quote)
+            }
+            
+            EditorWithPlaceHolder(text: $viewModel.content, placeHolder: "Chia sẻ cảm xúc của bạn ngay nào", forceground: .black, font: "Roboto-Regular")
+                .padding()
+            
+            if !viewModel.photo.isEmpty {
+                ZStack(alignment: .topTrailing) {
+                    Image(uiImage: UIImage(data: viewModel.photo)!)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 180, height: 140)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                    
+                    Button(action: {
+                        self.viewModel.photo = Data()
+                    }) {
+                        Image(systemName: "xmark")
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color("blue"))
+                            .clipShape(Circle())
+                    }
+                }
+            }
         }
     }
 }
