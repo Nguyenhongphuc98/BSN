@@ -15,12 +15,16 @@ struct CreatePostView: View {
     
     @State var showCategory: Bool = false
     
+    @State var showQuote: Bool = false
+    
     var body: some View {
         ZStack {
             VStack {
                 header
                 
-                QuoteEditor(message: $viewModel.quote)
+                if showQuote {
+                    QuoteEditor(message: $viewModel.quote)
+                }
                 
                 EditorWithPlaceHolder(text: $viewModel.content, placeHolder: "Chia sẻ cảm xúc của bạn ngay nào", forceground: .black, font: "Roboto-Regular")
                     .padding()
@@ -49,6 +53,13 @@ struct CreatePostView: View {
                     
                     Button {
                         print("did tap")
+                        if showQuote == true {
+                            // Changing to false (hiden)
+                            viewModel.quote = ""
+                        }
+                        withAnimation {
+                            self.showQuote.toggle()
+                        }
                     } label: {
                         HStack {
                             Image(systemName: "quote.bubble")
@@ -57,6 +68,7 @@ struct CreatePostView: View {
                             Text("Thêm trích dẫn")
                                 .robotoMedium(size: 11)
                         }
+                        .foregroundColor(showQuote ? .blue : .black)
                     }
                     .buttonStyle(StrokeBorderStyle())
                     
