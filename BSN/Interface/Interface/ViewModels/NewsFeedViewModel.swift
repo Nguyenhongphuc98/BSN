@@ -14,6 +14,8 @@ class NewsFeedViewModel: ObservableObject {
     
     @Published var newsData: [NewsFeed]
     
+    var selectedNews: NewsFeed?
+    
     init() {
         isLoadingNews = false
         newsData = fakeNews

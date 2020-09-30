@@ -140,7 +140,7 @@ struct CreatePostView: View {
                     Image(uiImage: UIImage(data: viewModel.photo)!)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: 180, height: 140)
+                        .frame(width: 170, height: 120)
                         .clipShape(RoundedRectangle(cornerRadius: 5))
                     
                     Button(action: {

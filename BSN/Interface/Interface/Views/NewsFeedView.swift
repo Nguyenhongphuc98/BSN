@@ -15,6 +15,8 @@ public struct NewsFeedView: View {
     
     @State private var presentCPV: Bool = false
     
+    @State private var presentPhoto: Bool = false
+    
     public init() {
         
     }
@@ -45,7 +47,10 @@ public struct NewsFeedView: View {
             List {
                 ForEach(fakeNews) { news in
                     VStack {
-                        NewsFeedCard(model: news)
+                        NewsFeedCard(model: news, didTapPhoto: {
+                            self.viewModel.selectedNews = news
+                            presentPhoto.toggle()
+                        })
                             .onAppear(perform: {
                                 self.viewModel.loadMoreIfNeeded(item: news)
                             })
@@ -56,6 +61,9 @@ public struct NewsFeedView: View {
                 .listRowInsets(.zero)
             }
             .onAppear(perform: self.viewDidAppear)
+            .fullScreenCover(isPresented: $presentPhoto) {
+                ViewFullPhoto(newFeed: viewModel.selectedNews!)
+            }
             
             // Loading view
             if viewModel.isLoadingNews {

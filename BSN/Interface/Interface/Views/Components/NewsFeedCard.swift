@@ -11,6 +11,8 @@ struct NewsFeedCard: View {
     
     @ObservedObject var model: NewsFeed
     
+    var didTapPhoto: (() -> Void)?
+    
     var body: some View {
         VStack {
             // Header
@@ -65,6 +67,9 @@ struct NewsFeedCard: View {
                     .frame(maxHeight: 200)
                     .clipped()
                     .padding(2)
+                    .onTapGesture {
+                        self.didTapPhoto?()
+                    }
             }
             
             // Interactive
