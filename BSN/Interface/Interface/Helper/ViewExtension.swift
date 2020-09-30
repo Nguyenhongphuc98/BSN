@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - Perform function
 extension View {
     
     /// Todo something on this view then return itself
@@ -17,4 +18,21 @@ extension View {
         
         return self
     }
+}
+
+// MARK: - Decorate View
+extension View {
+    
+    /// Add navigationView in logic but not show
+    /// Avoid arrow in List
+    func navigationLink<Destination: View>(destination: Destination) -> some View {
+        background(
+            NavigationLink(destination: destination) {
+                EmptyView()
+            }
+            .frame(width: 0, height: 0)
+            .opacity(0)
+        )
+    }
+    
 }

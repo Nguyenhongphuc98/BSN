@@ -19,8 +19,8 @@ public class User {
 
     public init() {
         username = "phucnh@gmail.com"
-        displayname = "Nguyễn Phúc Thiên Kim"
-        avatar = "avatar"
+        displayname = randomName()
+        avatar = randomAvatar()
         gender = .male
     }
 }

@@ -16,6 +16,11 @@
 		8414F2672521D7EA003CF799 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F2662521D7EA003CF799 /* DummyData.swift */; };
 		8414F26B2521E484003CF799 /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F26A2521E484003CF799 /* TimeIntervalExtension.swift */; };
 		84360FFC2524409C009FF4BF /* ScreenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84360FFB2524409C009FF4BF /* ScreenExtension.swift */; };
+		8436100025246A28009FF4BF /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84360FFF25246A28009FF4BF /* PostDetailView.swift */; };
+		8436100425246A8C009FF4BF /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8436100325246A8C009FF4BF /* PostDetailViewModel.swift */; };
+		8436100925246FC2009FF4BF /* BViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8436100825246FC2009FF4BF /* BViewModifier.swift */; };
+		8436100F25247DD2009FF4BF /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8436100E25247DD2009FF4BF /* Comment.swift */; };
+		843610132524811D009FF4BF /* CommentCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843610122524811D009FF4BF /* CommentCard.swift */; };
 		844119F92522E77D00AE31D8 /* Seperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844119F82522E77D00AE31D8 /* Seperator.swift */; };
 		844119FD2522E80500AE31D8 /* EdgeInsetsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844119FC2522E80500AE31D8 /* EdgeInsetsExtension.swift */; };
 		84411A012522EB8D00AE31D8 /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84411A002522EB8D00AE31D8 /* Loading.swift */; };
@@ -84,6 +89,11 @@
 		8414F2662521D7EA003CF799 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 		8414F26A2521E484003CF799 /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
 		84360FFB2524409C009FF4BF /* ScreenExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenExtension.swift; sourceTree = "<group>"; };
+		84360FFF25246A28009FF4BF /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
+		8436100325246A8C009FF4BF /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
+		8436100825246FC2009FF4BF /* BViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BViewModifier.swift; sourceTree = "<group>"; };
+		8436100E25247DD2009FF4BF /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		843610122524811D009FF4BF /* CommentCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCard.swift; sourceTree = "<group>"; };
 		844119F82522E77D00AE31D8 /* Seperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seperator.swift; sourceTree = "<group>"; };
 		844119FC2522E80500AE31D8 /* EdgeInsetsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeInsetsExtension.swift; sourceTree = "<group>"; };
 		84411A002522EB8D00AE31D8 /* Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
@@ -154,6 +164,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8436100725246F9F009FF4BF /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				8436100825246FC2009FF4BF /* BViewModifier.swift */,
+			);
+			path = Modifier;
+			sourceTree = "<group>";
+		};
 		84411A0C2523299D00AE31D8 /* Button */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +200,7 @@
 				84411A082523285400AE31D8 /* CreatePostView.swift */,
 				845DB4C3252374190019C29B /* BookCategoryView.swift */,
 				845DB4CF252385240019C29B /* ViewFullPhoto.swift */,
+				84360FFF25246A28009FF4BF /* PostDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -189,6 +208,7 @@
 		84AA95AA251AF0980029BB1E /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				8436100725246F9F009FF4BF /* Modifier */,
 				84411A192523328700AE31D8 /* Tracking */,
 				84411A0C2523299D00AE31D8 /* Button */,
 				8414F24C25218D8E003CF799 /* NewsFeedCard.swift */,
@@ -199,6 +219,7 @@
 				84411A152523310B00AE31D8 /* QuoteEditor.swift */,
 				845DB4CB25237ED20019C29B /* ImagePicker.swift */,
 				845DB4D3252386390019C29B /* ZoomableScroolView.swift */,
+				843610122524811D009FF4BF /* CommentCard.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -211,6 +232,7 @@
 				84411A042523208000AE31D8 /* NewsFeedViewModel.swift */,
 				84411A0F25232B7E00AE31D8 /* CreatePostViewModel.swift */,
 				845DB4C7252377B90019C29B /* BookCategoryViewModel.swift */,
+				8436100325246A8C009FF4BF /* PostDetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -222,6 +244,7 @@
 				84AA960A251B469F0029BB1E /* User.swift */,
 				84AA961A251B47640029BB1E /* Account.swift */,
 				8414F242252187C3003CF799 /* NewsFeed.swift */,
+				8436100E25247DD2009FF4BF /* Comment.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -229,11 +252,11 @@
 		84AA95C3251B01B70029BB1E /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				8414F2662521D7EA003CF799 /* DummyData.swift */,
 				84AA95C4251B01C80029BB1E /* ColorExtension.swift */,
 				84AA9684251F96320029BB1E /* StaticVariable.swift */,
 				84AA9696251F99470029BB1E /* CircleImage.swift */,
 				8414F25A2521A1B1003CF799 /* IntExension.swift */,
-				8414F2662521D7EA003CF799 /* DummyData.swift */,
 				8414F26A2521E484003CF799 /* TimeIntervalExtension.swift */,
 				844119FC2522E80500AE31D8 /* EdgeInsetsExtension.swift */,
 				84411A28252337C900AE31D8 /* ViewExtension.swift */,
@@ -446,7 +469,10 @@
 				84AA9681251F928A0029BB1E /* ProfileView.swift in Sources */,
 				84AA968D251F96F70029BB1E /* FullRadiusShadowButtonStyle.swift in Sources */,
 				84AA9621251B480C0029BB1E /* ItemContent.swift in Sources */,
+				843610132524811D009FF4BF /* CommentCard.swift in Sources */,
+				8436100425246A8C009FF4BF /* PostDetailViewModel.swift in Sources */,
 				84AA95EF251B45320029BB1E /* ProfileViewModel.swift in Sources */,
+				8436100925246FC2009FF4BF /* BViewModifier.swift in Sources */,
 				844119F92522E77D00AE31D8 /* Seperator.swift in Sources */,
 				84411A052523208000AE31D8 /* NewsFeedViewModel.swift in Sources */,
 				84411A252523331D00AE31D8 /* BoundTracking.swift in Sources */,
@@ -458,6 +484,7 @@
 				845DB4CC25237ED20019C29B /* ImagePicker.swift in Sources */,
 				84AA9697251F99470029BB1E /* CircleImage.swift in Sources */,
 				8414F2672521D7EA003CF799 /* DummyData.swift in Sources */,
+				8436100025246A28009FF4BF /* PostDetailView.swift in Sources */,
 				84AA9685251F96320029BB1E /* StaticVariable.swift in Sources */,
 				8414F26B2521E484003CF799 /* TimeIntervalExtension.swift in Sources */,
 				845DB4C4252374190019C29B /* BookCategoryView.swift in Sources */,
@@ -465,6 +492,7 @@
 				8414F2532521904B003CF799 /* CountTimeText.swift in Sources */,
 				84FA99182518619900CB92CB /* Launch.swift in Sources */,
 				845DB4D0252385240019C29B /* ViewFullPhoto.swift in Sources */,
+				8436100F25247DD2009FF4BF /* Comment.swift in Sources */,
 				84AA9689251F96CC0029BB1E /* BButton.swift in Sources */,
 				84360FFC2524409C009FF4BF /* ScreenExtension.swift in Sources */,
 				84AA95C5251B01C80029BB1E /* ColorExtension.swift in Sources */,

@@ -11,10 +11,20 @@ struct NewsFeedCard: View {
     
     @ObservedObject var model: NewsFeed
     
+    @State private var action: Int? = 0
+    
+    var isDetail: Bool = false
+    
     var didTapPhoto: (() -> Void)?
     
     var body: some View {
         VStack {
+            NavigationLink(destination: PostDetailView(post: model), tag: 1, selection: $action) {
+                EmptyView()
+            }
+            .frame(width: 0, height: 0)
+            .opacity(0)
+            
             // Header
             HStack {
                 CircleImage(image: model.owner.avatar, diameter: 30)
@@ -37,6 +47,7 @@ struct NewsFeedCard: View {
                 
                 Spacer()
                 
+                // More button
                 StickyImageButton(normal: "ellipsis",
                                   active: "ellipsis.rectangle.fill",
                                   color: .black) { (isHeart) in
@@ -56,7 +67,7 @@ struct NewsFeedCard: View {
             // Content
             Text(model.content)
                 .font(.custom("Roboto-Light", size: 13))
-                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: false)
                 .padding(2)
             
             // Photo
@@ -65,50 +76,56 @@ struct NewsFeedCard: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(maxHeight: 200)
-                    .clipped()
-                    .padding(2)
                     .onTapGesture {
                         self.didTapPhoto?()
                     }
+                    .clipped()
+                    .padding(2)
             }
             
-            // Interactive
-            HStack {
-                // Heart
-                StickyImageButton(normal: "heart",
-                                  active: "heart.fill",
-                                  color: .init(hex: 0xea299a)) { (isHeart) in
-                    print("did request heart: \(isHeart)")
-                }
-                
-                Text(model.numHeart.description)
-                    .font(.custom("Roboto-Bold", size: 13))
-                
-                // Break heart
-                StickyImageButton(normal: "bolt.heart",
-                                  active: "bolt.heart.fill",
-                                  color: .init(hex: 0x34495e)) { (isHeart) in
-                    print("did request heart: \(isHeart)")
-                }
-                
-                Text(model.numBeakHeart.description)
-                    .font(.custom("Roboto-Bold", size: 13))
-                
-                // Comment
-                StickyImageButton(normal: "bubble.left",
-                                  active: "bubble.left.fill",
-                                  color: .black) { (isHeart) in
-                    print("did request heart: \(isHeart)")
-                }
-                
-                Text(model.numComment.description)
-                    .font(.custom("Roboto-Bold", size: 13))
-                
-                Spacer()
-            }
+            actionComponent
         }
         .padding()
         .background(Color.white)
+    }
+    
+    private var actionComponent: some View {
+        // Interactive
+        HStack {
+            // Heart
+            StickyImageButton(normal: "heart",
+                              active: "heart.fill",
+                              color: .init(hex: 0xea299a)) { (isHeart) in
+                print("did request heart: \(isHeart)")
+            }
+            
+            Text(model.numHeart.description)
+                .font(.custom("Roboto-Bold", size: 13))
+            
+            // Break heart
+            StickyImageButton(normal: "bolt.heart",
+                              active: "bolt.heart.fill",
+                              color: .init(hex: 0x34495e)) { (isHeart) in
+                print("did request heart: \(isHeart)")
+            }
+            
+            Text(model.numBeakHeart.description)
+                .font(.custom("Roboto-Bold", size: 13))
+            
+            // Comment
+            StickyImageButton(normal: "bubble.left",
+                              active: "bubble.left.fill",
+                              color: .black) { (isHeart) in
+                print("did request comment: \(isHeart)")
+                action = 1
+            }
+            .disabled(isDetail)
+            
+            Text(model.numComment.description)
+                .font(.custom("Roboto-Bold", size: 13))
+            
+            Spacer()
+        }
     }
 }
 

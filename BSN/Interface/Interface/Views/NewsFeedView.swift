@@ -22,24 +22,9 @@ public struct NewsFeedView: View {
     }
     
     public var body: some View {
+        
         VStack {
-            // What's on your mind
-            HStack() {
-                CircleImage(image: rootModel.currentUser.avatar, diameter: 47)
-                
-                Text("Viết một thảo luận mới")
-                    .font(.custom("Roboto-Bold", size: 13))
-                
-                Spacer()
-            }
-            .padding(.top, 30)
-            .padding(.horizontal)
-            .onTapGesture {
-                self.presentCPV.toggle()
-            }
-            .fullScreenCover(isPresented: $presentCPV) {
-                CreatePostView()
-            }
+            editor
             
             Separator()
             
@@ -51,9 +36,9 @@ public struct NewsFeedView: View {
                             self.viewModel.selectedNews = news
                             presentPhoto.toggle()
                         })
-                            .onAppear(perform: {
-                                self.viewModel.loadMoreIfNeeded(item: news)
-                            })
+                        .onAppear(perform: {
+                            self.viewModel.loadMoreIfNeeded(item: news)
+                        })
                         
                         Separator()
                     }
@@ -70,7 +55,28 @@ public struct NewsFeedView: View {
                 Loading()
             }
         }
-        
+        .navigationTitle(Text("NewsFeed"))
+        .navigationBarHidden(true)
+    }
+    
+    private var editor: some View {
+        // What's on your mind
+        HStack() {
+            CircleImage(image: rootModel.currentUser.avatar, diameter: 47)
+            
+            Text("Viết một thảo luận mới")
+                .font(.custom("Roboto-Bold", size: 13))
+            
+            Spacer()
+        }
+        .padding(.top, 30)
+        .padding(.horizontal)
+        .onTapGesture {
+            self.presentCPV.toggle()
+        }
+        .fullScreenCover(isPresented: $presentCPV) {
+            CreatePostView()
+        }
     }
     
     func viewDidAppear() {

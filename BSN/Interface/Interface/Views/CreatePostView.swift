@@ -35,10 +35,10 @@ struct CreatePostView: View {
                             Image(systemName: "books.vertical")
                                 .frame(width: 21, height: 21)
                             
-                            Text(viewModel.category == fakeCategory[0] ? "Chọn chủ đề" : viewModel.category)
+                            Text(viewModel.category == fakeCategories[0] ? "Chọn chủ đề" : viewModel.category)
                                 .robotoMedium(size: 11)
                         }
-                        .foregroundColor(viewModel.category == fakeCategory[0] ? .black : .blue)
+                        .foregroundColor(viewModel.category == fakeCategories[0] ? .black : .blue)
                     }
                     .buttonStyle(StrokeBorderStyle())
                     .sheet(isPresented: $showCategory) {

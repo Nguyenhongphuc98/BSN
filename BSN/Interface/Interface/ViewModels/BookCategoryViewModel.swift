@@ -17,6 +17,6 @@ class BookCategoryViewModel: ObservableObject {
     }
     
     func fetchData() {
-        categories = fakeCategory
+        categories = fakeCategories
     }
 }

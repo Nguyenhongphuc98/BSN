@@ -24,7 +24,7 @@ class CreatePostViewModel: ObservableObject {
         content = ""
         photo = Data()
         isPosting = false
-        category = fakeCategory[0]
+        category = fakeCategories[0]
         print("did init Create Post ViewModel")
     }
     
