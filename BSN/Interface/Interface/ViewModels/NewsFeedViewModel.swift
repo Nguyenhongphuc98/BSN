@@ -22,8 +22,8 @@ class NewsFeedViewModel: ObservableObject {
     }
     
     func loadMoreIfNeeded(item: NewsFeed) {
-        let thresholdIndex = fakeNews.index(fakeNews.endIndex, offsetBy: -2)
-        if fakeNews.firstIndex(where: { $0.id == item.id }) == thresholdIndex {
+        let thresholdIndex = newsData.index(newsData.endIndex, offsetBy: -2)
+        if newsData.firstIndex(where: { $0.id == item.id }) == thresholdIndex {
             print("reached \(item.id)")
             self.isLoadingNews = true
             

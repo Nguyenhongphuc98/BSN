@@ -1,0 +1,98 @@
+//
+//  NotifyCard.swift
+//  Interface
+//
+//  Created by Phucnh on 10/1/20.
+//
+
+import SwiftUI
+
+struct NotifyCard: View {
+    
+    var model: Notify
+    
+    @State private var action: Int? = 0
+    
+    private var icon: String {
+        
+        switch model.action {
+        case .comment, .breakHeart, .heart:
+            return "text.bubble"
+            
+        case .borrowBook, .exchangeBook:
+            return "text.book.closed"
+            
+        case .following:
+            return "heart.circle"
+        }
+    }
+    
+    private var destinationView: AnyView {
+        switch model.action {
+        case .comment, .breakHeart, .heart:
+            return AnyView(PostDetailView(postID: model.destinationID))
+            
+        case .borrowBook, .exchangeBook:
+            return AnyView(PostDetailView(postID: model.destinationID))
+            
+        case .following:
+            return AnyView(ProfileView())
+        }
+    }
+    
+    var body: some View {
+        ZStack(alignment: .center) {
+            NavigationLink(destination: destinationView, tag: 1, selection: $action) {
+                EmptyView()
+            }
+            .frame(width: 0, height: 0)
+            .opacity(0)
+            
+            HStack(alignment: .center) {
+                CircleImage(image: model.sender.avatar, diameter: 40)
+                    .padding(.leading, 15)
+                    .padding(.top, 5)
+                
+                VStack {
+                    Text(model.sender.displayname)
+                        .robotoBold(size: 15)
+                        .foregroundColor(.black)
+                    +
+                        Text(" đã \(model.action.description())")
+                        .roboto(size: 13)
+                    
+                    Spacer()
+                }
+                .fixedSize(horizontal: false, vertical: false)
+                .padding(.top, 15)
+                
+                Spacer()
+                
+                Image(systemName: icon)
+                    .foregroundColor(model.seen ? .gray : .black)
+                    .padding(.horizontal, 10)
+            }
+            
+            HStack {
+                Spacer()
+                
+                VStack {
+                    Spacer()
+                    
+                    CountTimeText(date: model.createDate)
+                        .padding(.horizontal, 10)
+                }
+            }
+        }
+        .onTapGesture {
+            action = 1
+            model.seen = true
+        }
+    }
+}
+
+struct NotifyCard_Previews: PreviewProvider {
+    static var previews: some View {
+        NotifyCard(model: Notify())
+    }
+}

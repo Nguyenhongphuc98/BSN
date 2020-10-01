@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CommentCard: View {
     
-    @StateObject var comment: Comment
+    @StateObject var model: Comment
     
     @State private var showSubcomments: Bool = false
     
@@ -20,13 +20,13 @@ struct CommentCard: View {
         VStack {
             // Header
             HStack {
-                CircleImage(image: comment.owner.avatar, diameter: 30)
+                CircleImage(image: model.owner.avatar, diameter: 30)
                 
                 VStack(alignment: .leading) {
-                    Text(comment.owner.displayname)
+                    Text(model.owner.displayname)
                         .font(.custom("Roboto-Bold", size: 13))
                     
-                    CountTimeText(date: comment.commentDate)
+                    CountTimeText(date: model.commentDate)
                 }
                 
                 Spacer()
@@ -35,18 +35,18 @@ struct CommentCard: View {
             // Content
             VStack {
                 if level == 0 {
-                    Text(comment.content)
+                    Text(model.content)
                         +
                         Text(showSubcomments ? "  Ẩn trả lời" : "  Xem trả lời").foregroundColor(._primary).bold()
                 } else {
-                    Text(comment.content)
+                    Text(model.content)
                 }
                 
                 if showSubcomments {
-                    if comment.subcomments != nil {
+                    if model.subcomments != nil {
                         VStack {
-                            ForEach(comment.subcomments!) { subc in
-                                CommentCard(comment: subc, level: 1)
+                            ForEach(model.subcomments!) { subc in
+                                CommentCard(model: subc, level: 1)
                             }
                         }
                     } else {
@@ -57,7 +57,6 @@ struct CommentCard: View {
                 }
             }
             .font(.custom("Roboto-Light", size: 13))
-            //.lineLimit(nil)
             .fixedSize(horizontal: false, vertical: false)
             .onTapGesture {
                 print("did tap")
@@ -78,6 +77,6 @@ struct CommentCard: View {
 
 struct CommentCard_Previews: PreviewProvider {
     static var previews: some View {
-        CommentCard(comment: Comment())
+        CommentCard(model: Comment())
     }
 }

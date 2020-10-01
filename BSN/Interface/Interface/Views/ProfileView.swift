@@ -28,7 +28,7 @@ public struct ProfileView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(viewModel.profile.user.displayname)
-                            .pattayaRegular(size: 18)
+                            .pattaya(size: 18)
                         
                         HStack {
                             Image(systemName: "mappin.and.ellipse")

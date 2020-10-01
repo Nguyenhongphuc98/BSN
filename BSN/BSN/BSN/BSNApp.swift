@@ -32,7 +32,7 @@ struct BSNApp: App {
                         .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .chat) }
                         .tag(2)
                     
-                    ProfileView()
+                    NotifyView()
                         .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .notify) }
                         .tag(3)
                     
@@ -58,6 +58,8 @@ struct BSNApp: App {
     }
     
     func configureAppearance() {
+        
+        UITableView.appearance().backgroundColor = .white
         
         //let backImage = UIImage(named: "lauchlogo")
             //.withPadding(.init(top: -2, left: 0, bottom: 0, right: -4))

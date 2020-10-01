@@ -41,9 +41,8 @@ struct PostDetailView: View {
                         Separator()
                         
                         // List comments
-                        
                         ForEach(1..<3) { _ in
-                            CommentCard(comment: Comment())
+                            CommentCard(model: Comment())
                         }
                         
                         Spacer()

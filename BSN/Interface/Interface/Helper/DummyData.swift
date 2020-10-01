@@ -70,3 +70,6 @@ func randomAvatar() -> String {
     let avatar = fakeAvatars[Int.random(in: 0...3)]
     return avatar
 }
+
+
+let fakeNotifies = [Notify(), Notify(), Notify(), Notify(), Notify(), Notify(), Notify(), Notify(), Notify(), Notify()]

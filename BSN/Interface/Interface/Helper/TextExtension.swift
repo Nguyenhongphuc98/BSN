@@ -9,6 +9,10 @@ import SwiftUI
 
 extension Text {
     
+    func roboto(size: CGFloat) -> Self {
+        self.font(.custom("Roboto-Regular", size: size))
+    }
+    
     func robotoBold(size: CGFloat) -> Self {
         self.font(.custom("Roboto-Bold", size: size))
     }
@@ -21,12 +25,12 @@ extension Text {
         self.font(.custom("Roboto-Light", size: size))
     }
     
-    func pattayaRegular(size: CGFloat) -> Self {
-        self.font(.custom("Pattaya-Regular", size: size))
-    }
-    
     func robotoMedium(size: CGFloat) -> Self {
         self.font(.custom("Roboto-Medium", size: size))
+    }
+    
+    func pattaya(size: CGFloat) -> Self {
+        self.font(.custom("Pattaya-Regular", size: size))
     }
     
     func bFont(name: String, size: CGFloat) -> Self {

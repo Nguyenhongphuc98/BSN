@@ -30,7 +30,7 @@ public struct NewsFeedView: View {
             
             // News feed
             List {
-                ForEach(fakeNews) { news in
+                ForEach(viewModel.newsData) { news in
                     VStack {
                         NewsFeedCard(model: news, didTapPhoto: {
                             self.viewModel.selectedNews = news

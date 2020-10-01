@@ -63,6 +63,10 @@
 		84AA96B7252054820029BB1E /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AA96AA252054820029BB1E /* Roboto-MediumItalic.ttf */; };
 		84AA96B8252054820029BB1E /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AA96AB252054820029BB1E /* Roboto-Bold.ttf */; };
 		84AA96B9252054820029BB1E /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AA96AC252054820029BB1E /* Roboto-Light.ttf */; };
+		84B964EC2525C6BB00F37571 /* NotifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B964EB2525C6BB00F37571 /* NotifyView.swift */; };
+		84B964F02525C6D400F37571 /* NotifyCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B964EF2525C6D400F37571 /* NotifyCard.swift */; };
+		84B964F42525C6E600F37571 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B964F32525C6E600F37571 /* Notify.swift */; };
+		84B964F82525CBBD00F37571 /* NotifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B964F72525CBBD00F37571 /* NotifyViewModel.swift */; };
 		84FA99002518616E00CB92CB /* Interface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FA98F62518616E00CB92CB /* Interface.framework */; };
 		84FA99052518616E00CB92CB /* InterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA99042518616E00CB92CB /* InterfaceTests.swift */; };
 		84FA99072518616E00CB92CB /* Interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 84FA98F92518616E00CB92CB /* Interface.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -137,6 +141,10 @@
 		84AA96AA252054820029BB1E /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
 		84AA96AB252054820029BB1E /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		84AA96AC252054820029BB1E /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
+		84B964EB2525C6BB00F37571 /* NotifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyView.swift; sourceTree = "<group>"; };
+		84B964EF2525C6D400F37571 /* NotifyCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyCard.swift; sourceTree = "<group>"; };
+		84B964F32525C6E600F37571 /* Notify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
+		84B964F72525CBBD00F37571 /* NotifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyViewModel.swift; sourceTree = "<group>"; };
 		84FA98F62518616E00CB92CB /* Interface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Interface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FA98F92518616E00CB92CB /* Interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Interface.h; sourceTree = "<group>"; };
 		84FA98FA2518616E00CB92CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -204,6 +212,7 @@
 				845DB4CF252385240019C29B /* ViewFullPhoto.swift */,
 				84360FFF25246A28009FF4BF /* PostDetailView.swift */,
 				84FB37102525622000B8581F /* ExceptionView.swift */,
+				84B964EB2525C6BB00F37571 /* NotifyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -223,6 +232,7 @@
 				845DB4CB25237ED20019C29B /* ImagePicker.swift */,
 				845DB4D3252386390019C29B /* ZoomableScroolView.swift */,
 				843610122524811D009FF4BF /* CommentCard.swift */,
+				84B964EF2525C6D400F37571 /* NotifyCard.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -236,6 +246,7 @@
 				84411A0F25232B7E00AE31D8 /* CreatePostViewModel.swift */,
 				845DB4C7252377B90019C29B /* BookCategoryViewModel.swift */,
 				8436100325246A8C009FF4BF /* PostDetailViewModel.swift */,
+				84B964F72525CBBD00F37571 /* NotifyViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -248,6 +259,7 @@
 				84AA961A251B47640029BB1E /* Account.swift */,
 				8414F242252187C3003CF799 /* NewsFeed.swift */,
 				8436100E25247DD2009FF4BF /* Comment.swift */,
+				84B964F32525C6E600F37571 /* Notify.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -465,8 +477,10 @@
 			files = (
 				8414F25725219B7E003CF799 /* StickyButton.swift in Sources */,
 				84411A162523310B00AE31D8 /* QuoteEditor.swift in Sources */,
+				84B964F42525C6E600F37571 /* Notify.swift in Sources */,
 				84411A2D2523409E00AE31D8 /* TextExtension.swift in Sources */,
 				847BBAC62521EEB900E0500D /* RootViewModel.swift in Sources */,
+				84B964F82525CBBD00F37571 /* NotifyViewModel.swift in Sources */,
 				84411A092523285400AE31D8 /* CreatePostView.swift in Sources */,
 				8414F243252187C3003CF799 /* NewsFeed.swift in Sources */,
 				84AA9681251F928A0029BB1E /* ProfileView.swift in Sources */,
@@ -491,6 +505,7 @@
 				8436100025246A28009FF4BF /* PostDetailView.swift in Sources */,
 				84AA9685251F96320029BB1E /* StaticVariable.swift in Sources */,
 				8414F26B2521E484003CF799 /* TimeIntervalExtension.swift in Sources */,
+				84B964F02525C6D400F37571 /* NotifyCard.swift in Sources */,
 				845DB4C4252374190019C29B /* BookCategoryView.swift in Sources */,
 				84411A1025232B7E00AE31D8 /* CreatePostViewModel.swift in Sources */,
 				8414F2532521904B003CF799 /* CountTimeText.swift in Sources */,
@@ -505,6 +520,7 @@
 				8414F2632521A52E003CF799 /* NewsFeedView.swift in Sources */,
 				84AA960B251B469F0029BB1E /* User.swift in Sources */,
 				845DB4C8252377B90019C29B /* BookCategoryViewModel.swift in Sources */,
+				84B964EC2525C6BB00F37571 /* NotifyView.swift in Sources */,
 				84411A012522EB8D00AE31D8 /* Loading.swift in Sources */,
 				84AA961B251B47640029BB1E /* Account.swift in Sources */,
 			);
