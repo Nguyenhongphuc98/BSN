@@ -67,6 +67,7 @@
 		84FA99052518616E00CB92CB /* InterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA99042518616E00CB92CB /* InterfaceTests.swift */; };
 		84FA99072518616E00CB92CB /* Interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 84FA98F92518616E00CB92CB /* Interface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84FA99182518619900CB92CB /* Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA99172518619900CB92CB /* Launch.swift */; };
+		84FB37112525622000B8581F /* ExceptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB37102525622000B8581F /* ExceptionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +144,7 @@
 		84FA99042518616E00CB92CB /* InterfaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceTests.swift; sourceTree = "<group>"; };
 		84FA99062518616E00CB92CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84FA99172518619900CB92CB /* Launch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launch.swift; sourceTree = "<group>"; };
+		84FB37102525622000B8581F /* ExceptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExceptionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,6 +203,7 @@
 				845DB4C3252374190019C29B /* BookCategoryView.swift */,
 				845DB4CF252385240019C29B /* ViewFullPhoto.swift */,
 				84360FFF25246A28009FF4BF /* PostDetailView.swift */,
+				84FB37102525622000B8581F /* ExceptionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 				84411A252523331D00AE31D8 /* BoundTracking.swift in Sources */,
 				844119FD2522E80500AE31D8 /* EdgeInsetsExtension.swift in Sources */,
 				845DB4BA252369950019C29B /* StrokeBorderStyle.swift in Sources */,
+				84FB37112525622000B8581F /* ExceptionView.swift in Sources */,
 				845DB4D4252386390019C29B /* ZoomableScroolView.swift in Sources */,
 				8414F25B2521A1B1003CF799 /* IntExension.swift in Sources */,
 				84AA95F3251B453F0029BB1E /* Profile.swift in Sources */,

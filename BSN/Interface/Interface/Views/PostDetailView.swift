@@ -9,41 +9,57 @@ import SwiftUI
 
 struct PostDetailView: View {
     
-    @StateObject private var viewModel: PostDetailViewModel
+    @ObservedObject private var viewModel: PostDetailViewModel
     
     @State private var presentPhoto: Bool = false
     
     @Environment(\.presentationMode) var presentationMode
     
     init(post: NewsFeed) {
-        self._viewModel = StateObject(wrappedValue: PostDetailViewModel(post: post))
+        viewModel = PostDetailViewModel(post: post)
+    }
+    
+    init(postID: String) {
+        viewModel = PostDetailViewModel(postID: postID)
+        viewModel.fetchPost(by: postID) { (result) in
+            print("did fetch post")
+        }
     }
     
     var body: some View {
         VStack {
-            ScrollView(.vertical) {
-                // Main post
-                NewsFeedCard(model: viewModel.post, isDetail: true, didTapPhoto: {
-                    presentPhoto.toggle()
-                })
-                
-                Separator()
-                
-                // List comments
-                
-                ForEach(1..<3) { _ in
-                    CommentCard(comment: Comment())
+            if viewModel.isLoading {
+                Loading()
+            } else {
+                if viewModel.post != nil {
+                    ScrollView(.vertical) {
+                        // Main post
+                        NewsFeedCard(model: viewModel.post!, isDetail: true, didTapPhoto: {
+                            presentPhoto.toggle()
+                        })
+                        
+                        Separator()
+                        
+                        // List comments
+                        
+                        ForEach(1..<3) { _ in
+                            CommentCard(comment: Comment())
+                        }
+                        
+                        Spacer()
+                    }
+                } else {
+                    ExceptionView(sign: "exclamationmark.circle", message: "Bài viết đã bị gỡ bỏ!")
                 }
-                
-                Spacer()
             }
+            
         }
         .navigationBarTitle("Bình luận", displayMode: .inline)
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
         .fullScreenCover(isPresented: $presentPhoto) {
-            ViewFullPhoto(newFeed: viewModel.post)
+            ViewFullPhoto(newFeed: viewModel.post!)
         }
     }
     

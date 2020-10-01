@@ -19,7 +19,10 @@ struct NewsFeedCard: View {
     
     var body: some View {
         VStack {
-            NavigationLink(destination: PostDetailView(post: model), tag: 1, selection: $action) {
+//            NavigationLink(destination: PostDetailView(post: model), tag: 1, selection: $action) {
+//                EmptyView()
+//            }
+            NavigationLink(destination: PostDetailView(postID: "HEHE"), tag: 1, selection: $action) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)
@@ -105,8 +108,8 @@ struct NewsFeedCard: View {
             // Break heart
             StickyImageButton(normal: "bolt.heart",
                               active: "bolt.heart.fill",
-                              color: .init(hex: 0x34495e)) { (isHeart) in
-                print("did request heart: \(isHeart)")
+                              color: .init(hex: 0x34495e)) { (isHeartBreak) in
+                print("did request heart: \(isHeartBreak)")
             }
             
             Text(model.numBeakHeart.description)
@@ -115,8 +118,8 @@ struct NewsFeedCard: View {
             // Comment
             StickyImageButton(normal: "bubble.left",
                               active: "bubble.left.fill",
-                              color: .black) { (isHeart) in
-                print("did request comment: \(isHeart)")
+                              color: .black) { (isComment) in
+                print("did request comment: \(isComment)")
                 action = 1
             }
             .disabled(isDetail)
