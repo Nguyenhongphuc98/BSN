@@ -23,6 +23,10 @@ public class User {
         avatar = randomAvatar()
         gender = .male
     }
+    
+    func isCurrentUser() -> Bool {
+        return self.username == RootViewModel.shared.currentUser.username
+    }
 }
 
 public enum Gender {

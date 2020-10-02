@@ -73,3 +73,14 @@ func randomAvatar() -> String {
 
 
 let fakeNotifies = [Notify(), Notify(), Notify(), Notify(), Notify(), Notify(), Notify(), Notify(), Notify(), Notify()]
+
+let fakeMessages = ["Thanks so much for reaching out! What brings you to [website] today?",
+                    "Hi there, how can we help you today?",
+                    "Once your lead has reached this stage of the sales funnel, they’re in the process of trying to figure out whether or not to do business with you.",
+                    "While they’re aware of the problems they have and the solutions you present",
+                    "Ok"]
+
+func randomMessage() -> String {
+    let name = fakeMessages[Int.random(in: 0...4)]
+    return name
+}

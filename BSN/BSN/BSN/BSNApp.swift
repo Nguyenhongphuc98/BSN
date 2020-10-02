@@ -20,7 +20,6 @@ struct BSNApp: App {
             NavigationView {
                 TabView(selection: $viewModel.selectedIndex) {
                     NewsFeedView()
-                        .environmentObject(viewModel)
                         .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .news) }
                         .tag(0)
                     
@@ -28,7 +27,7 @@ struct BSNApp: App {
                         .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .search) }
                         .tag(1)
                     
-                    ProfileView()
+                    ChatView()
                         .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .chat) }
                         .tag(2)
                     
@@ -40,6 +39,10 @@ struct BSNApp: App {
                         .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .profile) }
                         .tag(4)
                 }
+                .environmentObject(viewModel)
+                .navigationBarHidden(false)
+                .navigationBarItems(trailing: viewModel.navBarTrailingItems)
+                .navigationBarTitle(viewModel.navBarTitle, displayMode: .inline)
             }
         }
         .onChange(of: phase) { newPhase in

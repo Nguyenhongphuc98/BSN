@@ -19,11 +19,17 @@ public class RootViewModel: ObservableObject {
     
     @Published public var currentUser: User
     
+    @Published public var navBarTitle: LocalizedStringKey
+    
+    @Published public var navBarTrailingItems: AnyView
+    
     public init() {
         self.selectedIndex = 0
         self.logined = true
         self.currentAccount = Account()
         self.currentUser = User()
+        self.navBarTitle = "SEB"
+        self.navBarTrailingItems = .init(EmptyView())
         print("did init root with user: \(currentUser.displayname)")
     }
 }

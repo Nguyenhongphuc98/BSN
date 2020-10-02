@@ -55,7 +55,7 @@ public struct NewsFeedView: View {
                 Loading()
             }
         }
-        .navigationTitle(Text("NewsFeed"))
+        .navigationBarTitle(Text("NewsFeed"))
         .navigationBarHidden(true)
     }
     

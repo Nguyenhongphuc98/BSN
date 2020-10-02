@@ -36,7 +36,7 @@ struct CommentCard: View {
                             Text(showSubcomments ? "  Ẩn trả lời" : "  Xem trả lời").foregroundColor(._primary).bold()
                     } else {
                         Text(model.content)
-                            .fixedSize(horizontal: false, vertical: false)
+                            //.fixedSize(horizontal: true, vertical: false)
                     }
                 }
                 .onTapGesture {
@@ -57,7 +57,7 @@ struct CommentCard: View {
             }
             .padding(.trailing, 10)
             .font(.custom("Roboto-Light", size: 13))
-            .fixedSize(horizontal: false, vertical: false)
+            .fixedSize(horizontal: false, vertical: true)
             
             
             // Just seperator between first level
@@ -83,7 +83,7 @@ struct CommentCard: View {
             
             Spacer()
             
-            if model.owner.username == RootViewModel.shared.currentUser.username {
+            if model.owner.isCurrentUser() {
                 Menu {
                     Button {
                         pdViewModel.didDeleteComment(comment: model) { (success) in
@@ -96,11 +96,6 @@ struct CommentCard: View {
                 label: {
                     // More button
                     Image(systemName: "ellipsis")
-//                    StickyImageButton(normal: "ellipsis",
-//                                      active: "ellipsis.rectangle.fill",
-//                                      color: .black) { (isMore) in
-//                        print("did request more: \(isMore)")
-//                    }
                     .padding(.bottom)
                     .padding(.trailing)
                 }
