@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - Quote Editor
 struct QuoteEditor: View {
     
     @Binding var message: String
@@ -32,6 +33,7 @@ struct QuoteEditor_Previews: PreviewProvider {
     }
 }
 
+// MARK: - Core Editor
 struct EditorWithPlaceHolder: View {
     
     @Binding var text: String

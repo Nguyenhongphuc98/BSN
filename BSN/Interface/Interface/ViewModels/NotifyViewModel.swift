@@ -34,4 +34,9 @@ class NotifyViewModel: ObservableObject {
             }
         }
     }
+    
+    func notifyDidReaded(notify: Notify) {
+        notify.seen = true
+        // request to server
+    }
 }

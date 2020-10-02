@@ -24,5 +24,6 @@ public class RootViewModel: ObservableObject {
         self.logined = true
         self.currentAccount = Account()
         self.currentUser = User()
+        print("did init root with user: \(currentUser.displayname)")
     }
 }

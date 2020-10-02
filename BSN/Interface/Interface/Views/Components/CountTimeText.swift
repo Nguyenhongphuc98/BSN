@@ -18,14 +18,7 @@ class CountTimeModel: ObservableObject {
     
     init(date: Date) {
         self.date = date
-        self.displayText = "5 seconds"
-        
-//        assignCancellable = Timer.publish(every: 1.0, on: .main, in: .default)
-//                    .autoconnect()
-//                    .map { String(describing: $0) }
-//                    .assign(to: \CountTimeModel.displayText, on: self)
-        
-//        print("delta \(date.timeIntervalSinceNow.stringTime)")
+        self.displayText = "caculating"
         caculateDisplay()
     }
     
@@ -42,7 +35,7 @@ class CountTimeModel: ObservableObject {
             displayText = "\(interval.hours) giờ trước"
         } else if interval.minutes != 0 {
             displayText = "\(interval.minutes) phút trước"
-        } else if interval.days != 0 {
+        } else {
             displayText = "vừa xong"
         }
     }

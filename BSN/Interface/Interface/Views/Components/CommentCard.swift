@@ -13,65 +13,107 @@ struct CommentCard: View {
     
     @State private var showSubcomments: Bool = false
     
-    // 0 - cmt, 1- subcmt
-    var level: Int = 0
+    // Reply in subcomment of 'Comment' and who be reppled is 'String'
+    var didRequestReply: ((Comment, String) -> Void)?
     
     var body: some View {
         VStack {
-            // Header
-            HStack {
-                CircleImage(image: model.owner.avatar, diameter: 30)
-                
-                VStack(alignment: .leading) {
-                    Text(model.owner.displayname)
-                        .font(.custom("Roboto-Bold", size: 13))
-                    
-                    CountTimeText(date: model.commentDate)
-                }
-                
-                Spacer()
-            }
+            header
             
             // Content
-            VStack {
-                if level == 0 {
+            VStack(alignment: .leading) {
+                // Expand box to fit width screen
+                expanseW
+                
+                // Allow expan comment if first level
+                // If it have subcomments
+                if model.level == 0 && model.subcomments != nil {
                     Text(model.content)
                         +
                         Text(showSubcomments ? "  Ẩn trả lời" : "  Xem trả lời").foregroundColor(._primary).bold()
                 } else {
                     Text(model.content)
+                        .fixedSize(horizontal: false, vertical: false)
                 }
                 
-                if showSubcomments {
-                    if model.subcomments != nil {
-                        VStack {
-                            ForEach(model.subcomments!) { subc in
-                                CommentCard(model: subc, level: 1)
-                            }
-                        }
-                    } else {
-                        Text("Chưa có câu trả lời nào, hãy là người đầu tiên để lại bình luận")
-                            .robotoLight(size: 13)
-                    }
-                    
+                replyButton
+                
+                if showSubcomments && model.subcomments != nil {
+                    subcomments
                 }
             }
+            .padding(.trailing, 10)
             .font(.custom("Roboto-Light", size: 13))
             .fixedSize(horizontal: false, vertical: false)
             .onTapGesture {
+                // Just first level can expanse
                 print("did tap")
-                withAnimation {
-                    self.showSubcomments.toggle()
+                if model.level == 0 {
+                    withAnimation {
+                        self.showSubcomments.toggle()
+                    }
                 }
             }
             
-            if level == 0 {
-                Separator(color: .init(hex: 0xECE7E7), height: 2)
-                    .padding(.leading, 5)
+            // Just seperator between first level
+            if model.level == 0 {
+                seperator
             }
         }
-        .padding(.leading, 30).padding(.top, 20)
+        .padding(.leading, 30)
         .background(Color.white)
+    }
+    
+    var header: some View {
+        // Header
+        HStack {
+            CircleImage(image: model.owner.avatar, diameter: 30)
+            
+            VStack(alignment: .leading) {
+                Text(model.owner.displayname)
+                    .font(.custom("Roboto-Bold", size: 13))
+                
+                CountTimeText(date: model.commentDate)
+            }
+            
+            Spacer()
+        }
+    }
+    
+    var expanseW: some View {
+        HStack {
+            Spacer()
+        }
+    }
+    
+    var subcomments: some View {
+        VStack {
+            ForEach(model.subcomments!) { subc in
+                CommentCard(model: subc) { _, n in
+                    didRequestReply?(model, n)
+                }.id(UUID())
+            }
+        }
+    }
+    
+    var replyButton: some View {
+        HStack {
+            Button(action: {
+                didRequestReply?(model, model.owner.displayname)
+            }, label: {
+                Text("Trả lời")
+                    .robotoBold(size: 13)
+                    .foregroundColor(._secondary)
+            })
+            .padding(0)
+            
+            Spacer()
+        }
+    }
+    
+    var seperator: some View {
+        Separator(color: .init(hex: 0xECE7E7), height: 2)
+            .padding(.leading, 5)
     }
 }
 

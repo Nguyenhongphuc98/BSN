@@ -22,6 +22,7 @@ public struct NotifyView: View {
                 ForEach(viewModel.notifies) { notify in
                     VStack {
                         NotifyCard(model: notify)
+                            .environmentObject(viewModel)
                         .onAppear(perform: {
                             self.viewModel.loadMoreIfNeeded(item: notify)
                         })

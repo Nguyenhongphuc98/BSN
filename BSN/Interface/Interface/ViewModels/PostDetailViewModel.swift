@@ -15,27 +15,102 @@ class PostDetailViewModel: ObservableObject {
     
     @Published var post: NewsFeed?
     
+    @Published var comments: [Comment]?
+    
+    // The comment will hold new subcomment
+    @Published var replingComment: Comment = Comment(dummy: true)
+    
+    // the name of user be commented
+    @Published var replingName: String
+    
+    private var neededFetchPost: Bool
+    
     init(post: NewsFeed) {
         self.isLoading = false
         self.post = post
         self.postID = post.id
+        self.replingName = ""
+        self.neededFetchPost = true
     }
     
     init(postID: String) {
         self.isLoading = true
         self.postID = postID
+        self.replingName = ""
+        self.neededFetchPost = true
+    }
+    
+    init() {
+        self.isLoading = true
+        self.postID = ""
+        self.replingName = ""
+        self.neededFetchPost = true
+        print("Did iit post detail viewModel")
     }
     
     func fetchPost(by id: String, complete: @escaping (Bool) -> Void) {
-        self.isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-            if Int.random(in: 0..<2) == 1 {
-                self.post = NewsFeed()
-            }
-            complete(false)
+        if neededFetchPost {
+            self.neededFetchPost = false
+            self.isLoading = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                if Int.random(in: 0..<4) != 1 {
+                    self.post = NewsFeed()
+                    self.comments = [Comment(), Comment()]
+                }
+                complete(false)
+                withAnimation {
+                    self.isLoading = false
+                }
+            })
+        }
+    }
+    
+    func didComment(message: String, complete: @escaping (Bool) -> Void) {
+        
+        let newLevel = replingComment.isDummy() ? 0 : 1
+        let parent = replingComment.isDummy() ? postID : replingComment.id
+        let finalMessage = newLevel == 0 ? message : "(\(replingName)) - " + message
+        let newComment = Comment(
+            parent: parent,
+            owner: RootViewModel.shared.currentUser,
+            content: finalMessage,
+            level: newLevel
+        )
+        
+        // Comment on post
+        if  newLevel == 0 {
+            
             withAnimation {
-                self.isLoading = false
+                if comments == nil {
+                    comments = [newComment]
+                } else {
+                    // Newest comment lv0 will be in top
+                    self.comments?.insert(newComment, at: 0)
+                }
             }
-        })
+            
+            // To-Do
+            // Call Busseness push cmt to server
+        } else {
+            
+            // On comment
+            withAnimation {
+                if replingComment.subcomments == nil {
+                    replingComment.subcomments = [newComment]
+                } else {
+                    // Newest comment lv1 will be in bottom
+                    replingComment.subcomments?.append(newComment)
+                }
+            }
+            
+            // To-Do
+            // Call Busseness push cmt to server
+        }
+        
+        complete(true)
+        
+//        for cmt in comments! {
+//            print("item: - \(cmt.owner.displayname) - \(cmt.content)")
+//        }
     }
 }

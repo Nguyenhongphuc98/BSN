@@ -13,6 +13,8 @@ struct NotifyCard: View {
     
     @State private var action: Int? = 0
     
+    @EnvironmentObject var viewModel: NotifyViewModel
+    
     private var icon: String {
         
         switch model.action {
@@ -69,7 +71,7 @@ struct NotifyCard: View {
                 Spacer()
                 
                 Image(systemName: icon)
-                    .foregroundColor(model.seen ? .gray : .black)
+                    .foregroundColor(model.seen ? .gray : ._primary)
                     .padding(.horizontal, 10)
             }
             
@@ -86,7 +88,7 @@ struct NotifyCard: View {
         }
         .onTapGesture {
             action = 1
-            model.seen = true
+            viewModel.notifyDidReaded(notify: model)
         }
     }
 }
