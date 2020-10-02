@@ -15,8 +15,16 @@ struct InChatView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
+    @State var goProfile: Int? = 0
+    
     var body: some View {
         ZStack(alignment: .bottom) {
+            NavigationLink(destination: ProfileView(), tag: 1, selection: $goProfile) {
+                EmptyView()
+            }
+            .frame(width: 0, height: 0)
+            .opacity(0)
+            
             VStack {
                 Separator(color: .white, height: 2)
                 
@@ -39,6 +47,7 @@ struct InChatView: View {
                         }
                     }
                 }
+                .resignKeyboardOnDragGesture()
                 
                 Spacer()
             }
@@ -48,7 +57,7 @@ struct InChatView: View {
         }
         .navigationBarTitle(viewModel.partner.displayname, displayMode: .inline)
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: backButton)
+        .navigationBarItems(leading: backButton, trailing: profileButton)
     }
     
     var backButton: some View {
@@ -57,6 +66,14 @@ struct InChatView: View {
         } label: {
             Image(systemName: "chevron.backward")
                 .foregroundColor(.gray)
+        }
+    }
+    
+    var profileButton: some View {
+        Button {
+            goProfile = 1
+        } label: {
+            CircleImage(image: viewModel.partner.avatar, diameter: 20)
         }
     }
     
