@@ -91,41 +91,45 @@ struct PostDetailView: View {
                             viewModel.replingName = name
                         }
                     }
+                    .environmentObject(viewModel)
                 }
                 
                 Spacer()
             }
             .padding(.bottom, 60)
             
-            VStack(spacing: 1) {
-                if !viewModel.replingComment.isDummy() {
-                HStack(spacing: 0) {
-                    Text("Bạn đang trả lời \(viewModel.replingName)...")
-                        .foregroundColor(._primary)
-                        .robotoLightItalic(size: 15)
-                        .background(Color.init(hex: 0xDCDCDC))
-                        
-                    Button(action: {
-                        // force to replace and emit signal to know we clear reply cmt
-                        viewModel.replingComment = Comment(dummy: true)
-                    }, label: {
-                        Image(systemName: "xmark")
-                    })
-                    .padding(2)
+            commentBox
+        }
+    }
+    
+    var commentBox: some View {
+        VStack(spacing: 1) {
+            if !viewModel.replingComment.isDummy() {
+            HStack(spacing: 0) {
+                Text("Bạn đang trả lời \(viewModel.replingName)...")
+                    .foregroundColor(._primary)
+                    .robotoLightItalic(size: 15)
                     .background(Color.init(hex: 0xDCDCDC))
                     
-                    Spacer()
-                }
-                }
+                Button(action: {
+                    // force to replace and emit signal to know we clear reply cmt
+                    viewModel.replingComment = Comment(dummy: true)
+                }, label: {
+                    Image(systemName: "xmark")
+                })
+                .padding(2)
+                .background(Color.init(hex: 0xDCDCDC))
                 
-                CoreMessageEditor(placeHolder: "Nhập bình luận") { (message) in
-                    viewModel.didComment(message: message) { (success) in
-                        print("Did comment: \(message) - \(success)")
-                    }
+                Spacer()
+            }
+            }
+            
+            CoreMessageEditor(placeHolder: "Nhập bình luận") { (message) in
+                viewModel.didComment(message: message) { (success) in
+                    print("Did comment: \(message) - \(success)")
                 }
             }
         }
-        
     }
 }
 

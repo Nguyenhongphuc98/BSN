@@ -113,4 +113,21 @@ class PostDetailViewModel: ObservableObject {
 //            print("item: - \(cmt.owner.displayname) - \(cmt.content)")
 //        }
     }
+    
+    func didDeleteComment(comment: Comment, complete: @escaping (Bool) -> Void) {
+        // first level
+        let id = comment.level == 0 ? comment.id : comment.parent
+        let foundCommentIndex = comments?.firstIndex(where: { $0.id == id })
+        if comment.level == 0 {
+            comments?.remove(at: foundCommentIndex!)
+        } else {
+            let foundSubIndex = comments?[foundCommentIndex!].subcomments?.firstIndex(where: { $0.id == comment.id })
+            comments?[foundCommentIndex!].subcomments?.remove(at: foundSubIndex!)
+        }
+        
+        // To- Do
+        // Call business to update data
+        
+        complete(true)
+    }
 }

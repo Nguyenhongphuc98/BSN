@@ -13,6 +13,8 @@ struct CommentCard: View {
     
     @State private var showSubcomments: Bool = false
     
+    @EnvironmentObject var pdViewModel: PostDetailViewModel
+    
     // Reply in subcomment of 'Comment' and who be reppled is 'String'
     var didRequestReply: ((Comment, String) -> Void)?
     
@@ -25,15 +27,26 @@ struct CommentCard: View {
                 // Expand box to fit width screen
                 expanseW
                 
-                // Allow expan comment if first level
-                // If it have subcomments
-                if model.level == 0 && model.subcomments != nil {
-                    Text(model.content)
-                        +
-                        Text(showSubcomments ? "  Ẩn trả lời" : "  Xem trả lời").foregroundColor(._primary).bold()
-                } else {
-                    Text(model.content)
-                        .fixedSize(horizontal: false, vertical: false)
+                VStack {
+                    // Allow expan comment if first level
+                    // If it have subcomments
+                    if model.level == 0 && model.subcomments != nil {
+                        Text(model.content)
+                            +
+                            Text(showSubcomments ? "  Ẩn trả lời" : "  Xem trả lời").foregroundColor(._primary).bold()
+                    } else {
+                        Text(model.content)
+                            .fixedSize(horizontal: false, vertical: false)
+                    }
+                }
+                .onTapGesture {
+                    // Just first level can expanse
+                    print("did tap")
+                    if model.level == 0 {
+                        withAnimation {
+                            self.showSubcomments.toggle()
+                        }
+                    }
                 }
                 
                 replyButton
@@ -45,15 +58,7 @@ struct CommentCard: View {
             .padding(.trailing, 10)
             .font(.custom("Roboto-Light", size: 13))
             .fixedSize(horizontal: false, vertical: false)
-            .onTapGesture {
-                // Just first level can expanse
-                print("did tap")
-                if model.level == 0 {
-                    withAnimation {
-                        self.showSubcomments.toggle()
-                    }
-                }
-            }
+            
             
             // Just seperator between first level
             if model.level == 0 {
@@ -77,6 +82,29 @@ struct CommentCard: View {
             }
             
             Spacer()
+            
+            if model.owner.username == RootViewModel.shared.currentUser.username {
+                Menu {
+                    Button {
+                        pdViewModel.didDeleteComment(comment: model) { (success) in
+                            print("did delete cmt: \(success)")
+                        }
+                    } label: {
+                        Text("Xoá bình luận")
+                    }
+                }
+                label: {
+                    // More button
+                    Image(systemName: "ellipsis")
+//                    StickyImageButton(normal: "ellipsis",
+//                                      active: "ellipsis.rectangle.fill",
+//                                      color: .black) { (isMore) in
+//                        print("did request more: \(isMore)")
+//                    }
+                    .padding(.bottom)
+                    .padding(.trailing)
+                }
+            }
         }
     }
     

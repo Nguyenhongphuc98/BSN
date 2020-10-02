@@ -18,7 +18,7 @@ public class User {
     public var gender: Gender
 
     public init() {
-        username = "phucnh@gmail.com"
+        username = UUID().uuidString
         displayname = randomName()
         avatar = randomAvatar()
         gender = .male

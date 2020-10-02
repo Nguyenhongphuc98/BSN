@@ -53,8 +53,8 @@ struct NewsFeedCard: View {
                 // More button
                 StickyImageButton(normal: "ellipsis",
                                   active: "ellipsis.rectangle.fill",
-                                  color: .black) { (isHeart) in
-                    print("did request more: \(isHeart)")
+                                  color: .black) { (isMore) in
+                    print("did request more: \(isMore)")
                 }
                 .padding(.bottom)
             }
