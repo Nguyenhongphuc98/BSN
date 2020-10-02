@@ -18,6 +18,15 @@ enum MessageStatus {
     case seen
 }
 
+enum MessageType {
+    
+    case sticker
+    
+    case text
+    
+    case photo
+}
+
 // MARK: - Message model
 class Message: ObservableObject, Identifiable {
     
@@ -31,14 +40,32 @@ class Message: ObservableObject, Identifiable {
     
     var content: String
     
+    var type: MessageType
+    
     var status: MessageStatus
     
     init() {
         id = UUID().uuidString
-        sender = User()
+        sender =  Int.random(in: 0..<2) == 0 ? User() : RootViewModel.shared.currentUser
+        
         receiver = RootViewModel.shared.currentUser
         createDate = randomDate()
         content = randomMessage()
         status = .received
+        type = .text
+    }
+    
+    init(sender: User, receiver: User, content: String, status: MessageStatus = .notsent, type: MessageType) {
+        id = UUID().uuidString
+        self.sender =  sender
+        self.receiver = receiver
+        self.createDate = Date()
+        self.content = content
+        self.status = status
+        self.type = type
+    }
+    
+    func isSendByMe() -> Bool {
+        sender.username == RootViewModel.shared.currentUser.username
     }
 }

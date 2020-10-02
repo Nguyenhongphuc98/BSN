@@ -68,6 +68,8 @@ struct EditorWithPlaceHolder: View {
                     .padding(.top, 6)
             }
         }
+        .padding(.leading, 10)
+        .background(Color.white)
     }
 }
 

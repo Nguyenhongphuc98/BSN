@@ -17,13 +17,12 @@ struct CoreMessageEditor: View {
     
     var body: some View {
         HStack {
-            EditorWithPlaceHolder(text: $message, placeHolder: placeHolder)
+            EditorWithPlaceHolder(text: $message, placeHolder: placeHolder, font: "Roboto-LightItalic")
                 .frame(height: 40)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .clipped()
                 .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.gray))
                 .padding(.vertical, 3)
-                .padding(.leading)
             
             Button(action: {
                 didEnter?(message)
@@ -36,7 +35,7 @@ struct CoreMessageEditor: View {
                     .padding()
             })
         }
-        .background(Color.init(hex: 0xDCDCDC))
+        .background(Color._receiveMessage)
     }
 }
 

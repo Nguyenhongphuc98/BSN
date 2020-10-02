@@ -17,6 +17,10 @@ public extension Color {
     static var _online: Color = Color(hex: 0x15A8FB)
     
     static var _normalButton: Color = Color(hex: 0xF3F3F3)
+    
+    static var _receiveMessage: Color = Color(hex: 0xEBEBEB)
+    
+    static var _sendMessage: Color = Color(hex: 0x25AFFD)
 }
 
 // MARK: - init method

@@ -23,6 +23,8 @@ public class RootViewModel: ObservableObject {
     
     @Published public var navBarTrailingItems: AnyView
     
+    @Published public var navBarLeadingItems: AnyView
+    
     public init() {
         self.selectedIndex = 0
         self.logined = true
@@ -30,6 +32,7 @@ public class RootViewModel: ObservableObject {
         self.currentUser = User()
         self.navBarTitle = "SEB"
         self.navBarTrailingItems = .init(EmptyView())
+        self.navBarLeadingItems = .init(EmptyView())
         print("did init root with user: \(currentUser.displayname)")
     }
 }

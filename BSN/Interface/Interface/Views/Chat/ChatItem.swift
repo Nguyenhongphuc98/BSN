@@ -16,7 +16,7 @@ struct ChatItem: View {
     
     var body: some View {
         HStack {
-            NavigationLink(destination: Text("detail message").navigationTitle("hehe"), tag: 1, selection: $action) {
+            NavigationLink(destination: InChatView(), tag: 1, selection: $action) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)
