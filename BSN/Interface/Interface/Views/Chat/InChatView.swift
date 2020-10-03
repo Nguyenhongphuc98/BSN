@@ -13,51 +13,63 @@ struct InChatView: View {
     
     @EnvironmentObject var root: RootViewModel
     
+    @EnvironmentObject var partner: User
+    
     @Environment(\.presentationMode) var presentationMode
     
     @State var goProfile: Int? = 0
-    
+
     var body: some View {
         ZStack(alignment: .bottom) {
-            NavigationLink(destination: ProfileView(), tag: 1, selection: $goProfile) {
-                EmptyView()
-            }
-            .frame(width: 0, height: 0)
-            .opacity(0)
-            
-            VStack {
-                Separator(color: .white, height: 2)
+            if !viewModel.isLoading {
+                NavigationLink(destination: ProfileView(), tag: 1, selection: $goProfile) {
+                    EmptyView()
+                }
+                .frame(width: 0, height: 0)
+                .opacity(0)
                 
-                ScrollView {
-                    ScrollViewReader { value in
-                        LazyVStack {
-                            ForEach(viewModel.messages) { message in
-                                MessageItem(message: message)
-                                    .id(message.id)
+                VStack {
+                    Separator(color: .white, height: 2)
+                    
+                    ScrollView {
+                        ScrollViewReader { value in
+                            LazyVStack {
+                                ForEach(viewModel.messages) { message in
+                                    MessageItem(message: message)
+                                        .id(message.id)
+                                }
                             }
-                        }
-                        .onAppear {
-                            
-                            value.scrollTo(viewModel.messages.last!.id)
-                            viewModel.didSend = {
-                                withAnimation {
-                                    value.scrollTo(viewModel.messages.last!.id)
+                            .onAppear {
+                                
+                                value.scrollTo(viewModel.messages.last!.id)
+                                viewModel.didSend = {
+                                    withAnimation {
+                                        value.scrollTo(viewModel.messages.last!.id)
+                                    }
                                 }
                             }
                         }
                     }
+                    .resignKeyboardOnDragGesture()
+                    
+                    Spacer()
                 }
-                .resignKeyboardOnDragGesture()
-                
-                Spacer()
+                .padding(.bottom, 60)
             }
-            .padding(.bottom, 60)
             
-            editorBox
+            VStack {
+                Spacer()
+                if viewModel.isLoading {
+                    Loading()
+                }
+                Spacer()
+                editorBox
+            }
         }
         .navigationBarTitle(viewModel.partner.displayname, displayMode: .inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton, trailing: profileButton)
+        .onAppear(perform: viewAppeard)
     }
     
     var backButton: some View {
@@ -106,6 +118,10 @@ struct InChatView: View {
             }
         }
         .background(Color._receiveMessage)
+    }
+    
+    func viewAppeard() {
+        viewModel.fetchData(partner: partner)
     }
 }
 

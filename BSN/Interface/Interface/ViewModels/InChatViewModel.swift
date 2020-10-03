@@ -13,12 +13,26 @@ class InChatViewModel: ObservableObject {
     
     @Published var partner: User
     
+    @Published var isLoading: Bool
+    
     // Did send new message
     var didSend: (() -> Void)?
     
     init() {
         messages = [Message(), Message(), Message(), Message(), Message(), Message(), Message(), Message(), Message()]
         partner = User()
+        isLoading = true
+        partner.displayname = "..."
+    }
+    
+    func fetchData(partner: User) {
+        self.isLoading = true
+        self.partner = partner
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            withAnimation {
+                self.isLoading = false
+            }
+        }
     }
     
     func didChat(message: String, complete: @escaping (Bool) -> Void) {

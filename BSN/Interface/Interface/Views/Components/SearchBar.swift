@@ -9,9 +9,11 @@ import SwiftUI
 
 struct SearchBar: View {
     
-    @State var showCancelButton: Bool = false
+    @Binding var isfocus: Bool
     
     @Binding var searchText: String
+    
+    var onchange: (() -> Void)?
     
     var body: some View {
         HStack {
@@ -20,10 +22,13 @@ struct SearchBar: View {
                 Image(systemName: "magnifyingglass")
                 
                 TextField("search", text: $searchText, onEditingChanged: { isEditing in
-                    self.showCancelButton = true
+                    withAnimation {
+                        self.isfocus = true
+                    }
                 }, onCommit: {
                     print("onCommit")
-                }).foregroundColor(.primary)
+                })
+                .foregroundColor(.primary)
                 
                 Button(action: {
                     self.searchText = ""
@@ -37,12 +42,12 @@ struct SearchBar: View {
             .cornerRadius(10.0)
             
             // Cancel button
-            if showCancelButton  {
+            if isfocus  {
                 Button("Huỷ") {
                     UIApplication.shared.endEditing(true) // this must be placed before the other commands here
                     withAnimation {
                         self.searchText = ""
-                        self.showCancelButton = false
+                        self.isfocus = false
                     }
                 }
             }

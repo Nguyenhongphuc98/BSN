@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class User {
+public class User: ObservableObject {
 
     public var username: String
 

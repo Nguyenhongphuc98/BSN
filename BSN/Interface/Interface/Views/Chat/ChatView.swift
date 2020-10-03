@@ -13,23 +13,57 @@ public struct ChatView: View {
     
     @EnvironmentObject var root: RootViewModel
     
+    @State var searchFound: Bool = false
+    
     public init() {
         
     }
     
     public var body: some View {
         VStack {
-            SearchBar(searchText: $viewModel.searchText)
-                .padding(.top, 10)
+            SearchBar(isfocus: $viewModel.isfocus, searchText: $viewModel.searchText)
+                .padding(.top, 20)
+                .onChange(of: viewModel.searchText) { _ in
+                    viewModel.searchChat { (success) in
+                        print("did search: \(success)")
+                        self.searchFound = success
+                    }
+                }
             
-            List {
-                ForEach(viewModel.chats) { c in
-                    ChatItem(message: c)
+            Group {
+                if viewModel.isfocus {
+                    if viewModel.isSearching {
+                        Loading()
+                            .padding(.top, 100)
+                    } else {
+                        ForEach(viewModel.searchChats) { c in
+                            SearchChatItem(message: c)
+                        }
+                        
+                        if !searchFound {
+                            Text("Không tìm thấy người dùng")
+                                .robotoLightItalic(size: 13)
+                                .foregroundColor(.gray)
+                                .padding()
+                        }
+                    }
+                } else {
+                    List {
+                        ForEach(viewModel.chats) { c in
+                            VStack {
+                                ChatItem(message: c)
+                                Separator(color: .white, height: 2)
+                            }
+                        }
+                    }
                 }
             }
             .resignKeyboardOnDragGesture()
+            
+            Spacer()
         }
         .onAppear(perform: viewAppeared)
+        .navigationBarHidden(viewModel.isfocus)
     }
     
     private var newChatButton: some View {
@@ -45,6 +79,7 @@ public struct ChatView: View {
     private func viewAppeared() {
         root.navBarTitle = "Nhắn tin"
         root.navBarTrailingItems = .init(newChatButton)
+        root.navBarHidden = viewModel.isfocus
     }
 }
 

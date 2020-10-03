@@ -40,7 +40,7 @@ struct BSNApp: App {
                         .tag(4)
                 }
                 .environmentObject(viewModel)
-                .navigationBarHidden(false)
+                .navigationBarHidden(viewModel.navBarHidden)
                 .navigationBarItems(trailing: viewModel.navBarTrailingItems)
                 .navigationBarTitle(viewModel.navBarTitle, displayMode: .inline)
             }

@@ -1,14 +1,13 @@
 //
-//  ChatItem.swift
+//  SearchChatItem.swift
 //  Interface
 //
-//  Created by Phucnh on 10/2/20.
+//  Created by Phucnh on 10/3/20.
 //
 
 import SwiftUI
 
-// The item that display as cell in ChatTab
-struct ChatItem: View {
+struct SearchChatItem: View {
     
     @ObservedObject var message: Message
     
@@ -24,29 +23,20 @@ struct ChatItem: View {
             
             CircleImage(image: message.sender.avatar, diameter: 45)
             
-            VStack(alignment: .leading) {
-                Text(message.sender.displayname)
-                    .robotoBold(size: 16)
-                
-                Text(message.content)
-                    .robotoBold(size: 14)
-                    .lineLimit(1)
-                    .foregroundColor(.init(hex: 0x6D6D6D))
-            }
+            Text(message.sender.displayname)
+                .robotoBold(size: 16)
             
             Spacer()
-            CountTimeText(date: message.createDate)
         }
-        .padding(.trailing)
-        .padding(.vertical, 5)
+        .padding(.horizontal)
         .onTapGesture {
             action = 1
         }
     }
 }
 
-struct ChatItem_Previews: PreviewProvider {
+struct SearchChatItem_Previews: PreviewProvider {
     static var previews: some View {
-        ChatItem(message: Message())
+        SearchChatItem(message: Message())
     }
 }
