@@ -25,8 +25,15 @@ struct MessageItem: View {
                 CircleImage(image: message.sender.avatar, diameter: 35)
             }
 
-            TextMessage(isMe: message.isSendByMe(), text: message.content)
-                //.frame(maxWidth: 300)
+            if message.type == .text {
+                TextMessage(isMe: message.isSendByMe(), text: message.content)
+            }
+            else if message.type == .sticker {
+                Image(message.sticker!, bundle: interfaceBundle)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 100)
+            }
 
             if !message.isSendByMe() {
                 Spacer()

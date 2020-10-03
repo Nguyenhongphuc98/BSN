@@ -27,6 +27,41 @@ enum MessageType {
     case photo
 }
 
+enum Sticker: String, CaseIterable {
+    
+    case bear
+    
+    case cat
+    
+    case chicken
+    
+    case circleFrog
+    
+    case elephant
+    
+    case frog
+    
+    case monkey
+    
+    case mouse
+    
+    case pig
+    
+    case polarBear
+    
+    case puppy
+    
+    case rabbit
+    
+    case rooster
+    
+    case sheep
+    
+    case squirrel
+    
+    case tiger
+}
+
 // MARK: - Message model
 class Message: ObservableObject, Identifiable {
     
@@ -44,6 +79,8 @@ class Message: ObservableObject, Identifiable {
     
     var status: MessageStatus
     
+    var sticker: String?
+    
     init() {
         id = UUID().uuidString
         sender =  Int.random(in: 0..<2) == 0 ? User() : RootViewModel.shared.currentUser
@@ -52,7 +89,14 @@ class Message: ObservableObject, Identifiable {
         createDate = randomDate()
         content = randomMessage()
         status = .received
-        type = .text
+        
+        if Int.random(in: 0..<2) == 0 {
+            type = .sticker
+            sticker = Sticker.allCases.randomElement()!.rawValue
+        } else {
+            type = .text
+        }
+        
     }
     
     init(sender: User, receiver: User, content: String, status: MessageStatus = .notsent, type: MessageType) {
