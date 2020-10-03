@@ -7,23 +7,25 @@
 
 import SwiftUI
 
-struct SearchChatItem: View {
+struct SearchUserItem: View {
     
-    @ObservedObject var message: Message
+    @ObservedObject var user: User
     
     @State private var action: Int? = 0
     
+    var didTap: (() -> Void)?
+    
     var body: some View {
         HStack {
-            NavigationLink(destination: InChatView().environmentObject(message.sender), tag: 1, selection: $action) {
+            NavigationLink(destination: InChatView().environmentObject(user), tag: 1, selection: $action) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)
             .opacity(0)
             
-            CircleImage(image: message.sender.avatar, diameter: 45)
+            CircleImage(image: user.avatar, diameter: 45)
             
-            Text(message.sender.displayname)
+            Text(user.displayname)
                 .robotoBold(size: 16)
             
             Spacer()
@@ -31,12 +33,13 @@ struct SearchChatItem: View {
         .padding(.horizontal)
         .onTapGesture {
             action = 1
+            didTap?()
         }
     }
 }
 
 struct SearchChatItem_Previews: PreviewProvider {
     static var previews: some View {
-        SearchChatItem(message: Message())
+        SearchUserItem(user: User())
     }
 }

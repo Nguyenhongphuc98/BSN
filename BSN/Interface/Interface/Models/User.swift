@@ -7,7 +7,9 @@
 
 import Foundation
 
-public class User: ObservableObject {
+public class User: ObservableObject, Identifiable {
+    
+    public var id: String
 
     public var username: String
 
@@ -18,14 +20,27 @@ public class User: ObservableObject {
     public var gender: Gender
 
     public init() {
+        id = UUID().uuidString
         username = UUID().uuidString
         displayname = randomName()
         avatar = randomAvatar()
         gender = .male
     }
     
+    public init(isDummy: Bool) {
+        id = "Dummy"
+        username = "Dummy"
+        displayname = "Dummy"
+        avatar = randomAvatar()
+        gender = .male
+    }
+    
     func isCurrentUser() -> Bool {
         return self.username == RootViewModel.shared.currentUser.username
+    }
+    
+    func isDummt() -> Bool {
+        id == "Dummy"
     }
 }
 

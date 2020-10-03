@@ -15,12 +15,25 @@ public struct ChatView: View {
     
     @State var searchFound: Bool = false
     
+    @State private var presentNewChat: Bool = false
+    
+    @State private var action: Int? = 0
+    
     public init() {
         
     }
     
     public var body: some View {
         VStack {
+            NavigationLink(
+                destination: InChatView().environmentObject(viewModel.selectedUserNewChat),
+                tag: 1,
+                selection: $action) {
+                EmptyView()
+            }
+            .frame(width: 0, height: 0)
+            .opacity(0)
+            
             SearchBar(isfocus: $viewModel.isfocus, searchText: $viewModel.searchText)
                 .padding(.top, 20)
                 .onChange(of: viewModel.searchText) { _ in
@@ -37,7 +50,7 @@ public struct ChatView: View {
                             .padding(.top, 100)
                     } else {
                         ForEach(viewModel.searchChats) { c in
-                            SearchChatItem(message: c)
+                            SearchUserItem(user: c.sender)
                         }
                         
                         if !searchFound {
@@ -49,9 +62,9 @@ public struct ChatView: View {
                     }
                 } else {
                     List {
-                        ForEach(viewModel.chats) { c in
+                        ForEach(viewModel.chats) { m in
                             VStack {
-                                ChatItem(message: c)
+                                ChatItem(message: m)
                                 Separator(color: .white, height: 2)
                             }
                         }
@@ -69,11 +82,18 @@ public struct ChatView: View {
     private var newChatButton: some View {
         Button(action: {
             print("did click add new chat")
+            presentNewChat = true
         }, label: {
             Image(systemName: "plus.bubble.fill")
                 .resizable()
                 .frame(width: 25, height: 25)
         })
+        .sheet(isPresented: $presentNewChat) {
+            NewChatView() { user in
+                viewModel.selectedUserNewChat = user
+                action = 1
+            }
+        }
     }
     
     private func viewAppeared() {

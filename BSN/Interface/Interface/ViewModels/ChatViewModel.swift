@@ -21,6 +21,8 @@ class ChatViewModel: ObservableObject {
     
     var processText: String
     
+    var selectedUserNewChat: User
+    
     init() {
         chats = [Message(), Message(), Message(), Message(), Message(), Message(), Message()]
         searchChats = []
@@ -28,6 +30,7 @@ class ChatViewModel: ObservableObject {
         isSearching = false
         isfocus = false
         processText = ""
+        selectedUserNewChat = User(isDummy: true)
     }
     
     func searchChat(complete: @escaping (Bool) -> Void) {
