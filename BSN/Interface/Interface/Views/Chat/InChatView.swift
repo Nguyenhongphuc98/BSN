@@ -72,10 +72,19 @@ struct InChatView: View {
 
                 //editorBox
                 RichMessageEditor(didChat: { (type, message) in
+                    
                     viewModel.didChat(type: type, content: message) { (success) in
                         print("did send: \(message) - \(success)")
                     }
-                }, didExpand: { expand, type in
+                }, didPickPhoto: { (data) in
+                    
+                    viewModel.photo = data
+                    viewModel.didChat(type: .photo) { (success) in
+                        print("did send photo :\(success)")
+                    }
+                }
+                , didExpand: { expand, type in
+                    
                     // Keyboard height (253) +  editText height (45) = 298
                     // Just need adapt sticker showing
                     if type == .sticker {

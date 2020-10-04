@@ -15,6 +15,8 @@ class InChatViewModel: ObservableObject {
     
     @Published var isLoading: Bool
     
+    @Published var photo: Data
+    
     // Did send new message
     // It's content should be force UI scroll to bottom
     var updateUIIfNeedes: (() -> Void)?
@@ -23,6 +25,7 @@ class InChatViewModel: ObservableObject {
         messages = [Message(), Message(), Message(), Message(), Message(), Message(), Message(), Message(), Message()]
         partner = User()
         isLoading = true
+        photo = Data()
         partner.displayname = "..."
     }
     
@@ -36,12 +39,16 @@ class InChatViewModel: ObservableObject {
         }
     }
     
-    func didChat(type:MessageType, content: String, complete: @escaping (Bool) -> Void) {
+    // if message type is photo. no need using content
+    func didChat(type:MessageType, content: String = "", complete: @escaping (Bool) -> Void) {
         
-        if type == .text {
+        switch type {
+        case .text:
             didChat(message: content, complete: complete)
-        } else {
+        case .sticker:
             didChat(sticker: content, complete: complete)
+        case .photo:
+            didChat(photo: self.photo, complete: complete)
         }
     }
     
@@ -64,6 +71,19 @@ class InChatViewModel: ObservableObject {
             receiver: partner,
             sticker: sticker,
             type: .sticker
+        )
+        
+        pushToUI(mess: newMessage)
+        
+        pushToServer(mess: newMessage, complete: complete)
+    }
+    
+    func didChat(photo: Data, complete: @escaping (Bool) -> Void) {
+        let newMessage = Message(
+            sender: RootViewModel.shared.currentUser,
+            receiver: partner,
+            photo: photo,
+            type: .photo
         )
         
         pushToUI(mess: newMessage)

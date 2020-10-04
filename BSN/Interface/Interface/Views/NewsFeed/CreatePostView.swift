@@ -83,7 +83,9 @@ struct CreatePostView: View {
                     }
                     .buttonStyle(StrokeBorderStyle())
                     .sheet(isPresented: $showPhotoPicker) {
-                        ImagePicker(picker: $showPhotoPicker, img_Data: $viewModel.photo)
+                        ImagePicker(picker: $showPhotoPicker) { data in
+                            viewModel.photo = data
+                        }
                     }
                 }
                 
@@ -141,7 +143,7 @@ struct CreatePostView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 170, height: 120)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                        .cornerRadius(5)
                     
                     Button(action: {
                         self.viewModel.photo = Data()

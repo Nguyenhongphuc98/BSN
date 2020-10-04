@@ -17,9 +17,13 @@ struct RichMessageEditor: View {
     
     var didChat: ((MessageType, String) -> Void)?
     
+    var didPickPhoto: ((Data) -> Void)?
+    
     var didExpand: ((Bool, EditorExpandType) -> Void)?
     
     @State var showStickersBar: Bool = false
+    
+    @State var showImagePicker: Bool = false
     
     @EnvironmentObject var root: RootViewModel
     
@@ -29,7 +33,7 @@ struct RichMessageEditor: View {
         VStack(spacing: 0) {
             HStack {
                 Button(action: {
-                    
+                    showImagePicker.toggle()
                 }, label: {
                     Image(systemName: "photo.fill")
                         .resizable()
@@ -65,18 +69,25 @@ struct RichMessageEditor: View {
             }
         }
         .animation(.easeIn)
-        .onAppear(perform: {
-            root.$keyboardHeight
-                .sink { (height) in
-                    if height != 0 {
-                        showStickersBar = false
-                        didExpand?(true, .keyboard)
-                    } else {
-                        didExpand?(showStickersBar, .sticker)
-                    }
+        .onAppear(perform: viewAppeared)
+        .sheet(isPresented: $showImagePicker) {
+            ImagePicker(picker: $showImagePicker) { data in
+                didPickPhoto?(data)
+            }
+        }
+    }
+    
+    private func viewAppeared() {
+        root.$keyboardHeight
+            .sink { (height) in
+                if height != 0 {
+                    showStickersBar = false
+                    didExpand?(true, .keyboard)
+                } else {
+                    didExpand?(showStickersBar, .sticker)
                 }
-                .store(in: &cancellables)
-        })
+            }
+            .store(in: &cancellables)
     }
 }
 

@@ -38,13 +38,15 @@ class Message: ObservableObject, Identifiable {
     
     var createDate: Date
     
-    var content: String?
-    
     var type: MessageType
     
     var status: MessageStatus
     
+    var content: String?
+    
     var sticker: String?
+    
+    var photo: Data?
     
     init() {
         id = UUID().uuidString
@@ -81,6 +83,11 @@ class Message: ObservableObject, Identifiable {
     convenience init(sender: User, receiver: User, sticker: String, status: MessageStatus = .notsent, type: MessageType) {
         self.init(sender: sender, receiver: receiver, status: status, type: type)
         self.sticker = sticker
+    }
+    
+    convenience init(sender: User, receiver: User, photo: Data, status: MessageStatus = .notsent, type: MessageType) {
+        self.init(sender: sender, receiver: receiver, status: status, type: type)
+        self.photo = photo
     }
     
     func isSendByMe() -> Bool {

@@ -12,14 +12,12 @@ struct MessageItem: View {
     
     @StateObject var message: Message
     
+    @State private var presentViewFull: Bool = false
+    
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
             if message.isSendByMe() {
-                Rectangle()
-                    .fill(Color.clear)
-                    .frame(width: 30)
-                    .layoutPriority(-1)
-                Spacer()
+                Spacer(minLength: 50)
                
             } else {
                 CircleImage(image: message.sender.avatar, diameter: 35)
@@ -29,21 +27,38 @@ struct MessageItem: View {
                 TextMessage(isMe: message.isSendByMe(), text: message.content!)
             }
             else if message.type == .sticker {
+                
                 Image(message.sticker!, bundle: interfaceBundle)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100)
+            } else {
+                //Image type = photo
+                Image(uiImage: UIImage(data: message.photo!)!)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 200)
+                    //.clipShape(RoundedRectangle(cornerRadius: 5))
+                    .cornerRadius(5)
+                    .onTapGesture {
+                        presentViewFull.toggle()
+                    }
             }
 
             if !message.isSendByMe() {
-                Spacer()
-                Rectangle()
-                    .fill(Color.clear)
-                    .frame(width: 30)
-                    .layoutPriority(-1)
+                Spacer(minLength: 50)
             }
         }
         .padding(.init(top: 8, leading: 12, bottom: 8, trailing: 12))
+        .fullScreenCover(isPresented: $presentViewFull) {
+            ZoomableScrollImage(data: message.photo!, didRequestOutScreen: {
+                dismiss()
+            })
+        }
+    }
+    
+    private func dismiss() {
+        presentViewFull.toggle()
     }
 }
 

@@ -24,15 +24,6 @@ struct ViewFullPhoto: View {
             }
             
             VStack(alignment: .leading) {
-                Button(action: {
-                    self.dismiss()
-                }, label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(.white)
-                })
-                
                 Spacer()
                 
                 HStack {
@@ -49,8 +40,6 @@ struct ViewFullPhoto: View {
             }
             .padding()
         }
-        .background(Color.init(hex: 0x565050))
-        .edgesIgnoringSafeArea(.all)
     }
     
     private func dismiss() {
