@@ -54,15 +54,17 @@ struct InChatView: View {
                     
                     Spacer()
                 }
-                .padding(.bottom, 60)
+                .padding(.bottom, 45)
             }
             
-            VStack {
+            VStack(spacing: 0) {
                 Spacer()
+                
                 if viewModel.isLoading {
                     Loading()
+                    Spacer()
                 }
-                Spacer()
+
                 editorBox
             }
         }
@@ -92,22 +94,20 @@ struct InChatView: View {
     var editorBox: some View {
         HStack {
             Button(action: {
-                
+
             }, label: {
                 Image(systemName: "photo.fill")
                     .resizable()
-                    .frame(width: 25, height: 25)
-                    .padding(5)
+                    .frame(width: 22, height: 22)
                     .foregroundColor(.gray)
             })
-            
+
             Button(action: {
-                
+
             }, label: {
                 Image(systemName: "face.dashed.fill")
                     .resizable()
-                    .frame(width: 25, height: 25)
-                    .padding(.vertical, 5)
+                    .frame(width: 22, height: 22)
                     .foregroundColor(.gray)
             })
             
@@ -117,7 +117,9 @@ struct InChatView: View {
                 }
             }
         }
-        .background(Color._receiveMessage)
+        .padding(.bottom, 10)
+        .padding(.top, 0)
+        .padding(.horizontal)
     }
     
     func viewAppeard() {

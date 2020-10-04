@@ -40,16 +40,20 @@ struct EditorWithPlaceHolder: View {
     
     var placeHolder: String
     
+    var bg: Color
+    
     var forcegroundColor: Color
     
     var font: String
     
     init(text: Binding<String>, placeHolder: String,
+         background: Color = .white,
          forceground: Color = .init(hex: 0x868686),
          font: String = "Roboto-Bold") {
         
         self._text = text
         self.placeHolder = placeHolder
+        self.bg = background
         self.forcegroundColor = forceground
         self.font = font
     }
@@ -59,6 +63,7 @@ struct EditorWithPlaceHolder: View {
             TextEditor(text: self.$text)
                 .bFont(name: font, size: 13)
                 .foregroundColor(forcegroundColor)
+                //.background(Color.pink)
             
             if text == "" {
                 Text(placeHolder)
@@ -69,7 +74,7 @@ struct EditorWithPlaceHolder: View {
             }
         }
         .padding(.leading, 10)
-        .background(Color.white)
+        .background(bg)
     }
 }
 

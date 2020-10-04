@@ -63,10 +63,7 @@ public struct ChatView: View {
                 } else {
                     List {
                         ForEach(viewModel.chats) { m in
-                            VStack {
-                                ChatItem(message: m)
-                                Separator(color: .white, height: 2)
-                            }
+                            ChatItem(message: m)
                         }
                     }
                 }

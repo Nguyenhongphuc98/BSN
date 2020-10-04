@@ -62,7 +62,9 @@ struct BSNApp: App {
     
     func configureAppearance() {
         
-        UITableView.appearance().backgroundColor = .white
+        UITextView.appearance().backgroundColor = .clear
+        
+        UITableView.appearance().backgroundColor = .clear
         
         //let backImage = UIImage(named: "lauchlogo")
             //.withPadding(.init(top: -2, left: 0, bottom: 0, right: -4))

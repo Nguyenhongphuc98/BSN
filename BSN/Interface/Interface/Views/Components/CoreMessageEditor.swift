@@ -17,25 +17,31 @@ struct CoreMessageEditor: View {
     
     var body: some View {
         HStack {
-            EditorWithPlaceHolder(text: $message, placeHolder: placeHolder, font: "Roboto-LightItalic")
-                .frame(height: 40)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .clipped()
-                .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.gray))
-                .padding(.vertical, 3)
+            EditorWithPlaceHolder(
+                text: $message,
+                placeHolder: placeHolder,
+                background: Color(.secondarySystemBackground),
+                font: "Roboto-LightItalic"
+            )
+            .frame(height: 40)
+            .clipShape(Capsule())
             
-            Button(action: {
-                didEnter?(message)
-                message = ""
-            }, label: {
-                Image(systemName: "arrow.right.circle.fill")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .foregroundColor(message == "" ? .gray : ._primary)
-                    .padding()
-            })
+            if message != "" {
+                
+                Button(action: {
+                    didEnter?(message)
+                    message = ""
+                }, label: {
+                    Image(systemName: "paperplane.fill")
+                        .font(.system(size: 22))
+                        .rotationEffect(.init(degrees: 45))
+                        .padding(.all, 8)
+                        .background(Color(.secondarySystemBackground))
+                        .clipShape(Circle())
+                })
+            }
         }
-        .background(Color._receiveMessage)
+        .animation(.easeOut)
     }
 }
 

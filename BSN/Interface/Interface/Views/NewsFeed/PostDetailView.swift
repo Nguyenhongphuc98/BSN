@@ -96,7 +96,7 @@ struct PostDetailView: View {
                 
                 Spacer()
             }
-            .padding(.bottom, 60)
+            .padding(.bottom, 45)
             
             commentBox
         }
@@ -105,23 +105,23 @@ struct PostDetailView: View {
     var commentBox: some View {
         VStack(spacing: 1) {
             if !viewModel.replingComment.isDummy() {
-            HStack(spacing: 0) {
-                Text("Bạn đang trả lời \(viewModel.replingName)...")
-                    .foregroundColor(._primary)
-                    .robotoLightItalic(size: 15)
-                    .background(Color.init(hex: 0xDCDCDC))
+                HStack(spacing: 0) {
+                    Text("Bạn đang trả lời \(viewModel.replingName)...")
+                        .foregroundColor(._primary)
+                        .robotoLightItalic(size: 15)
+                        .background(Color(.secondarySystemBackground))
                     
-                Button(action: {
-                    // force to replace and emit signal to know we clear reply cmt
-                    viewModel.replingComment = Comment(dummy: true)
-                }, label: {
-                    Image(systemName: "xmark")
-                })
-                .padding(2)
-                .background(Color.init(hex: 0xDCDCDC))
-                
-                Spacer()
-            }
+                    Button(action: {
+                        // force to replace and emit signal to know we clear reply cmt
+                        viewModel.replingComment = Comment(dummy: true)
+                    }, label: {
+                        Image(systemName: "xmark")
+                    })
+                    .padding(2)
+                    .background(Color(.secondarySystemBackground))
+                    
+                    Spacer()
+                }
             }
             
             CoreMessageEditor(placeHolder: "Nhập bình luận") { (message) in
@@ -130,6 +130,8 @@ struct PostDetailView: View {
                 }
             }
         }
+        .padding(.horizontal)
+        .padding(.vertical, 8)
     }
 }
 
