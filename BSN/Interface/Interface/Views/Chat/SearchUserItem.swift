@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SearchUserItem: View {
     
+    @EnvironmentObject var root: RootViewModel
+    
     @ObservedObject var user: User
     
     @State private var action: Int? = 0
@@ -17,7 +19,11 @@ struct SearchUserItem: View {
     
     var body: some View {
         HStack {
-            NavigationLink(destination: InChatView().environmentObject(user), tag: 1, selection: $action) {
+            NavigationLink(
+                destination: InChatView().environmentObject(user).environmentObject(root),
+                tag: 1,
+                selection: $action
+            ) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)

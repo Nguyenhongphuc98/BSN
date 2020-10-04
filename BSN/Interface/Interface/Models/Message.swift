@@ -27,41 +27,6 @@ enum MessageType {
     case photo
 }
 
-enum Sticker: String, CaseIterable {
-    
-    case bear
-    
-    case cat
-    
-    case chicken
-    
-    case circleFrog
-    
-    case elephant
-    
-    case frog
-    
-    case monkey
-    
-    case mouse
-    
-    case pig
-    
-    case polarBear
-    
-    case puppy
-    
-    case rabbit
-    
-    case rooster
-    
-    case sheep
-    
-    case squirrel
-    
-    case tiger
-}
-
 // MARK: - Message model
 class Message: ObservableObject, Identifiable {
     
@@ -73,7 +38,7 @@ class Message: ObservableObject, Identifiable {
     
     var createDate: Date
     
-    var content: String
+    var content: String?
     
     var type: MessageType
     
@@ -92,21 +57,30 @@ class Message: ObservableObject, Identifiable {
         
         if Int.random(in: 0..<2) == 0 {
             type = .sticker
-            sticker = Sticker.allCases.randomElement()!.rawValue
+            sticker = stickers.randomElement()
         } else {
             type = .text
         }
         
     }
     
-    init(sender: User, receiver: User, content: String, status: MessageStatus = .notsent, type: MessageType) {
+    init(sender: User, receiver: User, status: MessageStatus = .notsent, type: MessageType) {
         id = UUID().uuidString
         self.sender =  sender
         self.receiver = receiver
         self.createDate = Date()
-        self.content = content
         self.status = status
         self.type = type
+    }
+    
+    convenience init(sender: User, receiver: User, content: String, status: MessageStatus = .notsent, type: MessageType) {
+        self.init(sender: sender, receiver: receiver, status: status, type: type)
+        self.content = content
+    }
+    
+    convenience init(sender: User, receiver: User, sticker: String, status: MessageStatus = .notsent, type: MessageType) {
+        self.init(sender: sender, receiver: receiver, status: status, type: type)
+        self.sticker = sticker
     }
     
     func isSendByMe() -> Bool {

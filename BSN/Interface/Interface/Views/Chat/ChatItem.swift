@@ -14,9 +14,15 @@ struct ChatItem: View {
     
     @State private var action: Int? = 0
     
+    @EnvironmentObject var root: RootViewModel
+    
     var body: some View {
         HStack {
-            NavigationLink(destination: InChatView().environmentObject(message.sender), tag: 1, selection: $action) {
+            NavigationLink(
+                destination: InChatView().environmentObject(message.sender).environmentObject(root),
+                tag: 1,
+                selection: $action
+            ) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)
@@ -28,7 +34,7 @@ struct ChatItem: View {
                 Text(message.sender.displayname)
                     .robotoBold(size: 16)
                 
-                Text(message.content)
+                Text(messageContent(message: message))
                     .robotoBold(size: 14)
                     .lineLimit(1)
                     .foregroundColor(.init(hex: 0x6D6D6D))
@@ -42,6 +48,10 @@ struct ChatItem: View {
         .onTapGesture {
             action = 1
         }
+    }
+    
+    func messageContent(message: Message) -> String {
+        message.content ?? "File đính kèm"
     }
 }
 

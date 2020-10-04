@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 public class RootViewModel: ObservableObject {
     
@@ -24,8 +25,10 @@ public class RootViewModel: ObservableObject {
     @Published public var navBarTrailingItems: AnyView
     
     @Published public var navBarLeadingItems: AnyView
-        
+    
     @Published public var navBarHidden: Bool
+    
+    @Published public var keyboardHeight: CGFloat
     
     public init() {
         self.selectedIndex = 2
@@ -36,6 +39,27 @@ public class RootViewModel: ObservableObject {
         self.navBarTrailingItems = .init(EmptyView())
         self.navBarLeadingItems = .init(EmptyView())
         self.navBarHidden = true
+        self.keyboardHeight = 0
         print("did init root with user: \(currentUser.displayname)")
+        
+        registerKeyboardEvent()
+    }
+    
+    func registerKeyboardEvent() {
+        NotificationCenter.Publisher(center: NotificationCenter.default, name: UIResponder.keyboardWillShowNotification)
+            .merge(with: NotificationCenter.Publisher(center: NotificationCenter.default, name: UIResponder.keyboardWillChangeFrameNotification))
+            .compactMap { notification in
+                notification.userInfo?["UIKeyboardFrameEndUserInfoKey"] as? CGRect
+            }
+            .map { rect in
+                rect.height
+            }
+            .subscribe(Subscribers.Assign(object: self, keyPath: \.keyboardHeight))
+        
+        NotificationCenter.Publisher(center: NotificationCenter.default, name: UIResponder.keyboardWillHideNotification)
+            .compactMap { notification in
+                CGFloat.zero
+            }
+            .subscribe(Subscribers.Assign(object: self, keyPath: \.keyboardHeight))
     }
 }

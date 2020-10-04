@@ -26,7 +26,7 @@ struct MessageItem: View {
             }
 
             if message.type == .text {
-                TextMessage(isMe: message.isSendByMe(), text: message.content)
+                TextMessage(isMe: message.isSendByMe(), text: message.content!)
             }
             else if message.type == .sticker {
                 Image(message.sticker!, bundle: interfaceBundle)

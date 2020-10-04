@@ -18,6 +18,8 @@ struct InChatView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State var goProfile: Int? = 0
+    
+    @State var chatBottom: CGFloat = 45
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -42,10 +44,13 @@ struct InChatView: View {
                             .onAppear {
                                 
                                 value.scrollTo(viewModel.messages.last!.id)
-                                viewModel.didSend = {
-                                    withAnimation {
-                                        value.scrollTo(viewModel.messages.last!.id)
-                                    }
+                                viewModel.updateUIIfNeedes = {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
+                                        withAnimation {
+                                            value.scrollTo(viewModel.messages.last!.id)
+                                            print("did force update UI")
+                                        }
+                                    })
                                 }
                             }
                         }
@@ -54,7 +59,7 @@ struct InChatView: View {
                     
                     Spacer()
                 }
-                .padding(.bottom, 45)
+                .padding(.bottom, chatBottom)
             }
             
             VStack(spacing: 0) {
@@ -65,7 +70,22 @@ struct InChatView: View {
                     Spacer()
                 }
 
-                editorBox
+                //editorBox
+                RichMessageEditor(didChat: { (type, message) in
+                    viewModel.didChat(type: type, content: message) { (success) in
+                        print("did send: \(message) - \(success)")
+                    }
+                }, didExpand: { expand, type in
+                    // Keyboard height (253) +  editText height (45) = 298
+                    // Just need adapt sticker showing
+                    if type == .sticker {
+                        chatBottom = expand ? 298 : 45
+                    } else {
+                        chatBottom = 45
+                    }
+                    
+                    viewModel.updateUIIfNeedes?()
+                })
             }
         }
         .navigationBarTitle(viewModel.partner.displayname, displayMode: .inline)
@@ -89,37 +109,6 @@ struct InChatView: View {
         } label: {
             CircleImage(image: viewModel.partner.avatar, diameter: 20)
         }
-    }
-    
-    var editorBox: some View {
-        HStack {
-            Button(action: {
-
-            }, label: {
-                Image(systemName: "photo.fill")
-                    .resizable()
-                    .frame(width: 22, height: 22)
-                    .foregroundColor(.gray)
-            })
-
-            Button(action: {
-
-            }, label: {
-                Image(systemName: "face.dashed.fill")
-                    .resizable()
-                    .frame(width: 22, height: 22)
-                    .foregroundColor(.gray)
-            })
-            
-            CoreMessageEditor(placeHolder: "Nhập tin nhắn") { (message) in
-                viewModel.didChat(message: message) { (success) in
-                    print("did send: \(message)")
-                }
-            }
-        }
-        .padding(.bottom, 10)
-        .padding(.top, 0)
-        .padding(.horizontal)
     }
     
     func viewAppeard() {

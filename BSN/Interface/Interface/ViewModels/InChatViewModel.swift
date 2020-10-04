@@ -16,7 +16,8 @@ class InChatViewModel: ObservableObject {
     @Published var isLoading: Bool
     
     // Did send new message
-    var didSend: (() -> Void)?
+    // It's content should be force UI scroll to bottom
+    var updateUIIfNeedes: (() -> Void)?
     
     init() {
         messages = [Message(), Message(), Message(), Message(), Message(), Message(), Message(), Message(), Message()]
@@ -35,6 +36,15 @@ class InChatViewModel: ObservableObject {
         }
     }
     
+    func didChat(type:MessageType, content: String, complete: @escaping (Bool) -> Void) {
+        
+        if type == .text {
+            didChat(message: content, complete: complete)
+        } else {
+            didChat(sticker: content, complete: complete)
+        }
+    }
+    
     func didChat(message: String, complete: @escaping (Bool) -> Void) {
         let newMessage = Message(
             sender: RootViewModel.shared.currentUser,
@@ -42,16 +52,34 @@ class InChatViewModel: ObservableObject {
             content: message,
             type: .text
         )
+
+        pushToUI(mess: newMessage)
+
+        pushToServer(mess: newMessage, complete: complete)
+    }
+    
+    func didChat(sticker: String, complete: @escaping (Bool) -> Void) {
+        let newMessage = Message(
+            sender: RootViewModel.shared.currentUser,
+            receiver: partner,
+            sticker: sticker,
+            type: .sticker
+        )
         
+        pushToUI(mess: newMessage)
+        
+        pushToServer(mess: newMessage, complete: complete)
+    }
+    
+    func pushToUI(mess: Message) {
         // update on UI and force scroll to bottom most
-        messages.append(newMessage)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            self.didSend?()
-        })
-        
+        messages.append(mess)
+        self.updateUIIfNeedes?()
+    }
+    
+    func pushToServer(mess: Message, complete: @escaping (Bool) -> Void) {
         // To -Do
         // Call to bussiness layer to call server
-        
         complete(true)
     }
 }
