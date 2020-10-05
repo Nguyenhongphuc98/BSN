@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Model in explore card
 class Book: Identifiable {
     
     var id: String

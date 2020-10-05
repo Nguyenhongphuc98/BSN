@@ -13,6 +13,10 @@ extension Text {
         self.font(.custom("Roboto-Regular", size: size))
     }
     
+    func robotoItalic(size: CGFloat) -> Self {
+        self.font(.custom("Roboto-Italic", size: size))
+    }
+    
     func robotoBold(size: CGFloat) -> Self {
         self.font(.custom("Roboto-Bold", size: size))
     }
@@ -39,7 +43,7 @@ extension Text {
 }
 
 extension TextEditor {
-    
+
     func robontoBold(size: CGFloat) -> some View {
         self.font(.custom("Roboto-Bold", size: size))
     }

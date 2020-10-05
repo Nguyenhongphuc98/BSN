@@ -66,7 +66,6 @@ struct PostDetailView: View {
             Image(systemName: "chevron.backward")
                 .foregroundColor(.gray)
         }
-        
     }
     
     var title: Text {

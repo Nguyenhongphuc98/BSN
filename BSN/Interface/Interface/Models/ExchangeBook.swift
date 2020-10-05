@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Model in Explore Book, exchange book card
 class ExchangeBook: Identifiable {
     
     var photo: String
