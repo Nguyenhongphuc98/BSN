@@ -11,6 +11,8 @@ class SearchViewViewModel: ObservableObject {
     
     @Published var books: [Book]
     
+    @Published var exchangeBooks: [ExchangeBook]
+    
     @Published var searchText: String
     
     @Published var searchBooks: [Book]
@@ -23,6 +25,7 @@ class SearchViewViewModel: ObservableObject {
     
     init() {
         books = [Book(), Book(), Book(), Book(), Book(), Book(), Book()]
+        exchangeBooks = [ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook()]
         searchBooks = []
         searchText = ""
         isSearching = false

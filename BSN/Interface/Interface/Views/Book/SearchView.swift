@@ -41,10 +41,10 @@ public struct SearchView: View {
             
             TabView(selection: self.$selectedSegment){
                 
-                BookGrid(sources: viewModel.books)
+                BookGrid(models: viewModel.books)
                     .tag(0)
                 
-                BookGrid(sources: viewModel.books)
+                ExchangeBookList(models: viewModel.exchangeBooks)
                     .tag(1)
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))

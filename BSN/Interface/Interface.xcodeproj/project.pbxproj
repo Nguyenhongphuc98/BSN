@@ -24,6 +24,9 @@
 		8401C8C1252AD18500A722CE /* StarRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C8C0252AD18500A722CE /* StarRating.swift */; };
 		8401C8C5252AD6B500A722CE /* BookGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C8C4252AD6B500A722CE /* BookGrid.swift */; };
 		8401C8C9252B045400A722CE /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C8C8252B045400A722CE /* Segment.swift */; };
+		8401C8CD252B09B900A722CE /* ExchangeBookCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C8CC252B09B900A722CE /* ExchangeBookCard.swift */; };
+		8401C8D1252B09D400A722CE /* ExchangeBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C8D0252B09D400A722CE /* ExchangeBook.swift */; };
+		8401C8D5252B0D1B00A722CE /* ExchangeBookList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C8D4252B0D1B00A722CE /* ExchangeBookList.swift */; };
 		8414F243252187C3003CF799 /* NewsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F242252187C3003CF799 /* NewsFeed.swift */; };
 		8414F24D25218D8E003CF799 /* NewsFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F24C25218D8E003CF799 /* NewsFeedCard.swift */; };
 		8414F2532521904B003CF799 /* CountTimeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F2522521904B003CF799 /* CountTimeText.swift */; };
@@ -127,6 +130,9 @@
 		8401C8C0252AD18500A722CE /* StarRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRating.swift; sourceTree = "<group>"; };
 		8401C8C4252AD6B500A722CE /* BookGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookGrid.swift; sourceTree = "<group>"; };
 		8401C8C8252B045400A722CE /* Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
+		8401C8CC252B09B900A722CE /* ExchangeBookCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeBookCard.swift; sourceTree = "<group>"; };
+		8401C8D0252B09D400A722CE /* ExchangeBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeBook.swift; sourceTree = "<group>"; };
+		8401C8D4252B0D1B00A722CE /* ExchangeBookList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeBookList.swift; sourceTree = "<group>"; };
 		8414F242252187C3003CF799 /* NewsFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeed.swift; sourceTree = "<group>"; };
 		8414F24C25218D8E003CF799 /* NewsFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedCard.swift; sourceTree = "<group>"; };
 		8414F2522521904B003CF799 /* CountTimeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountTimeText.swift; sourceTree = "<group>"; };
@@ -229,6 +235,8 @@
 			children = (
 				8401C8A6252AB3C900A722CE /* SearchView.swift */,
 				8401C8B8252ACAEF00A722CE /* BookCard.swift */,
+				8401C8CC252B09B900A722CE /* ExchangeBookCard.swift */,
+				8401C8D4252B0D1B00A722CE /* ExchangeBookList.swift */,
 			);
 			path = Book;
 			sourceTree = "<group>";
@@ -365,6 +373,7 @@
 				84B964F32525C6E600F37571 /* Notify.swift */,
 				843E5229252708FA00B16995 /* Message.swift */,
 				8401C8AE252AB57300A722CE /* Book.swift */,
+				8401C8D0252B09D400A722CE /* ExchangeBook.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -624,6 +633,8 @@
 				845DB4CC25237ED20019C29B /* ImagePicker.swift in Sources */,
 				84AA9697251F99470029BB1E /* CircleImage.swift in Sources */,
 				8414F2672521D7EA003CF799 /* DummyData.swift in Sources */,
+				8401C8D1252B09D400A722CE /* ExchangeBook.swift in Sources */,
+				8401C8D5252B0D1B00A722CE /* ExchangeBookList.swift in Sources */,
 				8436100025246A28009FF4BF /* PostDetailView.swift in Sources */,
 				8401C89E2529BE9D00A722CE /* DismissSTOnDragModifier.swift in Sources */,
 				84AA9685251F96320029BB1E /* GlobalVariable.swift in Sources */,
@@ -635,6 +646,7 @@
 				84FA99182518619900CB92CB /* Launch.swift in Sources */,
 				845DB4D0252385240019C29B /* ViewFullPhoto.swift in Sources */,
 				8436100F25247DD2009FF4BF /* Comment.swift in Sources */,
+				8401C8CD252B09B900A722CE /* ExchangeBookCard.swift in Sources */,
 				843E5226252708AD00B16995 /* ChatItem.swift in Sources */,
 				843E5238252713CB00B16995 /* SearchBar.swift in Sources */,
 				8401C87625275EBD00A722CE /* InChatViewModel.swift in Sources */,

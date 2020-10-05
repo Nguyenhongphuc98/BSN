@@ -23,7 +23,7 @@ class Book: Identifiable {
     
     init() {
         id = UUID().uuidString
-        name = "Bứt phá để cho vui"
+        name = "Bứt phá để thành công"
         author = "Nguyễn Hồng Phúc"
         rating = 4.5
         numReview = 7

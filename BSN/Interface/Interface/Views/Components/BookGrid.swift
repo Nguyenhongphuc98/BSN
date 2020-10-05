@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BookGrid: View {
     
-    var sources: [Book]
+    var models: [Book]
     
     var columns: [GridItem] = [
         GridItem(.flexible(), spacing: 10),
@@ -22,7 +22,7 @@ struct BookGrid: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns, content: {
-                ForEach(sources) { book in
+                ForEach(models) { book in
                     BookCard(model: book)
                         .padding(.bottom, 5)
                         .padding(.trailing, 3)
@@ -36,6 +36,6 @@ struct BookGrid: View {
 
 struct BookGrid_Previews: PreviewProvider {
     static var previews: some View {
-        BookGrid(sources: [Book(), Book(), Book(), Book()])
+        BookGrid(models: [Book(), Book(), Book(), Book()])
     }
 }
