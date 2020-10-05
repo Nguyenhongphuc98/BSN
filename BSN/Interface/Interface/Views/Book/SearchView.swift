@@ -19,6 +19,8 @@ public struct SearchView: View {
     
     @State private var action: Int? = 0
     
+    @State private var selectedSegment: Int = 0
+    
     public init() {
         
     }
@@ -34,7 +36,19 @@ public struct SearchView: View {
                     }
                 }
             
-            BookGrid(sources: viewModel.books)
+            Segment(tabNames: ["Được yêu thích", "Đang trao đổi"], focusIndex: $selectedSegment)
+                .padding(.vertical, 5)
+            
+            TabView(selection: self.$selectedSegment){
+                
+                BookGrid(sources: viewModel.books)
+                    .tag(0)
+                
+                BookGrid(sources: viewModel.books)
+                    .tag(1)
+            }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+
             
             Spacer()
         }
