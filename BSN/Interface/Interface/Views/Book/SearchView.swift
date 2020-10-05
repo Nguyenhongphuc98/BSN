@@ -13,13 +13,13 @@ public struct SearchView: View {
     
     @EnvironmentObject var root: RootViewModel
     
-    @State var searchFound: Bool = false
-    
     @State private var presentBook: Bool = false
     
     @State private var action: Int? = 0
     
     @State private var selectedSegment: Int = 0
+    
+    @State private var searchFound: Bool = false
     
     public init() {
         
@@ -36,6 +36,20 @@ public struct SearchView: View {
                     }
                 }
             
+                if viewModel.isfocus {
+                    viewSearchMode
+                        .resignKeyboardOnDragGesture()
+                } else {
+                    viewNormalMode
+                }
+            
+            Spacer()
+        }
+        .onAppear(perform: viewAppeared)
+    }
+    
+    private var viewNormalMode: some View {
+        VStack {
             Segment(tabNames: ["Được yêu thích", "Đang trao đổi"], focusIndex: $selectedSegment)
                 .padding(.vertical, 5)
             
@@ -48,12 +62,28 @@ public struct SearchView: View {
                     .tag(1)
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-
-            
-            Spacer()
         }
-        .resignKeyboardOnDragGesture()
-        .onAppear(perform: viewAppeared)
+    }
+    
+    private var viewSearchMode: some View {
+        Group {
+            if viewModel.isSearching {
+                Loading()
+                    .padding(.top, 100)
+            } else {
+                ForEach(viewModel.searchBooks) { book in
+                    SearchBookCard(model: book)
+                        .padding(.horizontal)
+                }
+                
+                if !searchFound {
+                    Text("Không tìm thấy sách")
+                        .robotoLightItalic(size: 13)
+                        .foregroundColor(.gray)
+                        .padding()
+                }
+            }
+        }
     }
     
     private func viewAppeared() {
