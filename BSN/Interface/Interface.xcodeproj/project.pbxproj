@@ -16,6 +16,13 @@
 		8401C8942529ABA600A722CE /* StickerGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C8932529ABA600A722CE /* StickerGrid.swift */; };
 		8401C89E2529BE9D00A722CE /* DismissSTOnDragModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C89D2529BE9D00A722CE /* DismissSTOnDragModifier.swift */; };
 		8401C8A22529C8DD00A722CE /* RichMessageEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C8A12529C8DD00A722CE /* RichMessageEditor.swift */; };
+		8401C8A7252AB3C900A722CE /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C8A6252AB3C900A722CE /* SearchView.swift */; };
+		8401C8AB252AB45700A722CE /* SearchViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C8AA252AB45700A722CE /* SearchViewViewModel.swift */; };
+		8401C8AF252AB57300A722CE /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C8AE252AB57300A722CE /* Book.swift */; };
+		8401C8B9252ACAEF00A722CE /* BookCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C8B8252ACAEF00A722CE /* BookCard.swift */; };
+		8401C8BD252ACC6400A722CE /* FloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C8BC252ACC6400A722CE /* FloatExtension.swift */; };
+		8401C8C1252AD18500A722CE /* StarRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C8C0252AD18500A722CE /* StarRating.swift */; };
+		8401C8C5252AD6B500A722CE /* BookGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C8C4252AD6B500A722CE /* BookGrid.swift */; };
 		8414F243252187C3003CF799 /* NewsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F242252187C3003CF799 /* NewsFeed.swift */; };
 		8414F24D25218D8E003CF799 /* NewsFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F24C25218D8E003CF799 /* NewsFeedCard.swift */; };
 		8414F2532521904B003CF799 /* CountTimeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F2522521904B003CF799 /* CountTimeText.swift */; };
@@ -111,6 +118,13 @@
 		8401C8932529ABA600A722CE /* StickerGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerGrid.swift; sourceTree = "<group>"; };
 		8401C89D2529BE9D00A722CE /* DismissSTOnDragModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissSTOnDragModifier.swift; sourceTree = "<group>"; };
 		8401C8A12529C8DD00A722CE /* RichMessageEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichMessageEditor.swift; sourceTree = "<group>"; };
+		8401C8A6252AB3C900A722CE /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		8401C8AA252AB45700A722CE /* SearchViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewViewModel.swift; sourceTree = "<group>"; };
+		8401C8AE252AB57300A722CE /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		8401C8B8252ACAEF00A722CE /* BookCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCard.swift; sourceTree = "<group>"; };
+		8401C8BC252ACC6400A722CE /* FloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtension.swift; sourceTree = "<group>"; };
+		8401C8C0252AD18500A722CE /* StarRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRating.swift; sourceTree = "<group>"; };
+		8401C8C4252AD6B500A722CE /* BookGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookGrid.swift; sourceTree = "<group>"; };
 		8414F242252187C3003CF799 /* NewsFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeed.swift; sourceTree = "<group>"; };
 		8414F24C25218D8E003CF799 /* NewsFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedCard.swift; sourceTree = "<group>"; };
 		8414F2522521904B003CF799 /* CountTimeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountTimeText.swift; sourceTree = "<group>"; };
@@ -208,6 +222,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8401C8A5252AB39800A722CE /* Book */ = {
+			isa = PBXGroup;
+			children = (
+				8401C8A6252AB3C900A722CE /* SearchView.swift */,
+				8401C8B8252ACAEF00A722CE /* BookCard.swift */,
+			);
+			path = Book;
+			sourceTree = "<group>";
+		};
 		8436100725246F9F009FF4BF /* Modifier */ = {
 			isa = PBXGroup;
 			children = (
@@ -234,8 +257,8 @@
 		843E52432527235100B16995 /* NewsFeed */ = {
 			isa = PBXGroup;
 			children = (
-				8414F24C25218D8E003CF799 /* NewsFeedCard.swift */,
 				8414F2622521A52E003CF799 /* NewsFeedView.swift */,
+				8414F24C25218D8E003CF799 /* NewsFeedCard.swift */,
 				84411A082523285400AE31D8 /* CreatePostView.swift */,
 				84360FFF25246A28009FF4BF /* PostDetailView.swift */,
 				843610122524811D009FF4BF /* CommentCard.swift */,
@@ -274,6 +297,7 @@
 		84AA95A9251AF08D0029BB1E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8401C8A5252AB39800A722CE /* Book */,
 				843E5244252723AD00B16995 /* Notify */,
 				843E52432527235100B16995 /* NewsFeed */,
 				843E5224252707F300B16995 /* Chat */,
@@ -303,6 +327,8 @@
 				843E5237252713CB00B16995 /* SearchBar.swift */,
 				8401C8932529ABA600A722CE /* StickerGrid.swift */,
 				8401C8A12529C8DD00A722CE /* RichMessageEditor.swift */,
+				8401C8C0252AD18500A722CE /* StarRating.swift */,
+				8401C8C4252AD6B500A722CE /* BookGrid.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -320,6 +346,7 @@
 				843E522D25270CD000B16995 /* ChatViewModel.swift */,
 				8401C87525275EBD00A722CE /* InChatViewModel.swift */,
 				8401C883252824DD00A722CE /* NewChatViewModel.swift */,
+				8401C8AA252AB45700A722CE /* SearchViewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -334,6 +361,7 @@
 				8436100E25247DD2009FF4BF /* Comment.swift */,
 				84B964F32525C6E600F37571 /* Notify.swift */,
 				843E5229252708FA00B16995 /* Message.swift */,
+				8401C8AE252AB57300A722CE /* Book.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -352,6 +380,7 @@
 				84411A2C2523409E00AE31D8 /* TextExtension.swift */,
 				84360FFB2524409C009FF4BF /* ScreenExtension.swift */,
 				843E523B252714A900B16995 /* UIApplicationExtension.swift */,
+				8401C8BC252ACC6400A722CE /* FloatExtension.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -550,6 +579,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8401C8AB252AB45700A722CE /* SearchViewViewModel.swift in Sources */,
 				8414F25725219B7E003CF799 /* StickyButton.swift in Sources */,
 				84411A162523310B00AE31D8 /* QuoteEditor.swift in Sources */,
 				84B964F42525C6E600F37571 /* Notify.swift in Sources */,
@@ -557,13 +587,16 @@
 				847BBAC62521EEB900E0500D /* RootViewModel.swift in Sources */,
 				84B964FC2526063F00F37571 /* CoreMessageEditor.swift in Sources */,
 				84B964F82525CBBD00F37571 /* NotifyViewModel.swift in Sources */,
+				8401C8BD252ACC6400A722CE /* FloatExtension.swift in Sources */,
 				84411A092523285400AE31D8 /* CreatePostView.swift in Sources */,
 				8401C8942529ABA600A722CE /* StickerGrid.swift in Sources */,
 				8401C8A22529C8DD00A722CE /* RichMessageEditor.swift in Sources */,
+				8401C8A7252AB3C900A722CE /* SearchView.swift in Sources */,
 				8414F243252187C3003CF799 /* NewsFeed.swift in Sources */,
 				843E522A252708FA00B16995 /* Message.swift in Sources */,
 				843E522E25270CD000B16995 /* ChatViewModel.swift in Sources */,
 				84AA9681251F928A0029BB1E /* ProfileView.swift in Sources */,
+				8401C8AF252AB57300A722CE /* Book.swift in Sources */,
 				84AA968D251F96F70029BB1E /* FullRadiusShadowButtonStyle.swift in Sources */,
 				84AA9621251B480C0029BB1E /* ItemContent.swift in Sources */,
 				843610132524811D009FF4BF /* CommentCard.swift in Sources */,
@@ -604,15 +637,18 @@
 				84AA9689251F96CC0029BB1E /* BButton.swift in Sources */,
 				84360FFC2524409C009FF4BF /* ScreenExtension.swift in Sources */,
 				84AA95C5251B01C80029BB1E /* ColorExtension.swift in Sources */,
+				8401C8C5252AD6B500A722CE /* BookGrid.swift in Sources */,
 				843E5240252722D200B16995 /* DismissKeyboardOnDrag.swift in Sources */,
 				84411A29252337C900AE31D8 /* ViewExtension.swift in Sources */,
 				843E5221252707E300B16995 /* ChatView.swift in Sources */,
 				8414F24D25218D8E003CF799 /* NewsFeedCard.swift in Sources */,
+				8401C8C1252AD18500A722CE /* StarRating.swift in Sources */,
 				8414F2632521A52E003CF799 /* NewsFeedView.swift in Sources */,
 				84AA960B251B469F0029BB1E /* User.swift in Sources */,
 				845DB4C8252377B90019C29B /* BookCategoryViewModel.swift in Sources */,
 				8401C87A2528129300A722CE /* SearchUserItem.swift in Sources */,
 				84B964EC2525C6BB00F37571 /* NotifyView.swift in Sources */,
+				8401C8B9252ACAEF00A722CE /* BookCard.swift in Sources */,
 				84411A012522EB8D00AE31D8 /* Loading.swift in Sources */,
 				84AA961B251B47640029BB1E /* Account.swift in Sources */,
 			);

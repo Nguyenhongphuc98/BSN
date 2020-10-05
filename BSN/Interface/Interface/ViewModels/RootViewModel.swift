@@ -8,6 +8,14 @@
 import SwiftUI
 import Combine
 
+enum RootIndex: Int {
+    case news
+    case explore
+    case chat
+    case notify
+    case profile
+}
+
 public class RootViewModel: ObservableObject {
     
     public static var shared: RootViewModel = RootViewModel()
@@ -31,7 +39,7 @@ public class RootViewModel: ObservableObject {
     @Published public var keyboardHeight: CGFloat
     
     public init() {
-        self.selectedIndex = 2
+        self.selectedIndex = 1
         self.logined = true
         self.currentAccount = Account()
         self.currentUser = User()

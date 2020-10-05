@@ -21,7 +21,7 @@ struct StickerGrid: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns, content: {
-                ForEach(stickers,id: \.self) { sticker in
+                ForEach(stickers, id: \.self) { sticker in
                     Image(sticker, bundle: interfaceBundle)
                         .resizable()
                         .aspectRatio(contentMode: .fit)

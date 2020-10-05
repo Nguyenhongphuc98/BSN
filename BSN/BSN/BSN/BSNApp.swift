@@ -23,7 +23,7 @@ struct BSNApp: App {
                         .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .news) }
                         .tag(0)
                     
-                    ProfileView()
+                    SearchView()
                         .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .search) }
                         .tag(1)
                     

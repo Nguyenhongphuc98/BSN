@@ -94,9 +94,13 @@ public struct ChatView: View {
     }
     
     private func viewAppeared() {
-        root.navBarTitle = "Nhắn tin"
-        root.navBarTrailingItems = .init(newChatButton)
-        root.navBarHidden = viewModel.isfocus
+        if root.selectedIndex == RootIndex.chat.rawValue {
+            root.navBarTitle = "Nhắn tin"
+            root.navBarTrailingItems = .init(newChatButton)
+            root.navBarHidden = viewModel.isfocus
+        }
+
+        print("chat-apeard")
     }
 }
 

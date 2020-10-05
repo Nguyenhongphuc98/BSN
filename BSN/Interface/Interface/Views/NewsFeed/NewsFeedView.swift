@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct NewsFeedView: View {
     
-    @EnvironmentObject var rootModel: RootViewModel
+    @EnvironmentObject var root: RootViewModel
     
     @StateObject var viewModel: NewsFeedViewModel = NewsFeedViewModel()
     
@@ -55,14 +55,14 @@ public struct NewsFeedView: View {
                 Loading()
             }
         }
-        .navigationBarTitle(Text("NewsFeed"))
-        .navigationBarHidden(true)
+        //.navigationBarTitle(Text("NewsFeed"))
+        //.navigationBarHidden(true)
     }
     
     private var editor: some View {
         // What's on your mind
         HStack() {
-            CircleImage(image: rootModel.currentUser.avatar, diameter: 47)
+            CircleImage(image: root.currentUser.avatar, diameter: 47)
             
             Text("Viết một thảo luận mới")
                 .font(.custom("Roboto-Bold", size: 13))
@@ -80,7 +80,12 @@ public struct NewsFeedView: View {
     }
     
     func viewDidAppear() {
-        print("view appear")
+        if root.selectedIndex == RootIndex.news.rawValue {
+            root.navBarTitle = "Bài viết"
+            root.navBarHidden = true
+        }
+        
+        print("news-apeard")
     }
 }
 

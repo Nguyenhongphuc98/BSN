@@ -11,6 +11,8 @@ public struct NotifyView: View {
     
     @StateObject var viewModel: NotifyViewModel = NotifyViewModel()
     
+    @EnvironmentObject var root: RootViewModel
+    
     public init() {
         
     }
@@ -39,8 +41,18 @@ public struct NotifyView: View {
             }
         }
         .padding(.top)
-        .navigationTitle("Notify")
-        .navigationBarHidden(true)
+        //.navigationTitle("Notify")
+        //.navigationBarHidden(true)
+        .onAppear(perform: viewAppeared)
+    }
+    
+    func viewAppeared() {
+        if root.selectedIndex == RootIndex.notify.rawValue {
+            root.navBarTitle = "Thông báo"
+            root.navBarHidden = true
+        }
+        
+        print("notifi appeared")
     }
 }
 

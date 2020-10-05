@@ -13,6 +13,8 @@ public struct ProfileView: View {
 
     @State var showPosts: Bool = true
     
+    @EnvironmentObject var root: RootViewModel
+    
     public init() { }
         public var body: some View {
         ZStack(alignment: .leading) {
@@ -81,6 +83,15 @@ public struct ProfileView: View {
             }
         }
         .edgesIgnoringSafeArea(.all)
+        .onAppear(perform: viewAppeared)
+    }
+    
+    func viewAppeared() {
+        if root.selectedIndex == RootIndex.profile.rawValue {
+            root.navBarTitle = "Trang cá nhân"
+            root.navBarHidden = true
+        }
+        print("profile-apeard")
     }
 }
 
