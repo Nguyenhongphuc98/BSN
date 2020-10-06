@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-// Instance fo an message: sender - content
-struct MessageItem: View {
+// Instance for a message: sender - content
+struct MessageCel: View {
     
     @StateObject var message: Message
     
@@ -64,7 +64,7 @@ struct MessageItem: View {
 
 struct MessageItem_Previews: PreviewProvider {
     static var previews: some View {
-        MessageItem(message: Message())
+        MessageCel(message: Message())
     }
 }
 

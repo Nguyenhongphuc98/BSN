@@ -11,7 +11,7 @@ public struct ChatView: View {
     
     @StateObject var viewModel: ChatViewModel = ChatViewModel()
     
-    @EnvironmentObject var root: RootViewModel
+    @EnvironmentObject var root: AppManager
     
     @State var searchFound: Bool = false
     
@@ -63,7 +63,7 @@ public struct ChatView: View {
                 } else {
                     List {
                         ForEach(viewModel.chats) { m in
-                            ChatItem(message: m)
+                            ChatCell(message: m)
                         }
                     }
                 }

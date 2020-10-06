@@ -54,7 +54,7 @@ class InChatViewModel: ObservableObject {
     
     func didChat(message: String, complete: @escaping (Bool) -> Void) {
         let newMessage = Message(
-            sender: RootViewModel.shared.currentUser,
+            sender: AppManager.shared.currentUser,
             receiver: partner,
             content: message,
             type: .text
@@ -67,7 +67,7 @@ class InChatViewModel: ObservableObject {
     
     func didChat(sticker: String, complete: @escaping (Bool) -> Void) {
         let newMessage = Message(
-            sender: RootViewModel.shared.currentUser,
+            sender: AppManager.shared.currentUser,
             receiver: partner,
             sticker: sticker,
             type: .sticker
@@ -80,7 +80,7 @@ class InChatViewModel: ObservableObject {
     
     func didChat(photo: Data, complete: @escaping (Bool) -> Void) {
         let newMessage = Message(
-            sender: RootViewModel.shared.currentUser,
+            sender: AppManager.shared.currentUser,
             receiver: partner,
             photo: photo,
             type: .photo

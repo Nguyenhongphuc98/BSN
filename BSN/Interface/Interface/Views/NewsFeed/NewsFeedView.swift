@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct NewsFeedView: View {
     
-    @EnvironmentObject var root: RootViewModel
+    @EnvironmentObject var root: AppManager
     
     @StateObject var viewModel: NewsFeedViewModel = NewsFeedViewModel()
     

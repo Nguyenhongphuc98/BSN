@@ -11,7 +11,7 @@ struct InChatView: View {
     
     @StateObject var viewModel: InChatViewModel = InChatViewModel()
     
-    @EnvironmentObject var root: RootViewModel
+    @EnvironmentObject var root: AppManager
     
     @EnvironmentObject var partner: User
     
@@ -37,7 +37,7 @@ struct InChatView: View {
                         ScrollViewReader { value in
                             LazyVStack {
                                 ForEach(viewModel.messages) { message in
-                                    MessageItem(message: message)
+                                    MessageCel(message: message)
                                         .id(message.id)
                                 }
                             }

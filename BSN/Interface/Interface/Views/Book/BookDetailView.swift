@@ -15,6 +15,8 @@ struct BookDetailView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
+    @State var showRatingView: Bool = false
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack() {
@@ -112,8 +114,8 @@ struct BookDetailView: View {
                         Text("Giọng văn cuốn hút:")
                             .robotoItalic(size: 15)
                         Spacer()
-                        StarRating(rating: viewModel.model.writingRate)
-                        Text("(\(String(format: "%.1f", viewModel.model.writingRate)))")
+                        StarRating(rating: viewModel.model.ratingCriteria.writing)
+                        Text("(\(String(format: "%.1f", viewModel.model.ratingCriteria.writing)))")
                             .robotoItalic(size: 15)
                             .foregroundColor(._primary)
                     }
@@ -122,8 +124,8 @@ struct BookDetailView: View {
                         Text("Có mục đích rõ ràng:")
                             .robotoItalic(size: 15)
                         Spacer()
-                        StarRating(rating: viewModel.model.targetRate)
-                        Text("(\(String(format: "%.1f", viewModel.model.targetRate)))")
+                        StarRating(rating: viewModel.model.ratingCriteria.target)
+                        Text("(\(String(format: "%.1f", viewModel.model.ratingCriteria.target)))")
                             .robotoItalic(size: 15)
                             .foregroundColor(._primary)
                     }
@@ -132,8 +134,8 @@ struct BookDetailView: View {
                         Text("Nhân vật chính lôi cuốn:")
                             .robotoItalic(size: 15)
                         Spacer()
-                        StarRating(rating: viewModel.model.characterRate)
-                        Text("(\(String(format: "%.1f", viewModel.model.characterRate)))")
+                        StarRating(rating: viewModel.model.ratingCriteria.character)
+                        Text("(\(String(format: "%.1f", viewModel.model.ratingCriteria.character)))")
                             .robotoItalic(size: 15)
                             .foregroundColor(._primary)
                     }
@@ -142,8 +144,8 @@ struct BookDetailView: View {
                         Text("Cung cấp thông tin hữu ích:")
                             .robotoItalic(size: 15)
                         Spacer()
-                        StarRating(rating: viewModel.model.infoRate)
-                        Text("(\(String(format: "%.1f", viewModel.model.infoRate)))")
+                        StarRating(rating: viewModel.model.ratingCriteria.info)
+                        Text("(\(String(format: "%.1f", viewModel.model.ratingCriteria.info)))")
                             .robotoItalic(size: 15)
                             .foregroundColor(._primary)
                     }
@@ -180,7 +182,7 @@ struct BookDetailView: View {
             content: {
                 ForEach(viewModel.reviews) { review in
                     VStack {
-                        RatingItem(model: review)
+                        RatingCell(model: review)
                         Separator(height: 1)
                     }
                 }
@@ -198,7 +200,7 @@ struct BookDetailView: View {
         HStack {
             Spacer()
             Button(action: {
-                
+                showRatingView.toggle()
             }, label: {
                 Text("Để lại đánh giá")
             })
@@ -211,6 +213,11 @@ struct BookDetailView: View {
             Color(UIColor.secondarySystemBackground)
         )
         .shadow(color: .gray, radius: 2, y: -2)
+        .sheet(isPresented: $showRatingView, content: {
+            RatingView(bookName: viewModel.model.name, bookID: viewModel.model.id) { rating in
+                viewModel.addNewRating(rate: rating)
+            }
+        })
     }
     
     var backButton: some View {

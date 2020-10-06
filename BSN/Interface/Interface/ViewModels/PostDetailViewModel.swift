@@ -72,7 +72,7 @@ class PostDetailViewModel: ObservableObject {
         let finalMessage = newLevel == 0 ? message : "(\(replingName)) - " + message
         let newComment = Comment(
             parent: parent,
-            owner: RootViewModel.shared.currentUser,
+            owner: AppManager.shared.currentUser,
             content: finalMessage,
             level: newLevel
         )

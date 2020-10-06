@@ -16,9 +16,9 @@ enum RootIndex: Int {
     case profile
 }
 
-public class RootViewModel: ObservableObject {
+public class AppManager: ObservableObject {
     
-    public static var shared: RootViewModel = RootViewModel()
+    public static var shared: AppManager = AppManager()
     
     @Published public var selectedIndex: Int
     

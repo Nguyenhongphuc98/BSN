@@ -25,7 +25,7 @@ struct RichMessageEditor: View {
     
     @State var showImagePicker: Bool = false
     
-    @EnvironmentObject var root: RootViewModel
+    @EnvironmentObject var root: AppManager
     
     @State var cancellables = Set<AnyCancellable>()
     

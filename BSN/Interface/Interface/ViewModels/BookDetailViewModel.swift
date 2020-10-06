@@ -17,4 +17,9 @@ class BookDetailViewModel: ObservableObject {
         model = BookDetail()
         reviews = [Rating(), Rating()]
     }
+    
+    func addNewRating(rate: Rating) {
+        // Update UI with new rating
+        reviews.append(rate)
+    }
 }

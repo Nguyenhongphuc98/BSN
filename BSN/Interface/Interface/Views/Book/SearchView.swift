@@ -11,7 +11,7 @@ public struct SearchView: View {
     
     @StateObject var viewModel: SearchViewViewModel = SearchViewViewModel()
     
-    @EnvironmentObject var root: RootViewModel
+    @EnvironmentObject var root: AppManager
     
     @State private var presentBook: Bool = false
     

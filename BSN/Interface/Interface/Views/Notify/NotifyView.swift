@@ -11,7 +11,7 @@ public struct NotifyView: View {
     
     @StateObject var viewModel: NotifyViewModel = NotifyViewModel()
     
-    @EnvironmentObject var root: RootViewModel
+    @EnvironmentObject var root: AppManager
     
     public init() {
         

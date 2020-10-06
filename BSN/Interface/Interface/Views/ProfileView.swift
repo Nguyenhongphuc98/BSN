@@ -13,7 +13,7 @@ public struct ProfileView: View {
 
     @State var showPosts: Bool = true
     
-    @EnvironmentObject var root: RootViewModel
+    @EnvironmentObject var root: AppManager
     
     public init() { }
         public var body: some View {

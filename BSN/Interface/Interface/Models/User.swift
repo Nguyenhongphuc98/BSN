@@ -36,7 +36,7 @@ public class User: ObservableObject, Identifiable {
     }
     
     func isCurrentUser() -> Bool {
-        return self.username == RootViewModel.shared.currentUser.username
+        return self.username == AppManager.shared.currentUser.username
     }
     
     func isDummt() -> Bool {

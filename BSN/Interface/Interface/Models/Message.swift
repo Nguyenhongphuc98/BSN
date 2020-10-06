@@ -50,9 +50,9 @@ class Message: ObservableObject, Identifiable {
     
     init() {
         id = UUID().uuidString
-        sender =  Int.random(in: 0..<2) == 0 ? User() : RootViewModel.shared.currentUser
+        sender =  Int.random(in: 0..<2) == 0 ? User() : AppManager.shared.currentUser
         
-        receiver = RootViewModel.shared.currentUser
+        receiver = AppManager.shared.currentUser
         createDate = randomDate()
         content = randomMessage()
         status = .received
@@ -91,6 +91,6 @@ class Message: ObservableObject, Identifiable {
     }
     
     func isSendByMe() -> Bool {
-        sender.username == RootViewModel.shared.currentUser.username
+        sender.username == AppManager.shared.currentUser.username
     }
 }

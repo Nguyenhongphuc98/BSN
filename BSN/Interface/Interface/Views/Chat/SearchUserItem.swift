@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchUserItem: View {
     
-    @EnvironmentObject var root: RootViewModel
+    @EnvironmentObject var root: AppManager
     
     @ObservedObject var user: User
     

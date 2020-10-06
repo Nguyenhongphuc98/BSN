@@ -13,7 +13,7 @@ struct BSNApp: App {
     
     @Environment(\.scenePhase) private var phase
     
-    @ObservedObject var viewModel: RootViewModel = RootViewModel.shared
+    @ObservedObject var viewModel: AppManager = AppManager.shared
     
     var body: some Scene {
         WindowGroup {

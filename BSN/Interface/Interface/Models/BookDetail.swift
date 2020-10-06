@@ -14,27 +14,18 @@ class BookDetail: Book {
     
     var numAvailable: Int
     
-    // Giong van cuon hut
-    var writingRate: Float
-    
-    // Muc dich ro rang
-    var targetRate: Float
-    
-    // Nhan vat loi cuon
-    var characterRate: Float
-    
-    // thong tin huu ich
-    var infoRate: Float
+    var ratingCriteria: RatingCriteria
     
     var description: String
     
     override init() {
         numReading = 10
         numAvailable = 20
-        writingRate = 4.5
-        targetRate = 5
-        characterRate = 3.5
-        infoRate = 4
+        ratingCriteria = RatingCriteria()
+        ratingCriteria.writing = 4.5
+        ratingCriteria.target = 5
+        ratingCriteria.character = 3.5
+        ratingCriteria.info = 4
         description = randomComment()
     }
 }

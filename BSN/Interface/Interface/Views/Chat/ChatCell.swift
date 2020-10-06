@@ -8,13 +8,13 @@
 import SwiftUI
 
 // The item that display as cell in ChatTab
-struct ChatItem: View {
+struct ChatCell: View {
     
     @ObservedObject var message: Message
     
     @State private var action: Int? = 0
     
-    @EnvironmentObject var root: RootViewModel
+    @EnvironmentObject var root: AppManager
     
     var body: some View {
         HStack {
@@ -57,6 +57,6 @@ struct ChatItem: View {
 
 struct ChatItem_Previews: PreviewProvider {
     static var previews: some View {
-        ChatItem(message: Message())
+        ChatCell(message: Message())
     }
 }
