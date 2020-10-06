@@ -17,8 +17,20 @@ struct BookDetailView: View {
     
     @State var showRatingView: Bool = false
     
+    @State var showBorrowBook: Bool = false
+    
+    @State var showExchangeBook: Bool = false
+    
     var body: some View {
         ZStack(alignment: .bottom) {
+            NavigationLink(
+                destination: BorrowListView(),
+                isActive: $showBorrowBook,
+                label: {
+                    EmptyView()
+                })
+            
+            
             VStack() {
                 basicInfo
                 
@@ -84,7 +96,7 @@ struct BookDetailView: View {
                 
                 HStack {
                     Button(action: {
-                        
+                        showBorrowBook.toggle()
                     }, label: {
                         Text("Mượn sách")
                     })

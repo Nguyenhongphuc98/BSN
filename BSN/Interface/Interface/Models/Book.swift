@@ -7,6 +7,22 @@
 
 import SwiftUI
 
+// MARK: - Book state and status
+enum BookState {
+    case borrowed
+    case available //to be borrowed
+    case reading
+    case unknown
+}
+
+enum BookStatus: String, CaseIterable {
+    case new
+    case likeNew
+    case old
+    case veryOld
+}
+
+// MARK: - Book model
 // Model in explore card
 class Book: Identifiable {
     
