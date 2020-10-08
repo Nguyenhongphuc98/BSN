@@ -15,6 +15,8 @@ struct ConfirmBorrowBookView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
+    @State private var showDeclineView: Bool = false
+    
     var body: some View {
         VStack(alignment: .center) {
             BorrowBookHeader(model: viewModel.borrowBook, isRequest: false)
@@ -33,9 +35,10 @@ struct ConfirmBorrowBookView: View {
             if !viewModel.borrowBook.seen {
                 HStack {
                     Button(action: {
-                        viewModel.didDecline { (success) in
-                            AppManager.shared.selectedIndex = 0
-                        }
+//                        viewModel.didDecline { (success) in
+//                            AppManager.shared.selectedIndex = 0
+//                        }
+                        showDeclineView.toggle()
                     }, label: {
                         Text("Từ Chối")
                     })
@@ -59,6 +62,9 @@ struct ConfirmBorrowBookView: View {
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
+        .sheet(isPresented: $showDeclineView, content: {
+            DeclineBorrowBookView()
+        })
     }
     
     var backButton: some View {
