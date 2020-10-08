@@ -53,6 +53,8 @@
 		8401C976252EFB6B00A722CE /* ConfirmBorrowBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C975252EFB6B00A722CE /* ConfirmBorrowBookViewModel.swift */; };
 		8401C97A252F006D00A722CE /* TextWithIconInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C979252F006D00A722CE /* TextWithIconInfo.swift */; };
 		8401C97E252F037A00A722CE /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C97D252F037A00A722CE /* DateExtension.swift */; };
+		8401C982252F0BB600A722CE /* BorrowResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C981252F0BB600A722CE /* BorrowResultView.swift */; };
+		8401C986252F0C4E00A722CE /* BorrowResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C985252F0C4E00A722CE /* BorrowResultViewModel.swift */; };
 		8414F243252187C3003CF799 /* NewsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F242252187C3003CF799 /* NewsFeed.swift */; };
 		8414F24D25218D8E003CF799 /* NewsFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F24C25218D8E003CF799 /* NewsFeedCard.swift */; };
 		8414F2532521904B003CF799 /* CountTimeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F2522521904B003CF799 /* CountTimeText.swift */; };
@@ -185,6 +187,8 @@
 		8401C975252EFB6B00A722CE /* ConfirmBorrowBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmBorrowBookViewModel.swift; sourceTree = "<group>"; };
 		8401C979252F006D00A722CE /* TextWithIconInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithIconInfo.swift; sourceTree = "<group>"; };
 		8401C97D252F037A00A722CE /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		8401C981252F0BB600A722CE /* BorrowResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorrowResultView.swift; sourceTree = "<group>"; };
+		8401C985252F0C4E00A722CE /* BorrowResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorrowResultViewModel.swift; sourceTree = "<group>"; };
 		8414F242252187C3003CF799 /* NewsFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeed.swift; sourceTree = "<group>"; };
 		8414F24C25218D8E003CF799 /* NewsFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedCard.swift; sourceTree = "<group>"; };
 		8414F2522521904B003CF799 /* CountTimeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountTimeText.swift; sourceTree = "<group>"; };
@@ -293,6 +297,7 @@
 				8401C94A252C71AA00A722CE /* BorrowListView.swift */,
 				8401C956252C7A9300A722CE /* SubmitRequestBorrowView.swift */,
 				8401C971252EFB3000A722CE /* ConfirmBorrowBookView.swift */,
+				8401C981252F0BB600A722CE /* BorrowResultView.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -340,6 +345,7 @@
 				8401C94E252C71D100A722CE /* BorrowListViewModel.swift */,
 				8401C965252EAB9A00A722CE /* BorrowBookViewModel.swift */,
 				8401C975252EFB6B00A722CE /* ConfirmBorrowBookViewModel.swift */,
+				8401C985252F0C4E00A722CE /* BorrowResultViewModel.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -746,6 +752,7 @@
 				8401C921252C086300A722CE /* RatingView.swift in Sources */,
 				8436100925246FC2009FF4BF /* BViewModifier.swift in Sources */,
 				8401C8722527590D00A722CE /* MessageCel.swift in Sources */,
+				8401C982252F0BB600A722CE /* BorrowResultView.swift in Sources */,
 				8401C917252B6B7400A722CE /* BookDetailViewModel.swift in Sources */,
 				844119F92522E77D00AE31D8 /* Seperator.swift in Sources */,
 				84411A052523208000AE31D8 /* NewsFeedViewModel.swift in Sources */,
@@ -792,6 +799,7 @@
 				84AA95C5251B01C80029BB1E /* ColorExtension.swift in Sources */,
 				8401C8C5252AD6B500A722CE /* BookGrid.swift in Sources */,
 				843E5240252722D200B16995 /* DismissKeyboardOnDrag.swift in Sources */,
+				8401C986252F0C4E00A722CE /* BorrowResultViewModel.swift in Sources */,
 				84411A29252337C900AE31D8 /* ViewExtension.swift in Sources */,
 				843E5221252707E300B16995 /* ChatView.swift in Sources */,
 				8414F24D25218D8E003CF799 /* NewsFeedCard.swift in Sources */,

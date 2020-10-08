@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum BorrowResult: CaseIterable {
+    case success
+    case fail
+}
+
 class BorrowBookFull: BorrowBookDetail {
     
     var traddingAddress: String
@@ -19,12 +24,19 @@ class BorrowBookFull: BorrowBookDetail {
     
     var seen: Bool
     
+    var result: BorrowResult
+    
+    // Use in case book decline
+    var reason: String
+    
     override init() {
         traddingAddress = "KTX khu A, DHQG - Khu pho 6, Linh Trung, Thu Duc."
         borrowDate = Date()
         numOfDay = 7
         message = "Cho mình mượn sách nhé!"
         seen = false
+        result = BorrowResult.allCases.randomElement()!
+        reason = "Mình đang đi du lịch nên không cho mượn được thời gian này"
         super.init()
     }
     
@@ -40,6 +52,8 @@ class BorrowBookFull: BorrowBookDetail {
         self.numOfDay = numOfday
         self.message = message
         self.seen = false
+        self.result = BorrowResult.allCases.randomElement()!
+        self.reason = "Mình đang đi du lịch nên không cho mượn được thời gian này"
         super.init()
         self.book = book.book
         self.statusDes = book.statusDes

@@ -13,6 +13,8 @@ struct ConfirmBorrowBookView: View {
     
     var formater: String = "EEEE, MMM d, yyyy"
     
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         VStack(alignment: .center) {
             BorrowBookHeader(model: viewModel.borrowBook, isRequest: false)
@@ -53,6 +55,19 @@ struct ConfirmBorrowBookView: View {
             }
         }
         .padding()
+        .navigationBarTitle("Xem yêu cầu mượn sách", displayMode: .inline)
+        .navigationBarHidden(false)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: backButton)
+    }
+    
+    var backButton: some View {
+        Button {
+            presentationMode.wrappedValue.dismiss()
+        } label: {
+            Image(systemName: "chevron.backward")
+                .foregroundColor(.gray)
+        }
     }
 }
 

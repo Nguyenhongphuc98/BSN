@@ -82,8 +82,12 @@ struct BorrowBookHeader: View {
     
     var model: BorrowBookDetail
     
-    // use for reuest or confirm View
+    // Use for reuest or confirm View
     var isRequest: Bool = true
+    
+    // Use for result View
+    // If it true, isRequest invalidate
+    var isResultView: Bool = false
     
     var leftAvatar: String {
         isRequest ? AppManager.shared.currentUser.avatar : model.owner.avatar
@@ -95,13 +99,15 @@ struct BorrowBookHeader: View {
     
     var body: some View {
         VStack {
-            HStack(spacing: 30) {
-                CircleImage(image: leftAvatar, diameter: 60)
-                
-                Text("Yêu cầu mượn")
-                    .roboto(size: 18)
-                
-                CircleImage(image: rightAvatar, diameter: 60)
+            if !isResultView {
+                HStack(spacing: 30) {
+                    CircleImage(image: leftAvatar, diameter: 60)
+                    
+                    Text("Yêu cầu mượn")
+                        .roboto(size: 18)
+                    
+                    CircleImage(image: rightAvatar, diameter: 60)
+                }
             }
             
             HStack(alignment: .center) {
@@ -127,10 +133,12 @@ struct BorrowBookHeader: View {
                 Spacer()
             }
             
-            Text(description)
-                .roboto(size: 13)
-                .padding(.vertical)
-                .foregroundColor(isRequest ? .black : .init(hex: 0x4C0098))
+            if !isResultView {
+                Text(description)
+                    .roboto(size: 13)
+                    .padding(.vertical)
+                    .foregroundColor(isRequest ? .black : .init(hex: 0x4C0098))
+            }
             
             Separator(color: .init(hex: 0xE2DFDF), height: 1)
                 .padding(.horizontal, 50)
