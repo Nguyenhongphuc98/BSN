@@ -10,7 +10,7 @@ import SwiftUI
 enum ButtonSize {
     case small
     case medium
-    case big
+    case large
     
     func getH() -> CGFloat {
         switch self {
@@ -18,7 +18,7 @@ enum ButtonSize {
             return 15
         case .medium:
             return 20
-        case .big:
+        case .large:
             return 30
         }
     }
@@ -29,7 +29,7 @@ enum ButtonSize {
             return 4
         case .medium:
             return 7
-        case .big:
+        case .large:
             return 12
         }
     }

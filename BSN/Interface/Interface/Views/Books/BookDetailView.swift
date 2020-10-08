@@ -216,7 +216,7 @@ struct BookDetailView: View {
             }, label: {
                 Text("Để lại đánh giá")
             })
-            .buttonStyle(BaseButtonStyle(size:.big))
+            .buttonStyle(BaseButtonStyle(size:.large))
             
             Spacer()
         }

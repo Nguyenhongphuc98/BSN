@@ -11,8 +11,18 @@ struct BorrowBookCard: View {
     
     var model: BorrowBook
     
+    @State private var nav: Bool = false
+    
     var body: some View {
         HStack {
+            NavigationLink(
+                destination: SubmitRequestBorrowView(),
+                isActive: $nav,
+                label: {
+                    EmptyView()
+                })
+                .frame(width: 0, height: 0)
+            
             CircleImage(image: model.owner.avatar, diameter: 50)
             
             VStack(alignment: .leading, spacing: 5) {
@@ -28,7 +38,7 @@ struct BorrowBookCard: View {
                     Spacer()
                     
                     Button(action: {
-                        
+                        nav.toggle()
                     }, label: {
                         Text("Mượn")
                     })
