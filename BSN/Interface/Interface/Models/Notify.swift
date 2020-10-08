@@ -19,7 +19,15 @@ enum NotifyAction: Int {
     
     case borrowBook
     
+    case borrowFail
+    
+    case borrowSuccess
+    
     case exchangeBook
+    
+    case exchangeFail
+    
+    case exchangeSuccess
     
     func description() -> String {
         
@@ -30,7 +38,11 @@ enum NotifyAction: Int {
         case .comment: des = "bình luận bài viết của bạn"
         case .following: des = "theo dõi bạn"
         case .borrowBook: des = "gửi cho bạn yêu cầu mượn sách"
+        case .borrowFail: des = "từ chối yêu cầu mượn sách của bạn"
+        case .borrowSuccess: des = "chấp nhận yêu cầu mượn sách của bạn"
         case .exchangeBook: des = "gửi cho bạn yêu cầu đổi sách"
+        case .exchangeFail: des = "từ chối yêu cầu đổi sách của bạn"
+        case .exchangeSuccess: des = "chấp nhận yêu đổi mượn sách của bạn"
         }
         
         return des

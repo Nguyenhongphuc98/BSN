@@ -21,10 +21,10 @@ struct SubmitRequestBorrowView: View {
             Form {
                 Section {
                     DatePicker(selection: $viewModel.borrowDate, in: ...Date(), displayedComponents: .date) {
-                        Text("Thời gian mượn")
+                        Text("Thời điểm mượn")
                     }
                    
-                    Picker("Số ngày mượn", selection: $viewModel.numOfDay) {
+                    Picker("Thời gian mượn", selection: $viewModel.numOfDay) {
                             ForEach(1 ..< 30) {
                                 Text("\($0) ngày")
                             }
@@ -127,12 +127,18 @@ struct BorrowBookHeader: View {
                 Spacer()
             }
             
-            Text(model.statusDes)
+            Text(description)
                 .roboto(size: 13)
                 .padding(.vertical)
+                .foregroundColor(isRequest ? .black : .init(hex: 0x4C0098))
             
             Separator(color: .init(hex: 0xE2DFDF), height: 1)
                 .padding(.horizontal, 50)
         }
     }
+    
+    var description: String {
+        isRequest ? model.statusDes : "\"\(model.statusDes)\""
+    }
+    
 }
