@@ -20,11 +20,14 @@ class ExchangeBook: Identifiable {
     
     var exchangeBookAuthor: String
     
+    var distance: Float
+    
     init() {
         photo = "book"
         title = "Bứt phá để thành công"
         author = "TS. Mai Thế Trung"
         exchangeBookTitle = "Sắc màu cuộc sống"
         exchangeBookAuthor = "ThS. Kỹ Văn Minh"
+        distance = Float.random(in: 100...2999)
     }
 }

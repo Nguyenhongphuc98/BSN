@@ -1,36 +1,44 @@
 //
-//  BorowBookCard.swift
+//  ExchangeBookCell.swift
 //  Interface
 //
-//  Created by Phucnh on 10/6/20.
+//  Created by Phucnh on 10/9/20.
 //
 
 import SwiftUI
 
-struct BorrowBookCard: View {
+// Using in list available book-user can exchange
+struct ExchangeBookCell: View {
     
-    var model: BorrowBook
+    var model: ExchangeBook4C
     
     @State private var nav: Bool = false
     
     var body: some View {
         HStack {
             NavigationLink(
-                destination: SubmitRequestBorrowView(),
+                destination: ExchangeBookView(),
                 isActive: $nav,
                 label: {
                     EmptyView()
                 })
                 .frame(width: 0, height: 0)
             
-            CircleImage(image: model.owner.avatar, diameter: 50)
+            CircleImage(image: model.owner.avatar, diameter: 60)
             
             VStack(alignment: .leading, spacing: 5) {
+                HStack {
+                    Image(systemName: "text.book.closed")
+                    
+                    Text(model.exchangeBookName)
+                        .roboto(size: 18)
+                }
+                
                 Text(model.owner.displayname)
                     .roboto(size: 18)
                 
                 HStack {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 5) {
                         DistanceText(distance: model.distance)
                         BookStatusText(status: model.status)
                     }
@@ -40,7 +48,7 @@ struct BorrowBookCard: View {
                     Button(action: {
                         nav.toggle()
                     }, label: {
-                        Text("Mượn")
+                        Text("Trao đổi")
                     })
                     .buttonStyle(BaseButtonStyle())
                 }
@@ -50,8 +58,8 @@ struct BorrowBookCard: View {
     }
 }
 
-struct BorowBookCard_Previews: PreviewProvider {
+struct ExchangeBookCell_Previews: PreviewProvider {
     static var previews: some View {
-        BorrowBookCard(model: BorrowBook())
+        ExchangeBookCell(model: ExchangeBook4C())
     }
 }

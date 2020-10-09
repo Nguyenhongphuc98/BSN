@@ -7,13 +7,24 @@
 
 import SwiftUI
 
+enum DistanceStyle {
+    case short
+    case long
+}
+
 struct DistanceText: View {
     
     var distance: Float // in met unit
     
+    var style: DistanceStyle = .long
+    
     var body: some View {
-        Text("Khoảng cách: \(getDistance())")
+        Text("\(preS) \(getDistance())")
             .robotoLight(size: 13)
+    }
+    
+    var preS: String {
+        style == .long ? "Khoảng cách:" : "-"
     }
     
     func getDistance() -> String {

@@ -1,15 +1,14 @@
 //
-//  BorrowListView.swift
+//  ExchangeListView.swift
 //  Interface
 //
-//  Created by Phucnh on 10/6/20.
+//  Created by Phucnh on 10/9/20.
 //
 
 import SwiftUI
 
-struct BorrowListView: View {
-    
-    @StateObject var viewModel: BorrowListViewModel = BorrowListViewModel()
+struct ExchangeListView: View {
+    @StateObject var viewModel: ExchangeListViewModel = ExchangeListViewModel()
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -18,11 +17,11 @@ struct BorrowListView: View {
             Separator(color: .white, height: 3)
             List {
                 ForEach(viewModel.models) { item in
-                    BorrowBookCell(model: item)
+                    ExchangeBookCell(model: item)
                 }
             }
         }
-        .navigationBarTitle("Danh sách cho mượn", displayMode: .inline)
+        .navigationBarTitle("Danh sách trao đổi", displayMode: .inline)
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
@@ -38,8 +37,8 @@ struct BorrowListView: View {
     }
 }
 
-struct BorrowListView_Previews: PreviewProvider {
+struct ExchangeListView_Previews: PreviewProvider {
     static var previews: some View {
-        BorrowListView()
+        ExchangeListView()
     }
 }

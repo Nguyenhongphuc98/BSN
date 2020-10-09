@@ -30,6 +30,13 @@ struct BookDetailView: View {
                     EmptyView()
                 })
             
+            NavigationLink(
+                destination: ExchangeListView(),
+                isActive: $showExchangeBook,
+                label: {
+                    EmptyView()
+                })
+            
             
             VStack() {
                 basicInfo
@@ -103,7 +110,7 @@ struct BookDetailView: View {
                     .buttonStyle(BaseButtonStyle())
                     
                     Button(action: {
-                        
+                        showExchangeBook.toggle()
                     }, label: {
                         Text("Đổi sách")
                     })

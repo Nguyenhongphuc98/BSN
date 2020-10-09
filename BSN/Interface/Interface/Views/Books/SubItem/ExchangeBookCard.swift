@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Use in suggest view. List book card avalable to exchange
 struct ExchangeBookCard: View {
     
     var model: ExchangeBook
@@ -37,9 +38,13 @@ struct ExchangeBookCard: View {
                 
                 Spacer()
                 
-                Image(systemName: "repeat")
-                    .foregroundColor(._primary)
-                    .padding(.horizontal)
+                HStack {
+                    Image(systemName: "repeat")
+                        .foregroundColor(._primary)
+                        .padding(.horizontal)
+                    
+                    DistanceText(distance: model.distance, style: .short)
+                }
                 
                 Spacer()
                 
