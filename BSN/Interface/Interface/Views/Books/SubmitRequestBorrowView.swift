@@ -90,6 +90,8 @@ struct BorrowBookHeader: View {
     // If it true, isRequest invalidate
     var isResultView: Bool = false
     
+    var showSeperator: Bool = true
+    
     var body: some View {
         VStack {
             HStack(alignment: .center) {
@@ -100,7 +102,7 @@ struct BorrowBookHeader: View {
                     .background(Color.white)
                     .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))
                 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 4) {
                     Spacer()
                     
                     Text(model.book.name)
@@ -131,8 +133,10 @@ struct BorrowBookHeader: View {
                     .foregroundColor(isRequest ? .black : .init(hex: 0x4C0098))
             }
             
-            Separator(color: .init(hex: 0xE2DFDF), height: 1)
-                .padding(.horizontal, 50)
+            if showSeperator {
+                Separator(color: .init(hex: 0xE2DFDF), height: 1)
+                    .padding(.horizontal, 50)
+            }
         }
         .frame(height: height)
     }

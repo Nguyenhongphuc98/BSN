@@ -11,8 +11,19 @@ struct ExchangeBookCard: View {
     
     var model: ExchangeBook
     
+    @State private var nav: Bool = false
+    
     var body: some View {
         HStack(alignment: .center) {
+            NavigationLink(
+                destination: ExchangeBookView(),
+                isActive: $nav,
+                label: {
+                    EmptyView()
+                })
+                .frame(width: 0, height: 0)
+                .opacity(0)
+            
             Image(model.photo, bundle: interfaceBundle)
                 .resizable()
                 .frame(width: 110, height: 130)
