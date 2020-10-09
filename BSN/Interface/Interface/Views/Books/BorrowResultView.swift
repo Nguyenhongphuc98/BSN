@@ -23,8 +23,7 @@ struct BorrowResultView: View {
                 .multilineTextAlignment(.center)
             
             BorrowBookHeader(model: viewModel.borrowBook, isResultView: true)
-                .frame(height: 110)
-                .padding()
+                .padding(.horizontal)
             
             VStack(alignment: .leading) {
                 TextWithIconInfo(icon: "mappin.and.ellipse", title: "Địa chỉ giao dịch", content: viewModel.borrowBook.traddingAddress)

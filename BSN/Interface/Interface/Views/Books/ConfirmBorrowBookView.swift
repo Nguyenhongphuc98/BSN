@@ -20,7 +20,7 @@ struct ConfirmBorrowBookView: View {
     var body: some View {
         VStack(alignment: .center) {
             BorrowBookHeader(model: viewModel.borrowBook, isRequest: false)
-                .frame(height: 230)
+                .padding(.horizontal)
             
             VStack(alignment: .leading) {
                 TextWithIconInfo(icon: "mappin.and.ellipse", title: "Địa chỉ giao dịch", content: viewModel.borrowBook.traddingAddress)
@@ -33,7 +33,7 @@ struct ConfirmBorrowBookView: View {
             Spacer()
             
             if !viewModel.borrowBook.seen {
-                HStack {
+                HStack(spacing: 30) {
                     Button(action: {
 //                        viewModel.didDecline { (success) in
 //                            AppManager.shared.selectedIndex = 0

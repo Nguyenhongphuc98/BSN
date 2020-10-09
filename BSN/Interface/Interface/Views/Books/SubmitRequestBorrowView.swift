@@ -17,6 +17,7 @@ struct SubmitRequestBorrowView: View {
         VStack {
             BorrowBookHeader(model: viewModel.model)
                 .padding(.top, 10)
+                .padding(.horizontal)
             
             Form {
                 Section {
@@ -89,27 +90,8 @@ struct BorrowBookHeader: View {
     // If it true, isRequest invalidate
     var isResultView: Bool = false
     
-    var leftAvatar: String {
-        isRequest ? AppManager.shared.currentUser.avatar : model.owner.avatar
-    }
-    
-    var rightAvatar: String {
-        isRequest ? model.owner.avatar : AppManager.shared.currentUser.avatar
-    }
-    
     var body: some View {
         VStack {
-            if !isResultView {
-                HStack(spacing: 30) {
-                    CircleImage(image: leftAvatar, diameter: 60)
-                    
-                    Text("Yêu cầu mượn")
-                        .roboto(size: 18)
-                    
-                    CircleImage(image: rightAvatar, diameter: 60)
-                }
-            }
-            
             HStack(alignment: .center) {
                 Image(model.book.photo, bundle: interfaceBundle)
                     .resizable()
@@ -128,6 +110,15 @@ struct BorrowBookHeader: View {
                         .robotoLight(size: 14)
                     
                     BookStatusText(status: model.status)
+                    
+                    HStack {
+                        Text("\(partnerRole) :")
+                            .robotoLight(size: 14)
+                        
+                        Text(model.owner.displayname)
+                            .robotoBold(size: 13)
+                            .foregroundColor(._primary)
+                    }
                 }
                 
                 Spacer()
@@ -143,10 +134,18 @@ struct BorrowBookHeader: View {
             Separator(color: .init(hex: 0xE2DFDF), height: 1)
                 .padding(.horizontal, 50)
         }
+        .frame(height: height)
     }
     
     var description: String {
         isRequest ? model.statusDes : "\"\(model.statusDes)\""
     }
     
+    var partnerRole: String {
+        isRequest ? "Chủ sở hữu" : "Người mượn"
+    }
+    
+    var height: CGFloat {
+        isResultView ? 115 : 165
+    }
 }
