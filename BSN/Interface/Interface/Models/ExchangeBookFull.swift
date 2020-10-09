@@ -27,7 +27,8 @@ class ExchangeBookFull: BorrowBookDetail {
         traddingAddress = "KTX khu A, DHQG - Khu pho 6, Linh Trung, Thu Duc."
         message = "Cho mình mượn sách nhé!"
         seen = false
-        result = BorrowResult.allCases.randomElement()!
+        //result = BorrowResult.allCases.randomElement()!
+        result = .success
         reason = "Mình đang đi du lịch nên không cho mượn được thời gian này"
         myBook = BorrowBookDetail()
         super.init()

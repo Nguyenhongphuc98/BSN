@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum NotifyAction: Int {
+enum NotifyAction: Int, CaseIterable {
     
     case heart
     
@@ -42,7 +42,7 @@ enum NotifyAction: Int {
         case .borrowSuccess: des = "chấp nhận yêu cầu mượn sách của bạn"
         case .exchangeBook: des = "gửi cho bạn yêu cầu đổi sách"
         case .exchangeFail: des = "từ chối yêu cầu đổi sách của bạn"
-        case .exchangeSuccess: des = "chấp nhận yêu đổi mượn sách của bạn"
+        case .exchangeSuccess: des = "chấp nhận yêu đổi sách của bạn"
         }
         
         return des
@@ -70,7 +70,7 @@ class Notify: Identifiable {
         id = UUID().uuidString
         sender = User()
         receive = User()
-        action = NotifyAction(rawValue: Int.random(in: 0...5))!
+        action = NotifyAction.allCases.randomElement()!
         destinationID = UUID().uuidString
         createDate = randomDate()
         seen = Int.random(in: 0...1) == 0 ? true : false

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// View showing when click notify receive request from others
 struct ConfirmBorrowBookView: View {
     
     var viewModel: ConfirmBorrowBookViewModel = ConfirmBorrowBookViewModel()
@@ -63,7 +64,7 @@ struct ConfirmBorrowBookView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
         .sheet(isPresented: $showDeclineView, content: {
-            DeclineBorrowBookView()
+            DeclineEoBBookView()
         })
     }
     

@@ -21,12 +21,14 @@ struct TextWithIconInfo: View {
                 Image(systemName: icon)
                     .foregroundColor(._primary)
                 Text(title)
+                Spacer()
             }
             
             Text(content)
                 .robotoLight(size: 13)
         }
         .padding(.vertical, 5)
+        .padding(.horizontal)
     }
 }
 

@@ -10,6 +10,7 @@ import SwiftUI
 enum BorrowResult: CaseIterable {
     case success
     case fail
+    case unknown
 }
 
 class BorrowBookFull: BorrowBookDetail {

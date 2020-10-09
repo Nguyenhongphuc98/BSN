@@ -7,16 +7,19 @@
 
 import SwiftUI
 
-struct DeclineBorrowBookView: View {
+// View showing when decline request borrow or exchange book
+struct DeclineEoBBookView: View {
     
     @StateObject var viewModel: DeclineBorrowBookViewModel = DeclineBorrowBookViewModel()
     
     @Environment(\.presentationMode) var presentationMode
     
+    var isBorrow: Bool = true
+    
     var body: some View {
         ZStack(alignment: .top) {
             VStack(spacing: 20) {
-                Text("Từ chối mượn sách")
+                Text("Từ chối \(isBorrow ? "mượn" : "đổi") sách")
                     .robotoBold(size: 18)
                 
                 Text("Hãy để lại lý do bạn từ chối để bạn đọc hiểu chuyện gì đang xảy ra nhé")
@@ -62,6 +65,6 @@ struct DeclineBorrowBookView: View {
 
 struct DeclineBorrowBook_Previews: PreviewProvider {
     static var previews: some View {
-        DeclineBorrowBookView()
+        DeclineEoBBookView()
     }
 }
