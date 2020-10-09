@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Submit request exchange book View
 struct ExchangeBookView: View {
     
     @StateObject var viewModel: ExchangeBookViewModel = ExchangeBookViewModel()

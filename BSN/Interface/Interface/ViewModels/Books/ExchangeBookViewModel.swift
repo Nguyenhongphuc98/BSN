@@ -22,6 +22,7 @@ class ExchangeBookViewModel: ObservableObject {
         exchangeBook = ExchangeBookFull()
         message = ""
         traddingAdress = ""
-        canExchange = Int.random(in: 0..<2) == 1
+        //canExchange = Int.random(in: 0..<2) == 1
+        canExchange = true
     }
 }

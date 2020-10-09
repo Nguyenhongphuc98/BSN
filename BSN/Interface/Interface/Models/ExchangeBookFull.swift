@@ -28,7 +28,7 @@ class ExchangeBookFull: BorrowBookDetail {
         message = "Cho mình mượn sách nhé!"
         seen = false
         //result = BorrowResult.allCases.randomElement()!
-        result = .success
+        result = .fail
         reason = "Mình đang đi du lịch nên không cho mượn được thời gian này"
         myBook = BorrowBookDetail()
         super.init()

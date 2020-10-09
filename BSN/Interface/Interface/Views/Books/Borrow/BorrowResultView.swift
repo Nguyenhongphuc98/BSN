@@ -69,7 +69,7 @@ struct BorrowResultView: View {
     }
     
     var title: String {
-        let success = "Chúc mừng\nbạn đã mượn thành công!"
+        let success = "Chúc mừng\nBạn đã mượn thành công!"
         let fail = "Mượn thất bại!"
         return viewModel.borrowBook.result == .success ? success : fail
     }

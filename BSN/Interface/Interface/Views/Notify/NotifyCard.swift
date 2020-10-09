@@ -44,7 +44,7 @@ struct NotifyCard: View {
             return AnyView(ConfirmExchangeBookView())
             
         case .exchangeFail, .exchangeSuccess:
-            return AnyView(PostDetailView(postID: model.destinationID))
+            return AnyView(ConfirmExchangeBookView(resultView: true))
             
         case .following:
             return AnyView(ProfileView())
