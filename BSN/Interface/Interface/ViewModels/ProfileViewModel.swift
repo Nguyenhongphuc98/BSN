@@ -13,7 +13,10 @@ public class ProfileViewModel: ObservableObject {
     
     public static let shared: ProfileViewModel = ProfileViewModel()
     
+    @Published var posts: [NewsFeed]
+    
     public init() {
         profile = Profile()
+        posts = fakeNews
     }
 }

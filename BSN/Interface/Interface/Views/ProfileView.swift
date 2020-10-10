@@ -16,8 +16,11 @@ public struct ProfileView: View {
     @EnvironmentObject var root: AppManager
     
     public init() { }
-        public var body: some View {
+    
+    public var body: some View {
+        List {
             VStack {
+                Separator(color: .white, height: 3)
                 ZStack(alignment: .leading) {
                     userInfo
                     
@@ -30,7 +33,14 @@ public struct ProfileView: View {
                         Spacer()
                     }
                 }
+                Separator(color: .white, height: 3)
             }
+            .listRowInsets(.zeroNegativeTop)
+            
+            
+            posts
+                .listRowInsets(.zero)
+        }
         
         .edgesIgnoringSafeArea(.all)
         .onAppear(perform: viewAppeared)
@@ -49,7 +59,7 @@ public struct ProfileView: View {
                     .robotoBold(size: 18)
             }
         }
-        .padding()
+        .padding(.horizontal)
     }
     
     var userInfo: some View {
@@ -94,6 +104,15 @@ public struct ProfileView: View {
             actionButton
             
             Spacer()
+        }
+    }
+    
+    var posts: some View {
+        ForEach(viewModel.posts) { p in
+            VStack {
+                NewsFeedCard(model: p)
+                Separator()
+            }
         }
     }
     

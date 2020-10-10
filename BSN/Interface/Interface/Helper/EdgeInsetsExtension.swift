@@ -13,4 +13,7 @@ extension EdgeInsets {
         .init(top: 0, leading: 0, bottom: 0, trailing: 0)
     }
     
+    static var zeroNegativeTop: EdgeInsets {
+        .init(top: -3, leading: 0, bottom: 0, trailing: 0)
+    }
 }
