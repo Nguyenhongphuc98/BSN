@@ -39,7 +39,7 @@ public class AppManager: ObservableObject {
     @Published public var keyboardHeight: CGFloat
     
     public init() {
-        self.selectedIndex = 1
+        self.selectedIndex = 4
         self.logined = true
         self.currentAccount = Account()
         self.currentUser = User()

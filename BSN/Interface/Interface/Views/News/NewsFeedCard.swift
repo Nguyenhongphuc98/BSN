@@ -13,15 +13,12 @@ struct NewsFeedCard: View {
     
     @State private var action: Int? = 0
     
-    var isDetail: Bool = false
+    @State private var presentPhoto: Bool = false
     
-    var didTapPhoto: (() -> Void)?
+    var isDetail: Bool = false
     
     var body: some View {
         VStack {
-//            NavigationLink(destination: PostDetailView(post: model), tag: 1, selection: $action) {
-//                EmptyView()
-//            }
             NavigationLink(destination: PostDetailView(postID: "HEHE"), tag: 1, selection: $action) {
                 EmptyView()
             }
@@ -80,7 +77,7 @@ struct NewsFeedCard: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(maxHeight: 200)
                     .onTapGesture {
-                        self.didTapPhoto?()
+                        self.presentPhoto.toggle()
                     }
                     .clipped()
                     .padding(2)
@@ -90,6 +87,9 @@ struct NewsFeedCard: View {
         }
         .padding()
         .background(Color.white)
+        .fullScreenCover(isPresented: $presentPhoto) {
+            ViewFullPhoto(newFeed: model)
+        }
     }
     
     private var actionComponent: some View {

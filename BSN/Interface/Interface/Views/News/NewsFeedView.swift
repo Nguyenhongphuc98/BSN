@@ -14,9 +14,7 @@ public struct NewsFeedView: View {
     @StateObject var viewModel: NewsFeedViewModel = NewsFeedViewModel()
     
     @State private var presentCPV: Bool = false
-    
-    @State private var presentPhoto: Bool = false
-    
+  
     public init() {
         
     }
@@ -32,10 +30,7 @@ public struct NewsFeedView: View {
             List {
                 ForEach(viewModel.newsData) { news in
                     VStack {
-                        NewsFeedCard(model: news, didTapPhoto: {
-                            self.viewModel.selectedNews = news
-                            presentPhoto.toggle()
-                        })
+                        NewsFeedCard(model: news)
                         .onAppear(perform: {
                             self.viewModel.loadMoreIfNeeded(item: news)
                         })
@@ -46,9 +41,6 @@ public struct NewsFeedView: View {
                 .listRowInsets(.zero)
             }
             .onAppear(perform: self.viewDidAppear)
-            .fullScreenCover(isPresented: $presentPhoto) {
-                ViewFullPhoto(newFeed: viewModel.selectedNews!)
-            }
             
             // Loading view
             if viewModel.isLoadingNews {
@@ -80,12 +72,12 @@ public struct NewsFeedView: View {
     }
     
     func viewDidAppear() {
-        if root.selectedIndex == RootIndex.news.rawValue {
-            root.navBarTitle = "Bài viết"
-            root.navBarHidden = true
-        }
-        
-        print("news-apeard")
+//        if root.selectedIndex == RootIndex.news.rawValue {
+//            root.navBarTitle = "Bài viết"
+//            root.navBarHidden = true
+//        }
+//
+//        print("news-apeard")
     }
 }
 

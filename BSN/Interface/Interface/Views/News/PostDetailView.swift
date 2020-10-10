@@ -11,8 +11,6 @@ struct PostDetailView: View {
     
     @StateObject private var viewModel: PostDetailViewModel = PostDetailViewModel()
     
-    @State private var presentPhoto: Bool = false
-    
     @Environment(\.presentationMode) var presentationMode
     
     @State private var postID: String = ""
@@ -48,9 +46,6 @@ struct PostDetailView: View {
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
-        .fullScreenCover(isPresented: $presentPhoto) {
-            ViewFullPhoto(newFeed: viewModel.post!)
-        }
         .onAppear {
             print("Post detail apeared")
             viewModel.fetchPost(by: postID) { (result) in
@@ -76,9 +71,7 @@ struct PostDetailView: View {
         ZStack(alignment: .bottom) {
             ScrollView(.vertical) {
                 // Main post
-                NewsFeedCard(model: viewModel.post!, isDetail: true, didTapPhoto: {
-                    presentPhoto.toggle()
-                })
+                NewsFeedCard(model: viewModel.post!, isDetail: true)
                 
                 Separator()
                 

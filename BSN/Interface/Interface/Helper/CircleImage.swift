@@ -39,7 +39,7 @@ public struct CircleImageOptions: View {
     var shadowy: CGFloat
     
     public init(image: String = "avatar",
-         strokeColor: Color = Color._online, strokeWidth: CGFloat = 3,
+         strokeColor: Color = Color.white, strokeWidth: CGFloat = 3,
          diameter: CGFloat = 50,
          hasShadow: Bool = false,
          shadowx: CGFloat = 1,

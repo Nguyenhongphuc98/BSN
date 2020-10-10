@@ -17,81 +17,92 @@ public struct ProfileView: View {
     
     public init() { }
         public var body: some View {
-        ZStack(alignment: .leading) {
             VStack {
-                // Cover
-                Image(viewModel.profile.cover, bundle: interfaceBundle)
-                    .resizable()
-                    .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
-                    .frame(height: 200)
-                    .clipped()
-                
-                // Name and description
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(viewModel.profile.user.displayname)
-                            .pattaya(size: 18)
-                        
-                        HStack {
-                            Image(systemName: "mappin.and.ellipse")
-                            
-                            Text(viewModel.profile.location)
-                                .robotoLight(size: 13)
-                                
-                        }
-                        
-                        Rectangle()
-                            .fill(Color.gray)
-                            .frame(width: 50, height: 2)
-                            .padding(.vertical)
-                    }
-                    .padding(.top)
-                    .padding(.horizontal)
+                ZStack(alignment: .leading) {
+                    userInfo
                     
-                    Spacer()
-                }
-                
-                Text(viewModel.profile.description)
-                    .robotoLightItalic(size: 13)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
-                
-                // Action button
-                HStack {
-                    BButton(isActive: $showPosts) {
-                        Text("Bài viết")
-                            .robotoBold(size: 18)
-                    }
-
-                    BButton(isActive: $showPosts, invert: true) {
-                        Text("Tủ sách")
-                            .robotoBold(size: 18)
+                    // Avatar
+                    VStack() {
+                        CircleImageOptions(image: viewModel.profile.user.avatar, diameter: 80)
+                            .padding(.top, 115)
+                            .padding(.leading)
+                        
+                        Spacer()
                     }
                 }
-                .padding()
-                
-                Spacer()
             }
-            
-            // Avatar
-            VStack() {
-                CircleImageOptions(image: viewModel.profile.user.avatar, diameter: 80)
-                    .padding(.top, 135)
-                    .padding(.leading)
-                
-                Spacer()
-            }
-        }
+        
         .edgesIgnoringSafeArea(.all)
         .onAppear(perform: viewAppeared)
     }
     
-    func viewAppeared() {
-        if root.selectedIndex == RootIndex.profile.rawValue {
-            root.navBarTitle = "Trang cá nhân"
-            root.navBarHidden = true
+    var actionButton: some View {
+        // Action button
+        HStack {
+            BButton(isActive: $showPosts) {
+                Text("Bài viết")
+                    .robotoBold(size: 18)
+            }
+
+            BButton(isActive: $showPosts, invert: true) {
+                Text("Tủ sách")
+                    .robotoBold(size: 18)
+            }
         }
-        print("profile-apeard")
+        .padding()
+    }
+    
+    var userInfo: some View {
+        VStack {
+            // Cover
+            Image(viewModel.profile.cover, bundle: interfaceBundle)
+                .resizable()
+                .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                .frame(height: 180)
+                .clipped()
+            
+            // Name and description
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(viewModel.profile.user.displayname)
+                        .pattaya(size: 18)
+                    
+                    HStack {
+                        Image(systemName: "mappin.and.ellipse")
+                        
+                        Text(viewModel.profile.location)
+                            .robotoLight(size: 13)
+                            
+                    }
+                    
+                    Rectangle()
+                        .fill(Color.gray)
+                        .frame(width: 50, height: 2)
+                        .padding(.vertical)
+                }
+                .padding(.top)
+                .padding(.horizontal)
+                
+                Spacer()
+            }
+            
+            Text(viewModel.profile.description)
+                .robotoLightItalic(size: 13)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+            
+            actionButton
+            
+            Spacer()
+        }
+    }
+    
+    func viewAppeared() {
+//        if root.selectedIndex == RootIndex.profile.rawValue {
+//            root.navBarTitle = "Trang cá nhân"
+//            root.navBarHidden = true
+//        }
+//        print("profile-apeard")
     }
 }
 
