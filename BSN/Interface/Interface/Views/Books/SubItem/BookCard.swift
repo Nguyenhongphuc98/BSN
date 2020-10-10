@@ -11,9 +11,11 @@ struct BookCard: View {
     
     var model: Book
     
+    var navToMyBook: Bool = false
+    
     var body: some View {
         NavigationLink(
-            destination: BookDetailView(),
+            destination: navigateView,
             label: {
                 VStack(alignment: .center) {
                     Image(model.photo, bundle: interfaceBundle)
@@ -44,6 +46,10 @@ struct BookCard: View {
                 .shadow(color: Color.black.opacity(0.25), radius: 4, x: 2, y: 2)
                 .foregroundColor(.black)
             })
+    }
+    
+    var navigateView: AnyView {
+        navToMyBook ? .init(MyBookDetailView()) : .init(BookDetailView())
     }
 }
 

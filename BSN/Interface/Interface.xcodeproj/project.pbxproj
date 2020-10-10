@@ -65,6 +65,12 @@
 		8401C9C9253067EA00A722CE /* ExchangeBook4C.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C9C8253067EA00A722CE /* ExchangeBook4C.swift */; };
 		8401C9D225306AAC00A722CE /* ExchangeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C9D125306AAC00A722CE /* ExchangeListView.swift */; };
 		8401C9D625306AE500A722CE /* ExchangeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C9D525306AE500A722CE /* ExchangeListViewModel.swift */; };
+		8401C9F42531AB7100A722CE /* MyBookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C9F32531AB7100A722CE /* MyBookDetailView.swift */; };
+		8401C9FD2531ABF200A722CE /* MyBookDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C9FC2531ABF200A722CE /* MyBookDetailViewModel.swift */; };
+		8401CA012531AE6A00A722CE /* MyBookDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA002531AE6A00A722CE /* MyBookDetail.swift */; };
+		8401CA072531B0C300A722CE /* BookStateText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA062531B0C300A722CE /* BookStateText.swift */; };
+		8401CA0B2531B48D00A722CE /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA0A2531B48D00A722CE /* Note.swift */; };
+		8401CA0F2531B57800A722CE /* NoteCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA0E2531B57800A722CE /* NoteCard.swift */; };
 		8414F243252187C3003CF799 /* NewsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F242252187C3003CF799 /* NewsFeed.swift */; };
 		8414F24D25218D8E003CF799 /* NewsFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F24C25218D8E003CF799 /* NewsFeedCard.swift */; };
 		8414F2532521904B003CF799 /* CountTimeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F2522521904B003CF799 /* CountTimeText.swift */; };
@@ -208,6 +214,12 @@
 		8401C9C8253067EA00A722CE /* ExchangeBook4C.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeBook4C.swift; sourceTree = "<group>"; };
 		8401C9D125306AAC00A722CE /* ExchangeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeListView.swift; sourceTree = "<group>"; };
 		8401C9D525306AE500A722CE /* ExchangeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeListViewModel.swift; sourceTree = "<group>"; };
+		8401C9F32531AB7100A722CE /* MyBookDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBookDetailView.swift; sourceTree = "<group>"; };
+		8401C9FC2531ABF200A722CE /* MyBookDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBookDetailViewModel.swift; sourceTree = "<group>"; };
+		8401CA002531AE6A00A722CE /* MyBookDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBookDetail.swift; sourceTree = "<group>"; };
+		8401CA062531B0C300A722CE /* BookStateText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookStateText.swift; sourceTree = "<group>"; };
+		8401CA0A2531B48D00A722CE /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		8401CA0E2531B57800A722CE /* NoteCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCard.swift; sourceTree = "<group>"; };
 		8414F242252187C3003CF799 /* NewsFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeed.swift; sourceTree = "<group>"; };
 		8414F24C25218D8E003CF799 /* NewsFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedCard.swift; sourceTree = "<group>"; };
 		8414F2522521904B003CF799 /* CountTimeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountTimeText.swift; sourceTree = "<group>"; };
@@ -339,6 +351,7 @@
 				8414F2522521904B003CF799 /* CountTimeText.swift */,
 				8401C946252C6E7700A722CE /* BookStatusText.swift */,
 				8401C979252F006D00A722CE /* TextWithIconInfo.swift */,
+				8401CA062531B0C300A722CE /* BookStateText.swift */,
 			);
 			path = RichText;
 			sourceTree = "<group>";
@@ -413,6 +426,8 @@
 				8401C96D252EC32000A722CE /* BorrowBookFull.swift */,
 				8401C9A12530023500A722CE /* ExchangeBookFull.swift */,
 				8401C9C8253067EA00A722CE /* ExchangeBook4C.swift */,
+				8401CA002531AE6A00A722CE /* MyBookDetail.swift */,
+				8401CA0A2531B48D00A722CE /* Note.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -425,6 +440,24 @@
 				8401C928252C0A1000A722CE /* RatingCriteria.swift */,
 			);
 			path = Rating;
+			sourceTree = "<group>";
+		};
+		8401C9F02531AB3600A722CE /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				84AA9680251F928A0029BB1E /* ProfileView.swift */,
+				8401C9F32531AB7100A722CE /* MyBookDetailView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		8401C9F92531ABE200A722CE /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				84AA95EE251B45320029BB1E /* ProfileViewModel.swift */,
+				8401C9FC2531ABF200A722CE /* MyBookDetailViewModel.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		8436100725246F9F009FF4BF /* Modifier */ = {
@@ -497,8 +530,8 @@
 				843E5244252723AD00B16995 /* Notify */,
 				843E52432527235100B16995 /* News */,
 				843E5224252707F300B16995 /* Chat */,
+				8401C9F02531AB3600A722CE /* Profile */,
 				84AA95AA251AF0980029BB1E /* Components */,
-				84AA9680251F928A0029BB1E /* ProfileView.swift */,
 				845DB4C3252374190019C29B /* BookCategoryView.swift */,
 				845DB4CF252385240019C29B /* ViewFullPhoto.swift */,
 				84FB37102525622000B8581F /* ExceptionView.swift */,
@@ -527,6 +560,7 @@
 				8401C8C4252AD6B500A722CE /* BookGrid.swift */,
 				8401C8C8252B045400A722CE /* Segment.swift */,
 				8401C969252EB4AA00A722CE /* InputWithTitle.swift */,
+				8401CA0E2531B57800A722CE /* NoteCard.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -535,7 +569,7 @@
 			isa = PBXGroup;
 			children = (
 				8401C95E252EAABA00A722CE /* News */,
-				84AA95EE251B45320029BB1E /* ProfileViewModel.swift */,
+				8401C9F92531ABE200A722CE /* Profile */,
 				847BBAC52521EEB900E0500D /* AppManager.swift */,
 				84B964F72525CBBD00F37571 /* NotifyViewModel.swift */,
 				8401C962252EAB4A00A722CE /* Chat */,
@@ -777,6 +811,7 @@
 				8401C99E252FFEFF00A722CE /* ExchangeBookView.swift in Sources */,
 				8401C8AB252AB45700A722CE /* SearchViewViewModel.swift in Sources */,
 				8401C97E252F037A00A722CE /* DateExtension.swift in Sources */,
+				8401CA0B2531B48D00A722CE /* Note.swift in Sources */,
 				8414F25725219B7E003CF799 /* StickyButton.swift in Sources */,
 				8401C93A252C664800A722CE /* BorrowBook.swift in Sources */,
 				84411A162523310B00AE31D8 /* QuoteEditor.swift in Sources */,
@@ -808,6 +843,7 @@
 				8436100425246A8C009FF4BF /* PostDetailViewModel.swift in Sources */,
 				8401C96E252EC32100A722CE /* BorrowBookFull.swift in Sources */,
 				8401C9D225306AAC00A722CE /* ExchangeListView.swift in Sources */,
+				8401C9FD2531ABF200A722CE /* MyBookDetailViewModel.swift in Sources */,
 				84AA95EF251B45320029BB1E /* ProfileViewModel.swift in Sources */,
 				843E523C252714A900B16995 /* UIApplicationExtension.swift in Sources */,
 				8401C86E252758BD00A722CE /* InChatView.swift in Sources */,
@@ -823,6 +859,7 @@
 				8401C9BC2530659800A722CE /* ExchangeBookCell.swift in Sources */,
 				8401C947252C6E7700A722CE /* BookStatusText.swift in Sources */,
 				844119FD2522E80500AE31D8 /* EdgeInsetsExtension.swift in Sources */,
+				8401CA072531B0C300A722CE /* BookStateText.swift in Sources */,
 				8401C8802528243A00A722CE /* NewChatView.swift in Sources */,
 				845DB4BA252369950019C29B /* StrokeBorderStyle.swift in Sources */,
 				8401C901252B2E9500A722CE /* BaseButtonStyle.swift in Sources */,
@@ -831,6 +868,7 @@
 				8401C94F252C71D100A722CE /* BorrowListViewModel.swift in Sources */,
 				8414F25B2521A1B1003CF799 /* IntExension.swift in Sources */,
 				84AA95F3251B453F0029BB1E /* Profile.swift in Sources */,
+				8401C9F42531AB7100A722CE /* MyBookDetailView.swift in Sources */,
 				845DB4CC25237ED20019C29B /* ImagePicker.swift in Sources */,
 				84AA9697251F99470029BB1E /* CircleImage.swift in Sources */,
 				8401C94B252C71AA00A722CE /* BorrowListView.swift in Sources */,
@@ -857,6 +895,7 @@
 				8401C8DD252B1B7500A722CE /* BookDetailView.swift in Sources */,
 				8401C8CD252B09B900A722CE /* ExchangeBookCard.swift in Sources */,
 				8401C9A22530023500A722CE /* ExchangeBookFull.swift in Sources */,
+				8401CA012531AE6A00A722CE /* MyBookDetail.swift in Sources */,
 				8401C966252EAB9A00A722CE /* BorrowBookViewModel.swift in Sources */,
 				8401C9B22530514800A722CE /* ConfirmExchangeBookView.swift in Sources */,
 				843E5226252708AD00B16995 /* ChatCell.swift in Sources */,
@@ -878,6 +917,7 @@
 				84AA960B251B469F0029BB1E /* User.swift in Sources */,
 				8401C929252C0A1000A722CE /* RatingCriteria.swift in Sources */,
 				845DB4C8252377B90019C29B /* BookCategoryViewModel.swift in Sources */,
+				8401CA0F2531B57800A722CE /* NoteCard.swift in Sources */,
 				8401C87A2528129300A722CE /* SearchUserItem.swift in Sources */,
 				8401C8FD252B252F00A722CE /* BookDetail.swift in Sources */,
 				84B964EC2525C6BB00F37571 /* NotifyView.swift in Sources */,

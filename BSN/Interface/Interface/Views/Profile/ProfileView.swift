@@ -110,7 +110,7 @@ public struct ProfileView: View {
                 posts
                     .tag(0)
                 
-                BookGrid(models: viewModel.books, hasFooter: true)
+                BookGrid(models: viewModel.books, hasFooter: true, isOwner: true)
                     .tag(1)
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))

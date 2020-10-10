@@ -13,7 +13,7 @@ struct BookGrid: View {
     
     var hasFooter: Bool = false
     
-    var isOwner: Bool = true
+    var isOwner: Bool = false
     
     var columns: [GridItem] = [
         GridItem(.flexible(), spacing: 10),
@@ -28,7 +28,7 @@ struct BookGrid: View {
             LazyVGrid(columns: columns, content: {
                 ForEach(models) { book in
                     VStack {
-                        BookCard(model: book)
+                        BookCard(model: book, navToMyBook: isOwner)
                             .padding(.bottom, 5)
                             .padding(.trailing, 3)
                         

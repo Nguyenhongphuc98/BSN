@@ -12,6 +12,7 @@ enum BookState {
     case borrowed
     case available //to be borrowed
     case reading
+    case exchanged
     case unknown
 }
 
