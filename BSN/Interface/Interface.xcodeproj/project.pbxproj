@@ -112,7 +112,6 @@
 		84AA967D251F92530029BB1E /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84AA967C251F92530029BB1E /* Media.xcassets */; };
 		84AA9681251F928A0029BB1E /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA9680251F928A0029BB1E /* ProfileView.swift */; };
 		84AA9685251F96320029BB1E /* GlobalVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA9684251F96320029BB1E /* GlobalVariable.swift */; };
-		84AA9689251F96CC0029BB1E /* BButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA9688251F96CC0029BB1E /* BButton.swift */; };
 		84AA968D251F96F70029BB1E /* FullRadiusShadowButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA968C251F96F70029BB1E /* FullRadiusShadowButtonStyle.swift */; };
 		84AA9697251F99470029BB1E /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA9696251F99470029BB1E /* CircleImage.swift */; };
 		84AA96AD252054820029BB1E /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AA96A0252054820029BB1E /* Roboto-BoldItalic.ttf */; };
@@ -256,7 +255,6 @@
 		84AA967C251F92530029BB1E /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		84AA9680251F928A0029BB1E /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		84AA9684251F96320029BB1E /* GlobalVariable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVariable.swift; sourceTree = "<group>"; };
-		84AA9688251F96CC0029BB1E /* BButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BButton.swift; sourceTree = "<group>"; };
 		84AA968C251F96F70029BB1E /* FullRadiusShadowButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullRadiusShadowButtonStyle.swift; sourceTree = "<group>"; };
 		84AA9696251F99470029BB1E /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
 		84AA96A0252054820029BB1E /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -476,7 +474,6 @@
 		84411A0C2523299D00AE31D8 /* Button */ = {
 			isa = PBXGroup;
 			children = (
-				84AA9688251F96CC0029BB1E /* BButton.swift */,
 				84AA968C251F96F70029BB1E /* FullRadiusShadowButtonStyle.swift */,
 				8414F25625219B7E003CF799 /* StickyButton.swift */,
 				845DB4B9252369950019C29B /* StrokeBorderStyle.swift */,
@@ -865,7 +862,6 @@
 				843E5226252708AD00B16995 /* ChatCell.swift in Sources */,
 				843E5238252713CB00B16995 /* SearchBar.swift in Sources */,
 				8401C87625275EBD00A722CE /* InChatViewModel.swift in Sources */,
-				84AA9689251F96CC0029BB1E /* BButton.swift in Sources */,
 				84360FFC2524409C009FF4BF /* ScreenExtension.swift in Sources */,
 				84AA95C5251B01C80029BB1E /* ColorExtension.swift in Sources */,
 				8401C8C5252AD6B500A722CE /* BookGrid.swift in Sources */,

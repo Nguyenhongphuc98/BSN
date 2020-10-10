@@ -12,6 +12,12 @@ enum ButtonSize {
     case medium
     case large
     
+    // Medium but expand to horizontal more than usual
+    case mediumH
+    
+    // Large but expand to horizontal more than usual
+    case largeH
+    
     func getH() -> CGFloat {
         switch self {
         case .small:
@@ -20,6 +26,10 @@ enum ButtonSize {
             return 20
         case .large:
             return 30
+        case .mediumH:
+            return 40
+        case .largeH:
+            return 40
         }
     }
     
@@ -27,9 +37,9 @@ enum ButtonSize {
         switch self {
         case .small:
             return 4
-        case .medium:
+        case .medium, .mediumH:
             return 7
-        case .large:
+        case .large, .largeH:
             return 12
         }
     }

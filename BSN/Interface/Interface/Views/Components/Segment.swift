@@ -11,7 +11,14 @@ struct Segment: View {
     
     var tabNames: [String]
     
-    @Binding var focusIndex: Int
+    @Binding var focusIndex: Int {
+        didSet {
+            print("did set")
+            didChangeIndex?()
+        }
+    }
+    
+    var didChangeIndex: (() -> Void)?
     
     var body: some View {
         HStack(spacing: 0){
@@ -30,6 +37,7 @@ struct Segment: View {
                         withAnimation(.default){
                             
                             self.focusIndex = index
+                            didChangeIndex?()
                         }
                     }
             }

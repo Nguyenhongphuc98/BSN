@@ -11,55 +11,38 @@ public struct ProfileView: View {
     
     @ObservedObject var viewModel: ProfileViewModel = ProfileViewModel.shared
 
-    @State var showPosts: Bool = true
+    @State private var selectedSegment: Int = 0
     
     @EnvironmentObject var root: AppManager
     
     public init() { }
     
     public var body: some View {
-        List {
-            VStack {
-                Separator(color: .white, height: 3)
-                ZStack(alignment: .leading) {
-                    userInfo
-                    
-                    // Avatar
-                    VStack() {
-                        CircleImageOptions(image: viewModel.profile.user.avatar, diameter: 80)
-                            .padding(.top, 115)
-                            .padding(.leading)
+        ScrollView {
+            ScrollViewReader { value in
+                VStack {
+                    ZStack(alignment: .leading) {
+                        userInfo
                         
-                        Spacer()
+                        // Avatar
+                        VStack() {
+                            CircleImageOptions(image: viewModel.profile.user.avatar, diameter: 80)
+                                .padding(.top, 115)
+                                .padding(.leading)
+                            
+                            Spacer()
+                        }
                     }
+                    
+                    dinamicContent(proxy: value)
+                        .frame(height: UIScreen.screenHeight)
+                        
+                        
                 }
-                Separator(color: .white, height: 3)
             }
-            .listRowInsets(.zeroNegativeTop)
-            
-            
-            posts
-                .listRowInsets(.zero)
         }
-        
         .edgesIgnoringSafeArea(.all)
         .onAppear(perform: viewAppeared)
-    }
-    
-    var actionButton: some View {
-        // Action button
-        HStack {
-            BButton(isActive: $showPosts) {
-                Text("Bài viết")
-                    .robotoBold(size: 18)
-            }
-
-            BButton(isActive: $showPosts, invert: true) {
-                Text("Tủ sách")
-                    .robotoBold(size: 18)
-            }
-        }
-        .padding(.horizontal)
     }
     
     var userInfo: some View {
@@ -88,7 +71,6 @@ public struct ProfileView: View {
                     Rectangle()
                         .fill(Color.gray)
                         .frame(width: 50, height: 2)
-                        .padding(.vertical)
                 }
                 .padding(.top)
                 .padding(.horizontal)
@@ -100,19 +82,38 @@ public struct ProfileView: View {
                 .robotoLightItalic(size: 13)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
-            
-            actionButton
+                .id("des")
             
             Spacer()
         }
     }
     
     var posts: some View {
-        ForEach(viewModel.posts) { p in
-            VStack {
-                NewsFeedCard(model: p)
-                Separator()
+        List {
+            ForEach(viewModel.posts) { p in
+                VStack {
+                    NewsFeedCard(model: p)
+                    Separator()
+                }
             }
+        }
+    }
+    
+    func dinamicContent(proxy: ScrollViewProxy) -> some View {
+        VStack {
+            Segment(tabNames: ["   Bài viết   ", "   Tủ sách   "], focusIndex: $selectedSegment) {
+                proxy.scrollTo("des", anchor: .top)
+            }
+                .padding(.vertical, 5)
+            
+            TabView(selection: self.$selectedSegment) {
+                posts
+                    .tag(0)
+                
+                BookGrid(models: viewModel.books, hasFooter: true)
+                    .tag(1)
+            }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         }
     }
     

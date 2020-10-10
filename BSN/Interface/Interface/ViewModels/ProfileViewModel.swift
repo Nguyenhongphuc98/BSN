@@ -15,8 +15,11 @@ public class ProfileViewModel: ObservableObject {
     
     @Published var posts: [NewsFeed]
     
+    @Published var books: [Book]
+    
     public init() {
         profile = Profile()
         posts = fakeNews
+        books = [Book(), Book(), Book(), Book(), Book(), Book(), Book()]
     }
 }
