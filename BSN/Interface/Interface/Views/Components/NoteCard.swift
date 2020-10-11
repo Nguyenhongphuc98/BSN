@@ -13,9 +13,12 @@ struct NoteCard: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(model.createDate.getDate(format: "MMM d, yyyy"))
-                .robotoBold(size: 17)
-                .foregroundColor(._primary)
+            HStack {
+                Text(model.createDate.getDate(format: "MMM d, yyyy"))
+                    .robotoBold(size: 17)
+                    .foregroundColor(._primary)
+                Spacer()
+            }
                 
             Text(model.content)
         }

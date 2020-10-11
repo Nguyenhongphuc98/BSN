@@ -11,6 +11,8 @@ struct MyBookDetailView: View {
     
     @StateObject var viewModel: MyBookDetailViewModel = MyBookDetailViewModel()
     
+    @State private var showAddNoteView: Bool = false
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 10) {
@@ -42,7 +44,7 @@ struct MyBookDetailView: View {
         DisclosureGroup(
             content: {
                 VStack {
-                    ForEach(viewModel.model.notes) { note in
+                    ForEach(viewModel.notes) { note in
                         NoteCard(model: note)
                             .padding(.vertical, 5)
                             .padding(.horizontal, 5)
@@ -52,6 +54,7 @@ struct MyBookDetailView: View {
                         Spacer()
                         Button(action: {
                             print("did click new note")
+                            showAddNoteView.toggle()
                         }, label: {
                             Image(systemName: "plus")
                                 .font(.system(size: 35))
@@ -63,6 +66,9 @@ struct MyBookDetailView: View {
                     }
                     .padding(.horizontal)
                     .padding(.bottom)
+                    .sheet(isPresented: $showAddNoteView, content: {
+                        AddNoteView().environmentObject(viewModel)
+                    })
                 }
             },
             label: {

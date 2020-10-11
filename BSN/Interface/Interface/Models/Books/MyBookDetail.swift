@@ -15,13 +15,10 @@ class MyBookDetail: BookDetail {
     
     var statusDes: String
     
-    var notes: [Note]
-    
     override init() {
         statusDes = "Sách tương đối mới, chỉ bị mất 1 tờ số 25"
         state = .available
         status = .new
-        notes = [Note(), Note()]
         super.init()
     }
 }

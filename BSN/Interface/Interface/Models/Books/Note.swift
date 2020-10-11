@@ -20,4 +20,10 @@ class Note: Identifiable {
         createDate = randomDate()
         content = randomComment()
     }
+    
+    init(content: String) {
+        id = UUID().uuidString
+        createDate = randomDate()
+        self.content = content
+    }
 }
