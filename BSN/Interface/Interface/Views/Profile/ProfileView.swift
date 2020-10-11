@@ -97,6 +97,7 @@ public struct ProfileView: View {
                     Separator()
                 }
             }
+            .listRowInsets(.zero)
         }
     }
     
