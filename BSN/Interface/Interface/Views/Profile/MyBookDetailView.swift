@@ -21,14 +21,18 @@ struct MyBookDetailView: View {
                         .padding(.top, 10)
                     
                     Button(action: {
-                        print("did click new note")
+                        print("did click edit book")
                     }, label: {
-                        Image(systemName: "pencil")
-                            .font(.system(size: 25))
-                            .padding(10)
-                            .background(Color.init(hex: 0xEFEFEF))
-                            .cornerRadius(25)
-                            .shadow(radius: 3)
+                        NavigationLink(
+                            destination: UpdateBookView(),
+                            label: {
+                                Image(systemName: "pencil")
+                                    .font(.system(size: 25))
+                                    .padding(10)
+                                    .background(Color.init(hex: 0xEFEFEF))
+                                    .cornerRadius(25)
+                                    .shadow(radius: 3)
+                            })
                     })
                 }
                 
@@ -110,6 +114,8 @@ struct MyBookDetailViewHeader: View {
     
     @State var expandDes: Bool = false
     
+    var showDes: Bool = true
+    
     var body: some View {
         VStack {
             HStack(alignment: .center) {
@@ -137,25 +143,30 @@ struct MyBookDetailViewHeader: View {
                 Spacer()
             }
             
-            // Description
-            Group {
-                Text(model.description)
-                    .robotoItalic(size: 15)
-                    .foregroundColor(.init(hex: 0x404040))
-                +
-                Text(actionText)
-                    .robotoMedium(size: 14)
-                    .foregroundColor(._primary)
+            if showDes {
+                des
             }
-            .frame(maxHeight: expandDes ? 200 : 100)
-            .onTapGesture(perform: {
-                expandDes.toggle()
-            })
-            
         }
     }
     
     var actionText: String {
         expandDes ? " (Thu gọn)" : " (Mở rộng)"
+    }
+    
+    var des: some View {
+        // Description
+        Group {
+            Text(model.description)
+                .robotoItalic(size: 15)
+                .foregroundColor(.init(hex: 0x404040))
+            +
+            Text(actionText)
+                .robotoMedium(size: 14)
+                .foregroundColor(._primary)
+        }
+        .frame(maxHeight: expandDes ? 200 : 100)
+        .onTapGesture(perform: {
+            expandDes.toggle()
+        })
     }
 }

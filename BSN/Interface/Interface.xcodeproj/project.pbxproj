@@ -76,6 +76,7 @@
 		8401CA1B25329FC300A722CE /* SearchBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA1A25329FC300A722CE /* SearchBookViewModel.swift */; };
 		8401CA212532B07E00A722CE /* SubmitAddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA202532B07E00A722CE /* SubmitAddBookView.swift */; };
 		8401CA252532B0BC00A722CE /* SubmitAddBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA242532B0BC00A722CE /* SubmitAddBookViewModel.swift */; };
+		8401CA2F2532FB2C00A722CE /* UpdateBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA2E2532FB2C00A722CE /* UpdateBookView.swift */; };
 		8414F243252187C3003CF799 /* NewsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F242252187C3003CF799 /* NewsFeed.swift */; };
 		8414F24D25218D8E003CF799 /* NewsFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F24C25218D8E003CF799 /* NewsFeedCard.swift */; };
 		8414F2532521904B003CF799 /* CountTimeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F2522521904B003CF799 /* CountTimeText.swift */; };
@@ -230,6 +231,7 @@
 		8401CA1A25329FC300A722CE /* SearchBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookViewModel.swift; sourceTree = "<group>"; };
 		8401CA202532B07E00A722CE /* SubmitAddBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitAddBookView.swift; sourceTree = "<group>"; };
 		8401CA242532B0BC00A722CE /* SubmitAddBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitAddBookViewModel.swift; sourceTree = "<group>"; };
+		8401CA2E2532FB2C00A722CE /* UpdateBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBookView.swift; sourceTree = "<group>"; };
 		8414F242252187C3003CF799 /* NewsFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeed.swift; sourceTree = "<group>"; };
 		8414F24C25218D8E003CF799 /* NewsFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedCard.swift; sourceTree = "<group>"; };
 		8414F2522521904B003CF799 /* CountTimeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountTimeText.swift; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 				8401CA12253294D600A722CE /* AddNoteView.swift */,
 				8401CA1625329C5700A722CE /* SearchAddBookView.swift */,
 				8401CA202532B07E00A722CE /* SubmitAddBookView.swift */,
+				8401CA2E2532FB2C00A722CE /* UpdateBookView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -860,6 +863,7 @@
 				8436100425246A8C009FF4BF /* PostDetailViewModel.swift in Sources */,
 				8401C96E252EC32100A722CE /* BorrowBookFull.swift in Sources */,
 				8401C9D225306AAC00A722CE /* ExchangeListView.swift in Sources */,
+				8401CA2F2532FB2C00A722CE /* UpdateBookView.swift in Sources */,
 				8401C9FD2531ABF200A722CE /* MyBookDetailViewModel.swift in Sources */,
 				84AA95EF251B45320029BB1E /* ProfileViewModel.swift in Sources */,
 				843E523C252714A900B16995 /* UIApplicationExtension.swift in Sources */,

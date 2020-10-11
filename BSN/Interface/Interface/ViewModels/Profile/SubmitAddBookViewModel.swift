@@ -21,4 +21,8 @@ class SubmitAddBookViewModel: ObservableObject {
     func addBook(complete: @escaping (Bool) -> Void) {
         complete(true)
     }
+    
+    func updateBook(complete: @escaping (Bool) -> Void) {
+        complete(true)
+    }
 }
