@@ -33,21 +33,7 @@ struct BookGrid: View {
                             .padding(.trailing, 3)
                         
                         if hasFooter {
-                            if isOwner {
-                                Button(action: {
-                                    print("did click borrow book")
-                                }, label: {
-                                    Text(" Đổi sách  ")
-                                })
-                                .buttonStyle(BaseButtonStyle(size: .mediumH))
-                            } else {
-                                Button(action: {
-                                    print("did click exchange book")
-                                }, label: {
-                                    Text("Mượn sách")
-                                })
-                                .buttonStyle(BaseButtonStyle(size: .mediumH))
-                            }
+                            footer
                         }
                     }
                     .padding(.bottom)
@@ -56,6 +42,30 @@ struct BookGrid: View {
         }
         .padding(.horizontal)
         .background(Color.white)
+    }
+    
+    var footer: some View {
+        Group {
+            if isOwner {
+                Button(action: {
+                    print("did click exchange book")
+                }, label: {
+                    NavigationLink(
+                        destination: SearchAddBookView(justSearchInStore: true),
+                        label: {
+                            Text(" Đổi sách  ")
+                        })
+                })
+                .buttonStyle(BaseButtonStyle(size: .mediumH))
+            } else {
+                Button(action: {
+                    print("did click borrow book")
+                }, label: {
+                    Text("Mượn sách")
+                })
+                .buttonStyle(BaseButtonStyle(size: .mediumH))
+            }
+        }
     }
 }
 

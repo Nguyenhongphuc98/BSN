@@ -7,15 +7,21 @@
 
 import SwiftUI
 
+// Search any book exists on Book 'Store'
+// Use in search to add book
+// Use in search to find book exchange
 struct SearchAddBookView: View {
     
     @StateObject var viewModel: SearchBookViewModel = SearchBookViewModel()
     
     @State private var searchFound: Bool = false
     
-    public init() {
-        
-    }
+    // Mean can't create new book, search only
+    var justSearchInStore: Bool = false
+    
+//    public init() {
+//        
+//    }
     
     public var body: some View {
         VStack {
@@ -28,14 +34,14 @@ struct SearchAddBookView: View {
                     }
                 }
             
-            viewSearchMode
+            searchContent
                 .resignKeyboardOnDragGesture()
             
             Spacer()
         }
     }
     
-    private var viewSearchMode: some View {
+    private var searchContent: some View {
         Group {
             if viewModel.isSearching {
                 Loading()
@@ -45,7 +51,7 @@ struct SearchAddBookView: View {
                     LazyVStack {
                         ForEach(viewModel.searchBooks) { book in
                             NavigationLink(
-                                destination: SubmitAddBookView(),
+                                destination: getDestination(id: book.id),
                                 label: {
                                     SearchBookCard(model: book)
                                 })
@@ -60,24 +66,34 @@ struct SearchAddBookView: View {
                         .foregroundColor(.gray)
                         .padding()
                     
-                    VStack {
-                        Spacer()
-                        
-                        Button(action: {
-                            
-                        }, label: {
-                            NavigationLink(
-                                destination: SubmitAddBookView(),
-                                label: {
-                                    Text("Nhập thủ công")
-                                        .robotoBold(size: 18)
-                                })
-                        })
-                        .buttonStyle(BaseButtonStyle(size: .largeH, type: .secondary))
+                    if !justSearchInStore {
+                        addManually
                     }
                 }
             }
         }
+    }
+    
+    var addManually: some View {
+        VStack {
+            Spacer()
+            
+            Button(action: {
+                
+            }, label: {
+                NavigationLink(
+                    destination: SubmitAddBookView(),
+                    label: {
+                        Text("Nhập thủ công")
+                            .robotoBold(size: 18)
+                    })
+            })
+            .buttonStyle(BaseButtonStyle(size: .largeH, type: .secondary))
+        }
+    }
+    
+    func getDestination(id: String) -> AnyView {
+        justSearchInStore ? .init(SubmitAddBookView()) : .init(SubmitAddBookView())
     }
 }
 
