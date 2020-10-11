@@ -72,6 +72,8 @@
 		8401CA0B2531B48D00A722CE /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA0A2531B48D00A722CE /* Note.swift */; };
 		8401CA0F2531B57800A722CE /* NoteCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA0E2531B57800A722CE /* NoteCard.swift */; };
 		8401CA13253294D600A722CE /* AddNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA12253294D600A722CE /* AddNoteView.swift */; };
+		8401CA1725329C5700A722CE /* SearchAddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA1625329C5700A722CE /* SearchAddBookView.swift */; };
+		8401CA1B25329FC300A722CE /* SearchBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA1A25329FC300A722CE /* SearchBookViewModel.swift */; };
 		8414F243252187C3003CF799 /* NewsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F242252187C3003CF799 /* NewsFeed.swift */; };
 		8414F24D25218D8E003CF799 /* NewsFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F24C25218D8E003CF799 /* NewsFeedCard.swift */; };
 		8414F2532521904B003CF799 /* CountTimeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F2522521904B003CF799 /* CountTimeText.swift */; };
@@ -222,6 +224,8 @@
 		8401CA0A2531B48D00A722CE /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		8401CA0E2531B57800A722CE /* NoteCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCard.swift; sourceTree = "<group>"; };
 		8401CA12253294D600A722CE /* AddNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteView.swift; sourceTree = "<group>"; };
+		8401CA1625329C5700A722CE /* SearchAddBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddBookView.swift; sourceTree = "<group>"; };
+		8401CA1A25329FC300A722CE /* SearchBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookViewModel.swift; sourceTree = "<group>"; };
 		8414F242252187C3003CF799 /* NewsFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeed.swift; sourceTree = "<group>"; };
 		8414F24C25218D8E003CF799 /* NewsFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedCard.swift; sourceTree = "<group>"; };
 		8414F2522521904B003CF799 /* CountTimeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountTimeText.swift; sourceTree = "<group>"; };
@@ -450,6 +454,7 @@
 				84AA9680251F928A0029BB1E /* ProfileView.swift */,
 				8401C9F32531AB7100A722CE /* MyBookDetailView.swift */,
 				8401CA12253294D600A722CE /* AddNoteView.swift */,
+				8401CA1625329C5700A722CE /* SearchAddBookView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -459,6 +464,7 @@
 			children = (
 				84AA95EE251B45320029BB1E /* ProfileViewModel.swift */,
 				8401C9FC2531ABF200A722CE /* MyBookDetailViewModel.swift */,
+				8401CA1A25329FC300A722CE /* SearchBookViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -840,6 +846,7 @@
 				84AA968D251F96F70029BB1E /* FullRadiusShadowButtonStyle.swift in Sources */,
 				84AA9621251B480C0029BB1E /* ItemContent.swift in Sources */,
 				8401C972252EFB3000A722CE /* ConfirmBorrowBookView.swift in Sources */,
+				8401CA1B25329FC300A722CE /* SearchBookViewModel.swift in Sources */,
 				8401C8C9252B045400A722CE /* Segment.swift in Sources */,
 				843610132524811D009FF4BF /* CommentCard.swift in Sources */,
 				8401C930252C1C4D00A722CE /* RatingViewModel.swift in Sources */,
@@ -910,6 +917,7 @@
 				8401C8C5252AD6B500A722CE /* BookGrid.swift in Sources */,
 				843E5240252722D200B16995 /* DismissKeyboardOnDrag.swift in Sources */,
 				8401C986252F0C4E00A722CE /* BorrowResultViewModel.swift in Sources */,
+				8401CA1725329C5700A722CE /* SearchAddBookView.swift in Sources */,
 				84411A29252337C900AE31D8 /* ViewExtension.swift in Sources */,
 				843E5221252707E300B16995 /* ChatView.swift in Sources */,
 				8414F24D25218D8E003CF799 /* NewsFeedCard.swift in Sources */,

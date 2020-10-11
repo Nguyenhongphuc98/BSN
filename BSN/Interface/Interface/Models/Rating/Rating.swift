@@ -28,12 +28,12 @@ class Rating: Identifiable {
     
     init() {
         id = UUID().uuidString
-        authorPhoto = randomAvatar()
+        authorPhoto = fakeAvatars.randomElement()!
         authorID = UUID().uuidString
         title = "Sách hay nên đọc"
         rating = 4.3
-        content = randomComment()
-        createDate = randomDate()
+        content = fakeComments.randomElement()!
+        createDate = fakedates.randomElement()!
         ratingBookID = UUID().uuidString
     }
     

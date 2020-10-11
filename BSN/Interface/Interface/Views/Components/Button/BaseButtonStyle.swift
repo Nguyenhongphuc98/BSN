@@ -82,6 +82,6 @@ struct BaseButtonStyle: ButtonStyle {
             .padding(.horizontal, size.getH())
             .background(RoundedRectangle(cornerRadius: 5).fill(type.background().opacity(configuration.isPressed ? 0.7 : 1)))
             .clipped()
-            .shadow(radius: 1)
+            //.shadow(radius: 1)
     }
 }

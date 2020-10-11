@@ -83,6 +83,7 @@ public struct ProfileView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
                 .id("des")
+                .fixedSize(horizontal: false, vertical: false)
             
             Spacer()
         }
@@ -99,6 +100,26 @@ public struct ProfileView: View {
         }
     }
     
+    var books: some View {
+        ZStack(alignment: .trailing) {
+            BookGrid(models: viewModel.books, hasFooter: true, isOwner: true)
+            
+            NavigationLink(
+                destination: SearchAddBookView(),
+                label: {
+                    
+                    Image(systemName: "plus")
+                        .font(.system(size: 35))
+                        .padding(10)
+                        .background(Color.init(hex: 0xEFEFEF))
+                        .cornerRadius(25)
+                        .shadow(radius: 3)
+                        .padding()
+                })
+                .position(x: 50, y: 450)
+        }
+    }
+    
     func dinamicContent(proxy: ScrollViewProxy) -> some View {
         VStack {
             Segment(tabNames: ["   Bài viết   ", "   Tủ sách   "], focusIndex: $selectedSegment) {
@@ -110,7 +131,7 @@ public struct ProfileView: View {
                 posts
                     .tag(0)
                 
-                BookGrid(models: viewModel.books, hasFooter: true, isOwner: true)
+                books
                     .tag(1)
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))

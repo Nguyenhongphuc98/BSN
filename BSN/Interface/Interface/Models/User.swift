@@ -22,8 +22,8 @@ public class User: ObservableObject, Identifiable {
     public init() {
         id = UUID().uuidString
         username = UUID().uuidString
-        displayname = randomName()
-        avatar = randomAvatar()
+        displayname = fakeNames.randomElement()!
+        avatar = fakeAvatars.randomElement()!
         gender = .male
     }
     
@@ -31,7 +31,7 @@ public class User: ObservableObject, Identifiable {
         id = "Dummy"
         username = "Dummy"
         displayname = "Dummy"
-        avatar = randomAvatar()
+        avatar = fakeAvatars.randomElement()!
         gender = .male
     }
     

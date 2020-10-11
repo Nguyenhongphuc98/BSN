@@ -17,13 +17,13 @@ class Note: Identifiable {
     
     init() {
         id = UUID().uuidString
-        createDate = randomDate()
-        content = randomComment()
+        createDate = fakedates.randomElement()!
+        content = fakeComments.randomElement()!
     }
     
     init(content: String) {
         id = UUID().uuidString
-        createDate = randomDate()
+        createDate = fakedates.randomElement()!
         self.content = content
     }
 }

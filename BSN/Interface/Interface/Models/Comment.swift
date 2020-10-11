@@ -28,8 +28,8 @@ class Comment: ObservableObject, Identifiable {
         self.id = UUID().uuidString
         self.parent = UUID().uuidString
         self.owner = User()
-        self.commentDate = randomDate()
-        self.content = randomComment()
+        self.commentDate = fakedates.randomElement()!
+        self.content = fakeComments.randomElement()!
         self.level = firstLevel ? 0 : 1
         subcomments = firstLevel ? [Comment(firstLevel: false), Comment(firstLevel: false)] : nil
     }
@@ -47,7 +47,7 @@ class Comment: ObservableObject, Identifiable {
         self.id = ""
         self.parent = ""
         self.owner = User()
-        self.commentDate = randomDate()
+        self.commentDate = fakedates.randomElement()!
         self.content = ""
         level = 0
     }

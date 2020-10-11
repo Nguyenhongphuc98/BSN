@@ -72,7 +72,7 @@ class Notify: Identifiable {
         receive = User()
         action = NotifyAction.allCases.randomElement()!
         destinationID = UUID().uuidString
-        createDate = randomDate()
+        createDate = fakedates.randomElement()!
         seen = Int.random(in: 0...1) == 0 ? true : false
     }
 }

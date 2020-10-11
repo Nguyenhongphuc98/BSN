@@ -72,7 +72,11 @@ public struct SearchView: View {
                     .padding(.top, 100)
             } else {
                 ForEach(viewModel.searchBooks) { book in
-                    SearchBookCard(model: book)
+                    NavigationLink(
+                        destination: BookDetailView(),
+                        label: {
+                            SearchBookCard(model: book)
+                        })
                         .padding(.horizontal)
                 }
                 

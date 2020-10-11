@@ -53,8 +53,8 @@ class Message: ObservableObject, Identifiable {
         sender =  Int.random(in: 0..<2) == 0 ? User() : AppManager.shared.currentUser
         
         receiver = AppManager.shared.currentUser
-        createDate = randomDate()
-        content = randomMessage()
+        createDate = fakedates.randomElement()!
+        content = fakeMessages.randomElement()!
         status = .received
         
         if Int.random(in: 0..<2) == 0 {
