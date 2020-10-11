@@ -10,7 +10,7 @@ import SwiftUI
 class ExchangeBookFull: BorrowBookDetail {
     
     // Book to exchange with others
-    var myBook: BorrowBookDetail
+    var exchangeBook: BorrowBookDetail
     
     var traddingAddress: String
     
@@ -30,7 +30,7 @@ class ExchangeBookFull: BorrowBookDetail {
         //result = BorrowResult.allCases.randomElement()!
         result = .fail
         reason = "Mình đang đi du lịch nên không cho mượn được thời gian này"
-        myBook = BorrowBookDetail()
+        exchangeBook = BorrowBookDetail()
         super.init()
     }
     
@@ -44,7 +44,7 @@ class ExchangeBookFull: BorrowBookDetail {
         self.seen = false
         self.result = BorrowResult.allCases.randomElement()!
         self.reason = "Mình đang đi du lịch nên không trao đổi được thời gian này"
-        self.myBook = BorrowBookDetail()
+        self.exchangeBook = BorrowBookDetail()
         super.init()
         self.book = book.book
         self.statusDes = book.statusDes

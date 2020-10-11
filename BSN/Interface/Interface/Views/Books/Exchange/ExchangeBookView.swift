@@ -85,7 +85,7 @@ struct ExchangeBookSecondHeader: View {
     
     var body: some View {
         VStack {
-            HStack {
+            HStack(spacing: 20) {
                 Spacer()
                 
                 VStack(alignment: .leading, spacing: 4) {

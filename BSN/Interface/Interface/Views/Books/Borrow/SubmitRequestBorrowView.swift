@@ -94,7 +94,7 @@ struct BorrowBookHeader: View {
     
     var body: some View {
         VStack {
-            HStack(alignment: .center) {
+            HStack(alignment: .center, spacing: 20) {
                 Image(model.book.photo, bundle: interfaceBundle)
                     .resizable()
                     .aspectRatio(contentMode: .fit)

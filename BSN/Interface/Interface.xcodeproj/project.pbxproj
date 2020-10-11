@@ -77,6 +77,8 @@
 		8401CA212532B07E00A722CE /* SubmitAddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA202532B07E00A722CE /* SubmitAddBookView.swift */; };
 		8401CA252532B0BC00A722CE /* SubmitAddBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA242532B0BC00A722CE /* SubmitAddBookViewModel.swift */; };
 		8401CA2F2532FB2C00A722CE /* UpdateBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA2E2532FB2C00A722CE /* UpdateBookView.swift */; };
+		8401CA332533056200A722CE /* CreateExchangeBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA322533056200A722CE /* CreateExchangeBookView.swift */; };
+		8401CA37253305F900A722CE /* CreateExchangeBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA36253305F900A722CE /* CreateExchangeBookViewModel.swift */; };
 		8414F243252187C3003CF799 /* NewsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F242252187C3003CF799 /* NewsFeed.swift */; };
 		8414F24D25218D8E003CF799 /* NewsFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F24C25218D8E003CF799 /* NewsFeedCard.swift */; };
 		8414F2532521904B003CF799 /* CountTimeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F2522521904B003CF799 /* CountTimeText.swift */; };
@@ -232,6 +234,8 @@
 		8401CA202532B07E00A722CE /* SubmitAddBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitAddBookView.swift; sourceTree = "<group>"; };
 		8401CA242532B0BC00A722CE /* SubmitAddBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitAddBookViewModel.swift; sourceTree = "<group>"; };
 		8401CA2E2532FB2C00A722CE /* UpdateBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBookView.swift; sourceTree = "<group>"; };
+		8401CA322533056200A722CE /* CreateExchangeBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExchangeBookView.swift; sourceTree = "<group>"; };
+		8401CA36253305F900A722CE /* CreateExchangeBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExchangeBookViewModel.swift; sourceTree = "<group>"; };
 		8414F242252187C3003CF799 /* NewsFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeed.swift; sourceTree = "<group>"; };
 		8414F24C25218D8E003CF799 /* NewsFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedCard.swift; sourceTree = "<group>"; };
 		8414F2522521904B003CF799 /* CountTimeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountTimeText.swift; sourceTree = "<group>"; };
@@ -463,6 +467,7 @@
 				8401CA1625329C5700A722CE /* SearchAddBookView.swift */,
 				8401CA202532B07E00A722CE /* SubmitAddBookView.swift */,
 				8401CA2E2532FB2C00A722CE /* UpdateBookView.swift */,
+				8401CA322533056200A722CE /* CreateExchangeBookView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -474,6 +479,7 @@
 				8401C9FC2531ABF200A722CE /* MyBookDetailViewModel.swift */,
 				8401CA1A25329FC300A722CE /* SearchBookViewModel.swift */,
 				8401CA242532B0BC00A722CE /* SubmitAddBookViewModel.swift */,
+				8401CA36253305F900A722CE /* CreateExchangeBookViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -912,6 +918,7 @@
 				84FA99182518619900CB92CB /* Launch.swift in Sources */,
 				845DB4D0252385240019C29B /* ViewFullPhoto.swift in Sources */,
 				8436100F25247DD2009FF4BF /* Comment.swift in Sources */,
+				8401CA332533056200A722CE /* CreateExchangeBookView.swift in Sources */,
 				8401C9A62530034500A722CE /* ExchangeBookViewModel.swift in Sources */,
 				8401C976252EFB6B00A722CE /* ConfirmBorrowBookViewModel.swift in Sources */,
 				8401C8DD252B1B7500A722CE /* BookDetailView.swift in Sources */,
@@ -933,6 +940,7 @@
 				84411A29252337C900AE31D8 /* ViewExtension.swift in Sources */,
 				843E5221252707E300B16995 /* ChatView.swift in Sources */,
 				8414F24D25218D8E003CF799 /* NewsFeedCard.swift in Sources */,
+				8401CA37253305F900A722CE /* CreateExchangeBookViewModel.swift in Sources */,
 				8401C97A252F006D00A722CE /* TextWithIconInfo.swift in Sources */,
 				8401C8C1252AD18500A722CE /* StarRating.swift in Sources */,
 				8414F2632521A52E003CF799 /* NewsFeedView.swift in Sources */,

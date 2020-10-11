@@ -93,7 +93,7 @@ struct SearchAddBookView: View {
     }
     
     func getDestination(id: String) -> AnyView {
-        justSearchInStore ? .init(SubmitAddBookView()) : .init(SubmitAddBookView())
+        justSearchInStore ? .init(CreateExchangeBookView()) : .init(SubmitAddBookView())
     }
 }
 
