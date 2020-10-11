@@ -9,11 +9,11 @@ import SwiftUI
 
 class MyBookDetail: BookDetail {
     
-    var status: BookStatus
+    @Published var status: BookStatus
     
-    var state: BookState
+    @Published var state: BookState
     
-    var statusDes: String
+    @Published var statusDes: String
     
     override init() {
         statusDes = "Sách tương đối mới, chỉ bị mất 1 tờ số 25"

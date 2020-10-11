@@ -45,11 +45,10 @@ struct SearchAddBookView: View {
                     LazyVStack {
                         ForEach(viewModel.searchBooks) { book in
                             NavigationLink(
-                                destination: BookDetailView(),
+                                destination: SubmitAddBookView(),
                                 label: {
                                     SearchBookCard(model: book)
                                 })
-                            
                                 .padding(.horizontal)
                         }
                     }
@@ -67,8 +66,12 @@ struct SearchAddBookView: View {
                         Button(action: {
                             
                         }, label: {
-                            Text("Nhập thủ công")
-                                .robotoBold(size: 18)
+                            NavigationLink(
+                                destination: SubmitAddBookView(),
+                                label: {
+                                    Text("Nhập thủ công")
+                                        .robotoBold(size: 18)
+                                })
                         })
                         .buttonStyle(BaseButtonStyle(size: .largeH, type: .secondary))
                     }

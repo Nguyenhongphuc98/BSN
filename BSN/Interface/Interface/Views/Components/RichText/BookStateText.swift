@@ -16,24 +16,9 @@ struct BookStateText: View {
             Text("Trạng thái sách: ")
                 .robotoLight(size: 13)
             +
-            Text(getTitle())
+                Text(state.getTitle())
                 .robotoBold(size: 13)
                 .foregroundColor(._primary)
-        }
-    }
-    
-    func getTitle() -> String {
-        switch state {
-        case .available:
-            return "Sẵn sàng cho mượn"
-        case .borrowed:
-            return "Đang cho mượn"
-        case .reading:
-            return "Đang đọc"
-        case .exchanged:
-            return "Đã trao đổi"
-        case .unknown:
-            return "Không xác định"
         }
     }
 }

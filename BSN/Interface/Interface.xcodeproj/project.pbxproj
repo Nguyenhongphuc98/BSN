@@ -74,6 +74,8 @@
 		8401CA13253294D600A722CE /* AddNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA12253294D600A722CE /* AddNoteView.swift */; };
 		8401CA1725329C5700A722CE /* SearchAddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA1625329C5700A722CE /* SearchAddBookView.swift */; };
 		8401CA1B25329FC300A722CE /* SearchBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA1A25329FC300A722CE /* SearchBookViewModel.swift */; };
+		8401CA212532B07E00A722CE /* SubmitAddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA202532B07E00A722CE /* SubmitAddBookView.swift */; };
+		8401CA252532B0BC00A722CE /* SubmitAddBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401CA242532B0BC00A722CE /* SubmitAddBookViewModel.swift */; };
 		8414F243252187C3003CF799 /* NewsFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F242252187C3003CF799 /* NewsFeed.swift */; };
 		8414F24D25218D8E003CF799 /* NewsFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F24C25218D8E003CF799 /* NewsFeedCard.swift */; };
 		8414F2532521904B003CF799 /* CountTimeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F2522521904B003CF799 /* CountTimeText.swift */; };
@@ -226,6 +228,8 @@
 		8401CA12253294D600A722CE /* AddNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteView.swift; sourceTree = "<group>"; };
 		8401CA1625329C5700A722CE /* SearchAddBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddBookView.swift; sourceTree = "<group>"; };
 		8401CA1A25329FC300A722CE /* SearchBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookViewModel.swift; sourceTree = "<group>"; };
+		8401CA202532B07E00A722CE /* SubmitAddBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitAddBookView.swift; sourceTree = "<group>"; };
+		8401CA242532B0BC00A722CE /* SubmitAddBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitAddBookViewModel.swift; sourceTree = "<group>"; };
 		8414F242252187C3003CF799 /* NewsFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeed.swift; sourceTree = "<group>"; };
 		8414F24C25218D8E003CF799 /* NewsFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedCard.swift; sourceTree = "<group>"; };
 		8414F2522521904B003CF799 /* CountTimeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountTimeText.swift; sourceTree = "<group>"; };
@@ -455,6 +459,7 @@
 				8401C9F32531AB7100A722CE /* MyBookDetailView.swift */,
 				8401CA12253294D600A722CE /* AddNoteView.swift */,
 				8401CA1625329C5700A722CE /* SearchAddBookView.swift */,
+				8401CA202532B07E00A722CE /* SubmitAddBookView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -465,6 +470,7 @@
 				84AA95EE251B45320029BB1E /* ProfileViewModel.swift */,
 				8401C9FC2531ABF200A722CE /* MyBookDetailViewModel.swift */,
 				8401CA1A25329FC300A722CE /* SearchBookViewModel.swift */,
+				8401CA242532B0BC00A722CE /* SubmitAddBookViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -826,6 +832,7 @@
 				84411A162523310B00AE31D8 /* QuoteEditor.swift in Sources */,
 				84B964F42525C6E600F37571 /* Notify.swift in Sources */,
 				8401C95B252C7B4E00A722CE /* BorrowBookDetail.swift in Sources */,
+				8401CA212532B07E00A722CE /* SubmitAddBookView.swift in Sources */,
 				8401C936252C658400A722CE /* BorrowBookCell.swift in Sources */,
 				84411A2D2523409E00AE31D8 /* TextExtension.swift in Sources */,
 				847BBAC62521EEB900E0500D /* AppManager.swift in Sources */,
@@ -911,6 +918,7 @@
 				8401C9B22530514800A722CE /* ConfirmExchangeBookView.swift in Sources */,
 				843E5226252708AD00B16995 /* ChatCell.swift in Sources */,
 				843E5238252713CB00B16995 /* SearchBar.swift in Sources */,
+				8401CA252532B0BC00A722CE /* SubmitAddBookViewModel.swift in Sources */,
 				8401C87625275EBD00A722CE /* InChatViewModel.swift in Sources */,
 				84360FFC2524409C009FF4BF /* ScreenExtension.swift in Sources */,
 				84AA95C5251B01C80029BB1E /* ColorExtension.swift in Sources */,

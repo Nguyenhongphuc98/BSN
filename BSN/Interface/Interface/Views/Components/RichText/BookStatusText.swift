@@ -16,35 +16,9 @@ struct BookStatusText: View {
             Text("Tình trạng sách: ")
                 .robotoLight(size: 13)
             +
-            Text(getTitle())
+                Text(status.getTitle())
                 .robotoBold(size: 13)
-                .foregroundColor(getColor())
-        }
-    }
-    
-    func getTitle() -> String {
-        switch status {
-        case .new:
-            return "Mới"
-        case .likeNew:
-            return "Như mới"
-        case .old:
-            return "Sách đã cũ"
-        case .veryOld:
-            return "Sách rất cũ"
-        }
-    }
-    
-    func getColor() -> Color {
-        switch status {
-        case .new:
-            return ._primary
-        case .likeNew:
-            return .init(hex: 0x298DEA)
-        case .old:
-            return .init(hex: 0x05E744)
-        case .veryOld:
-            return .init(hex: 0xFF6D1B)
+                .foregroundColor(status.getColor())
         }
     }
 }
