@@ -1,3 +1,10 @@
+//
+//  Account.swift
+//
+//
+//  Created by Phucnh on 10/15/20.
+//
+
 import Fluent
 import Vapor
 
@@ -10,5 +17,5 @@ func routes(_ app: Application) throws {
         return "Hello, world!"
     }
 
-    try app.register(collection: TodoController())
+    try app.register(collection: AccountController())
 }
