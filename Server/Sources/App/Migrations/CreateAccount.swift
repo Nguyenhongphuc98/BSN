@@ -14,7 +14,8 @@ struct CreateAccount: Migration {
             .id()
             .field("username", .string, .required)
             .field("password", .string, .required)
-            .field("isOnboarded", .bool, .required)
+            .field("is_onboarded", .bool, .required)
+            .unique(on: "username")
             .create()
     }
     

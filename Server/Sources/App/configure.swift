@@ -22,6 +22,7 @@ public func configure(_ app: Application) throws {
     ), as: .psql)
 
     app.migrations.add(CreateAccount())
+    app.migrations.add(CreateUser())
 
     // register routes
     try routes(app)

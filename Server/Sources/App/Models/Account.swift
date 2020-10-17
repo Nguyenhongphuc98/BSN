@@ -21,7 +21,7 @@ final class Account: Model, Content {
     @Field(key: "password")
     var password: String
     
-    @Field(key: "isOnboarded")
+    @Field(key: "is_onboarded")
     var isOnboarded: Bool
     
     init() { }

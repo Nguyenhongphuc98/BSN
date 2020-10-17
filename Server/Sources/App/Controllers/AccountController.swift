@@ -14,8 +14,8 @@ struct AccountController: RouteCollection {
         let accounts = routes.grouped("accounts")
         accounts.get(use: index)
         accounts.post(use: create)
-        accounts.group(":accountID") { todo in
-            todo.delete(use: delete)
+        accounts.group(":accountID") { user in
+            user.delete(use: delete)
         }
     }
 
