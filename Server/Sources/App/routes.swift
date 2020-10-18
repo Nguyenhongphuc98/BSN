@@ -19,5 +19,7 @@ func routes(_ app: Application) throws {
 
     try app.register(collection: AccountController())
     try app.register(collection: UserController())
+    
     try app.register(collection: NotifyTypeController())
+    try app.register(collection: NotifyController())
 }

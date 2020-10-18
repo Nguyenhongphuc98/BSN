@@ -8,7 +8,7 @@
 import Fluent
 import Vapor
 
-final class Account: Model, Content {
+final class Account: Model {
     
     static let schema = "account"
     
@@ -33,3 +33,5 @@ final class Account: Model, Content {
         self.isOnboarded = false
     }
 }
+
+extension Account: Content { }

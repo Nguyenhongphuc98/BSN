@@ -9,7 +9,7 @@ import Fluent
 import Vapor
 import FluentPostgresDriver
 
-final class User: Model, Content {
+final class User: Model {
     
     static let schema = "user"
     
@@ -54,3 +54,5 @@ final class User: Model, Content {
         self.accountID = accountID
     }
 }
+
+extension User: Content { }

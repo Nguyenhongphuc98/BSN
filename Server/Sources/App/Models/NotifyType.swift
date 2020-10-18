@@ -8,7 +8,7 @@
 import Fluent
 import Vapor
 
-final class NotifyType: Model, Content {
+final class NotifyType: Model {
     
     static let schema = "notify_type"
     
@@ -25,3 +25,5 @@ final class NotifyType: Model, Content {
         self.name = name
     }
 }
+
+extension NotifyType: Content { }
