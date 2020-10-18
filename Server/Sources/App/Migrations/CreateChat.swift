@@ -20,6 +20,6 @@ struct CreateChat: Migration {
     }
     
     func revert(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(Notify.schema).delete()
+        return database.schema(Chat.schema).delete()
     }
 }

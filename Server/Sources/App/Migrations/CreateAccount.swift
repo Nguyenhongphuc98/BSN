@@ -10,16 +10,19 @@ import Fluent
 struct CreateAccount: Migration {
     
     func prepare(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema("account")
+        
+        let account = Account()
+        
+        return database.schema(Account.schema)
             .id()
-            .field("username", .string, .required)
-            .field("password", .string, .required)
-            .field("is_onboarded", .bool, .required)
-            .unique(on: "username")
+            .field(account.$username.key, .string, .required)
+            .field(account.$password.key, .string, .required)
+            .field(account.$isOnboarded.key, .bool, .required)
+            .unique(on: account.$username.key)
             .create()
     }
     
     func revert(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema("account").delete()
+        return database.schema(Account.schema).delete()
     }
 }

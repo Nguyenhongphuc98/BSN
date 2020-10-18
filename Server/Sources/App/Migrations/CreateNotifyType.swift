@@ -10,10 +10,12 @@ import Fluent
 struct CreateNotifyType: Migration {
     
     func prepare(on database: Database) -> EventLoopFuture<Void> {
+        
+        let type = NotifyType()
         return database.schema(NotifyType.schema)
             .id()
-            .field("name", .string, .required)
-            .unique(on: "name")
+            .field(type.$name.key, .string, .required)
+            .unique(on: type.$name.key)
             .create()
     }
     

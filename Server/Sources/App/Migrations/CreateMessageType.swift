@@ -10,10 +10,13 @@ import Fluent
 struct CreateMessageType: Migration {
     
     func prepare(on database: Database) -> EventLoopFuture<Void> {
+        
+        let type = MessageType()
+        
         return database.schema(MessageType.schema)
             .id()
-            .field("name", .string, .required)
-            .unique(on: "name")
+            .field(type.$name.key, .string, .required)
+            .unique(on: type.$name.key)
             .create()
     }
     
