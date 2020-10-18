@@ -26,4 +26,5 @@ func routes(_ app: Application) throws {
     try app.register(collection: SettingController())
     
     try app.register(collection: MessageTypeController())
+    try app.register(collection: ChatController())
 }
