@@ -5,7 +5,6 @@
 //  Created by Phucnh on 10/15/20.
 //
 
-import Fluent
 import Vapor
 
 struct AccountController: RouteCollection {

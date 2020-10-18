@@ -26,6 +26,8 @@ public func configure(_ app: Application) throws {
     
     app.migrations.add(CreateNotifyType())
     app.migrations.add(CreateNotify())
+    
+    app.migrations.add(CreateSetting())
 
     // register routes
     try routes(app)

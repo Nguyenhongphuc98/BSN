@@ -5,7 +5,6 @@
 //  Created by Phucnh on 10/18/20.
 //
 
-import Fluent
 import Vapor
 
 struct NotifyController: RouteCollection {

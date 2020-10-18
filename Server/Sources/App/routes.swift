@@ -22,4 +22,6 @@ func routes(_ app: Application) throws {
     
     try app.register(collection: NotifyTypeController())
     try app.register(collection: NotifyController())
+    
+    try app.register(collection: SettingController())
 }
