@@ -34,6 +34,8 @@ public func configure(_ app: Application) throws {
     app.migrations.add(CreateMessage())
     
     app.migrations.add(CreateUserFollow())
+    
+    app.migrations.add(CreateCategory())
 
     // register routes
     try routes(app)
