@@ -31,6 +31,7 @@ public func configure(_ app: Application) throws {
     
     app.migrations.add(CreateMessageType())
     app.migrations.add(CreateChat())
+    app.migrations.add(CreateMessage())
 
     // register routes
     try routes(app)
