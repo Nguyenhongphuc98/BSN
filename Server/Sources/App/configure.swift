@@ -38,6 +38,9 @@ public func configure(_ app: Application) throws {
     app.migrations.add(CreateCategory())
     app.migrations.add(CreatePost())
     app.migrations.add(CreateComment())
+    app.migrations.add(CreateReaction())
+    
+    app.migrations.add(CreateUserCategory())
 
     // register routes
     try routes(app)
