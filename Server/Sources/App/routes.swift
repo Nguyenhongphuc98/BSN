@@ -32,4 +32,5 @@ func routes(_ app: Application) throws {
     try app.register(collection: UserFollowController())
     
     try app.register(collection: CategoryController())
+    try app.register(collection: PostController())
 }

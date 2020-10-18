@@ -36,6 +36,7 @@ public func configure(_ app: Application) throws {
     app.migrations.add(CreateUserFollow())
     
     app.migrations.add(CreateCategory())
+    app.migrations.add(CreatePost())
 
     // register routes
     try routes(app)
