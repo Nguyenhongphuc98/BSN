@@ -28,7 +28,7 @@ final class Setting: Model {
     
     init(id: UUID? = nil, language: String, theme: String, user: User.IDValue) {
         self.id = id
-        self.language = name
+        self.language = language
         self.theme = theme
         self.userID = user
     }
