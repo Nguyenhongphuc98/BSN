@@ -5,7 +5,6 @@
 //  Created by Phucnh on 10/16/20.
 //
 import Fluent
-import Foundation
 
 struct CreateUser: Migration {
     

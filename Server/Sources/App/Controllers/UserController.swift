@@ -11,10 +11,10 @@ import Vapor
 struct UserController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
-        let accounts = routes.grouped("users")
-        accounts.get(use: index)
-        accounts.post(use: create)
-        accounts.group(":userID") { user in
+        let users = routes.grouped("users")
+        users.get(use: index)
+        users.post(use: create)
+        users.group(":userID") { user in
             user.delete(use: delete)
         }
     }
