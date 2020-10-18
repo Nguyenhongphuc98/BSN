@@ -10,7 +10,6 @@ import Fluent
 struct CreateCategory: Migration {
     
     func prepare(on database: Database) -> EventLoopFuture<Void> {
-        
         let category = Category()
         
         return database.schema(Category.schema)

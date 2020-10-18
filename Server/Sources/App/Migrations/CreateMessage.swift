@@ -11,6 +11,7 @@ struct CreateMessage: Migration {
     
     func prepare(on database: Database) -> EventLoopFuture<Void> {
         let message = Message()
+        
         return database.schema(Message.schema)
             .id()
             .field(message.$chatID.key, .uuid, .references(Chat.schema, "id"))

@@ -11,6 +11,7 @@ struct CreateNotify: Migration {
     
     func prepare(on database: Database) -> EventLoopFuture<Void> {
         let notify = Notify()
+        
         return database.schema(Notify.schema)
             .id()
             .field(notify.$notifyTypeID.key, .uuid, .references(NotifyType.schema, "id"))

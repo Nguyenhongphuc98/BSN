@@ -10,7 +10,6 @@ import Fluent
 struct CreateSetting: Migration {
     
     func prepare(on database: Database) -> EventLoopFuture<Void> {
-        
         let setting = Setting()
         
         return database.schema(Setting.schema)
