@@ -11,7 +11,7 @@ import Vapor
 struct NotifyTypeController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
-        let types = routes.grouped("notifyTypes")
+        let types = routes.grouped("api" ,"v1", "notifyTypes")
         types.get(use: index)
         types.post(use: create)
         types.group(":typeID") { type in

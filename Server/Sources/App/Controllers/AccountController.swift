@@ -11,7 +11,7 @@ import Vapor
 struct AccountController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
-        let accounts = routes.grouped("accounts")
+        let accounts = routes.grouped("api", "v1", "accounts")
         accounts.get(use: index)
         accounts.post(use: create)
         accounts.group(":accountID") { user in
