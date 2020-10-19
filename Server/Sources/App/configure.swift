@@ -53,6 +53,7 @@ public func configure(_ app: Application) throws {
     app.migrations.add(CreateBook())
     app.migrations.add(CreateUserBook())
     app.migrations.add(CreateBookReview())
+    app.migrations.add(CreateNote())
 
     // register routes
     try routes(app)

@@ -49,4 +49,5 @@ func routes(_ app: Application) throws {
     try app.register(collection: BookController())
     try app.register(collection: UserBookController())
     try app.register(collection: BookReviewController())
+    try app.register(collection: NoteController())
 }
