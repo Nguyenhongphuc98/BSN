@@ -21,26 +21,36 @@ public func configure(_ app: Application) throws {
         database: Environment.get("DATABASE_NAME") ?? "vapor"
     ), as: .psql)
 
+    // User - account info
     app.migrations.add(CreateAccount())
     app.migrations.add(CreateUser())
     
+    // Notify info
     app.migrations.add(CreateNotifyType())
     app.migrations.add(CreateNotify())
     
+    // Setting
     app.migrations.add(CreateSetting())
     
+    // Chat - Message
     app.migrations.add(CreateMessageType())
     app.migrations.add(CreateChat())
     app.migrations.add(CreateMessage())
     
+    // Following
     app.migrations.add(CreateUserFollow())
     
+    // Post
     app.migrations.add(CreateCategory())
     app.migrations.add(CreatePost())
     app.migrations.add(CreateComment())
     app.migrations.add(CreateReaction())
     
+    // User register Category
     app.migrations.add(CreateUserCategory())
+    
+    // Book
+    app.migrations.add(CreateBook())
 
     // register routes
     try routes(app)
