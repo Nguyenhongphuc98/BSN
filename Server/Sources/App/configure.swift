@@ -55,6 +55,7 @@ public func configure(_ app: Application) throws {
     app.migrations.add(CreateBookReview())
     app.migrations.add(CreateNote())
     app.migrations.add(CreateBorrowBook())
+    app.migrations.add(CreateExchangeBook())
 
     // register routes
     try routes(app)

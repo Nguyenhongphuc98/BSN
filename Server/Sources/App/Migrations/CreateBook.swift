@@ -22,6 +22,7 @@ struct CreateBook: Migration {
             .field(book.$cover.key, .string)
             .field(book.$description.key, .string)
             .field(book.$categoryID.key, .uuid, .references(Category.schema, "id"))
+            //.field("category_id", .uuid, .references(Category.schema, "id"))
             .field(book.$isbn.key, .string)
             .field(book.$avgRating.key, .float, .sql(defaultRating))
             .field(book.$characterRating.key, .float, .sql(defaultRating))

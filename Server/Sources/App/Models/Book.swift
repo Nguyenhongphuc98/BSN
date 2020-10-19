@@ -30,6 +30,9 @@ final class Book: Model {
     @Field(key: "category_id")
     var categoryID: Category.IDValue
     
+//    @Parent(key: "category_id")
+//    var category: Category
+    
     @Field(key: "isbn")
     var isbn: String
     
