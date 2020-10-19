@@ -47,4 +47,5 @@ func routes(_ app: Application) throws {
     
     // Book
     try app.register(collection: BookController())
+    try app.register(collection: BookReviewController())
 }

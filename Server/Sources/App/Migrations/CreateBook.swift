@@ -30,6 +30,7 @@ struct CreateBook: Migration {
             .field(post.$writeRating.key, .float, .sql(defaultRating))
             .field(post.$confirmed.key, .bool, .sql(defaultConfirmed))
             .field("created_at", .datetime)
+            .unique(on: post.$isbn.key)
             .create()
     }
     
