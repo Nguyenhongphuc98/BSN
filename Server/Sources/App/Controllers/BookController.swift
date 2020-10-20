@@ -38,7 +38,7 @@ struct BookController: RouteCollection {
             .transform(to: .ok)
     }
     
-    func search(req: Request) throws -> EventLoopFuture<[Book]> {
+    func search(req: Request) throws -> EventLoopFuture<[SearchBook]> {
         guard let term: String = req.query["term"] else {
             throw Abort(.badRequest)
         }
@@ -48,7 +48,10 @@ struct BookController: RouteCollection {
             .group(.or) { (group) in
                 group.filter(\.$title ~~ term).filter(\.$author ~~ term)
             }
-            .range(0...4)
+            .range(0..<BusinessConfig.searchBookLimit)
             .all()
+            .mapEach { book in
+                book.toSearchBook()
+            }
     }
 }

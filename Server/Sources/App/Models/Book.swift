@@ -8,6 +8,7 @@
 import Fluent
 import Vapor
 
+// MARK: - Base model
 final class Book: Model {
     
     static let schema = "book"
@@ -60,4 +61,30 @@ final class Book: Model {
     init() { }
 }
 
+// MARK: - Extension
 extension Book: Content { }
+
+extension Book {
+    
+    public func toSearchBook() -> SearchBook {
+        SearchBook(
+            id: self.id,
+            title: self.title,
+            author: self.author,
+            cover: self.cover
+        )
+    }
+}
+
+
+// MARK: - Custom model
+struct SearchBook: Content {
+    
+    var id: Book.IDValue?
+    
+    var title: String
+    
+    var author: String
+    
+    var cover: String?
+}
