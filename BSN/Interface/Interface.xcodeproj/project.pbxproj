@@ -146,6 +146,8 @@
 		84B964F42525C6E600F37571 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B964F32525C6E600F37571 /* Notify.swift */; };
 		84B964F82525CBBD00F37571 /* NotifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B964F72525CBBD00F37571 /* NotifyViewModel.swift */; };
 		84B964FC2526063F00F37571 /* CoreMessageEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B964FB2526063F00F37571 /* CoreMessageEditor.swift */; };
+		84C8CB79253EDBEE004D5CD0 /* Business.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C8CB78253EDBEE004D5CD0 /* Business.framework */; };
+		84C8CB7A253EDBEE004D5CD0 /* Business.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84C8CB78253EDBEE004D5CD0 /* Business.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84FA99002518616E00CB92CB /* Interface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FA98F62518616E00CB92CB /* Interface.framework */; };
 		84FA99052518616E00CB92CB /* InterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA99042518616E00CB92CB /* InterfaceTests.swift */; };
 		84FA99072518616E00CB92CB /* Interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 84FA98F92518616E00CB92CB /* Interface.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -162,6 +164,20 @@
 			remoteInfo = Interface;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		84C8CB7B253EDBEE004D5CD0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				84C8CB7A253EDBEE004D5CD0 /* Business.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8401C86D252758BD00A722CE /* InChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InChatView.swift; sourceTree = "<group>"; };
@@ -303,6 +319,7 @@
 		84B964F32525C6E600F37571 /* Notify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 		84B964F72525CBBD00F37571 /* NotifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyViewModel.swift; sourceTree = "<group>"; };
 		84B964FB2526063F00F37571 /* CoreMessageEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMessageEditor.swift; sourceTree = "<group>"; };
+		84C8CB78253EDBEE004D5CD0 /* Business.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Business.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FA98F62518616E00CB92CB /* Interface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Interface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FA98F92518616E00CB92CB /* Interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Interface.h; sourceTree = "<group>"; };
 		84FA98FA2518616E00CB92CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -318,6 +335,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84C8CB79253EDBEE004D5CD0 /* Business.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -666,6 +684,14 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		84C8CB77253EDBEE004D5CD0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				84C8CB78253EDBEE004D5CD0 /* Business.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		84FA98EC2518616E00CB92CB = {
 			isa = PBXGroup;
 			children = (
@@ -673,6 +699,7 @@
 				84FA98F82518616E00CB92CB /* Interface */,
 				84FA99032518616E00CB92CB /* InterfaceTests */,
 				84FA98F72518616E00CB92CB /* Products */,
+				84C8CB77253EDBEE004D5CD0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -731,6 +758,7 @@
 				84FA98F22518616E00CB92CB /* Sources */,
 				84FA98F32518616E00CB92CB /* Frameworks */,
 				84FA98F42518616E00CB92CB /* Resources */,
+				84C8CB7B253EDBEE004D5CD0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

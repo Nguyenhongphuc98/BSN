@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Business
 
 class SearchViewViewModel: SearchBookViewModel {
     
@@ -17,5 +18,6 @@ class SearchViewViewModel: SearchBookViewModel {
         books = fakebooks
         exchangeBooks = [ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook()]
         super.init()
+        startBusiness()
     }
 }

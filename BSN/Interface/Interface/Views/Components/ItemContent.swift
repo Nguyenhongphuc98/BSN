@@ -47,7 +47,7 @@ public extension ItemContent {
             case .news:
                 return Image(systemName: "note")
             case .search:
-                return Image(systemName: "magnifyingglass.circle")
+                return Image(systemName: "books.vertical")
             case .chat:
                 return Image(systemName: "bubble.left")
             case .notify:
@@ -62,7 +62,7 @@ public extension ItemContent {
             case .news:
                 return Image(systemName: "note.text")
             case .search:
-                return Image(systemName: "magnifyingglass.circle.fill")
+                return Image(systemName: "books.vertical.fill")
             case .chat:
                 return Image(systemName: "bubble.left.fill")
             case .notify:
