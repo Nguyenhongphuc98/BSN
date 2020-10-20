@@ -6,16 +6,20 @@
 //
 
 import Vapor
+import Fluent
 
 struct BookController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
-        let posts = routes.grouped("api" ,"v1", "books")
-        posts.get(use: index)
-        posts.post(use: create)
-        posts.group(":bookID") { user in
-            user.delete(use: delete)
+        let books = routes.grouped("api" ,"v1", "books")
+        
+        books.get(use: index)
+        books.post(use: create)
+        books.group(":bookID") { book in
+            book.delete(use: delete)
         }
+        
+        books.get("search", use: search)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[Book]> {
@@ -32,5 +36,19 @@ struct BookController: RouteCollection {
             .unwrap(or: Abort(.notFound))
             .flatMap { $0.delete(on: req.db) }
             .transform(to: .ok)
+    }
+    
+    func search(req: Request) throws -> EventLoopFuture<[Book]> {
+        guard let term: String = req.query["term"] else {
+            throw Abort(.badRequest)
+        }
+        
+        // Get first 5 book match term
+        return Book.query(on: req.db)
+            .group(.or) { (group) in
+                group.filter(\.$title ~~ term).filter(\.$author ~~ term)
+            }
+            .range(0...4)
+            .all()
     }
 }
