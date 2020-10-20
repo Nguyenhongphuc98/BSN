@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Business
 
 class SearchBookViewModel: ObservableObject {
     
@@ -19,12 +20,15 @@ class SearchBookViewModel: ObservableObject {
     
     var processText: String
     
+    var bookManager: BookManager
+    
     init() {
         searchBooks = []
         searchText = ""
         isSearching = false
         isfocus = false
         processText = ""
+        bookManager = BookManager.shared
     }
     
     func searchBook(complete: @escaping (Bool) -> Void) {
@@ -39,6 +43,8 @@ class SearchBookViewModel: ObservableObject {
         // Ignore any request when searching
         if !isSearching {
             isSearching = true
+            
+            bookManager.searchBook(term: "Ph")
             
             // Make a lacenty for user type too fast
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [self] in
