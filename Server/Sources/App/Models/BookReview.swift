@@ -18,6 +18,9 @@ final class BookReview: Model {
     @Field(key: "user_id")
     var userID: User.IDValue
     
+//    @Parent(key: "user_id")
+//    var user: User
+    
     @Field(key: "book_id")
     var bookID: Book.IDValue
     
