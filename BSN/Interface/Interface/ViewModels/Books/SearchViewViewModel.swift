@@ -19,6 +19,5 @@ class SearchViewViewModel: SearchBookViewModel {
         exchangeBooks = [ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook()]
         super.init()
         startBusiness()
-        
     }
 }

@@ -39,9 +39,6 @@ struct ResourceRequest<ResourceType> where ResourceType: Codable {
     }
     
     func getAll(completion: @escaping (GetResourcesRequest<ResourceType>) -> Void) {
-        
-        //self.resourceURL = componentURL//.appendingPathComponent(resourcePath)
-        
         let dataTask = URLSession.shared
             .dataTask(with: resourceURL) { data, _, _ in
                 

@@ -86,6 +86,15 @@ class Book: Identifiable, ObservableObject {
         author = "Nguyễn Hồng Phúc"
         rating = 4.5
         numReview = 7
-        photo = "book"
+        photo = "book_cover"
+    }
+    
+    init(id: String, name: String, author: String, photo: String?) {
+        self.id = UUID().uuidString
+        self.name = "Bứt phá để thành công"
+        self.author = "Nguyễn Hồng Phúc"
+        rating = 0
+        numReview = 0
+        self.photo = photo ?? "book_cover"
     }
 }

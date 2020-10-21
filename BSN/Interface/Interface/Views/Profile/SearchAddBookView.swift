@@ -28,10 +28,7 @@ struct SearchAddBookView: View {
             SearchBar(isfocus: $viewModel.isfocus, searchText: $viewModel.searchText)
                 .padding(.top, 20)
                 .onChange(of: viewModel.searchText) { _ in
-                    viewModel.searchBook { (success) in
-                        print("did search: \(success)")
-                        self.searchFound = success
-                    }
+                    viewModel.searchBook()
                 }
             
             searchContent

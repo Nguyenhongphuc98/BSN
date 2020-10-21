@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Business
+import Combine
 
 class SearchBookViewModel: ObservableObject {
     
@@ -18,9 +19,12 @@ class SearchBookViewModel: ObservableObject {
     
     @Published var isfocus: Bool
     
-    var processText: String
+    private var processText: String
     
-    var bookManager: BookManager
+    private var bookManager: BookManager
+    
+    //Cancellable
+    var searchCancellables = Set<AnyCancellable>()
     
     init() {
         searchBooks = []
@@ -29,14 +33,15 @@ class SearchBookViewModel: ObservableObject {
         isfocus = false
         processText = ""
         bookManager = BookManager.shared
+        
+        setupReceiceSearchBook()
     }
     
-    func searchBook(complete: @escaping (Bool) -> Void) {
+    func searchBook() {
         // Clear action
         if searchText == "" {
             searchBooks = []
             isSearching = false
-            complete(false)
             return
         }
         
@@ -44,31 +49,43 @@ class SearchBookViewModel: ObservableObject {
         if !isSearching {
             isSearching = true
             
-            bookManager.searchBook(term: "Ph")
-            
             // Make a lacenty for user type too fast
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [self] in
+            DispatchQueue.global().asyncAfter(deadline: .now() + 0.25) { [self] in
+                // Store current state of searching text
                 processText = searchText
-                // To-Do
-                // Call BL process and get result
                 
-                //EX data
-                filterInternalBook(key: processText) { (data) in
-                    isSearching = false
-                    searchBooks = data
-                    
-                    // This result is not lastest key
-                    // Try to continue searching
-                    if processText != searchText {
-                        searchBook { (success) in
-                            complete(success)
-                        }
-                    } else {
-                        complete(searchBooks.count != 0)
-                    }
-                }
+                // Make a request to server
+                bookManager.searchBook(term: processText)
             }
         }
+    }
+    
+    func setupReceiceSearchBook() {
+        bookManager
+            .searchBooksPublisher
+            .sink {[weak self] (sb) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.searchBooks = []
+                    self.searchBooks = sb.map { (book) in
+                        Book(id: book.id, name: book.title, author: book.author, photo: book.cover)
+                    }
+                    
+                    print("count: \(self.searchBooks.count)")
+                    self.isSearching = false
+                }
+                
+                // This result is not lastest key
+                // Try to continue searching
+                if self.processText != self.searchText {
+                    self.searchBook()
+                }
+            }
+            .store(in: &searchCancellables)
     }
     
     private func filterInternalBook(key: String, complete: @escaping ([Book]) -> Void) {

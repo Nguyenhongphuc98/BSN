@@ -27,5 +27,6 @@ class BookDetail: Book {
         ratingCriteria.character = 3.5
         ratingCriteria.info = 4
         description = fakeComments.randomElement()!
+        super.init()
     }
 }

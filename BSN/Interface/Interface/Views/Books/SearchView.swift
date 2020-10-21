@@ -30,10 +30,7 @@ public struct SearchView: View {
             SearchBar(isfocus: $viewModel.isfocus, searchText: $viewModel.searchText)
                 .padding(.top, 20)
                 .onChange(of: viewModel.searchText) { _ in
-                    viewModel.searchBook { (success) in
-                        print("did search: \(success)")
-                        self.searchFound = success
-                    }
+                    viewModel.searchBook()
                 }
             
                 if viewModel.isfocus {
@@ -80,7 +77,7 @@ public struct SearchView: View {
                         .padding(.horizontal)
                 }
                 
-                if !searchFound {
+                if viewModel.searchBooks.isEmpty {
                     Text("Không tìm thấy sách")
                         .robotoLightItalic(size: 13)
                         .foregroundColor(.gray)

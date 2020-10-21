@@ -33,10 +33,13 @@ struct SearchBookCard: View {
                 Text(model.author)
                     .robotoLight(size: 14)
             }
+            .padding(.bottom, 5)
             
             Spacer()
         }
         .foregroundColor(.black)
+        .frame(height: 60)
+        .padding(7)
     }
 }
 
