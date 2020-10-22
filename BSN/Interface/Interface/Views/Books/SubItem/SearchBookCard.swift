@@ -19,9 +19,8 @@ struct SearchBookCard: View {
 //            })
         
         HStack(alignment: .center) {
-            Image(model.photo, bundle: interfaceBundle)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+            //Image(model.photo, bundle: interfaceBundle)
+            BSNImage(urlString: model.photo, tempImage: "book_cover")
                 .frame(width: 50, height: 60)
             
             VStack(alignment: .leading) {

@@ -13,29 +13,34 @@ enum GetResourcesRequest<ResourceType> {
 }
 
 
-struct ResourceRequest<ResourceType> where ResourceType: Codable {
+class ResourceRequest<ResourceType> where ResourceType: Codable {
     
     // Connect to root server
     let baseURL = "http://localhost:8080/api/v1/"
     
     // Connect to a component of server
-    let componentURL: URL
+    var componentPath: String
     
     // Connect to special resource
     var resourceURL: URL
     
     init(componentPath: String) {
-        let fullPath = baseURL + componentPath
-        guard let componentURL = URL(string: fullPath) else {
-            fatalError()
-        }
-        self.componentURL = componentURL
-        self.resourceURL = componentURL
+        self.componentPath = baseURL + componentPath
+        self.resourceURL = URL(string: self.componentPath)!
     }
     
-    func setPath(resourcePath: String) {
-        var _self = self
-        _self.resourceURL = componentURL.appendingPathComponent(resourcePath)
+    func setPath(resourcePath: String, params: [String:String] = [:]) {
+        var urlComponent = URLComponents(string: componentPath + resourcePath)!
+
+        // Setup query
+        if resourcePath == "search" {
+            urlComponent.queryItems = []
+            params.keys.forEach { (key) in
+                let queryItem = URLQueryItem(name: key, value: params[key])
+                urlComponent.queryItems!.append(queryItem)
+            }
+        }
+        resourceURL = urlComponent.url!
     }
     
     func getAll(completion: @escaping (GetResourcesRequest<ResourceType>) -> Void) {

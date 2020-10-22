@@ -57,7 +57,7 @@ struct SearchAddBookView: View {
                     }
                 }
                 
-                if !searchFound {
+                if viewModel.searchBooks.isEmpty {
                     Text("Không tìm thấy sách")
                         .robotoLightItalic(size: 13)
                         .foregroundColor(.gray)

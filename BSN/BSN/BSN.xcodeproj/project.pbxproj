@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		845BA20E25402EF000CC9140 /* Business.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845BA20D25402EF000CC9140 /* Business.framework */; };
-		845BA20F25402EF000CC9140 /* Business.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 845BA20D25402EF000CC9140 /* Business.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		65151F95923C646F69F68B15 /* libPods-BSN.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC0276D056E4D9B3857004C /* libPods-BSN.a */; };
 		84AA95C0251AFEB70029BB1E /* Pattaya-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AA95BF251AFEB70029BB1E /* Pattaya-Regular.ttf */; };
 		84AA95C2251B01010029BB1E /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AA95C1251B01010029BB1E /* Roboto-Regular.ttf */; };
 		84AA95D1251B03680029BB1E /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AA95CA251B03680029BB1E /* Roboto-Bold.ttf */; };
@@ -23,16 +22,11 @@
 		84AA95DE251B03E60029BB1E /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AA95DA251B03E50029BB1E /* Roboto-LightItalic.ttf */; };
 		84AA95DF251B03E60029BB1E /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AA95DB251B03E60029BB1E /* Roboto-ThinItalic.ttf */; };
 		84AA969B252031780029BB1E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84AA969A252031780029BB1E /* LaunchScreen.storyboard */; };
-		84C8CB6F253EDAC4004D5CD0 /* Business.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C8CB6E253EDAC4004D5CD0 /* Business.framework */; };
-		84C8CB70253EDAC4004D5CD0 /* Business.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84C8CB6E253EDAC4004D5CD0 /* Business.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84FA98DD251860DB00CB92CB /* BSNApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA98DC251860DB00CB92CB /* BSNApp.swift */; };
-		84FA98DF251860DB00CB92CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA98DE251860DB00CB92CB /* ContentView.swift */; };
 		84FA98E1251860DE00CB92CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84FA98E0251860DE00CB92CB /* Assets.xcassets */; };
 		84FA98E4251860DE00CB92CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84FA98E3251860DE00CB92CB /* Preview Assets.xcassets */; };
 		84FA99142518618100CB92CB /* Interface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FA99132518618100CB92CB /* Interface.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		84FA99152518618100CB92CB /* Interface.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84FA99132518618100CB92CB /* Interface.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		84FE74B32518DF7D005C0D27 /* Component.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FE74B22518DF7D005C0D27 /* Component.framework */; };
-		84FE74B42518DF7D005C0D27 /* Component.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84FE74B22518DF7D005C0D27 /* Component.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,10 +36,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				84FE74B42518DF7D005C0D27 /* Component.framework in Embed Frameworks */,
 				84FA99152518618100CB92CB /* Interface.framework in Embed Frameworks */,
-				845BA20F25402EF000CC9140 /* Business.framework in Embed Frameworks */,
-				84C8CB70253EDAC4004D5CD0 /* Business.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -53,7 +44,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		845BA20D25402EF000CC9140 /* Business.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Business.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		03C31E3AC0F9113697D31C72 /* Pods-BSN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSN.debug.xcconfig"; path = "Target Support Files/Pods-BSN/Pods-BSN.debug.xcconfig"; sourceTree = "<group>"; };
+		2CC0276D056E4D9B3857004C /* libPods-BSN.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BSN.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84AA95BF251AFEB70029BB1E /* Pattaya-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pattaya-Regular.ttf"; sourceTree = "<group>"; };
 		84AA95C1251B01010029BB1E /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		84AA95CA251B03680029BB1E /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -68,15 +60,13 @@
 		84AA95DA251B03E50029BB1E /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
 		84AA95DB251B03E60029BB1E /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
 		84AA969A252031780029BB1E /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		84C8CB6E253EDAC4004D5CD0 /* Business.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Business.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FA98D9251860DB00CB92CB /* BSN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BSN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FA98DC251860DB00CB92CB /* BSNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BSNApp.swift; sourceTree = "<group>"; };
-		84FA98DE251860DB00CB92CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		84FA98E0251860DE00CB92CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84FA98E3251860DE00CB92CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		84FA98E5251860DE00CB92CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84FA99132518618100CB92CB /* Interface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Interface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		84FE74B22518DF7D005C0D27 /* Component.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Component.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFA78AF45319C07BF9471415 /* Pods-BSN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSN.release.xcconfig"; path = "Target Support Files/Pods-BSN/Pods-BSN.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,16 +74,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84FE74B32518DF7D005C0D27 /* Component.framework in Frameworks */,
 				84FA99142518618100CB92CB /* Interface.framework in Frameworks */,
-				845BA20E25402EF000CC9140 /* Business.framework in Frameworks */,
-				84C8CB6F253EDAC4004D5CD0 /* Business.framework in Frameworks */,
+				65151F95923C646F69F68B15 /* libPods-BSN.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00206EB9DA88C1D13BCC88FB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				03C31E3AC0F9113697D31C72 /* Pods-BSN.debug.xcconfig */,
+				FFA78AF45319C07BF9471415 /* Pods-BSN.release.xcconfig */,
+			);
+			name = Pods;
+			path = ../Pods;
+			sourceTree = "<group>";
+		};
 		84AA95B7251AFBD60029BB1E /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +118,7 @@
 				84FA98DB251860DB00CB92CB /* BSN */,
 				84FA98DA251860DB00CB92CB /* Products */,
 				84FA99122518618100CB92CB /* Frameworks */,
+				00206EB9DA88C1D13BCC88FB /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -136,7 +135,6 @@
 			children = (
 				84AA95B7251AFBD60029BB1E /* Fonts */,
 				84FA98DC251860DB00CB92CB /* BSNApp.swift */,
-				84FA98DE251860DB00CB92CB /* ContentView.swift */,
 				84FA98E0251860DE00CB92CB /* Assets.xcassets */,
 				84FA98E5251860DE00CB92CB /* Info.plist */,
 				84FA98E2251860DE00CB92CB /* Preview Content */,
@@ -156,10 +154,8 @@
 		84FA99122518618100CB92CB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				845BA20D25402EF000CC9140 /* Business.framework */,
-				84C8CB6E253EDAC4004D5CD0 /* Business.framework */,
-				84FE74B22518DF7D005C0D27 /* Component.framework */,
 				84FA99132518618100CB92CB /* Interface.framework */,
+				2CC0276D056E4D9B3857004C /* libPods-BSN.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -171,6 +167,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84FA98E8251860DE00CB92CB /* Build configuration list for PBXNativeTarget "BSN" */;
 			buildPhases = (
+				9F1885AE320FFD51CEFD0A95 /* [CP] Check Pods Manifest.lock */,
 				84FA98D5251860DB00CB92CB /* Sources */,
 				84FA98D6251860DB00CB92CB /* Frameworks */,
 				84FA98D7251860DB00CB92CB /* Resources */,
@@ -243,12 +240,36 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9F1885AE320FFD51CEFD0A95 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BSN-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		84FA98D5251860DB00CB92CB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84FA98DF251860DB00CB92CB /* ContentView.swift in Sources */,
 				84FA98DD251860DB00CB92CB /* BSNApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -374,6 +395,7 @@
 		};
 		84FA98E9251860DE00CB92CB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03C31E3AC0F9113697D31C72 /* Pods-BSN.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -396,6 +418,7 @@
 		};
 		84FA98EA251860DE00CB92CB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FFA78AF45319C07BF9471415 /* Pods-BSN.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

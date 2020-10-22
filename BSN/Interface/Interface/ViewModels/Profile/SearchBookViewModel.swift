@@ -34,23 +34,30 @@ class SearchBookViewModel: ObservableObject {
         processText = ""
         bookManager = BookManager.shared
         
-        setupReceiceSearchBook()
+        setupReceiveSearchBook()
     }
     
     func searchBook() {
-        // Clear action
-        if searchText == "" {
-            searchBooks = []
-            isSearching = false
-            return
-        }
-        
         // Ignore any request when searching
         if !isSearching {
             isSearching = true
             
             // Make a lacenty for user type too fast
             DispatchQueue.global().asyncAfter(deadline: .now() + 0.25) { [self] in
+                // Clear action
+                if searchText == "" {
+                    if Thread.isMainThread {
+                        searchBooks = []
+                        isSearching = false
+                    } else {
+                        DispatchQueue.main.sync {
+                            searchBooks = []
+                            isSearching = false
+                        }
+                    }
+                    return
+                }
+                
                 // Store current state of searching text
                 processText = searchText
                 
@@ -60,7 +67,8 @@ class SearchBookViewModel: ObservableObject {
         }
     }
     
-    func setupReceiceSearchBook() {
+    func setupReceiveSearchBook() {
+        print("Begin setup search book receive")
         bookManager
             .searchBooksPublisher
             .sink {[weak self] (sb) in
@@ -75,7 +83,6 @@ class SearchBookViewModel: ObservableObject {
                         Book(id: book.id, name: book.title, author: book.author, photo: book.cover)
                     }
                     
-                    print("count: \(self.searchBooks.count)")
                     self.isSearching = false
                 }
                 
@@ -86,6 +93,7 @@ class SearchBookViewModel: ObservableObject {
                 }
             }
             .store(in: &searchCancellables)
+        print("Finish setup search book receive")
     }
     
     private func filterInternalBook(key: String, complete: @escaping ([Book]) -> Void) {

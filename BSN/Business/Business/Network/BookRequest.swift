@@ -10,12 +10,13 @@ import Combine
 extension ResourceRequest where ResourceType == SearchBook {
     
     func searchBook(term:String, publisher: PassthroughSubject<[SearchBook], Never>) {
-        self.setPath(resourcePath: "search?term=" + term)
+        self.setPath(resourcePath: "search", params: ["term":term])
+        
         self.getAll { result in
             
             switch result {
             case .failure:
-                let message = "There was an error getting the categories"
+                let message = "There was an error searching the books"
                 print(message)
             case .success(let books):
                 publisher.send(books)

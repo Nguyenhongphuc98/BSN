@@ -1,0 +1,17 @@
+platform :ios, '14.0'
+workspace 'BSN'
+
+project 'Interface/Interface.xcodeproj'
+project 'BSN/BSN.xcodeproj'
+
+target 'Interface' do
+  project 'Interface/Interface.xcodeproj'
+   #Pods for Project1
+    pod 'AlamofireImage', '~> 4.1'
+end
+
+target 'BSN' do
+  project 'BSN/BSN.xcodeproj'
+   #Pods for Project1
+    pod 'AlamofireImage', '~> 4.1'
+end
