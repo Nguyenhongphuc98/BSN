@@ -36,8 +36,6 @@ public struct ProfileView: View {
                     
                     dinamicContent(proxy: value)
                         .frame(height: UIScreen.screenHeight)
-                        
-                        
                 }
             }
         }
@@ -140,11 +138,7 @@ public struct ProfileView: View {
     }
     
     func viewAppeared() {
-//        if root.selectedIndex == RootIndex.profile.rawValue {
-//            root.navBarTitle = "Trang cá nhân"
-//            root.navBarHidden = true
-//        }
-//        print("profile-apeard")
+        print("profile-appeard")
     }
 }
 

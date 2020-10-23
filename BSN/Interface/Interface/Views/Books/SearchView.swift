@@ -88,11 +88,6 @@ public struct SearchView: View {
     }
     
     private func viewAppeared() {
-        if root.selectedIndex == RootIndex.explore.rawValue {
-            root.navBarTitle = "Khám phá"
-            //root.navBarTrailingItems = .init(EmptyView())
-            root.navBarHidden = true
-        }
         print("search appeard")
     }
 }

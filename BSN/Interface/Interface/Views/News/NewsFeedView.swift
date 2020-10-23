@@ -34,21 +34,20 @@ public struct NewsFeedView: View {
                         .onAppear(perform: {
                             self.viewModel.loadMoreIfNeeded(item: news)
                         })
-                        
+
                         Separator()
                     }
                 }
                 .listRowInsets(.zero)
             }
+            .listStyle(PlainListStyle())
             .onAppear(perform: self.viewDidAppear)
-            
+    
             // Loading view
             if viewModel.isLoadingNews {
                 Loading()
             }
         }
-        //.navigationBarTitle(Text("NewsFeed"))
-        //.navigationBarHidden(true)
     }
     
     private var editor: some View {
@@ -72,12 +71,7 @@ public struct NewsFeedView: View {
     }
     
     func viewDidAppear() {
-//        if root.selectedIndex == RootIndex.news.rawValue {
-//            root.navBarTitle = "Bài viết"
-//            root.navBarHidden = true
-//        }
-//
-//        print("news-apeard")
+        print("news-appeard")
     }
 }
 

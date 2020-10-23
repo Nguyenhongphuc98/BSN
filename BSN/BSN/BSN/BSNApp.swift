@@ -17,33 +17,46 @@ struct BSNApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                TabView(selection: $viewModel.selectedIndex) {
+            TabView(selection: $viewModel.selectedIndex) {
+                NavigationView {
                     NewsFeedView()
-                        .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .news) }
-                        .tag(0)
-                    
-                    SearchView()
-                        .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .search) }
-                        .tag(1)
-                    
-                    ChatView()
-                        .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .chat) }
-                        .tag(2)
-                    
-                    NotifyView()
-                        .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .notify) }
-                        .tag(3)
-                    
-                    ProfileView()
-                        .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .profile) }
-                        .tag(4)
+                        .navigationTitle("Bài viết")
+                        .navigationBarHidden(true)
                 }
-                .environmentObject(viewModel)
-                .navigationBarHidden(viewModel.navBarHidden)
-                .navigationBarItems(trailing: viewModel.navBarTrailingItems)
-                .navigationBarTitle(viewModel.navBarTitle, displayMode: .inline)
+                .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .news) }
+                .tag(0)
+                
+                NavigationView {
+                    SearchView()
+                        .navigationTitle("Khám phá")
+                        .navigationBarHidden(true)
+                }
+                .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .search) }
+                .tag(1)
+                
+                NavigationView {
+                    ChatView()
+                        .navigationTitle("Tin nhắn")
+                }
+                .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .chat) }
+                .tag(2)
+                
+                NavigationView {
+                    NotifyView()
+                        .navigationTitle("Thông báo")
+                }
+                .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .notify) }
+                .tag(3)
+                
+                NavigationView {
+                    ProfileView()
+                        .navigationTitle("Trang cá nhân")
+                        .navigationBarHidden(true)
+                }
+                .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .profile) }
+                .tag(4)
             }
+            .environmentObject(viewModel)
         }
         .onChange(of: phase) { newPhase in
             switch newPhase {
@@ -67,7 +80,7 @@ struct BSNApp: App {
         UITableView.appearance().backgroundColor = .clear
         
         //let backImage = UIImage(named: "lauchlogo")
-            //.withPadding(.init(top: -2, left: 0, bottom: 0, right: -4))
+        //.withPadding(.init(top: -2, left: 0, bottom: 0, right: -4))
         
         //UINavigationBar.appearance().backIndicatorImage = backImage
         //UINavigationBar.appearance().backIndicatorTransitionMaskImage = backImage

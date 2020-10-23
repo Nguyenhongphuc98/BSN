@@ -66,6 +66,7 @@ public struct ChatView: View {
                             ChatCell(message: m)
                         }
                     }
+                    .listStyle(PlainListStyle())
                 }
             }
             .resignKeyboardOnDragGesture()
@@ -74,6 +75,7 @@ public struct ChatView: View {
         }
         .onAppear(perform: viewAppeared)
         .navigationBarHidden(viewModel.isfocus)
+        .navigationBarItems(trailing: newChatButton)
     }
     
     private var newChatButton: some View {
@@ -94,12 +96,6 @@ public struct ChatView: View {
     }
     
     private func viewAppeared() {
-        if root.selectedIndex == RootIndex.chat.rawValue {
-            root.navBarTitle = "Nhắn tin"
-            root.navBarTrailingItems = .init(newChatButton)
-            root.navBarHidden = viewModel.isfocus
-        }
-
         print("chat-apeard")
     }
 }

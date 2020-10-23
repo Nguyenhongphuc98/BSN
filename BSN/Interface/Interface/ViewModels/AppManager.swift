@@ -30,12 +30,6 @@ public class AppManager: ObservableObject {
     
     @Published public var navBarTitle: LocalizedStringKey
     
-    @Published public var navBarTrailingItems: AnyView
-    
-    @Published public var navBarLeadingItems: AnyView
-    
-    @Published public var navBarHidden: Bool
-    
     @Published public var keyboardHeight: CGFloat
     
     public init() {
@@ -44,9 +38,6 @@ public class AppManager: ObservableObject {
         self.currentAccount = Account()
         self.currentUser = User()
         self.navBarTitle = "SEB"
-        self.navBarTrailingItems = .init(EmptyView())
-        self.navBarLeadingItems = .init(EmptyView())
-        self.navBarHidden = true
         self.keyboardHeight = 0
         print("did init root with user: \(currentUser.displayname)")
         

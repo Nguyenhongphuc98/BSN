@@ -41,17 +41,10 @@ public struct NotifyView: View {
             }
         }
         .padding(.top)
-        //.navigationTitle("Notify")
-        //.navigationBarHidden(true)
         .onAppear(perform: viewAppeared)
     }
     
     func viewAppeared() {
-        if root.selectedIndex == RootIndex.notify.rawValue {
-            root.navBarTitle = "Thông báo"
-            root.navBarHidden = true
-        }
-        
         print("notifi appeared")
     }
 }
