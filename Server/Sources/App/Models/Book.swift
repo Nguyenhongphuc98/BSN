@@ -74,6 +74,15 @@ extension Book {
             cover: self.cover
         )
     }
+    
+    public func toBookDetail(numRead: Int, numAvailable: Int) -> BookDetail {
+        BookDetail(
+            id: self.id,
+            book: self,
+            numReading: numRead,
+            numAvailable: numAvailable
+        )
+    }
 }
 
 
@@ -87,4 +96,16 @@ struct SearchBook: Content {
     var author: String
     
     var cover: String?
+}
+
+
+struct BookDetail: Content {
+    
+    var id: Book.IDValue?
+    
+    var book: Book
+    
+    var numReading: Int
+    
+    var numAvailable: Int
 }

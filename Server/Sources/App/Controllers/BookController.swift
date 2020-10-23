@@ -17,11 +17,17 @@ struct BookController: RouteCollection {
         books.post(use: create)
         books.group(":bookID") { book in
             book.delete(use: delete)
+            book.get(use: getBook)
         }
         
+        // Advance
         books.get("search", use: search)
+        
+        // Get detail book for view in client (not full info book store in DB)
+        books.get("detail",":bookID", use: getBookDetail)
     }
 
+    // Base function
     func index(req: Request) throws -> EventLoopFuture<[Book]> {
         return Book.query(on: req.db).all()
     }
@@ -38,6 +44,13 @@ struct BookController: RouteCollection {
             .transform(to: .ok)
     }
     
+    func getBook(req: Request) throws -> EventLoopFuture<Book> {
+        return Book.find(req.parameters.get("bookID"), on: req.db)
+            .unwrap(or: Abort(.notFound))
+            .map { $0 }
+    }
+    
+    // Advance function
     func search(req: Request) throws -> EventLoopFuture<[SearchBook]> {
         guard let term: String = req.query["term"] else {
             throw Abort(.badRequest)
@@ -52,6 +65,31 @@ struct BookController: RouteCollection {
             .all()
             .mapEach { book in
                 book.toSearchBook()
+            }
+    }
+    
+    // Add num read and num available
+    func getBookDetail(req: Request) throws -> EventLoopFuture<BookDetail> {
+        return Book.find(req.parameters.get("bookID"), on: req.db)
+            .unwrap(or: Abort(.notFound))
+            .flatMap { book in
+                
+                let reading = UserBook
+                    .query(on: req.db)
+                    .filter(UserBook.self, \.$state == "reading")
+                    .filter(UserBook.self, \.$bookID == book.id!)
+                    .count()
+                
+                
+                let available = UserBook
+                    .query(on: req.db)
+                    .filter(UserBook.self, \.$state == "available")
+                    .filter(UserBook.self, \.$bookID == book.id!)
+                    .count()
+                
+                return reading.and(available).map { (r, a) -> (BookDetail) in
+                    book.toBookDetail(numRead: r, numAvailable: a)
+                }
             }
     }
 }
