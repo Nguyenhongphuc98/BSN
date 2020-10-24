@@ -37,3 +37,26 @@ final class UserBook: Model {
 }
 
 extension UserBook: Content { }
+
+extension UserBook {
+    func toUserSerchBook(cover: String, title: String, author: String) -> SearchUserBook {
+        SearchUserBook(
+            cover: cover,
+            title: title,
+            author: author,
+            status: self.status
+        )
+    }
+}
+
+// MARK: - SearchUserBook
+struct SearchUserBook: Content {
+    
+    var cover: String
+    
+    var title: String
+    
+    var author: String
+    
+    var status: String
+}

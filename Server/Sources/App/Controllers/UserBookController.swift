@@ -6,6 +6,8 @@
 //
 
 import Vapor
+//import SwifQL
+import SQLKit
 
 struct UserBookController: RouteCollection {
     
@@ -16,6 +18,10 @@ struct UserBookController: RouteCollection {
         userBooks.group(":ID") { user in
             user.delete(use: delete)
         }
+        
+        // Advance
+        // Get all UserBook of a User
+        userBooks.get("users",":userID", use: search)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[UserBook]> {
@@ -32,5 +38,16 @@ struct UserBookController: RouteCollection {
             .unwrap(or: Abort(.notFound))
             .flatMap { $0.delete(on: req.db) }
             .transform(to: .ok)
+    }
+    
+    // Advance function
+    func search(req: Request) throws -> EventLoopFuture<[SearchUserBook]> {
+        let uid = req.parameters.get("userID")! as String
+        
+        let sqlQuery = SQLQueryString("SELECT b.title, b.cover, b.author, ub.status FROM user_book as ub, book as b where ub.user_id = '\(raw: uid)' and ub.book_id = b.id")
+        
+        let db = req.db as! SQLDatabase
+        return db.raw(sqlQuery)
+            .all(decoding: SearchUserBook.self)
     }
 }
