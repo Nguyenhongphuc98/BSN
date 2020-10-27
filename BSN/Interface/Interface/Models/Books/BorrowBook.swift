@@ -8,15 +8,15 @@
 import SwiftUI
 
 class BorrowBook: Identifiable {
-    
+
     var id: String
-    
+
     var owner: User
-    
+
     var distance: Float // in Met unit
-    
+
     var status: BookStatus
-    
+
     init() {
         id = UUID().uuidString
         owner = User()

@@ -15,9 +15,9 @@ struct SubmitRequestBorrowView: View {
     
     var body: some View {
         VStack {
-            BorrowBookHeader(model: viewModel.model)
-                .padding(.top, 10)
-                .padding(.horizontal)
+            BorrowBookHeader(model: viewModel.model.book)
+                .padding(.top, 20)
+                //.padding(.horizontal)
             
             Form {
                 Section {
@@ -34,7 +34,7 @@ struct SubmitRequestBorrowView: View {
                 
             }
             
-            InputWithTitle(content: $viewModel.traddingAddress, placeHolder: "Địa chỉ thuận tiện nhất cho giao dịch", title: "Địa chỉ giao dịch")
+            InputWithTitle(content: $viewModel.address, placeHolder: "Địa chỉ thuận tiện nhất cho giao dịch", title: "Địa chỉ giao dịch")
             
             InputWithTitle(content: $viewModel.message, placeHolder: "ex: Bạn ơi cho mình mượn cuốn này nhé!", title: "Lời nhắn")
             
@@ -44,7 +44,7 @@ struct SubmitRequestBorrowView: View {
                     AppManager.shared.selectedIndex = 1
                 }
             }, label: {
-                Text("Hoàn tất")
+                Text("    Hoàn tất    ")
             })
             .buttonStyle(BaseButtonStyle(size: .large))
             
@@ -81,21 +81,15 @@ struct SubmitRequestBorrowView_Previews: PreviewProvider {
 // MARK: - Sub compoent
 struct BorrowBookHeader: View {
     
-    var model: BorrowBookDetail
+    var model: BUserBook
     
     // Use for reuest or confirm View
     var isRequest: Bool = true
     
-    // Use for result View
-    // If it true, isRequest invalidate
-    var isResultView: Bool = false
-    
-    var showSeperator: Bool = true
-    
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 20) {
-                Image(model.book.photo, bundle: interfaceBundle)
+                Image(model.cover!, bundle: interfaceBundle)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 80, height: 100)
@@ -105,51 +99,42 @@ struct BorrowBookHeader: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Spacer()
                     
-                    Text(model.book.name)
+                    Text(model.title)
                         .roboto(size: 15)
                     
-                    Text(model.book.author)
+                    Text(model.author)
                         .robotoLight(size: 14)
                     
-                    BookStatusText(status: model.status)
+                    HStack {
+                        BookStatusText(status: model.status)
+                        Spacer()
+                    }
                     
                     HStack {
                         Text("\(partnerRole) :")
                             .robotoLight(size: 14)
+                            .layoutPriority(1)
                         
-                        Text(model.owner.displayname)
+                        Text(model.ownerName!)
                             .robotoBold(size: 13)
                             .foregroundColor(._primary)
                     }
                 }
-                
-                Spacer()
             }
+            .frame(height: 100)
             
-            if !isResultView {
-                Text(description)
+            if isRequest {
+                Text(model.statusDes)
                     .roboto(size: 13)
                     .padding(.vertical)
-                    .foregroundColor(isRequest ? .black : .init(hex: 0x4C0098))
-            }
-            
-            if showSeperator {
+                
                 Separator(color: .init(hex: 0xE2DFDF), height: 1)
-                    .padding(.horizontal, 50)
+                    .padding(.horizontal, 30)
             }
         }
-        .frame(height: height)
-    }
-    
-    var description: String {
-        isRequest ? model.statusDes : "\"\(model.statusDes)\""
     }
     
     var partnerRole: String {
         isRequest ? "Chủ sở hữu" : "Người mượn"
-    }
-    
-    var height: CGFloat {
-        isResultView ? 115 : 165
     }
 }

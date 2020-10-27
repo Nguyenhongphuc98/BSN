@@ -10,27 +10,25 @@ import SwiftUI
 // In submit request borrow book
 class BorrowBookViewModel: ObservableObject {
     
-    var model: BorrowBookDetail
-    
-    @Published var traddingAddress: String
+    var model: BBorrowBook
     
     @Published var borrowDate: Date
     
     @Published var numOfDay: Int
     
+    @Published var address: String
+    
     @Published var message: String
     
     init() {
-        model = BorrowBookDetail()
-        traddingAddress = ""
+        model = BBorrowBook()
         borrowDate = Date()
         numOfDay = 7
-        message = ""
+        address = model.transactionInfo.adress
+        message = model.transactionInfo.message
     }
     
     func didRequestBorrowBook(complete: @escaping (Bool) -> Void) {
-        
-        let newBorrowbook = BorrowBookFull(book: model, traddingAddress: traddingAddress, borrowDate: borrowDate, numOfday: numOfDay, message: message)
      
         // To- Do
         // Call BL

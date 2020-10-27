@@ -9,10 +9,10 @@ import SwiftUI
 
 class ConfirmBorrowBookViewModel {
     
-    var borrowBook: BorrowBookFull
+    var borrowBook: BBorrowBook
     
     init() {
-        borrowBook = BorrowBookFull()
+        borrowBook = BBorrowBook()
     }
     
     func didAccept(complete: @escaping (Bool) -> Void) {

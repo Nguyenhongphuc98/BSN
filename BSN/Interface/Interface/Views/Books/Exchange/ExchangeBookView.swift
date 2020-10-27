@@ -16,7 +16,7 @@ struct ExchangeBookView: View {
     
     var body: some View {
         VStack {
-            BorrowBookHeader(model: viewModel.exchangeBook, showSeperator: false)
+            //BorrowBookHeader(model: viewModel.exchangeBook)
             
             Image(systemName: "repeat")
                 .foregroundColor(._primary)

@@ -16,43 +16,59 @@ struct BorrowResultView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        VStack(alignment: .center) {
-            Text(title)
-                .foregroundColor(titleforeground)
-                .font(.system(size: 22))
-                .multilineTextAlignment(.center)
-            
-            BorrowBookHeader(model: viewModel.borrowBook, isResultView: true)
-                .padding(.horizontal)
-            
-            VStack(alignment: .leading) {
-                TextWithIconInfo(icon: "mappin.and.ellipse", title: "Địa chỉ giao dịch", content: viewModel.borrowBook.traddingAddress)
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .center) {
+                Text(title)
+                    .foregroundColor(titleforeground)
+                    .font(.system(size: 22))
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: false)
+                    .padding(.vertical)
                 
-                TextWithIconInfo(icon: "clock", title: "Thời điểm mượn", content: viewModel.borrowBook.borrowDate.getDate(format: formater))
+                BorrowBookHeader(model: viewModel.borrowBook.book)
+                    .padding(.horizontal, 8)
                 
-                TextWithIconInfo(icon: "clock.arrow.circlepath", title: "Thời gian mượn", content: "\(viewModel.borrowBook.numOfDay) Ngày")
-            }
-            .padding()
-            
-            Spacer()
-            
-            Text(des)
-                .roboto(size: 15)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.gray)
+                VStack(alignment: .leading) {
+                    TextWithIconInfo(icon: "mappin.and.ellipse", title: "Địa chỉ giao dịch", content: viewModel.borrowBook.transactionInfo.adress)
+                    
+                    TextWithIconInfo(icon: "clock", title: "Thời điểm mượn", content: viewModel.borrowBook.transactionInfo.exchangeDate!.getDate(format: formater))
+                    
+                    TextWithIconInfo(icon: "clock.arrow.circlepath", title: "Thời gian mượn", content: "\(viewModel.borrowBook.transactionInfo.numDay!) Ngày")
+                }
                 .padding()
-            
-            Button(action: {
-                AppManager.shared.selectedIndex = 2
-                presentationMode.wrappedValue.dismiss()
-            }, label: {
-                Text(viewModel.borrowBook.result == .success ? "Đi tới tin nhắn" : "Về trang chủ")
-            })
-            .buttonStyle(BaseButtonStyle(size: .large))
-            
-            Spacer()
+                
+                Spacer()
+                
+                Text(des)
+                    .roboto(size: 15)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.gray)
+                    .padding()
+                    .fixedSize(horizontal: false, vertical: false)
+                
+                if viewModel.borrowBook.transactionInfo.progess == .accept {
+                    Button(action: {
+                        
+                    }, label: {
+                        Text("Đi tới tin nhắn")
+                    })
+                    .buttonStyle(BaseButtonStyle(size: .large))
+                } else {
+                    
+                    Button(action: {
+                        AppManager.shared.selectedIndex = 2
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text("Về trang chủ")
+                    })
+                    .buttonStyle(BaseButtonStyle(size: .large))
+                }
+                
+                Spacer()
+            }
         }
-        .padding()
+        .padding(.horizontal)
         .navigationBarTitle("Kết quả mượn sách", displayMode: .inline)
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
@@ -71,18 +87,18 @@ struct BorrowResultView: View {
     var title: String {
         let success = "Chúc mừng\nBạn đã mượn thành công!"
         let fail = "Mượn thất bại!"
-        return viewModel.borrowBook.result == .success ? success : fail
+        return viewModel.borrowBook.transactionInfo.progess == .accept ? success : fail
     }
     
     var titleforeground: Color {
-        viewModel.borrowBook.result == .success ? ._primary : .init(hex: 0xFC6D2F)
+        viewModel.borrowBook.transactionInfo.progess == .accept ? ._primary : .init(hex: 0xFC6D2F)
     }
     
     var des: String {
-        if viewModel.borrowBook.result == .success {
+        if viewModel.borrowBook.transactionInfo.progess == .accept {
             return "Chúng tôi đã tạo cho bạn một cuộc trò chuyện, nhấn vào “đi tới tin nhắn” để trao đổi cụ thể hơn về việc mượn sách"
         } else {
-            return "\"\(viewModel.borrowBook.reason)\""
+            return "\"\(viewModel.borrowBook.transactionInfo.message)\""
         }
     }
 }

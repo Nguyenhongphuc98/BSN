@@ -9,9 +9,9 @@ import SwiftUI
 
 class BorrowResultViewModel {
     
-    var borrowBook: BorrowBookFull
+    var borrowBook: BBorrowBook
     
     init() {
-        borrowBook = BorrowBookFull()
+        borrowBook = BBorrowBook()
     }
 }

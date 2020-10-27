@@ -20,6 +20,8 @@ class BUserBook: BBook {
     var statusDes: String
     
     override init() {
+        ownerName = "Nguyễn Hồng Phúc"
+        ownerID = UUID().uuidString
         status = .likeNew
         state = .available
         statusDes = "Như mới, đẹp từ trong ra ngoài"

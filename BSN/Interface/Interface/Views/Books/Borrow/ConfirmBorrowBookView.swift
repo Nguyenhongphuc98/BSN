@@ -20,28 +20,33 @@ struct ConfirmBorrowBookView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            BorrowBookHeader(model: viewModel.borrowBook, isRequest: false)
-                .padding(.horizontal)
+            BorrowBookHeader(model: viewModel.borrowBook.book, isRequest: false)
+                .padding(.horizontal, 5)
+            
+            Text("\"\(viewModel.borrowBook.transactionInfo.message)\"")
+                .roboto(size: 13)
+                .padding(.vertical)
+                .foregroundColor(.init(hex: 0x4C0098))
             
             VStack(alignment: .leading) {
-                TextWithIconInfo(icon: "mappin.and.ellipse", title: "Địa chỉ giao dịch", content: viewModel.borrowBook.traddingAddress)
+                TextWithIconInfo(icon: "mappin.and.ellipse", title: "Địa chỉ giao dịch", content: viewModel.borrowBook.transactionInfo.adress)
                 
-                TextWithIconInfo(icon: "clock", title: "Thời điểm mượn", content: viewModel.borrowBook.borrowDate.getDate(format: formater))
+                TextWithIconInfo(icon: "clock", title: "Thời điểm mượn", content: viewModel.borrowBook.transactionInfo.exchangeDate!.getDate(format: formater))
                 
-                TextWithIconInfo(icon: "clock.arrow.circlepath", title: "Thời gian mượn", content: "\(viewModel.borrowBook.numOfDay) Ngày")
+                TextWithIconInfo(icon: "clock.arrow.circlepath", title: "Thời gian mượn", content: "\(viewModel.borrowBook.transactionInfo.numDay!) Ngày")
             }
+            .padding(.top)
+            .padding(.horizontal)
             
             Spacer()
             
-            if !viewModel.borrowBook.seen {
+            if shouldShowAction(proges: viewModel.borrowBook.transactionInfo.progess) {
                 HStack(spacing: 30) {
                     Button(action: {
-//                        viewModel.didDecline { (success) in
-//                            AppManager.shared.selectedIndex = 0
-//                        }
+
                         showDeclineView.toggle()
                     }, label: {
-                        Text("Từ Chối")
+                        Text("   Từ Chối   ")
                     })
                     .buttonStyle(BaseButtonStyle(size: .large, type: .secondary))
                     
@@ -50,7 +55,7 @@ struct ConfirmBorrowBookView: View {
                             AppManager.shared.selectedIndex = 2
                         }
                     }, label: {
-                        Text("Đồng ý")
+                        Text("   Đồng ý   ")
                     })
                     .buttonStyle(BaseButtonStyle(size: .large))
                 }
@@ -75,6 +80,10 @@ struct ConfirmBorrowBookView: View {
             Image(systemName: "chevron.backward")
                 .foregroundColor(.gray)
         }
+    }
+    
+    func shouldShowAction(proges: ExchangeProgess) -> Bool {
+        !(proges == .decline) || (proges == .accept)
     }
 }
 

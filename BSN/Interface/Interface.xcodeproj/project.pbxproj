@@ -94,6 +94,8 @@
 		842C44B525484650003C570D /* BBookCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C44B425484650003C570D /* BBookCard.swift */; };
 		842C44BA25484DEC003C570D /* BExchangeBookCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C44B925484DEC003C570D /* BExchangeBookCard.swift */; };
 		842C44BD25484E55003C570D /* BExchangeBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C44BC25484E55003C570D /* BExchangeBook.swift */; };
+		842C44C2254857FB003C570D /* BTransactionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C44C1254857FB003C570D /* BTransactionInfo.swift */; };
+		842C44C5254859F2003C570D /* BBorrowBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C44C4254859F2003C570D /* BBorrowBook.swift */; };
 		84360FFC2524409C009FF4BF /* ScreenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84360FFB2524409C009FF4BF /* ScreenExtension.swift */; };
 		8436100025246A28009FF4BF /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84360FFF25246A28009FF4BF /* PostDetailView.swift */; };
 		8436100425246A8C009FF4BF /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8436100325246A8C009FF4BF /* PostDetailViewModel.swift */; };
@@ -275,6 +277,8 @@
 		842C44B425484650003C570D /* BBookCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBookCard.swift; sourceTree = "<group>"; };
 		842C44B925484DEC003C570D /* BExchangeBookCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BExchangeBookCard.swift; sourceTree = "<group>"; };
 		842C44BC25484E55003C570D /* BExchangeBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BExchangeBook.swift; sourceTree = "<group>"; };
+		842C44C1254857FB003C570D /* BTransactionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTransactionInfo.swift; sourceTree = "<group>"; };
+		842C44C4254859F2003C570D /* BBorrowBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBorrowBook.swift; sourceTree = "<group>"; };
 		84360FFB2524409C009FF4BF /* ScreenExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenExtension.swift; sourceTree = "<group>"; };
 		84360FFF25246A28009FF4BF /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		8436100325246A8C009FF4BF /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
@@ -540,6 +544,8 @@
 				842C447325480C5C003C570D /* BSusggestBook.swift */,
 				842C447B25480F46003C570D /* BUserBook.swift */,
 				842C44BC25484E55003C570D /* BExchangeBook.swift */,
+				842C44C1254857FB003C570D /* BTransactionInfo.swift */,
+				842C44C4254859F2003C570D /* BBorrowBook.swift */,
 			);
 			path = BBook;
 			sourceTree = "<group>";
@@ -984,6 +990,7 @@
 				8401C917252B6B7400A722CE /* BookDetailViewModel.swift in Sources */,
 				845BA212254031F300CC9140 /* BSNImage.swift in Sources */,
 				844119F92522E77D00AE31D8 /* Seperator.swift in Sources */,
+				842C44C5254859F2003C570D /* BBorrowBook.swift in Sources */,
 				84411A052523208000AE31D8 /* NewsFeedViewModel.swift in Sources */,
 				8401C884252824DD00A722CE /* NewChatViewModel.swift in Sources */,
 				84411A252523331D00AE31D8 /* BoundTracking.swift in Sources */,
@@ -1004,6 +1011,7 @@
 				8401C9F42531AB7100A722CE /* MyBookDetailView.swift in Sources */,
 				845DB4CC25237ED20019C29B /* ImagePicker.swift in Sources */,
 				84AA9697251F99470029BB1E /* CircleImage.swift in Sources */,
+				842C44C2254857FB003C570D /* BTransactionInfo.swift in Sources */,
 				8401C94B252C71AA00A722CE /* BorrowListView.swift in Sources */,
 				8401C925252C095B00A722CE /* RatingDetail.swift in Sources */,
 				8414F2672521D7EA003CF799 /* DummyData.swift in Sources */,

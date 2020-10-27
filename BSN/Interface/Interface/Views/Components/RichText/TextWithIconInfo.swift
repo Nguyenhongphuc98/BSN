@@ -16,7 +16,7 @@ struct TextWithIconInfo: View {
     var content: String
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Image(systemName: icon)
                     .foregroundColor(._primary)

@@ -30,7 +30,7 @@ struct ConfirmExchangeBookView: View {
                         .multilineTextAlignment(.center)
                 }
                 
-                BorrowBookHeader(model: viewModel.exchangeBook, showSeperator: false)
+//                BorrowBookHeader(model: viewModel.exchangeBook, showSeperator: false)
                 
                 Image(systemName: "repeat")
                     .foregroundColor(._primary)
