@@ -11,18 +11,37 @@ public class BookManager {
     
     public static let shared: BookManager = BookManager()
     
-    private let booksRequest: ResourceRequest<SearchBook>
+    private let searchBooksRequest: ResourceRequest<SearchBook>
     
+    private let booksRequest: ResourceRequest<Book>
+    
+    // List book searched from DB
     public let searchBooksPublisher: PassthroughSubject<[SearchBook], Never>
     
+    // Get book info by isbn from google api
+    public let googleBookPublisher: PassthroughSubject<Book, Never>
+    
     public init() {
+        // Publisher
         searchBooksPublisher = PassthroughSubject<[SearchBook], Never>()
-        booksRequest = ResourceRequest<SearchBook>(componentPath: "books/")
+        
+        // Init resource URL
+        searchBooksRequest = ResourceRequest<SearchBook>(componentPath: "books/")
+        booksRequest = ResourceRequest<Book>(componentPath: "books/")
+        
+        // Google
+        googleBookPublisher = PassthroughSubject<Book, Never>()
     }
     
     // Request book with title or author `term`
     public func searchBook(term: String) {
         print("Did start searching books")
-        booksRequest.searchBook(term: term, publisher: searchBooksPublisher)
+        searchBooksRequest.searchBook(term: term, publisher: searchBooksPublisher)
+    }
+    
+    public func getBookInfo(by isbn: String) {
+        GoogleApiRequest
+            .shared
+            .getBookInfo(by: isbn, publisher: googleBookPublisher)
     }
 }

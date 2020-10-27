@@ -41,6 +41,7 @@ struct UserBookController: RouteCollection {
     }
     
     // Advance function
+    // Get all book in shell of a user `[UserBook]`
     func search(req: Request) throws -> EventLoopFuture<[SearchUserBook]> {
         let uid = req.parameters.get("userID")! as String
         

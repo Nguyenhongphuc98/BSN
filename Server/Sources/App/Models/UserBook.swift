@@ -39,6 +39,8 @@ final class UserBook: Model {
 extension UserBook: Content { }
 
 extension UserBook {
+    
+    // Return model when user search book
     func toUserSerchBook(cover: String, title: String, author: String) -> SearchUserBook {
         SearchUserBook(
             cover: cover,

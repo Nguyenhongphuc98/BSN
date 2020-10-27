@@ -1,17 +1,23 @@
 platform :ios, '14.0'
 workspace 'BSN'
 
+project 'Business/Business.xcodeproj'
 project 'Interface/Interface.xcodeproj'
 project 'BSN/BSN.xcodeproj'
 
+target 'Business' do
+  project 'Business/Business.xcodeproj'
+  pod 'SwiftyJSON', '~> 4.0'
+end
+
 target 'Interface' do
   project 'Interface/Interface.xcodeproj'
-   #Pods for Project1
-    pod 'AlamofireImage', '~> 4.1'
+  pod 'AlamofireImage', '~> 4.1'
+  pod 'SwiftyJSON', '~> 4.0'
 end
 
 target 'BSN' do
   project 'BSN/BSN.xcodeproj'
-   #Pods for Project1
-    pod 'AlamofireImage', '~> 4.1'
+  pod 'AlamofireImage', '~> 4.1'
+  pod 'SwiftyJSON', '~> 4.0'
 end

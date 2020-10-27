@@ -15,6 +15,26 @@ struct SubmitAddBookView: View {
         ScrollView {
             VStack {
                 VStack(spacing: 10) {
+                    
+                    HStack {
+                        InputWithTitle(content: $viewModel.bookCode, placeHolder: "Nhập mã in sau bìa sách", title: "Mã ISBN")
+                        
+                    
+                        VStack {
+                            Spacer()
+                            Button(action: {
+                                viewModel.loadInfo()
+                            }, label: {
+                                Text("Truy vấn")
+                                    .padding(.vertical, 3)
+                            })
+                            .buttonStyle(BaseButtonStyle(size: .medium, type: .primary))
+                        }
+                        .frame(height: 66)
+                    }
+                    
+                    Separator(height: 2)
+                    
                     MyBookDetailViewHeader(model: viewModel.model)
                         .padding(.top, 10)
 
@@ -53,11 +73,11 @@ struct SubmitAddBookView: View {
     
     var textInput: some View {
         VStack {
-            InputWithTitle(content: $viewModel.model.name, placeHolder: "Nhập tên sách", title: "Tiêu đề")
-            
-            InputWithTitle(content: $viewModel.model.author, placeHolder: "Nhập tác giả chính", title: "Tác giả")
+//            InputWithTitle(content: $viewModel.model.name, placeHolder: "Nhập tên sách", title: "Tiêu đề")
+//
+//            InputWithTitle(content: $viewModel.model.author, placeHolder: "Nhập tác giả chính", title: "Tác giả")
 
-            InputWithTitle(content: $viewModel.bookCode, placeHolder: "ex: Nhập mã in sau bìa sách", title: "Mã sách")
+//            InputWithTitle(content: $viewModel.bookCode, placeHolder: "ex: Nhập mã in sau bìa sách", title: "Mã sách")
 
             InputWithTitle(content: $viewModel.model.statusDes, placeHolder: "Hãy mô tả càng chi tiết nhất có thể", title: "Mô tả tình trạng sách")
         }

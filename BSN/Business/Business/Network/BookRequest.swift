@@ -24,3 +24,8 @@ extension ResourceRequest where ResourceType == SearchBook {
         }
     }
 }
+
+extension ResourceRequest where ResourceType == Book {
+    
+    
+}
