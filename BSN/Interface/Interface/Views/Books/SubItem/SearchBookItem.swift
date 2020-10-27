@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct SearchBookCard: View {
+// List Item in search list
+struct SearchBookItem: View {
     
-    var model: Book
+    var model: BBook
     
     var body: some View {
 //        NavigationLink(
@@ -20,13 +21,13 @@ struct SearchBookCard: View {
         
         HStack(alignment: .center) {
             //Image(model.photo, bundle: interfaceBundle)
-            BSNImage(urlString: model.photo, tempImage: "book_cover")
+            BSNImage(urlString: model.cover, tempImage: "book_cover")
                 .frame(width: 50, height: 60)
             
             VStack(alignment: .leading) {
                 Spacer()
                 
-                Text(model.name)
+                Text(model.title)
                     .roboto(size: 15)
                 
                 Text(model.author)
@@ -44,6 +45,6 @@ struct SearchBookCard: View {
 
 struct SearchBookCard_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBookCard(model: Book())
+        SearchBookItem(model: BBook())
     }
 }

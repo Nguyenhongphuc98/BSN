@@ -16,23 +16,28 @@ public class ImageLoader: ObservableObject {
     // UIImage got from url
     @Published var uiImage: UIImage
     
+    // Image will be set if err to got image grom url
+    private var instate: String
+    
     // Caching fetched images
     public static var imageCache = AutoPurgingImageCache()
     
     public init() {
         uiImage = UIImage(named: "loading", in: interfaceBundle, with: nil)!
+        instate = "loading"
     }
     
-    public func setup(urlString: String, temp: String) {
+    public func setup(urlString: String?, temp: String) {
         if self.urlString == nil {
+            self.instate = temp
             self.urlString = urlString
-            uiImage = UIImage(named: temp, in: interfaceBundle, with: nil)!
             download(urlString: urlString)
         }
     }
 
-    private func download(urlString: String) {
-        guard let url = URL(string: urlString) else {
+    private func download(urlString: String?) {
+        guard let url = URL(string: urlString!) else {
+            self.uiImage = UIImage(named: self.instate, in: interfaceBundle, with: nil)!
             return
         }
         
@@ -48,6 +53,8 @@ public class ImageLoader: ObservableObject {
         imageDownloader.download(urlRequest, completion:  { response in
             if case .success(let image) = response.result {
                 self.uiImage = image
+            } else {
+                self.uiImage = UIImage(named: self.instate, in: interfaceBundle, with: nil)!
             }
         })
     }

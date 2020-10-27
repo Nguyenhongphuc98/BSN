@@ -72,7 +72,7 @@ public struct SearchView: View {
                     NavigationLink(
                         destination: BookDetailView(),
                         label: {
-                            SearchBookCard(model: book)
+                            SearchBookItem(model: book)
                         })
                         .padding(.horizontal)
                 }

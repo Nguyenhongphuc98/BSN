@@ -13,7 +13,8 @@ class SearchBookViewModel: ObservableObject {
     
     @Published var searchText: String
     
-    @Published var searchBooks: [Book]
+    //@Published var searchBooks: [Book]
+    @Published var searchBooks: [BBook]
     
     @Published var isSearching: Bool
     
@@ -80,7 +81,8 @@ class SearchBookViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.searchBooks = []
                     self.searchBooks = sb.map { (book) in
-                        Book(id: book.id, name: book.title, author: book.author, photo: book.cover)
+                        //Book(id: book.id, name: book.title, author: book.author, photo: book.cover)
+                        BBook(id: book.id, title: book.title, author: book.author, cover: book.cover)
                     }
                     
                     self.isSearching = false

@@ -50,7 +50,7 @@ struct BSNApp: App {
                 
                 NavigationView {
                     ProfileView()
-                        .navigationTitle("Trang cá nhân")
+                        .navigationBarTitle(Text("Trang cá nhân"), displayMode: .inline)
                         .navigationBarHidden(true)
                 }
                 .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .profile) }

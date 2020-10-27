@@ -19,6 +19,8 @@ struct SearchAddBookView: View {
     // Mean can't create new book, search only
     var justSearchInStore: Bool = false
     
+    @Environment(\.presentationMode) var presentationMode
+    
 //    public init() {
 //        
 //    }
@@ -36,8 +38,18 @@ struct SearchAddBookView: View {
             
             Spacer()
         }
+        .navigationBarItems(leading: backButton)
+        .navigationBarBackButtonHidden(true)
     }
     
+    var backButton: some View {
+        Button {
+            presentationMode.wrappedValue.dismiss()
+        } label: {
+            Image(systemName: "chevron.backward")
+                .foregroundColor(.gray)
+        }
+    }
     private var searchContent: some View {
         Group {
             if viewModel.isSearching {
@@ -48,9 +60,9 @@ struct SearchAddBookView: View {
                     LazyVStack {
                         ForEach(viewModel.searchBooks) { book in
                             NavigationLink(
-                                destination: getDestination(id: book.id),
+                                destination: getDestination(id: book.id!),
                                 label: {
-                                    SearchBookCard(model: book)
+                                    SearchBookItem(model: book)
                                 })
                                 .padding(.horizontal)
                         }

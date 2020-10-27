@@ -10,7 +10,7 @@ import SwiftUI
 struct BSNImage: View {
     // Image with auto download data from url
     
-    var urlString: String
+    var urlString: String?
     
     var tempImage: String = "loading"
     
