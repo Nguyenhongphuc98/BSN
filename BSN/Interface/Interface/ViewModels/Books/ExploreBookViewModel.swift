@@ -8,14 +8,14 @@
 import SwiftUI
 import Business
 
-class SearchViewViewModel: SearchBookViewModel {
+class ExploreBookViewModel: SearchBookViewModel {
     
-    @Published var books: [Book]
+    @Published var suggestBooks: [BSusggestBook]
     
     @Published var exchangeBooks: [ExchangeBook]
     
     override init() {
-        books = fakebooks
+        suggestBooks = [BSusggestBook(), BSusggestBook(), BSusggestBook(), BSusggestBook()]
         exchangeBooks = [ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook()]
         super.init()
         startBusiness()

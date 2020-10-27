@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-public struct SearchView: View {
+public struct ExploreBookView: View {
     
-    @StateObject var viewModel: SearchViewViewModel = SearchViewViewModel()
+    @StateObject var viewModel: ExploreBookViewModel = ExploreBookViewModel()
     
     @EnvironmentObject var root: AppManager
     
@@ -52,8 +52,9 @@ public struct SearchView: View {
             
             TabView(selection: self.$selectedSegment){
                 
-                BookGrid(models: viewModel.books)
-                    .tag(0)
+//                BookGrid(models: viewModel.books)
+//                    .tag(0)
+                BBookGrid(models: viewModel.suggestBooks, style: .suggestbook)
                 
                 ExchangeBookList(models: viewModel.exchangeBooks)
                     .tag(1)
@@ -94,6 +95,6 @@ public struct SearchView: View {
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchView()
+        ExploreBookView()
     }
 }

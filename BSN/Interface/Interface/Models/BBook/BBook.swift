@@ -30,9 +30,10 @@ class BBook: ObservableObject, Identifiable {
     }
     
     init() {
+        self.id = UUID().uuidString
         self.title = "Bứt phá để thành công"
         self.author = "Ks. Nguyễn Hồng Phúc"
-        self.cover = ""
+        self.cover = "book_cover"
         self.description = "Đây là cốn sách nói về cuộc sống của 1 chàng trai xuất thân từ gia đình rất khó khăn, nhưng thông qua đó anh lại nhận ra được nhiều giá trị tự cuộc sống."
     }
 }

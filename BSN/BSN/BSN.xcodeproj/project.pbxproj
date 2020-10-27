@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		65151F95923C646F69F68B15 /* libPods-BSN.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC0276D056E4D9B3857004C /* libPods-BSN.a */; };
+		842C44AD2548271C003C570D /* Business.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842C44AC2548271C003C570D /* Business.framework */; };
+		842C44AE2548271C003C570D /* Business.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 842C44AC2548271C003C570D /* Business.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84AA95C0251AFEB70029BB1E /* Pattaya-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AA95BF251AFEB70029BB1E /* Pattaya-Regular.ttf */; };
 		84AA95C2251B01010029BB1E /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AA95C1251B01010029BB1E /* Roboto-Regular.ttf */; };
 		84AA95D1251B03680029BB1E /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AA95CA251B03680029BB1E /* Roboto-Bold.ttf */; };
@@ -36,6 +38,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				842C44AE2548271C003C570D /* Business.framework in Embed Frameworks */,
 				84FA99152518618100CB92CB /* Interface.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -46,6 +49,7 @@
 /* Begin PBXFileReference section */
 		03C31E3AC0F9113697D31C72 /* Pods-BSN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSN.debug.xcconfig"; path = "Target Support Files/Pods-BSN/Pods-BSN.debug.xcconfig"; sourceTree = "<group>"; };
 		2CC0276D056E4D9B3857004C /* libPods-BSN.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BSN.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		842C44AC2548271C003C570D /* Business.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Business.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84AA95BF251AFEB70029BB1E /* Pattaya-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pattaya-Regular.ttf"; sourceTree = "<group>"; };
 		84AA95C1251B01010029BB1E /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		84AA95CA251B03680029BB1E /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -76,6 +80,7 @@
 			files = (
 				84FA99142518618100CB92CB /* Interface.framework in Frameworks */,
 				65151F95923C646F69F68B15 /* libPods-BSN.a in Frameworks */,
+				842C44AD2548271C003C570D /* Business.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +159,7 @@
 		84FA99122518618100CB92CB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				842C44AC2548271C003C570D /* Business.framework */,
 				84FA99132518618100CB92CB /* Interface.framework */,
 				2CC0276D056E4D9B3857004C /* libPods-BSN.a */,
 			);

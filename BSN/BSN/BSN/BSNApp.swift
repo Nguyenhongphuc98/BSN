@@ -27,7 +27,7 @@ struct BSNApp: App {
                 .tag(0)
                 
                 NavigationView {
-                    SearchView()
+                    ExploreBookView()
                         .navigationTitle("Khám phá")
                         .navigationBarHidden(true)
                 }
