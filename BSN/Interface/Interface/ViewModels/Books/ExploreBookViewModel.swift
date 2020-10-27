@@ -12,11 +12,11 @@ class ExploreBookViewModel: SearchBookViewModel {
     
     @Published var suggestBooks: [BSusggestBook]
     
-    @Published var exchangeBooks: [ExchangeBook]
+    @Published var exchangeBooks: [BExchangeBook]
     
     override init() {
         suggestBooks = [BSusggestBook(), BSusggestBook(), BSusggestBook(), BSusggestBook()]
-        exchangeBooks = [ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook(), ExchangeBook()]
+        exchangeBooks = [BExchangeBook(), BExchangeBook(), BExchangeBook(), BExchangeBook(), BExchangeBook()]
         super.init()
         startBusiness()
     }

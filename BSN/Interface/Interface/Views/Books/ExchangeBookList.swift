@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ExchangeBookList: View {
     
-    var models: [ExchangeBook]
+    var models: [BExchangeBook]
     
     var body: some View {
         VStack {
@@ -18,7 +18,7 @@ struct ExchangeBookList: View {
             List {
                 ForEach(models) { item in
                     VStack {
-                        ExchangeBookCard(model: item)
+                        BExchangeBookCard(model: item)
                         Separator(color: .white, height: 3)
                     }
                 }
@@ -30,6 +30,6 @@ struct ExchangeBookList: View {
 
 struct ExchangeBookList_Previews: PreviewProvider {
     static var previews: some View {
-        ExchangeBookList(models: [ExchangeBook(), ExchangeBook()])
+        ExchangeBookList(models: [BExchangeBook(), BExchangeBook()])
     }
 }

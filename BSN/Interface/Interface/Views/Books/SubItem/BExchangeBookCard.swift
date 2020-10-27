@@ -1,16 +1,15 @@
 //
-//  ExchangeBookCard.swift
+//  BExchangeBookCard.swift
 //  Interface
 //
-//  Created by Phucnh on 10/5/20.
+//  Created by Phucnh on 10/27/20.
 //
 
 import SwiftUI
 
-// Use in suggest view. List book card avalable to exchange
-struct ExchangeBookCard: View {
+struct BExchangeBookCard: View {
     
-    var model: ExchangeBook
+    var model: BExchangeBook
     
     @State private var nav: Bool = false
     
@@ -25,15 +24,15 @@ struct ExchangeBookCard: View {
                 .frame(width: 0, height: 0)
                 .opacity(0)
             
-            Image(model.photo, bundle: interfaceBundle)
+            Image(model.needChangeBook.cover!, bundle: interfaceBundle)
                 .resizable()
                 .frame(width: 110, height: 130)
                 
             VStack(alignment: .leading) {
-                Text(model.title)
+                Text(model.needChangeBook.title)
                     .roboto(size: 15)
                 
-                Text(model.author)
+                Text(model.needChangeBook.author)
                     .robotoLight(size: 14)
                 
                 Spacer()
@@ -48,10 +47,10 @@ struct ExchangeBookCard: View {
                 
                 Spacer()
                 
-                Text(model.exchangeBookTitle)
+                Text(model.wantChangeBook!.title)
                     .roboto(size: 15)
                 
-                Text(model.exchangeBookAuthor)
+                Text(model.wantChangeBook!.author)
                     .robotoLight(size: 14)
                 
             }
@@ -66,8 +65,8 @@ struct ExchangeBookCard: View {
     }
 }
 
-struct ExchangeBookCard_Previews: PreviewProvider {
+struct BExchangeBookCard_Previews: PreviewProvider {
     static var previews: some View {
-        ExchangeBookCard(model: ExchangeBook())
+        BExchangeBookCard(model: BExchangeBook())
     }
 }
