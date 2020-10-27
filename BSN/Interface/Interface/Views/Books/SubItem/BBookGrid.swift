@@ -31,7 +31,7 @@ struct BBookGrid: View {
             LazyVGrid(columns: columns, content: {
                 ForEach(models) { book in
                     if style == .mybook {
-                        Rectangle()
+                        BUserBookCard(model: book as! BUserBook)
                     } else {
                         SuggestBookCard(model: book as! BSusggestBook)
                     }

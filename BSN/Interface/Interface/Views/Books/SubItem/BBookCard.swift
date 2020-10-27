@@ -1,43 +1,45 @@
 //
-//  BookCard.swift
+//  BBookCard.swift
 //  Interface
 //
-//  Created by Phucnh on 10/5/20.
+//  Created by Phucnh on 10/27/20.
 //
 
 import SwiftUI
 
-struct BookCard: View {
+// Book card template
+// Using show core info of book
+// Ex: suggest book, my book can using it
+struct BBookCard<Content: View>: View {
     
-    var model: Book
+    var model: BBook
     
-    var navToMyBook: Bool = false
+    // Addition content
+    var content: Content
+    
+    init(model: BBook, @ViewBuilder content: () -> Content) {
+        self.content = content()
+        self.model = model
+    }
     
     var body: some View {
         NavigationLink(
-            destination: navigateView,
+            destination: BookDetailView(),
             label: {
                 VStack(alignment: .center) {
-                    Image(model.photo, bundle: interfaceBundle)
+                    Image(model.cover!, bundle: interfaceBundle)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 100, height: 120)
                         
                     VStack(alignment: .leading) {
-                        Text(model.name)
+                        Text(model.title)
                             .roboto(size: 15)
                         
                         Text(model.author)
                             .robotoLight(size: 14)
                         
-                        HStack {
-                            StarRating(rating: model.rating)
-                            
-                            Text("\(model.numReview) nhận xét")
-                                .roboto(size: 12)
-                            
-                            Spacer()
-                        }
+                        content
                     }
                 }
                 .padding(5)
@@ -45,16 +47,16 @@ struct BookCard: View {
                 .cornerRadius(8)
                 .shadow(color: Color.black.opacity(0.25), radius: 4, x: 2, y: 2)
                 .foregroundColor(.black)
+                .padding(.horizontal, 5)
+                .padding(.top, 5)
             })
-    }
-    
-    var navigateView: AnyView {
-        navToMyBook ? .init(MyBookDetailView()) : .init(BookDetailView())
     }
 }
 
-struct BookCard_Previews: PreviewProvider {
+struct BBookCard_Previews: PreviewProvider {
     static var previews: some View {
-        BookCard(model: Book())
+        BBookCard(model: BBook()) {
+            Text("test")
+        }
     }
 }

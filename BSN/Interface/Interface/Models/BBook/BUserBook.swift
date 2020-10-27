@@ -22,7 +22,7 @@ class BUserBook: BBook {
     override init() {
         status = .likeNew
         state = .available
-        statusDes = "Như mới"
+        statusDes = "Như mới, đẹp từ trong ra ngoài"
         super.init()
     }
 }

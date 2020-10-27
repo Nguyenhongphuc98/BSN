@@ -101,7 +101,9 @@ public struct ProfileView: View {
     
     var books: some View {
         ZStack(alignment: .trailing) {
-            BookGrid(models: viewModel.books, hasFooter: true, isOwner: true)
+            //BookGrid(models: viewModel.books, hasFooter: true, isOwner: true)
+            
+            BBookGrid(models: viewModel.books, style: .mybook)
             
             NavigationLink(
                 destination: SearchAddBookView(),
