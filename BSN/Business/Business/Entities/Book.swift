@@ -7,7 +7,7 @@
 
 public struct Book: Codable {
     
-    public var id: UUID?
+    public var id: String?
     
     public var title: String
     

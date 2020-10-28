@@ -75,12 +75,27 @@ struct BaseButtonStyle: ButtonStyle {
     
     var type: ButtonType = .primary
     
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .foregroundColor(type.forceground())
-            .padding(.vertical, size.getV())
-            .padding(.horizontal, size.getH())
-            .background(RoundedRectangle(cornerRadius: 5).fill(type.background().opacity(configuration.isPressed ? 0.7 : 1)))
-            .clipped()
+    func makeBody(configuration: ButtonStyle.Configuration) -> some View {
+        MyButton(configuration: configuration, size: size, type: type)
+    }
+    
+    struct MyButton: View {
+        
+        let configuration: ButtonStyle.Configuration
+        
+        var size: ButtonSize = .small
+        
+        var type: ButtonType = .primary
+        
+        @Environment(\.isEnabled) private var isEnabled: Bool
+        
+        var body: some View {
+            configuration.label
+                .foregroundColor(type.forceground())
+                .padding(.vertical, size.getV())
+                .padding(.horizontal, size.getH())
+                .background(RoundedRectangle(cornerRadius: 5).fill(isEnabled ? type.background().opacity(configuration.isPressed ? 0.7 : 1) : Color.gray))
+                .clipped()
+        }
     }
 }

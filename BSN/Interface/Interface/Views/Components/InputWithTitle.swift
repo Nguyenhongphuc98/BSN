@@ -15,11 +15,14 @@ struct InputWithTitle: View {
     
     var title: String
     
+    var keyboardType: UIKeyboardType = .default
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text(title)
             
             TextField(placeHolder, text: $content)
+                .keyboardType(keyboardType)
                 .padding(10)
                 .background(Color.white.cornerRadius(10))
                 .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.init(hex: 0xC4C4C4)))

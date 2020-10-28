@@ -15,6 +15,10 @@ class SubmitAddBookViewModel: ObservableObject {
     
     @Published var bookCode: String
     
+    @Published var showAlert: Bool
+    
+    @Published var enableDoneBtn: Bool
+    
     private var bookManager: BookManager
     
     private var bookID: String?
@@ -26,9 +30,14 @@ class SubmitAddBookViewModel: ObservableObject {
         model = BUserBook()
         bookCode = ""
         bookManager = BookManager.shared
+        showAlert = false
+        enableDoneBtn = false
         
         setupReceiveBookInfo()
         model.description = ""
+        model.statusDes = ""
+        model.title = "Tiêu đề sách"
+        model.author = "Tác giả"
     }
     
     func prepareData(bookID: String) {
@@ -61,11 +70,17 @@ class SubmitAddBookViewModel: ObservableObject {
                 }
                 
                 DispatchQueue.main.async {
-                    self.model.title = book.title
-                    self.model.author = book.author
-                    self.model.description = book.description!
-                    self.model.cover = book.cover
-                    print("did receive book info")
+                    if book.id == "undefine" {
+                        self.showAlert.toggle()
+                    } else {
+                        
+                        self.model.title = book.title
+                        self.model.author = book.author
+                        self.model.description = book.description!
+                        self.model.cover = book.cover
+                        self.enableDoneBtn = true
+                        print("did receive book info")
+                    }
                 }
             }
             .store(in: &searchCancellables)

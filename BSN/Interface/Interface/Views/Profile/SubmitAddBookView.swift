@@ -27,7 +27,6 @@ struct SubmitAddBookView: View {
                     // Mean shoud get book from google
                     if bookID == nil {
                         isbnInfo
-                            .disabled(bookID != nil)
                         
                         Separator(height: 2)
                     }
@@ -62,17 +61,26 @@ struct SubmitAddBookView: View {
                     Text("   Hoàn tất   ")
                 })
                 .buttonStyle(BaseButtonStyle(size: .largeH))
+                .disabled(!viewModel.enableDoneBtn)
                 .padding()
                 .padding(.bottom, 40)
+                
             }
         }
         .background(Color(.secondarySystemBackground))
+        .resignKeyboardOnDragGesture()
         .onAppear(perform: viewAppeared)
+        .alert(isPresented: $viewModel.showAlert) {
+            Alert(
+                title: Text("Kết quả"),
+                message: Text("Không tìm thấy sách, vui lòng thử isbn khác")
+            )
+        }
     }
     
     private var isbnInfo: some View {
         HStack {
-            InputWithTitle(content: $viewModel.bookCode, placeHolder: "Nhập mã in sau bìa sách", title: "Mã ISBN")
+            InputWithTitle(content: $viewModel.bookCode, placeHolder: "Nhập mã in sau bìa sách", title: "Mã ISBN", keyboardType: .numberPad)
             
             VStack {
                 Spacer()
