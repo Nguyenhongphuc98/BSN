@@ -9,12 +9,12 @@ import SwiftUI
 
 class MyBookDetailViewModel: ObservableObject {
     
-    var model: MyBookDetail
+    var model: BUserBook
     
     @Published var notes: [Note]
     
     init() {
-        model = MyBookDetail()
+        model = BUserBook()
         notes = [Note(), Note()]
     }
     

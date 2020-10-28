@@ -15,7 +15,7 @@ struct BUserBookCard: View {
     
     var body: some View {
         NavigationLink(
-            destination: BookDetailView(),
+            destination:navigateView,
             label: {
                 VStack {
                     BBookCard(model: model) {

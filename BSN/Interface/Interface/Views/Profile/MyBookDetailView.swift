@@ -13,6 +13,8 @@ struct MyBookDetailView: View {
     
     @State private var showAddNoteView: Bool = false
     
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 10) {
@@ -41,6 +43,17 @@ struct MyBookDetailView: View {
                 bookStatus
             }
             .padding()
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: backButton)
+    }
+    
+    var backButton: some View {
+        Button {
+            presentationMode.wrappedValue.dismiss()
+        } label: {
+            Image(systemName: "chevron.backward")
+                .foregroundColor(.gray)
         }
     }
     
@@ -110,7 +123,7 @@ struct MyBookDetailView_Previews: PreviewProvider {
 // MARK: - Sub compoent
 struct MyBookDetailViewHeader: View {
     
-    var model: MyBookDetail
+    var model: BUserBook
     
     @State var expandDes: Bool = false
     
@@ -119,7 +132,7 @@ struct MyBookDetailViewHeader: View {
     var body: some View {
         VStack {
             HStack(alignment: .center) {
-                Image(model.photo, bundle: interfaceBundle)
+                Image(model.cover!, bundle: interfaceBundle)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 80, height: 100)
@@ -129,7 +142,7 @@ struct MyBookDetailViewHeader: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Spacer()
                     
-                    Text(model.name)
+                    Text(model.title)
                         .roboto(size: 15)
                     
                     Text(model.author)
@@ -156,7 +169,7 @@ struct MyBookDetailViewHeader: View {
     var des: some View {
         // Description
         Group {
-            Text(model.description)
+            Text(model.description!)
                 .robotoItalic(size: 15)
                 .foregroundColor(.init(hex: 0x404040))
             +

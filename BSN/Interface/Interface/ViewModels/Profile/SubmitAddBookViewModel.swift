@@ -11,7 +11,7 @@ import Combine
 
 class SubmitAddBookViewModel: ObservableObject {
     
-    @Published var model: MyBookDetail
+    @Published var model: BUserBook
     
     @Published var bookCode: String
     
@@ -21,7 +21,7 @@ class SubmitAddBookViewModel: ObservableObject {
     var searchCancellables = Set<AnyCancellable>()
     
     init() {
-        model = MyBookDetail()
+        model = BUserBook()
         bookCode = "XBDFS"
         bookManager = BookManager.shared
         setupReceiveBookInfo()
@@ -51,7 +51,7 @@ class SubmitAddBookViewModel: ObservableObject {
                 }
                 
                 DispatchQueue.main.async {
-                    self.model.name = book.title
+                    self.model.title = book.title
                     self.model.author = book.author
                     self.model.description = book.description!
                 }
