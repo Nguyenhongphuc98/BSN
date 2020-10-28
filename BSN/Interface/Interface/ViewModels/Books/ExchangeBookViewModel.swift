@@ -10,7 +10,7 @@ import SwiftUI
 // Manager in exchange book view (detail - available or not)
 class ExchangeBookViewModel: ObservableObject {
     
-    var exchangeBook: ExchangeBookFull
+    var exchangeBook: BExchangeBookFull
     
     var canExchange: Bool
     
@@ -19,7 +19,7 @@ class ExchangeBookViewModel: ObservableObject {
     @Published var traddingAdress: String
     
     init() {
-        exchangeBook = ExchangeBookFull()
+        exchangeBook = BExchangeBookFull()
         message = ""
         traddingAdress = ""
         //canExchange = Int.random(in: 0..<2) == 1

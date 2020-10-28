@@ -30,21 +30,24 @@ struct ConfirmExchangeBookView: View {
                         .multilineTextAlignment(.center)
                 }
                 
-//                BorrowBookHeader(model: viewModel.exchangeBook, showSeperator: false)
+                BorrowBookHeader(model: viewModel.exchangeBook.needChangeBook)
                 
                 Image(systemName: "repeat")
                     .foregroundColor(._primary)
                     .padding(.horizontal)
                     .font(.system(size: 28))
                 
-                ExchangeBookSecondHeader(model: viewModel.exchangeBook, isCanChange: viewModel.canExchange)
+                ExchangeBookSecondHeader(model: viewModel.exchangeBook.wantChangeBook!, isCanChange: viewModel.canExchange)
+                    .padding(.bottom)
                 
-                TextWithIconInfo(icon: "clock", title: "Địa chỉ giao dịch", content: viewModel.exchangeBook.traddingAddress)
+                TextWithIconInfo(icon: "clock", title: "Địa chỉ giao dịch", content: viewModel.exchangeBook.transactionInfo.adress)
                 
-                TextWithIconInfo(icon: "clock.arrow.circlepath", title: "Lời nhắn", content: viewModel.exchangeBook.message)
+                TextWithIconInfo(icon: "clock.arrow.circlepath", title: "Lời nhắn", content: viewModel.exchangeBook.transactionInfo.message)
                
+                Spacer(minLength: 30)
+                
                 if !resultView {
-                    if viewModel.exchangeBook.result == .unknown {
+                    if viewModel.exchangeBook.transactionInfo.progess == .new {
                         confirmAction
                     }
                 } else {
@@ -53,8 +56,8 @@ struct ConfirmExchangeBookView: View {
                 
                 Spacer()
             }
-            .padding(.horizontal)
-            .background(Color(.secondarySystemBackground))
+            .padding()
+            //.background(Color(.secondarySystemBackground))
             .navigationBarTitle(navTitle, displayMode: .inline)
             .navigationBarHidden(false)
             .navigationBarBackButtonHidden(true)
@@ -81,18 +84,18 @@ struct ConfirmExchangeBookView: View {
     var title: String {
         let success = "Chúc mừng\nBạn đã đổi sách thành công!"
         let fail = "Đổi sách thất bại!"
-        return viewModel.exchangeBook.result == .success ? success : fail
+        return viewModel.exchangeBook.transactionInfo.progess == .accept ? success : fail
     }
     
     var titleforeground: Color {
-        viewModel.exchangeBook.result == .success ? ._primary : .init(hex: 0xFC6D2F)
+        viewModel.exchangeBook.transactionInfo.progess == .accept ? ._primary : .init(hex: 0xFC6D2F)
     }
     
     var des: String {
-        if viewModel.exchangeBook.result == .success {
+        if viewModel.exchangeBook.transactionInfo.progess == .accept {
             return "Chúng tôi đã tạo cho bạn một cuộc trò chuyện, nhấn vào “đi tới tin nhắn” để trao đổi cụ thể hơn về việc đổi sách"
         } else {
-            return "\"\(viewModel.exchangeBook.reason)\""
+            return "\"\(viewModel.exchangeBook.transactionInfo.message)\""
         }
     }
     
@@ -123,7 +126,7 @@ struct ConfirmExchangeBookView: View {
                 .padding()
                 .fixedSize(horizontal: false, vertical: false)
             
-            if viewModel.exchangeBook.result == .success {
+            if viewModel.exchangeBook.transactionInfo.progess == .accept {
                 Button(action: {
                     dismiss()
                 }, label: {

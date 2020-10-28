@@ -19,6 +19,9 @@ struct SubmitRequestBorrowView: View {
                 .padding(.top, 20)
                 //.padding(.horizontal)
             
+            Separator(color: .init(hex: 0xE2DFDF), height: 1)
+                .padding(.horizontal, 30)
+            
             Form {
                 Section {
                     DatePicker(selection: $viewModel.borrowDate, in: ...Date(), displayedComponents: .date) {
@@ -127,9 +130,6 @@ struct BorrowBookHeader: View {
                 Text(model.statusDes)
                     .roboto(size: 13)
                     .padding(.vertical)
-                
-                Separator(color: .init(hex: 0xE2DFDF), height: 1)
-                    .padding(.horizontal, 30)
             }
         }
     }

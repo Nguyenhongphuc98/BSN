@@ -15,43 +15,46 @@ struct ExchangeBookView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        VStack {
-            //BorrowBookHeader(model: viewModel.exchangeBook)
-            
-            Image(systemName: "repeat")
-                .foregroundColor(._primary)
-                .padding(.horizontal)
-                .font(.system(size: 28))
-            
-            ExchangeBookSecondHeader(model: viewModel.exchangeBook, isCanChange: viewModel.canExchange)
-            
-            if viewModel.canExchange {
-                InputWithTitle(content: $viewModel.traddingAdress, placeHolder: "Địa chỉ thuận tiện nhất cho giao dịch", title: "Địa chỉ giao dịch")
+        ScrollView(showsIndicators: false, content: {
+            VStack {
+                BorrowBookHeader(model: viewModel.exchangeBook.needChangeBook)
                 
-                InputWithTitle(content: $viewModel.message, placeHolder: "ex: Bạn ơi cho mình đổi cuốn này nhé!", title: "Lời nhắn")
+                Image(systemName: "repeat")
+                    .foregroundColor(._primary)
+                    .padding(.horizontal)
+                    .font(.system(size: 28))
                 
-                Button(action: {
-                    dismiss()
-                }, label: {
-                    Text("Hoàn tất")
-                })
-                .buttonStyle(BaseButtonStyle(size: .large))
+                ExchangeBookSecondHeader(model: viewModel.exchangeBook.wantChangeBook!, isCanChange: viewModel.canExchange)
                 
-            } else {
+                if viewModel.canExchange {
+                    InputWithTitle(content: $viewModel.traddingAdress, placeHolder: "Địa chỉ thuận tiện nhất cho giao dịch", title: "Địa chỉ giao dịch")
+                    
+                    InputWithTitle(content: $viewModel.message, placeHolder: "ex: Bạn ơi cho mình đổi cuốn này nhé!", title: "Lời nhắn")
+                    
+                    Button(action: {
+                        dismiss()
+                    }, label: {
+                        Text("   Hoàn tất   ")
+                    })
+                    .buttonStyle(BaseButtonStyle(size: .largeH))
+                    .padding()
+                    
+                } else {
+                    Spacer(minLength: 80)
+                        
+                    Button(action: {
+                        dismiss()
+                    }, label: {
+                        Text("    Quay lại    ")
+                    })
+                    .buttonStyle(BaseButtonStyle(size: .largeH))
+                }
                 Spacer()
-                
-                Button(action: {
-                    dismiss()
-                }, label: {
-                    Text("Quay lại")
-                })
-                .buttonStyle(BaseButtonStyle(size: .large))
             }
-            Spacer()
-        }
-        .padding(.horizontal)
-        .background(Color(.secondarySystemBackground))
-        .navigationBarTitle("Hoàn đổi mượn sách", displayMode: .inline)
+        })
+        .padding()
+        //.background(Color(.secondarySystemBackground))
+        .navigationBarTitle("Hoàn tất đổi sách", displayMode: .inline)
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
@@ -77,9 +80,10 @@ struct ExchangeBookJustVView_Previews: PreviewProvider {
     }
 }
 
+// MARK: - Second header
 struct ExchangeBookSecondHeader: View {
     
-    var model: BorrowBookDetail
+    var model: BUserBook
     
     var isCanChange: Bool = true
     
@@ -91,10 +95,10 @@ struct ExchangeBookSecondHeader: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Spacer()
                     
-                    Text(model.book.name)
+                    Text(model.title)
                         .roboto(size: 15)
                     
-                    Text(model.book.author)
+                    Text(model.author)
                         .robotoLight(size: 14)
                     
                     if isCanChange {
@@ -106,7 +110,7 @@ struct ExchangeBookSecondHeader: View {
                     }
                 }
                 
-                Image(model.book.photo, bundle: interfaceBundle)
+                Image(model.cover!, bundle: interfaceBundle)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 80, height: 100)
