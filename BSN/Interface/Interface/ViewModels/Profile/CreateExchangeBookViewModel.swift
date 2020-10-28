@@ -9,10 +9,10 @@ import SwiftUI
 
 class CreateExchangeBookViewModel: ObservableObject {
     
-    var exchangeBook: ExchangeBookFull
+    var exchangeBook: BExchangeBook
     
     init() {
-        exchangeBook = ExchangeBookFull()
+        exchangeBook = BExchangeBook()
     }
     
     func addExchangeBook(complete: @escaping (Bool) -> Void) {

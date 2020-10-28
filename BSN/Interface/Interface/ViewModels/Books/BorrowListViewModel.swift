@@ -9,9 +9,9 @@ import SwiftUI
 
 class BorrowListViewModel: ObservableObject {
     
-    var models: [BorrowBook]
+    var models: [BAvailableTransaction]
     
     init() {
-        models = [BorrowBook(), BorrowBook(), BorrowBook(), BorrowBook(), BorrowBook(), BorrowBook()]
+        models = [BAvailableTransaction(), BAvailableTransaction(), BAvailableTransaction(), BAvailableTransaction(), BAvailableTransaction(), BAvailableTransaction()]
     }
 }

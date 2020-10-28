@@ -10,7 +10,7 @@ import SwiftUI
 // Using in list available book-user can exchange
 struct ExchangeBookCell: View {
     
-    var model: ExchangeBook4C
+    var model: BAvailableExchange
     
     @State private var nav: Bool = false
     
@@ -24,7 +24,7 @@ struct ExchangeBookCell: View {
                 })
                 .frame(width: 0, height: 0)
             
-            CircleImage(image: model.owner.avatar, diameter: 60)
+            CircleImage(image: model.createrPhoto, diameter: 60)
             
             VStack(alignment: .leading, spacing: 5) {
                 HStack {
@@ -34,7 +34,7 @@ struct ExchangeBookCell: View {
                         .roboto(size: 18)
                 }
                 
-                Text(model.owner.displayname)
+                Text(model.createrName)
                     .roboto(size: 18)
                 
                 HStack {
@@ -60,6 +60,6 @@ struct ExchangeBookCell: View {
 
 struct ExchangeBookCell_Previews: PreviewProvider {
     static var previews: some View {
-        ExchangeBookCell(model: ExchangeBook4C())
+        ExchangeBookCell(model: BAvailableExchange())
     }
 }

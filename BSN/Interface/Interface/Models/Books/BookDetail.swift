@@ -1,13 +1,13 @@
+////
+////  BookDetail.swift
+////  Interface
+////
+////  Created by Phucnh on 10/5/20.
+////
 //
-//  BookDetail.swift
-//  Interface
+//import SwiftUI
 //
-//  Created by Phucnh on 10/5/20.
-//
-
-import SwiftUI
-
-// Model in box detail view
+//// Model in box detail view
 class BookDetail: Book {
     
     var numReading: Int

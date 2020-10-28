@@ -97,6 +97,8 @@
 		842C44C2254857FB003C570D /* BTransactionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C44C1254857FB003C570D /* BTransactionInfo.swift */; };
 		842C44C5254859F2003C570D /* BBorrowBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C44C4254859F2003C570D /* BBorrowBook.swift */; };
 		842C44C82548FA01003C570D /* BExchangeBookFull.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C44C72548FA01003C570D /* BExchangeBookFull.swift */; };
+		842C44CB25490392003C570D /* BAvailableTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C44CA25490392003C570D /* BAvailableTransaction.swift */; };
+		842C44CF254909FE003C570D /* BBookDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C44CE254909FE003C570D /* BBookDetail.swift */; };
 		84360FFC2524409C009FF4BF /* ScreenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84360FFB2524409C009FF4BF /* ScreenExtension.swift */; };
 		8436100025246A28009FF4BF /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84360FFF25246A28009FF4BF /* PostDetailView.swift */; };
 		8436100425246A8C009FF4BF /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8436100325246A8C009FF4BF /* PostDetailViewModel.swift */; };
@@ -281,6 +283,8 @@
 		842C44C1254857FB003C570D /* BTransactionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTransactionInfo.swift; sourceTree = "<group>"; };
 		842C44C4254859F2003C570D /* BBorrowBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBorrowBook.swift; sourceTree = "<group>"; };
 		842C44C72548FA01003C570D /* BExchangeBookFull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BExchangeBookFull.swift; sourceTree = "<group>"; };
+		842C44CA25490392003C570D /* BAvailableTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BAvailableTransaction.swift; sourceTree = "<group>"; };
+		842C44CE254909FE003C570D /* BBookDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBookDetail.swift; sourceTree = "<group>"; };
 		84360FFB2524409C009FF4BF /* ScreenExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenExtension.swift; sourceTree = "<group>"; };
 		84360FFF25246A28009FF4BF /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		8436100325246A8C009FF4BF /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
@@ -390,10 +394,10 @@
 			children = (
 				8401C92C252C0E4700A722CE /* SubItem */,
 				8401C8A6252AB3C900A722CE /* ExploreBookView.swift */,
-				8401C8D4252B0D1B00A722CE /* ExchangeBookList.swift */,
 				8401C8DC252B1B7500A722CE /* BookDetailView.swift */,
 				8401C920252C086300A722CE /* RatingView.swift */,
 				8401C989252F152400A722CE /* DeclineEoBBookView.swift */,
+				8401C8D4252B0D1B00A722CE /* ExchangeBookList.swift */,
 				8401C9AB253050B900A722CE /* Borrow */,
 				8401C9AE253050D900A722CE /* Exchange */,
 			);
@@ -549,6 +553,8 @@
 				842C44C1254857FB003C570D /* BTransactionInfo.swift */,
 				842C44C4254859F2003C570D /* BBorrowBook.swift */,
 				842C44C72548FA01003C570D /* BExchangeBookFull.swift */,
+				842C44CA25490392003C570D /* BAvailableTransaction.swift */,
+				842C44CE254909FE003C570D /* BBookDetail.swift */,
 			);
 			path = BBook;
 			sourceTree = "<group>";
@@ -956,6 +962,7 @@
 				847BBAC62521EEB900E0500D /* AppManager.swift in Sources */,
 				84B964FC2526063F00F37571 /* CoreMessageEditor.swift in Sources */,
 				8401C98A252F152400A722CE /* DeclineEoBBookView.swift in Sources */,
+				842C44CB25490392003C570D /* BAvailableTransaction.swift in Sources */,
 				842C44C82548FA01003C570D /* BExchangeBookFull.swift in Sources */,
 				84B964F82525CBBD00F37571 /* NotifyViewModel.swift in Sources */,
 				8401C8BD252ACC6400A722CE /* FloatExtension.swift in Sources */,
@@ -974,6 +981,7 @@
 				84AA968D251F96F70029BB1E /* FullRadiusShadowButtonStyle.swift in Sources */,
 				842C44BD25484E55003C570D /* BExchangeBook.swift in Sources */,
 				84AA9621251B480C0029BB1E /* ItemContent.swift in Sources */,
+				842C44CF254909FE003C570D /* BBookDetail.swift in Sources */,
 				8401C972252EFB3000A722CE /* ConfirmBorrowBookView.swift in Sources */,
 				8401CA1B25329FC300A722CE /* SearchBookViewModel.swift in Sources */,
 				8401C8C9252B045400A722CE /* Segment.swift in Sources */,

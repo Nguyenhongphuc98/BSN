@@ -24,7 +24,7 @@ struct BBookGrid: View {
     ]
     
     // Did select book have name 'Book'
-    var didSelect: ((Book) -> Void)?
+    var didSelect: ((BBook) -> Void)?
     
     var body: some View {
         ScrollView {

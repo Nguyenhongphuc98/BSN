@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ExchangeListView: View {
+    
     @StateObject var viewModel: ExchangeListViewModel = ExchangeListViewModel()
     
     @Environment(\.presentationMode) var presentationMode

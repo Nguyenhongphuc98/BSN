@@ -36,8 +36,7 @@ struct BookDetailView: View {
                 label: {
                     EmptyView()
                 })
-            
-            
+        
             VStack() {
                 basicInfo
                 
@@ -66,22 +65,22 @@ struct BookDetailView: View {
     
     private var basicInfo: some View {
         HStack(alignment: .center) {
-            Image(viewModel.model.photo, bundle: interfaceBundle)
+            Image(viewModel.model.cover!, bundle: interfaceBundle)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 80, height: 130)
+                .frame(width: 90, height: 130)
                 .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))
             
             VStack(alignment: .leading) {
-                Text(viewModel.model.name)
+                Text(viewModel.model.title)
                     .roboto(size: 15)
                 
                 Text(viewModel.model.author)
                     .robotoLight(size: 14)
                 
                 HStack {
-                    StarRating(rating: viewModel.model.rating)
-                    Text(String(format: "%.1f", viewModel.model.rating))
+                    StarRating(rating: viewModel.model.ratingCriteria.avg)
+                    Text(String(format: "%.1f", viewModel.model.ratingCriteria.avg))
                         .roboto(size: 15)
                 }
                 
@@ -90,14 +89,16 @@ struct BookDetailView: View {
                         .roboto(size: 15)
                     Image("reading", bundle: interfaceBundle)
                         .resizable()
-                        .frame(width: 23, height: 23)
+                        .frame(width: 20, height: 20)
                     Text("Đang đọc")
+                        .font(.system(size: 17))
                         .foregroundColor(Color.init(hex: 0xAFAFAF))
                     
-                    Text("\(viewModel.model.numReading)")
+                    Text("\(viewModel.model.numAvailable)")
                         .roboto(size: 15)
                     Image(systemName: "text.book.closed")
                     Text("Có sẵn")
+                        .font(.system(size: 17))
                         .foregroundColor(Color.init(hex: 0xAFAFAF))
                 }
                 
@@ -112,7 +113,7 @@ struct BookDetailView: View {
                     Button(action: {
                         showExchangeBook.toggle()
                     }, label: {
-                        Text("Đổi sách")
+                        Text("  Đổi sách  ")
                     })
                     .buttonStyle(BaseButtonStyle())
                 }
@@ -120,8 +121,8 @@ struct BookDetailView: View {
             
             Spacer()
         }
-        .frame(height: 135)
-        .padding(.vertical)
+        .frame(height: 130)
+        .padding(.top)
     }
     
     private var ratingDetail: some View {
@@ -184,7 +185,7 @@ struct BookDetailView: View {
     private var description: some View {
         DisclosureGroup(
             content: {
-                Text(viewModel.model.description)
+                Text(viewModel.model.description!)
                     .robotoItalic(size: 15)
                     .foregroundColor(.init(hex: 0x404040))
             },
@@ -231,9 +232,9 @@ struct BookDetailView: View {
         .background(
             Color(UIColor.secondarySystemBackground)
         )
-        .shadow(color: .gray, radius: 2, y: -2)
+        .shadow(radius: 2, y: -2)
         .sheet(isPresented: $showRatingView, content: {
-            RatingView(bookName: viewModel.model.name, bookID: viewModel.model.id) { rating in
+            RatingView(bookName: viewModel.model.title, bookID: viewModel.model.id!) { rating in
                 viewModel.addNewRating(rate: rating)
             }
         })

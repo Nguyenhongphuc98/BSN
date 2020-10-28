@@ -38,11 +38,11 @@ struct CreateExchangeBookView: View {
     
     func bookInfo(isMyBook: Bool) -> some View {
         VStack(alignment: .leading) {
-            Text(isMyBook ? "Sách của bạn" : "Sách muốn đổi")
+            Text(getSubtitle(isMyBook: isMyBook))
                 .robotoBold(size: 20)
             
             HStack(spacing: 20) {
-                Image(viewModel.exchangeBook.book.photo, bundle: interfaceBundle)
+                Image(getBookCover(isMyBook: isMyBook), bundle: interfaceBundle)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 80, height: 100)
@@ -52,20 +52,40 @@ struct CreateExchangeBookView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Spacer()
                     
-                    Text(viewModel.exchangeBook.book.name)
+                    Text(getBookName(isMyBook: isMyBook))
                         .roboto(size: 15)
                     
-                    Text(viewModel.exchangeBook.book.author)
+                    Text(getBookAuthor(isMyBook: isMyBook))
                         .robotoLight(size: 14)
                     
                     if isMyBook {
-                        BookStatusText(status: viewModel.exchangeBook.status)
+                        BookStatusText(status: getBookStatus(isMyBook: isMyBook))
                     }
                 }
                 Spacer()
             }
         }
         .frame(height: 120)
+    }
+    
+    func getSubtitle(isMyBook: Bool) -> String {
+        isMyBook ? "Sách của bạn" : "Sách muốn đổi"
+    }
+    
+    func getBookName(isMyBook: Bool) -> String {
+        isMyBook ? viewModel.exchangeBook.needChangeBook.title : viewModel.exchangeBook.needChangeBook.title
+    }
+    
+    func getBookCover(isMyBook: Bool) -> String {
+        isMyBook ? viewModel.exchangeBook.needChangeBook.cover! : viewModel.exchangeBook.needChangeBook.cover!
+    }
+    
+    func getBookAuthor(isMyBook: Bool) -> String {
+        isMyBook ? viewModel.exchangeBook.needChangeBook.author : viewModel.exchangeBook.needChangeBook.author
+    }
+    
+    func getBookStatus(isMyBook: Bool) -> BookStatus {
+        isMyBook ? viewModel.exchangeBook.needChangeBook.status : viewModel.exchangeBook.needChangeBook.status
     }
 }
 

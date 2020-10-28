@@ -64,6 +64,10 @@ class SearchBookViewModel: ObservableObject {
                 
                 // Make a request to server
                 bookManager.searchBook(term: processText)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.searchBooks = [BBook(), BBook()]
+                    self.isSearching = false
+                }
             }
         }
     }
@@ -98,8 +102,8 @@ class SearchBookViewModel: ObservableObject {
         print("Finish setup search book receive")
     }
     
-    private func filterInternalBook(key: String, complete: @escaping ([Book]) -> Void) {
-        let result = fakebooks.filter { $0.name.contains(key) }
+    private func filterInternalBook(key: String, complete: @escaping ([BBook]) -> Void) {
+        let result = fakebooks.filter { $0.title.contains(key) }
         complete(result)
     }
 }

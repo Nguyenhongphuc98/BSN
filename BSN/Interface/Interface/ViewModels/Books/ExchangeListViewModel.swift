@@ -10,9 +10,9 @@ import SwiftUI
 // Manage list show in list exchange books list (seperate view)
 class ExchangeListViewModel: ObservableObject {
     
-    var models: [ExchangeBook4C]
+    var models: [BAvailableExchange]
     
     init() {
-        models = [ExchangeBook4C(), ExchangeBook4C(), ExchangeBook4C(), ExchangeBook4C(), ExchangeBook4C(), ExchangeBook4C()]
+        models = [BAvailableExchange(), BAvailableExchange(), BAvailableExchange(), BAvailableExchange(), BAvailableExchange(), BAvailableExchange()]
     }
 }

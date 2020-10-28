@@ -57,4 +57,4 @@ let fakeMessages = ["Thanks so much for reaching out! What brings you to [websit
                     "While they’re aware of the problems they have and the solutions you present",
                     "Ok"]
 
-let fakebooks = [Book(), Book(), Book(), Book(), Book(), Book(), Book()]
+let fakebooks = [BBook(), BBook(), BBook(), BBook()]

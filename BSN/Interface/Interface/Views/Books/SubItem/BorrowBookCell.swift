@@ -10,7 +10,7 @@ import SwiftUI
 // Using in list available book-user can borrow
 struct BorrowBookCell: View {
     
-    var model: BorrowBook
+    var model: BAvailableTransaction
     
     @State private var nav: Bool = false
     
@@ -24,10 +24,10 @@ struct BorrowBookCell: View {
                 })
                 .frame(width: 0, height: 0)
             
-            CircleImage(image: model.owner.avatar, diameter: 50)
+            CircleImage(image: model.createrPhoto, diameter: 50)
             
             VStack(alignment: .leading, spacing: 5) {
-                Text(model.owner.displayname)
+                Text(model.createrName)
                     .roboto(size: 18)
                 
                 HStack {
@@ -53,6 +53,6 @@ struct BorrowBookCell: View {
 
 struct BorowBookCard_Previews: PreviewProvider {
     static var previews: some View {
-        BorrowBookCell(model: BorrowBook())
+        BorrowBookCell(model: BAvailableTransaction())
     }
 }

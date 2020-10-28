@@ -9,12 +9,12 @@ import SwiftUI
 
 class BookDetailViewModel: ObservableObject {
     
-    var model: BookDetail
+    var model: BBookDetail
     
     var reviews: [Rating]
     
     init() {
-        model = BookDetail()
+        model = BBookDetail()
         reviews = [Rating(), Rating()]
     }
     
