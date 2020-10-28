@@ -28,7 +28,7 @@ public class ImageLoader: ObservableObject {
     }
     
     public func setup(urlString: String?, temp: String) {
-        if self.urlString == nil {
+        if self.urlString != urlString {
             self.instate = temp
             self.urlString = urlString
             download(urlString: urlString)

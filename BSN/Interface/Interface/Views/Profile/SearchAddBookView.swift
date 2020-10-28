@@ -16,14 +16,11 @@ struct SearchAddBookView: View {
     
     @State private var searchFound: Bool = false
     
-    // Mean can't create new book, search only
-    var justSearchInStore: Bool = false
+    // Mean can't create new book,
+    // Search in store only
+    var useForExchangeBook: Bool = false
     
     @Environment(\.presentationMode) var presentationMode
-    
-//    public init() {
-//        
-//    }
     
     public var body: some View {
         VStack {
@@ -42,7 +39,7 @@ struct SearchAddBookView: View {
         .navigationBarBackButtonHidden(true)
     }
     
-    var backButton: some View {
+    private var backButton: some View {
         Button {
             presentationMode.wrappedValue.dismiss()
         } label: {
@@ -50,6 +47,7 @@ struct SearchAddBookView: View {
                 .foregroundColor(.gray)
         }
     }
+    
     private var searchContent: some View {
         Group {
             if viewModel.isSearching {
@@ -75,7 +73,7 @@ struct SearchAddBookView: View {
                         .foregroundColor(.gray)
                         .padding()
                     
-                    if !justSearchInStore {
+                    if !useForExchangeBook {
                         addManually
                     }
                 }
@@ -102,7 +100,7 @@ struct SearchAddBookView: View {
     }
     
     func getDestination(id: String) -> AnyView {
-        justSearchInStore ? .init(CreateExchangeBookView()) : .init(SubmitAddBookView())
+        useForExchangeBook ? .init(CreateExchangeBookView()) : .init(SubmitAddBookView(bookID: id))
     }
 }
 

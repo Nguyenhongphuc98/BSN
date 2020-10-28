@@ -33,7 +33,7 @@ public struct Book: Codable {
     
     public var confirmed: Bool?
     
-    public var createdAt: Date?
+    public var createdAt: String?
     
     init() {
         title = ""

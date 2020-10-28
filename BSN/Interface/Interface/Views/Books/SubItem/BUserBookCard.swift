@@ -45,7 +45,7 @@ struct BUserBookCard: View {
                     print("did click exchange book")
                 }, label: {
                     NavigationLink(
-                        destination: SearchAddBookView(justSearchInStore: true),
+                        destination: SearchAddBookView(useForExchangeBook: true),
                         label: {
                             Text(" Đổi sách  ")
                         })

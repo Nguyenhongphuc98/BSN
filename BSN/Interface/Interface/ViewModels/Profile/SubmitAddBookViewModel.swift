@@ -17,17 +17,26 @@ class SubmitAddBookViewModel: ObservableObject {
     
     private var bookManager: BookManager
     
+    private var bookID: String?
+    
     //Cancellable
     var searchCancellables = Set<AnyCancellable>()
     
     init() {
         model = BUserBook()
-        bookCode = "XBDFS"
+        bookCode = ""
         bookManager = BookManager.shared
+        
         setupReceiveBookInfo()
+        model.description = ""
     }
     
-    func loadInfo() {
+    func prepareData(bookID: String) {
+        self.bookID = bookID
+        bookManager.fetchBook(bookID: bookID)
+    }
+    
+    func loadInfoFromGoogle() {
         bookManager.getBookInfo(by: bookCode)
     }
     
@@ -40,10 +49,11 @@ class SubmitAddBookViewModel: ObservableObject {
     }
     
     // Result book info from google api
+    // Book get from server or google will received at this block
     func setupReceiveBookInfo() {
         print("Begin setup get book info receive")
         bookManager
-            .googleBookPublisher
+            .bookPublisher
             .sink {[weak self] (book) in
                 
                 guard let self = self else {
@@ -54,6 +64,8 @@ class SubmitAddBookViewModel: ObservableObject {
                     self.model.title = book.title
                     self.model.author = book.author
                     self.model.description = book.description!
+                    self.model.cover = book.cover
+                    print("did receive book info")
                 }
             }
             .store(in: &searchCancellables)

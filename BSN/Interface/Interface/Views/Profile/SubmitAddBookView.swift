@@ -9,36 +9,33 @@ import SwiftUI
 
 struct SubmitAddBookView: View {
     
+    // Book will add to User book
+    // If create new so it will be nil
+    var bookID: String?
+    
     @StateObject var viewModel: SubmitAddBookViewModel = SubmitAddBookViewModel()
+    
+    init(bookID: String? = nil) {
+        self.bookID = bookID
+    }
     
     var body: some View {
         ScrollView {
             VStack {
                 VStack(spacing: 10) {
                     
-                    HStack {
-                        InputWithTitle(content: $viewModel.bookCode, placeHolder: "Nhập mã in sau bìa sách", title: "Mã ISBN")
+                    // Mean shoud get book from google
+                    if bookID == nil {
+                        isbnInfo
+                            .disabled(bookID != nil)
                         
-                    
-                        VStack {
-                            Spacer()
-                            Button(action: {
-                                viewModel.loadInfo()
-                            }, label: {
-                                Text("Truy vấn")
-                                    .padding(.vertical, 3)
-                            })
-                            .buttonStyle(BaseButtonStyle(size: .medium, type: .primary))
-                        }
-                        .frame(height: 66)
+                        Separator(height: 2)
                     }
-                    
-                    Separator(height: 2)
                     
                     MyBookDetailViewHeader(model: viewModel.model)
                         .padding(.top, 10)
 
-                    textInput
+                    InputWithTitle(content: $viewModel.model.statusDes, placeHolder: "Hãy mô tả càng chi tiết nhất có thể", title: "Mô tả tình trạng sách")
                 }
                 .padding(.horizontal)
                 
@@ -65,27 +62,41 @@ struct SubmitAddBookView: View {
                     Text("   Hoàn tất   ")
                 })
                 .buttonStyle(BaseButtonStyle(size: .largeH))
-                .padding(.bottom)
+                .padding()
+                .padding(.bottom, 40)
             }
         }
         .background(Color(.secondarySystemBackground))
+        .onAppear(perform: viewAppeared)
     }
     
-    var textInput: some View {
-        VStack {
-//            InputWithTitle(content: $viewModel.model.name, placeHolder: "Nhập tên sách", title: "Tiêu đề")
-//
-//            InputWithTitle(content: $viewModel.model.author, placeHolder: "Nhập tác giả chính", title: "Tác giả")
-
-//            InputWithTitle(content: $viewModel.bookCode, placeHolder: "ex: Nhập mã in sau bìa sách", title: "Mã sách")
-
-            InputWithTitle(content: $viewModel.model.statusDes, placeHolder: "Hãy mô tả càng chi tiết nhất có thể", title: "Mô tả tình trạng sách")
+    private var isbnInfo: some View {
+        HStack {
+            InputWithTitle(content: $viewModel.bookCode, placeHolder: "Nhập mã in sau bìa sách", title: "Mã ISBN")
+            
+            VStack {
+                Spacer()
+                Button(action: {
+                    viewModel.loadInfoFromGoogle()
+                }, label: {
+                    Text("Truy vấn")
+                        .padding(.vertical, 3)
+                })
+                .buttonStyle(BaseButtonStyle(size: .medium, type: .primary))
+            }
+            .frame(height: 70)
+        }
+    }
+    
+    private func viewAppeared() {
+        if let id = bookID {
+            viewModel.prepareData(bookID: id)
         }
     }
 }
 
 struct SubmitAddBookView_Previews: PreviewProvider {
     static var previews: some View {
-        SubmitAddBookView()
+        SubmitAddBookView(bookID: "12345")
     }
 }

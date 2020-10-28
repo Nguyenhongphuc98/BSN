@@ -71,13 +71,13 @@ class BBook: ObservableObject, Identifiable {
     
     //var isbn: String
     
-    var title: String
+    @Published var title: String
     
-    var author: String
+    @Published var author: String
     
-    var cover: String?
+    @Published var cover: String?
     
-    var description: String?
+    @Published var description: String?
     
     init(id: String?, title: String, author: String, cover: String? = nil, description: String? = nil) {
         self.id = id

@@ -123,7 +123,7 @@ struct MyBookDetailView_Previews: PreviewProvider {
 // MARK: - Sub compoent
 struct MyBookDetailViewHeader: View {
     
-    var model: BUserBook
+    @StateObject var model: BUserBook
     
     @State var expandDes: Bool = false
     
@@ -132,9 +132,8 @@ struct MyBookDetailViewHeader: View {
     var body: some View {
         VStack {
             HStack(alignment: .center) {
-                Image(model.cover!, bundle: interfaceBundle)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                //Image(model.cover!, bundle: interfaceBundle)
+                BSNImage(urlString: model.cover, tempImage: "book_cover")
                     .frame(width: 80, height: 100)
                     .background(Color.white)
                     .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))
@@ -143,7 +142,7 @@ struct MyBookDetailViewHeader: View {
                     Spacer()
                     
                     Text(model.title)
-                        .roboto(size: 15)
+                        .roboto(size: 17)
                     
                     Text(model.author)
                         .robotoLight(size: 14)

@@ -64,10 +64,10 @@ class SearchBookViewModel: ObservableObject {
                 
                 // Make a request to server
                 bookManager.searchBook(term: processText)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.searchBooks = [BBook(), BBook()]
-                    self.isSearching = false
-                }
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                    self.searchBooks = [BBook(), BBook()]
+//                    self.isSearching = false
+//                }
             }
         }
     }
@@ -85,7 +85,7 @@ class SearchBookViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.searchBooks = []
                     self.searchBooks = sb.map { (book) in
-                        //Book(id: book.id, name: book.title, author: book.author, photo: book.cover)
+                        
                         BBook(id: book.id, title: book.title, author: book.author, cover: book.cover)
                     }
                     

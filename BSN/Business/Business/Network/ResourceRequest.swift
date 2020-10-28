@@ -44,12 +44,11 @@ class ResourceRequest<ResourceType> where ResourceType: Codable {
     }
     
     // Get all data from base url
-    // Or special url if it not nil
-    func getAll(from url: URL? = nil, completion: @escaping (GetResourcesRequest<ResourceType>) -> Void) {
-        let desUrl = url ?? self.resourceURL
+    func get(isAll: Bool = true, completion: @escaping (GetResourcesRequest<ResourceType>) -> Void) {
+        //let desUrl = url ?? self.resourceURL
         
         let dataTask = URLSession.shared
-            .dataTask(with: desUrl) { data, _, _ in
+            .dataTask(with: resourceURL) { data, _, _ in
                 
                 guard let jsonData = data else {
                     completion(.failure)
@@ -57,12 +56,18 @@ class ResourceRequest<ResourceType> where ResourceType: Codable {
                 }
                 
                 do {
-                    let resources  = try JSONDecoder().decode([ResourceType].self, from: jsonData)
-                    completion(.success(resources))
-                } catch {
-                    
-                    completion(.failure)
+                    if isAll {
+                        let resources  = try! JSONDecoder().decode([ResourceType].self, from: jsonData)
+                        completion(.success(resources))
+                    } else {
+                        let resources  = try! JSONDecoder().decode(ResourceType.self, from: jsonData)
+                        completion(.success([resources]))
+                    }
                 }
+//                catch {
+//
+//                    completion(.failure)
+//                }
             }
         
         dataTask.resume()

@@ -18,8 +18,8 @@ public class BookManager {
     // List book searched from DB
     public let searchBooksPublisher: PassthroughSubject<[SearchBook], Never>
     
-    // Get book info by isbn from google api
-    public let googleBookPublisher: PassthroughSubject<Book, Never>
+    // Get single book
+    public let bookPublisher: PassthroughSubject<Book, Never>
     
     public init() {
         // Publisher
@@ -30,18 +30,25 @@ public class BookManager {
         booksRequest = ResourceRequest<Book>(componentPath: "books/")
         
         // Google
-        googleBookPublisher = PassthroughSubject<Book, Never>()
+        bookPublisher = PassthroughSubject<Book, Never>()
     }
     
-    // Request book with title or author `term`
+    // Request books with title or author `term`
     public func searchBook(term: String) {
         print("Did start searching books")
         searchBooksRequest.searchBook(term: term, publisher: searchBooksPublisher)
     }
     
+    // Request book with ID from Our Server
+    public func fetchBook(bookID: String) {
+        print("Did start fetch book: \(bookID)")
+        booksRequest.fetchBook(bookID: bookID, publisher: bookPublisher)
+    }
+    
+    // Fetch from google api
     public func getBookInfo(by isbn: String) {
         GoogleApiRequest
             .shared
-            .getBookInfo(by: isbn, publisher: googleBookPublisher)
+            .getBookInfo(by: isbn, publisher: bookPublisher)
     }
 }

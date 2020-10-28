@@ -20,11 +20,14 @@ struct BSNImage: View {
         Image(uiImage: loader.uiImage)
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .onAppear(perform: viewAppeared)
+            .onReload {
+                refetchImage()
+            }
+            //.onAppear(perform: viewAppeared)
     }
     
-    func viewAppeared() {
-        loader.setup(urlString: urlString, temp: "loading")
+    func refetchImage() {
+        loader.setup(urlString: urlString, temp: tempImage)
     }
 }
 
