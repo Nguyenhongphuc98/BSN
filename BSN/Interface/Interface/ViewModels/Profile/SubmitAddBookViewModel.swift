@@ -23,6 +23,8 @@ class SubmitAddBookViewModel: ObservableObject {
     
     private var bookManager: BookManager
     
+    private var userBookManager: UserBookManager
+    
     private var bookID: String?
     
     // Handle reslut process resource
@@ -35,6 +37,7 @@ class SubmitAddBookViewModel: ObservableObject {
         model = BUserBook()
         isbn = ""
         bookManager = BookManager.shared
+        userBookManager = UserBookManager.shared
         showAlert = false
         enableDoneBtn = false
         isLoading = false
@@ -43,14 +46,17 @@ class SubmitAddBookViewModel: ObservableObject {
         setupReceiveBookInfo()
         setupReceiveSaveBookInfo()
         setupReceiveGoogleBookInfo()
+        setupReceiveSaveUserBookInfo()
     }
     
+    /// Fetching data from Server to fill page if it passed bookID from preView
     func prepareData(bookID: String) {
         self.bookID = bookID
         self.isLoading = true
         bookManager.fetchBook(bookID: bookID)
     }
     
+    /// Fetching book info from google base on isbn
     func loadInfoFromGoogle() {
         self.isLoading = true
         bookManager.getBookInfo(by: isbn)
@@ -69,18 +75,18 @@ class SubmitAddBookViewModel: ObservableObject {
         bookManager.saveBook(book: newBook)
     }
     
-    func addUserBook(complete: @escaping (Bool) -> Void) {
-        complete(true)
+    func addUserBook() {
+        /// After receive book in fo it will auto save userbook
+        bookManager.fetchBook(isbn: isbn)
     }
     
     func updateUserBook(complete: @escaping (Bool) -> Void) {
         complete(true)
     }
     
-    /// Result book info from google api
     /// Book get from server or google will received at this block
     func setupReceiveBookInfo() {
-        print("Begin setup get book info receive")
+        /// Get book by ID to load on UI
         bookManager
             .getBookPublisher
             .sink {[weak self] (book) in
@@ -107,9 +113,29 @@ class SubmitAddBookViewModel: ObservableObject {
                 }
             }
             .store(in: &searchCancellables)
-        print("Finish setup get book info receive")
+       
+        /// Get book by isbn to save new UserBook
+        bookManager
+            .getBookByIsbnPublisher
+            .sink { [weak self] book in
+                guard let self = self else {
+                    return
+                }
+                
+                /// When receive info of book, save user book to server
+                let userBook = UserBook(
+                    uid: AppManager.shared.currentUser.id,
+                    bid: book.id,
+                    status: self.model.status.getTitle(),
+                    state: self.model.state.getTitle(),
+                    statusDes: self.model.statusDes)
+                
+                self.userBookManager.saveUserBook(ub: userBook)
+            }
+            .store(in: &searchCancellables)
     }
     
+    /// Result book info from google api
     func setupReceiveGoogleBookInfo() {
         bookManager
             .getGoogleBookPublisher
@@ -121,17 +147,25 @@ class SubmitAddBookViewModel: ObservableObject {
                 
                 DispatchQueue.main.async {
                     self.isLoading = false
-                    self.resourceInfo = .success
                     
-                    self.model.title = book.title
-                    self.model.author = book.author
-                    self.model.description = book.description!
-                    self.model.cover = book.cover
-                    self.enableDoneBtn = true
+                    if book.id == "undefine" {
+                        self.resourceInfo = .notfound
+                        self.showAlert.toggle()
+                    } else {
+                        /// No need to show notify
+                        //self.resourceInfo = .success
+                        
+                        // Data showing is enought
+                        self.model.title = book.title
+                        self.model.author = book.author
+                        self.model.description = book.description!
+                        self.model.cover = book.cover
+                        self.enableDoneBtn = true
+                        
+                        // Add new book to server if it don't exists
+                        self.addBook()
+                    }
                     
-                    self.showAlert.toggle()
-                    
-                    self.addBook()
                 }
             }
             .store(in: &searchCancellables)
@@ -148,13 +182,36 @@ class SubmitAddBookViewModel: ObservableObject {
                 
                 DispatchQueue.main.async {
                     self.isLoading = false
-                    self.showAlert.toggle()
                     
-                    if book.id == "undefine" {
-                        self.resourceInfo = .exists
-                    } else {
-                        self.resourceInfo = .success
-                    }
+                    
+                    // It should working in slient, if error, user don't need to know
+                    //=====================
+//                    if book.id == "undefine" {
+//                        self.resourceInfo = .exists
+//                    } else {
+//                        self.resourceInfo = .success
+//                    }
+                    //self.showAlert.toggle()
+                }
+            }
+            .store(in: &searchCancellables)
+    }
+    
+    func setupReceiveSaveUserBookInfo() {
+        /// Get save user_book
+        userBookManager
+            .savePublisher
+            .sink {[weak self] (ub) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    
+                    self.resourceInfo = (ub.id == "undefine") ? .failure : .success
+                    self.showAlert.toggle()
                 }
             }
             .store(in: &searchCancellables)

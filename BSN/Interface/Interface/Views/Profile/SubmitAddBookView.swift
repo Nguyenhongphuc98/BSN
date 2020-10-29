@@ -55,7 +55,7 @@ struct SubmitAddBookView: View {
                     .frame(height: 130)
                     
                     Button(action: {
-                        
+                        viewModel.addUserBook()
                     }, label: {
                         Text("   Hoàn tất   ")
                     })

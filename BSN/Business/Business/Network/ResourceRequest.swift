@@ -37,13 +37,12 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
         var urlComponent = URLComponents(string: componentPath + resourcePath)!
         
         // Setup query
-        if resourcePath == "search" {
-            urlComponent.queryItems = []
-            params.keys.forEach { (key) in
-                let queryItem = URLQueryItem(name: key, value: params[key])
-                urlComponent.queryItems!.append(queryItem)
-            }
+        urlComponent.queryItems = []
+        params.keys.forEach { (key) in
+            let queryItem = URLQueryItem(name: key, value: params[key])
+            urlComponent.queryItems!.append(queryItem)
         }
+        
         resourceURL = urlComponent.url!
     }
     

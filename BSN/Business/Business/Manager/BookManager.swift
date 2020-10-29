@@ -24,7 +24,7 @@ public class BookManager {
     // Get single book from google api
     public let getGoogleBookPublisher: PassthroughSubject<Book, Never>
     
-    public let getBookToSaveUserBookPublisher: PassthroughSubject<Book, Never>
+    public let getBookByIsbnPublisher: PassthroughSubject<SearchBook, Never>
     
     public let saveBookPublisher: PassthroughSubject<Book, Never>
     
@@ -38,7 +38,7 @@ public class BookManager {
         
         getBookPublisher = PassthroughSubject<Book, Never>()
         getGoogleBookPublisher = PassthroughSubject<Book, Never>()
-        getBookToSaveUserBookPublisher = PassthroughSubject<Book, Never>()
+        getBookByIsbnPublisher = PassthroughSubject<SearchBook, Never>()
         saveBookPublisher = PassthroughSubject<Book, Never>()
     }
     
@@ -54,10 +54,10 @@ public class BookManager {
         booksRequest.fetchBook(bookID: bookID, publisher: getBookPublisher)
     }
     
-//    public func fetchBookForCreateUserBook(isbn: String) {
-//        print("Did start fetch book isbn: \(isbn)")
-//        booksRequest.fetchBook(bookID: bookID, publisher: getBookPublisher)
-//    }
+    public func fetchBook(isbn: String) {
+        print("Did start fetch book isbn: \(isbn)")
+        searchBooksRequest.searchBook(isbn: isbn, publisher: getBookByIsbnPublisher)
+    }
     
     public func saveBook(book: Book) {
         print("Did start save book \(book.title)")

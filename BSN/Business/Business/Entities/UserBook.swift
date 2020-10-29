@@ -5,19 +5,37 @@
 //  Created by Phucnh on 10/26/20.
 //
 
-public struct UserBook {
+public struct UserBook: Codable {
     
-    var id: UUID?
+    public var id: String?
     
-    var userID: UUID
+    public var userID: String
     
-    var bookID: UUID
+    public var bookID: String
     
-    var status: String
+    public var status: String
     
-    var state: String
+    public var state: String
     
-    var statusDes: String
+    public var statusDes: String
     
-    var createdAt: Date?
+    public var createdAt: String?
+    
+    public init() {
+        userID = ""
+        bookID = ""
+        state = ""
+        status = ""
+        statusDes = ""
+    }
+    
+    public init(id: String? = nil, uid: String, bid: String, status: String, state: String, statusDes: String, createdAt: String? = nil) {
+        self.id = id
+        self.userID = uid
+        self.bookID = bid
+        self.status = status
+        self.state = state
+        self.statusDes = statusDes
+        self.createdAt = createdAt
+    }
 }

@@ -39,11 +39,11 @@ class GoogleApiRequest {
                     
                     if items != nil {
                         for item in items! {
-                            let authors = item["volumeInfo"]["authors"].array!
+                            let authorsT = item["volumeInfo"]["authors"].array
+                            let authors = authorsT != nil ? authorsT! : ["Unknown"]
                             
                             book.title = item["volumeInfo"]["title"].stringValue
                             book.author = ""
-                            book.title = item["volumeInfo"]["title"].stringValue
                             book.description = item["volumeInfo"]["description"].stringValue
                             book.cover = item["volumeInfo"]["imageLinks"]["smallThumbnail"].stringValue
                             

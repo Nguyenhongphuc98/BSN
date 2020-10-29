@@ -15,6 +15,8 @@
 		848E1058253EE65C003C89C8 /* BookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E1057253EE65C003C89C8 /* BookManager.swift */; };
 		848E105D253EE770003C89C8 /* SearchBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E105C253EE770003C89C8 /* SearchBook.swift */; };
 		848E1061253EEEEC003C89C8 /* BookRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E1060253EEEEC003C89C8 /* BookRequest.swift */; };
+		84A0CC34254ACDA10074CBAC /* UserBookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0CC33254ACDA10074CBAC /* UserBookManager.swift */; };
+		84A0CC38254AFDD80074CBAC /* UserBookRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0CC37254AFDD80074CBAC /* UserBookRequest.swift */; };
 		84C8CB5C253EDA89004D5CD0 /* Business.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C8CB52253EDA89004D5CD0 /* Business.framework */; };
 		84C8CB61253EDA89004D5CD0 /* BusinessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8CB60253EDA89004D5CD0 /* BusinessTests.swift */; };
 		84C8CB63253EDA89004D5CD0 /* Business.h in Headers */ = {isa = PBXBuildFile; fileRef = 84C8CB55253EDA89004D5CD0 /* Business.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -43,6 +45,8 @@
 		848E1057253EE65C003C89C8 /* BookManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookManager.swift; sourceTree = "<group>"; };
 		848E105C253EE770003C89C8 /* SearchBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBook.swift; sourceTree = "<group>"; };
 		848E1060253EEEEC003C89C8 /* BookRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookRequest.swift; sourceTree = "<group>"; };
+		84A0CC33254ACDA10074CBAC /* UserBookManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBookManager.swift; sourceTree = "<group>"; };
+		84A0CC37254AFDD80074CBAC /* UserBookRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBookRequest.swift; sourceTree = "<group>"; };
 		84C8CB52253EDA89004D5CD0 /* Business.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Business.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C8CB55253EDA89004D5CD0 /* Business.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Business.h; sourceTree = "<group>"; };
 		84C8CB56253EDA89004D5CD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -147,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				848E1057253EE65C003C89C8 /* BookManager.swift */,
+				84A0CC33254ACDA10074CBAC /* UserBookManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -157,6 +162,7 @@
 				848E1051253EE32F003C89C8 /* ResourceRequest.swift */,
 				848E1060253EEEEC003C89C8 /* BookRequest.swift */,
 				842C444E2547C240003C570D /* GoogleApiRequest.swift */,
+				84A0CC37254AFDD80074CBAC /* UserBookRequest.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -306,10 +312,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A0CC34254ACDA10074CBAC /* UserBookManager.swift in Sources */,
 				848E105D253EE770003C89C8 /* SearchBook.swift in Sources */,
 				842C444F2547C240003C570D /* GoogleApiRequest.swift in Sources */,
 				846EFE6125465DD600F01805 /* UserBook.swift in Sources */,
 				846EFE6525465E4900F01805 /* Book.swift in Sources */,
+				84A0CC38254AFDD80074CBAC /* UserBookRequest.swift in Sources */,
 				848E1058253EE65C003C89C8 /* BookManager.swift in Sources */,
 				84C8CB74253EDB1A004D5CD0 /* Utils.swift in Sources */,
 				848E1061253EEEEC003C89C8 /* BookRequest.swift in Sources */,

@@ -41,6 +41,7 @@ public class AppManager: ObservableObject {
         self.keyboardHeight = 0
         print("did init root with user: \(currentUser.displayname)")
         
+        self.currentUser.id = "C4285ABE-F520-46F3-97A3-508D94177D9C"
         registerKeyboardEvent()
     }
     
