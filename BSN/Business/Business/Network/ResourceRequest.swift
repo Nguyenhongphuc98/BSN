@@ -17,8 +17,7 @@ enum SaveResult<ResourceType> {
     case failure
 }
 
-
-class ResourceRequest<ResourceType> where ResourceType: Codable {
+class ResourceRequest<ResourceType>  where ResourceType: Codable {
     
     // Connect to root server
     let baseURL = "http://localhost:8080/api/v1/"

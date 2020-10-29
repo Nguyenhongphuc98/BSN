@@ -20,55 +20,59 @@ struct SubmitAddBookView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack {
-                VStack(spacing: 10) {
-                    
-                    // Mean shoud get book from google
-                    if bookID == nil {
-                        isbnInfo
+        ZStack {
+            ScrollView {
+                VStack {
+                    VStack(spacing: 10) {
                         
-                        Separator(height: 2)
-                    }
-                    
-                    MyBookDetailViewHeader(model: viewModel.model)
-                        .padding(.top, 10)
+                        // Mean shoud get book from google
+                        if bookID == nil {
+                            isbnInfo
+                            
+                            Separator(height: 2)
+                        }
+                        
+                        MyBookDetailViewHeader(model: viewModel.model)
+                            .padding(.top, 10)
 
-                    InputWithTitle(content: $viewModel.model.statusDes, placeHolder: "Hãy mô tả càng chi tiết nhất có thể", title: "Mô tả tình trạng sách")
-                }
-                .padding(.horizontal)
-                
-                Form {
-                    Picker("Tình trạng", selection: $viewModel.model.status) {
-                        ForEach(BookStatus.allCases, id: \.self) {
-                            Text("\($0.getTitle())")
-                        }
+                        InputWithTitle(content: $viewModel.model.statusDes, placeHolder: "Hãy mô tả càng chi tiết nhất có thể", title: "Mô tả tình trạng sách")
                     }
+                    .padding(.horizontal)
                     
-                    Picker("Trạng thái", selection: $viewModel.model.state) {
-                        ForEach(BookState.allCases, id: \.self) {
-                            Text("\($0.getTitle())")
+                    Form {
+                        Picker("Tình trạng", selection: $viewModel.model.status) {
+                            ForEach(BookStatus.allCases, id: \.self) {
+                                Text("\($0.getTitle())")
+                            }
+                        }
+                        
+                        Picker("Trạng thái", selection: $viewModel.model.state) {
+                            ForEach(BookState.allCases, id: \.self) {
+                                Text("\($0.getTitle())")
+                            }
                         }
                     }
+                    .frame(height: 130)
+                    
+                    Button(action: {
+                        
+                    }, label: {
+                        Text("   Hoàn tất   ")
+                    })
+                    .buttonStyle(BaseButtonStyle(size: .largeH))
+                    .disabled(!viewModel.enableDoneBtn)
+                    .padding()
+                    .padding(.bottom, 40)
+                    
                 }
-                .frame(height: 130)
-                
-                Button(action: {
-                    viewModel.addBook { (success) in
-                        print("did save book")
-                    }
-                }, label: {
-                    Text("   Hoàn tất   ")
-                })
-                .buttonStyle(BaseButtonStyle(size: .largeH))
-                .disabled(!viewModel.enableDoneBtn)
-                .padding()
-                .padding(.bottom, 40)
-                
+            }
+            .background(Color(.secondarySystemBackground))
+            .resignKeyboardOnDragGesture()
+            
+            if viewModel.isLoading {
+                Loading()
             }
         }
-        .background(Color(.secondarySystemBackground))
-        .resignKeyboardOnDragGesture()
         .onAppear(perform: viewAppeared)
         .alert(isPresented: $viewModel.showAlert) {
             Alert(

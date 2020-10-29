@@ -23,6 +23,21 @@ extension ResourceRequest where ResourceType == SearchBook {
             }
         }
     }
+    
+    func searchBook(isbn:String, publisher: PassthroughSubject<SearchBook, Never>) {
+        self.setPath(resourcePath: "isbn", params: ["term":isbn])
+        
+        self.get(isAll: false) { result in
+            
+            switch result {
+            case .failure:
+                let message = "There was an error searching the books"
+                print(message)
+            case .success(let books):
+                publisher.send(books[0])
+            }
+        }
+    }
 }
 
 extension ResourceRequest where ResourceType == Book {

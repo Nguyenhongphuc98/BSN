@@ -19,6 +19,8 @@ class SubmitAddBookViewModel: ObservableObject {
     
     @Published var enableDoneBtn: Bool
     
+    @Published var isLoading: Bool
+    
     private var bookManager: BookManager
     
     private var bookID: String?
@@ -35,23 +37,27 @@ class SubmitAddBookViewModel: ObservableObject {
         bookManager = BookManager.shared
         showAlert = false
         enableDoneBtn = false
+        isLoading = false
         resourceInfo = .success
         
         setupReceiveBookInfo()
         setupReceiveSaveBookInfo()
+        setupReceiveGoogleBookInfo()
     }
     
     func prepareData(bookID: String) {
         self.bookID = bookID
+        self.isLoading = true
         bookManager.fetchBook(bookID: bookID)
     }
     
     func loadInfoFromGoogle() {
+        self.isLoading = true
         bookManager.getBookInfo(by: isbn)
     }
     
-    // Add new book to book system
-    func addBook(complete: @escaping (Bool) -> Void) {
+    /// Add new book to book system
+    func addBook() {
         let newBook = Book(
             title: model.title,
             author: model.author,
@@ -61,7 +67,6 @@ class SubmitAddBookViewModel: ObservableObject {
         )
         
         bookManager.saveBook(book: newBook)
-        complete(true)
     }
     
     func addUserBook(complete: @escaping (Bool) -> Void) {
@@ -72,8 +77,8 @@ class SubmitAddBookViewModel: ObservableObject {
         complete(true)
     }
     
-    // Result book info from google api
-    // Book get from server or google will received at this block
+    /// Result book info from google api
+    /// Book get from server or google will received at this block
     func setupReceiveBookInfo() {
         print("Begin setup get book info receive")
         bookManager
@@ -85,6 +90,8 @@ class SubmitAddBookViewModel: ObservableObject {
                 }
                 
                 DispatchQueue.main.async {
+                    self.isLoading = false
+                    
                     if book.id == "undefine" {
                         self.resourceInfo = .notfound
                         self.showAlert.toggle()
@@ -103,8 +110,34 @@ class SubmitAddBookViewModel: ObservableObject {
         print("Finish setup get book info receive")
     }
     
+    func setupReceiveGoogleBookInfo() {
+        bookManager
+            .getGoogleBookPublisher
+            .sink {[weak self] (book) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    self.resourceInfo = .success
+                    
+                    self.model.title = book.title
+                    self.model.author = book.author
+                    self.model.description = book.description!
+                    self.model.cover = book.cover
+                    self.enableDoneBtn = true
+                    
+                    self.showAlert.toggle()
+                    
+                    self.addBook()
+                }
+            }
+            .store(in: &searchCancellables)
+    }
+    
     func setupReceiveSaveBookInfo() {
-        print("Begin setup get book info receive")
         bookManager
             .saveBookPublisher
             .sink {[weak self] (book) in
@@ -114,16 +147,16 @@ class SubmitAddBookViewModel: ObservableObject {
                 }
                 
                 DispatchQueue.main.async {
+                    self.isLoading = false
                     self.showAlert.toggle()
+                    
                     if book.id == "undefine" {
                         self.resourceInfo = .exists
                     } else {
                         self.resourceInfo = .success
                     }
-                    print("did receive book info")
                 }
             }
             .store(in: &searchCancellables)
-        print("Finish setup get book info receive")
     }
 }

@@ -21,22 +21,23 @@ struct BookController: RouteCollection {
         }
         
         // Advance
-        books.get("search", use: search)
+        books.get("search", use: searchAuthorandTitle)
+        books.get("isbn", use: searchIsbn)
         
         // Get detail book for view in client (not full info book store in DB)
         books.get("detail",":bookID", use: getBookDetail)
     }
-
+    
     // Base function
     func index(req: Request) throws -> EventLoopFuture<[Book]> {
         return Book.query(on: req.db).all()
     }
-
+    
     func create(req: Request) throws -> EventLoopFuture<Book> {
         let book = try req.content.decode(Book.self)
         return book.save(on: req.db).map { book }
     }
-
+    
     func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {
         return Book.find(req.parameters.get("bookID"), on: req.db)
             .unwrap(or: Abort(.notFound))
@@ -51,10 +52,11 @@ struct BookController: RouteCollection {
     }
     
     // Advance function
-    func search(req: Request) throws -> EventLoopFuture<[SearchBook]> {
+    func searchAuthorandTitle(req: Request) throws -> EventLoopFuture<[SearchBook]> {
         guard let term: String = req.query["term"] else {
             throw Abort(.badRequest)
         }
+        
         
         // Get first 5 book match term
         return Book.query(on: req.db)
@@ -64,6 +66,20 @@ struct BookController: RouteCollection {
             .range(0..<BusinessConfig.searchBookLimit)
             .all()
             .mapEach { book in
+                book.toSearchBook()
+            }
+    }
+    
+    func searchIsbn(req: Request) throws -> EventLoopFuture<SearchBook> {
+        guard let term: String = req.query["term"] else {
+            throw Abort(.badRequest)
+        }
+        
+        return Book.query(on: req.db)
+            .filter(\.$isbn ~~ term)
+            .first()
+            .unwrap(or: Abort(.notFound))
+            .map { book in
                 book.toSearchBook()
             }
     }
