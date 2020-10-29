@@ -38,7 +38,7 @@ struct UpdateBookView: View {
             
             Spacer()
             Button(action: {
-                viewModel.updateBook { (success) in
+                viewModel.updateUserBook { (success) in
                     print("did update book")
                 }
             }, label: {

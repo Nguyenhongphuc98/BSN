@@ -17,7 +17,7 @@ public struct Book: Codable {
     
     public var description: String?
     
-    public var categoryID: UUID?
+    public var categoryID: String?
  
     public var isbn: String
  
@@ -39,5 +39,15 @@ public struct Book: Codable {
         title = ""
         author = ""
         isbn = ""
+    }
+    
+    public init(title: String, author: String, isbn: String, cover: String? = nil, des: String? = nil) {
+        self.title = title
+        self.author = author
+        self.cover = cover
+        self.description = des
+        self.isbn = isbn
+        // Default category is Undefine have ID as bellow
+        self.categoryID = "59EB6BBF-1C9A-44CB-A680-D09416248485"
     }
 }

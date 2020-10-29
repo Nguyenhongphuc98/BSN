@@ -24,7 +24,7 @@ class BUserBook: BBook {
         ownerID = UUID().uuidString
         status = .likeNew
         state = .available
-        statusDes = "Như mới, đẹp từ trong ra ngoài"
+        statusDes = ""
         super.init()
     }
 }

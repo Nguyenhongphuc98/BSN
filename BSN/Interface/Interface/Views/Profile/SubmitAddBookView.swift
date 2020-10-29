@@ -73,14 +73,14 @@ struct SubmitAddBookView: View {
         .alert(isPresented: $viewModel.showAlert) {
             Alert(
                 title: Text("Kết quả"),
-                message: Text("Không tìm thấy sách, vui lòng thử isbn khác")
+                message: Text(viewModel.resourceInfo.des())
             )
         }
     }
     
     private var isbnInfo: some View {
         HStack {
-            InputWithTitle(content: $viewModel.bookCode, placeHolder: "Nhập mã in sau bìa sách", title: "Mã ISBN", keyboardType: .numberPad)
+            InputWithTitle(content: $viewModel.isbn, placeHolder: "Nhập mã in sau bìa sách", title: "Mã ISBN", keyboardType: .numberPad)
             
             VStack {
                 Spacer()

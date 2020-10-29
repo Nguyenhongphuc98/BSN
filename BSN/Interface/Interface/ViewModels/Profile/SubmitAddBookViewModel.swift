@@ -13,7 +13,7 @@ class SubmitAddBookViewModel: ObservableObject {
     
     @Published var model: BUserBook
     
-    @Published var bookCode: String
+    @Published var isbn: String
     
     @Published var showAlert: Bool
     
@@ -23,21 +23,22 @@ class SubmitAddBookViewModel: ObservableObject {
     
     private var bookID: String?
     
+    // Handle reslut process resource
+    var resourceInfo: ResourceInfo
+    
     //Cancellable
     var searchCancellables = Set<AnyCancellable>()
     
     init() {
         model = BUserBook()
-        bookCode = ""
+        isbn = ""
         bookManager = BookManager.shared
         showAlert = false
         enableDoneBtn = false
+        resourceInfo = .success
         
         setupReceiveBookInfo()
-        model.description = ""
-        model.statusDes = ""
-        model.title = "Tiêu đề sách"
-        model.author = "Tác giả"
+        setupReceiveSaveBookInfo()
     }
     
     func prepareData(bookID: String) {
@@ -46,14 +47,28 @@ class SubmitAddBookViewModel: ObservableObject {
     }
     
     func loadInfoFromGoogle() {
-        bookManager.getBookInfo(by: bookCode)
+        bookManager.getBookInfo(by: isbn)
     }
     
+    // Add new book to book system
     func addBook(complete: @escaping (Bool) -> Void) {
+        let newBook = Book(
+            title: model.title,
+            author: model.author,
+            isbn: isbn,
+            cover: model.cover,
+            des: model.description
+        )
+        
+        bookManager.saveBook(book: newBook)
         complete(true)
     }
     
-    func updateBook(complete: @escaping (Bool) -> Void) {
+    func addUserBook(complete: @escaping (Bool) -> Void) {
+        complete(true)
+    }
+    
+    func updateUserBook(complete: @escaping (Bool) -> Void) {
         complete(true)
     }
     
@@ -62,7 +77,7 @@ class SubmitAddBookViewModel: ObservableObject {
     func setupReceiveBookInfo() {
         print("Begin setup get book info receive")
         bookManager
-            .bookPublisher
+            .getBookPublisher
             .sink {[weak self] (book) in
                 
                 guard let self = self else {
@@ -71,6 +86,7 @@ class SubmitAddBookViewModel: ObservableObject {
                 
                 DispatchQueue.main.async {
                     if book.id == "undefine" {
+                        self.resourceInfo = .notfound
                         self.showAlert.toggle()
                     } else {
                         
@@ -81,6 +97,30 @@ class SubmitAddBookViewModel: ObservableObject {
                         self.enableDoneBtn = true
                         print("did receive book info")
                     }
+                }
+            }
+            .store(in: &searchCancellables)
+        print("Finish setup get book info receive")
+    }
+    
+    func setupReceiveSaveBookInfo() {
+        print("Begin setup get book info receive")
+        bookManager
+            .saveBookPublisher
+            .sink {[weak self] (book) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.showAlert.toggle()
+                    if book.id == "undefine" {
+                        self.resourceInfo = .exists
+                    } else {
+                        self.resourceInfo = .success
+                    }
+                    print("did receive book info")
                 }
             }
             .store(in: &searchCancellables)

@@ -41,4 +41,22 @@ extension ResourceRequest where ResourceType == Book {
             }
         }
     }
+    
+    func saveBook(book: Book, publisher: PassthroughSubject<Book, Never>) {
+        self.resetPath()
+        
+        self.save(book) { result in
+            
+            switch result {
+            case .failure:
+                let message = "There was an error save book"
+                print(message)
+                var b = Book()
+                b.id = "undefine"
+                publisher.send(b)
+            case .success(let book):
+                publisher.send(book)
+            }
+        }
+    }
 }

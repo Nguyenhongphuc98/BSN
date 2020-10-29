@@ -8,8 +8,13 @@
 import Foundation
 
 enum GetResourcesRequest<ResourceType> {
-  case success([ResourceType])
-  case failure
+    case success([ResourceType])
+    case failure
+}
+
+enum SaveResult<ResourceType> {
+    case success(ResourceType)
+    case failure
 }
 
 
@@ -31,7 +36,7 @@ class ResourceRequest<ResourceType> where ResourceType: Codable {
     
     func setPath(resourcePath: String, params: [String:String] = [:]) {
         var urlComponent = URLComponents(string: componentPath + resourcePath)!
-
+        
         // Setup query
         if resourcePath == "search" {
             urlComponent.queryItems = []
@@ -41,6 +46,10 @@ class ResourceRequest<ResourceType> where ResourceType: Codable {
             }
         }
         resourceURL = urlComponent.url!
+    }
+    
+    func resetPath() {
+        self.resourceURL = URL(string: self.componentPath)!
     }
     
     // Get all data from base url
@@ -65,11 +74,41 @@ class ResourceRequest<ResourceType> where ResourceType: Codable {
                     }
                 }
                 catch {
-
+                    
                     completion(.failure)
                 }
             }
         
         dataTask.resume()
+    }
+    
+    func save(_ resourceToSave: ResourceType, completion: @escaping (SaveResult<ResourceType>) -> Void) {
+        do {
+            
+            var urlRequest = URLRequest(url: resourceURL)
+            urlRequest.httpMethod = "POST"
+            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            urlRequest.httpBody = try JSONEncoder().encode(resourceToSave)
+            
+            let dataTask = URLSession.shared
+                .dataTask(with: urlRequest) { data, response, _ in
+                    
+                    guard let httpResponse = response as? HTTPURLResponse,
+                          httpResponse.statusCode == 200, let jsonData = data else {
+                        completion(.failure)
+                        return
+                    }
+                    do {
+                        let resource = try! JSONDecoder().decode(ResourceType.self,
+                                                     from: jsonData)
+                        completion(.success(resource))
+                    } catch {
+                        completion(.failure) }
+                }
+            
+            dataTask.resume()
+            
+        } catch {
+            completion(.failure) }
     }
 }

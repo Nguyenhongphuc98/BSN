@@ -91,6 +91,7 @@
 		842C44C82548FA01003C570D /* BExchangeBookFull.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C44C72548FA01003C570D /* BExchangeBookFull.swift */; };
 		842C44CB25490392003C570D /* BAvailableTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C44CA25490392003C570D /* BAvailableTransaction.swift */; };
 		842C44CF254909FE003C570D /* BBookDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C44CE254909FE003C570D /* BBookDetail.swift */; };
+		842C44E3254A7A1F003C570D /* ResourceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C44E2254A7A1F003C570D /* ResourceInfo.swift */; };
 		84360FFC2524409C009FF4BF /* ScreenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84360FFB2524409C009FF4BF /* ScreenExtension.swift */; };
 		8436100025246A28009FF4BF /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84360FFF25246A28009FF4BF /* PostDetailView.swift */; };
 		8436100425246A8C009FF4BF /* PostDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8436100325246A8C009FF4BF /* PostDetailViewModel.swift */; };
@@ -269,6 +270,7 @@
 		842C44C72548FA01003C570D /* BExchangeBookFull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BExchangeBookFull.swift; sourceTree = "<group>"; };
 		842C44CA25490392003C570D /* BAvailableTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BAvailableTransaction.swift; sourceTree = "<group>"; };
 		842C44CE254909FE003C570D /* BBookDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBookDetail.swift; sourceTree = "<group>"; };
+		842C44E2254A7A1F003C570D /* ResourceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceInfo.swift; sourceTree = "<group>"; };
 		84360FFB2524409C009FF4BF /* ScreenExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenExtension.swift; sourceTree = "<group>"; };
 		84360FFF25246A28009FF4BF /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		8436100325246A8C009FF4BF /* PostDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewModel.swift; sourceTree = "<group>"; };
@@ -679,6 +681,7 @@
 				8401C8BC252ACC6400A722CE /* FloatExtension.swift */,
 				8401C97D252F037A00A722CE /* DateExtension.swift */,
 				8482E42A25403E69003DE823 /* ImageLoader.swift */,
+				842C44E2254A7A1F003C570D /* ResourceInfo.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -916,6 +919,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8401C99E252FFEFF00A722CE /* ExchangeBookView.swift in Sources */,
+				842C44E3254A7A1F003C570D /* ResourceInfo.swift in Sources */,
 				8401C8AB252AB45700A722CE /* ExploreBookViewModel.swift in Sources */,
 				8401C97E252F037A00A722CE /* DateExtension.swift in Sources */,
 				8401CA0B2531B48D00A722CE /* Note.swift in Sources */,

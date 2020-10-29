@@ -79,7 +79,7 @@ class BBook: ObservableObject, Identifiable {
     
     @Published var description: String?
     
-    init(id: String?, title: String, author: String, cover: String? = nil, description: String? = nil) {
+    init(id: String? = nil, title: String, author: String, cover: String? = nil, description: String? = nil) {
         self.id = id
         self.title = title
         self.author = author
@@ -89,9 +89,9 @@ class BBook: ObservableObject, Identifiable {
     
     init() {
         self.id = UUID().uuidString
-        self.title = "Bứt phá để thành công"
-        self.author = "Ks. Nguyễn Hồng Phúc"
+        self.title = "Tiêu đề sách"
+        self.author = "Tác giả"
         self.cover = "book_cover"
-        self.description = "Đây là cốn sách nói về cuộc sống của 1 chàng trai xuất thân từ gia đình rất khó khăn, nhưng thông qua đó anh lại nhận ra được nhiều giá trị tự cuộc sống."
+        self.description = "Mô tả sách"
     }
 }
