@@ -13,7 +13,7 @@ struct BookStatusText: View {
     
     var body: some View {
         HStack {
-            Text("Tình trạng sách: ")
+            Text("Tình trạng: ")
                 .robotoLight(size: 13)
             +
                 Text(status.getTitle())

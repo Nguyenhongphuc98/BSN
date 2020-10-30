@@ -24,19 +24,23 @@ struct BBookCard<Content: View>: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Image(model.cover!, bundle: interfaceBundle)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 100, height: 120)
+            BSNImage(urlString: model.cover!, tempImage: "book_cover")
+                .frame(width: 100, height: 140)
             
             VStack(alignment: .leading) {
                 Text(model.title)
                     .roboto(size: 15)
+                    .lineLimit(2)
                 
                 Text(model.author)
                     .robotoLight(size: 14)
+                    .lineLimit(1)
                 
                 content
+                
+                HStack {
+                    Spacer()
+                }
             }
         }
         .padding(5)
