@@ -21,6 +21,8 @@ struct BUserBookCard: View, PopToable {
     
     @State private var activeSearchBook: Bool = false
     
+    @State private var ubid: String = ""
+    
     var body: some View {
         NavigationLink(
             destination:navigateView,
@@ -43,7 +45,7 @@ struct BUserBookCard: View, PopToable {
     }
     
     var navigateView: AnyView {
-        isGuest ? .init(BookDetailView()) : .init(MyBookDetailView())
+        isGuest ? .init(BookDetailView()) : .init(MyBookDetailView(ubid: model.id!))
     }
     
     var footer: some View {

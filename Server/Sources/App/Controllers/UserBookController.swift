@@ -23,6 +23,9 @@ struct UserBookController: RouteCollection {
         // Advance
         // Get all UserBook of a User
         userBooks.get("search", use: search)
+        
+        // Get UserBook with full info (after joined)
+        //userBooks.get("full", use: getFull)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[UserBook]> {
@@ -58,14 +61,41 @@ struct UserBookController: RouteCollection {
     // Advance function
     // Get all book in shell of a user `[UserBook]`
     func search(req: Request) throws -> EventLoopFuture<[SearchUserBook]> {
-        guard let uid: String = req.query["uid"] else {
-            throw Abort(.badRequest)
+        
+        var key = ""
+        var value = ""
+        
+        if let uid: String = req.query["uid"] {
+            key = "ub.user_id"
+            value = uid
         }
         
-        let sqlQuery = SQLQueryString("SELECT b.title, b.cover, b.author, ub.status, ub.id, ub.user_id as \"userID\", ub.state, ub.book_id as \"bookID\" FROM user_book as ub, book as b where ub.user_id = '\(raw: uid)' and ub.book_id = b.id")
+        if let ubid: String = req.query["ubid"] {
+            key = "ub.id"
+            value = ubid
+        }
+        let sqlQuery = SQLQueryString("SELECT b.title, b.cover, b.author, ub.status, ub.id, ub.user_id as \"userID\", ub.state, ub.book_id as \"bookID\", b.description, ub.status_des as \"statusDes\" FROM user_book as ub, book as b where \(raw: key) = '\(raw: value)' and ub.book_id = b.id")
+        
+        guard value != "" else {
+            throw Abort(.badRequest)
+        }
         
         let db = req.db as! SQLDatabase
         return db.raw(sqlQuery)
             .all(decoding: SearchUserBook.self)
     }
+    
+    // Get User book have id ubid
+//    func getFull(req: Request) throws -> EventLoopFuture<SearchUserBook> {
+//        guard let ubid: String = req.query["ubid"] else {
+//            throw Abort(.badRequest)
+//        }
+//
+//        let sqlQuery = SQLQueryString("SELECT b.title, b.cover, b.author, ub.status, ub.id, ub.user_id as \"userID\", ub.state, ub.book_id as \"bookID\" FROM user_book as ub, book as b where ub.id = '\(raw: ubid)' and ub.book_id = b.id")
+//
+//        let db = req.db as! SQLDatabase
+//        return db.raw(sqlQuery)
+//            .first(decoding: SearchUserBook.self)
+//            .unwrap(or: Abort(.notFound))
+//    }
 }

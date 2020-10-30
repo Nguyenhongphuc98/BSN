@@ -15,6 +15,8 @@ struct MyBookDetailView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
+    var ubid: String
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 10) {
@@ -44,8 +46,16 @@ struct MyBookDetailView: View {
             }
             .padding()
         }
+        .embededLoading(isLoading: $viewModel.isLoading)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
+        .alert(isPresented: $viewModel.showAlert) {
+            Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des())
+            )
+        }
+        .onAppear(perform: viewAppeared)
     }
     
     var backButton: some View {
@@ -112,13 +122,17 @@ struct MyBookDetailView: View {
         )
         .padding(.trailing, 5)
     }
-}
-
-struct MyBookDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        MyBookDetailView()
+    
+    private func viewAppeared() {
+        viewModel.prepareData(ubid: ubid)
     }
 }
+
+//struct MyBookDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MyBookDetailView()
+//    }
+//}
 
 // MARK: - Sub compoent
 struct MyBookDetailViewHeader: View {

@@ -28,7 +28,10 @@ public struct UserBook: Codable {
     
     public var cover: String?
     
+    public var description: String?
+    
     public init() {
+        id = "undefine"
         userID = ""
         bookID = ""
         state = ""
@@ -39,7 +42,7 @@ public struct UserBook: Codable {
         cover = ""
     }
     
-    public init(id: String? = nil, uid: String, bid: String, status: String, state: String, statusDes: String? = nil, createdAt: String? = nil, title: String, author: String, cover: String? = nil) {
+    public init(id: String? = nil, uid: String, bid: String, status: String, state: String, statusDes: String? = nil, createdAt: String? = nil, title: String, author: String, cover: String? = nil, description: String? = nil) {
         self.id = id
         self.userID = uid
         self.bookID = bid

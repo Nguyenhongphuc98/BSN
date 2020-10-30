@@ -41,18 +41,18 @@ extension UserBook: Content { }
 extension UserBook {
     
     // Return model when user search book
-//    func toUserSerchBook(cover: String, title: String, author: String) -> SearchUserBook {
-//        SearchUserBook(
-//            id: self.id!.uuidString,
-//            user_id: self.user_id.uuidString,
-//            book_id: self.book_id.uuidString,
-//            cover: cover,
-//            title: title,
-//            author: author,
-//            status: self.status,
-//            state: self.state
-//        )
-//    }
+    func toUserSerchBook(cover: String? = nil, title: String, author: String) -> SearchUserBook {
+        SearchUserBook(
+            id: self.id!.uuidString,
+            userID: self.userID.uuidString,
+            bookID: self.bookID.uuidString,
+            cover: cover,
+            title: title,
+            author: author,
+            status: self.status,
+            state: self.state
+        )
+    }
 }
 
 // MARK: - Updte user book
@@ -77,7 +77,7 @@ struct SearchUserBook: Content {
     
     var bookID: String
     
-    var cover: String
+    var cover: String?
     
     var title: String
     
@@ -86,4 +86,8 @@ struct SearchUserBook: Content {
     var status: String
     
     var state: String
+    
+    var description: String?
+    
+    var statusDes: String?
 }
