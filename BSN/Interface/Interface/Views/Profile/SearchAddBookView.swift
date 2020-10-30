@@ -22,6 +22,8 @@ struct SearchAddBookView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
+    @EnvironmentObject var navState: NavigationState
+    
     public var body: some View {
         VStack {
             SearchBar(isfocus: $viewModel.isfocus, searchText: $viewModel.searchText)
@@ -58,7 +60,7 @@ struct SearchAddBookView: View {
                     LazyVStack {
                         ForEach(viewModel.searchBooks) { book in
                             NavigationLink(
-                                destination: getDestination(id: book.id!),
+                                destination: getDestination(id: book.id!).environmentObject(navState),
                                 label: {
                                     SearchBookItem(model: book)
                                 })
@@ -89,7 +91,7 @@ struct SearchAddBookView: View {
                 
             }, label: {
                 NavigationLink(
-                    destination: SubmitAddBookView(),
+                    destination: SubmitAddBookView().environmentObject(navState),
                     label: {
                         Text("Nhập thủ công")
                             .robotoBold(size: 18)
@@ -100,7 +102,7 @@ struct SearchAddBookView: View {
     }
     
     func getDestination(id: String) -> AnyView {
-        useForExchangeBook ? .init(CreateExchangeBookView()) : .init(SubmitAddBookView(bookID: id))
+        useForExchangeBook ? .init(SubmitExchangeBookView()) : .init(SubmitAddBookView(bookID: id))
     }
 }
 

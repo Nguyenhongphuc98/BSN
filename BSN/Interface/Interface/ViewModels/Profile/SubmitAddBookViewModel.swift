@@ -128,8 +128,8 @@ class SubmitAddBookViewModel: ObservableObject {
                 let userBook = UserBook(
                     uid: AppManager.shared.currentUser.id,
                     bid: book.id,
-                    status: self.model.status.getTitle(),
-                    state: self.model.state.des(),
+                    status: self.model.status.rawValue,
+                    state: self.model.state.rawValue,
                     statusDes: self.model.statusDes,
                     title: book.title,
                     author: book.author

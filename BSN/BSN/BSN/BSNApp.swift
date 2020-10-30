@@ -15,6 +15,8 @@ struct BSNApp: App {
     
     @ObservedObject var viewModel: AppManager = AppManager.shared
     
+    var profileNavState: NavigationState = NavigationState()
+    
     var body: some Scene {
         WindowGroup {
             TabView(selection: $viewModel.selectedIndex) {
@@ -52,6 +54,7 @@ struct BSNApp: App {
                     ProfileView()
                         .navigationBarTitle(Text("Trang cá nhân"), displayMode: .inline)
                         .navigationBarHidden(true)
+                        .environmentObject(profileNavState)
                 }
                 .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .profile) }
                 .tag(4)

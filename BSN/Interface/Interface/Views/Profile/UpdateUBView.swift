@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct UpdateBookView: View {
+struct UpdateUBView: View {
     
     @StateObject var viewModel: SubmitAddBookViewModel = SubmitAddBookViewModel()
+    
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack(spacing: 10) {
@@ -38,9 +40,11 @@ struct UpdateBookView: View {
             
             Spacer()
             Button(action: {
-                viewModel.updateUserBook { (success) in
-                    print("did update book")
-                }
+//                viewModel.updateUserBook { (success) in
+//                    print("did update book")
+//                }
+                
+                presentationMode.wrappedValue.dismiss()
             }, label: {
                 Text("   Hoàn tất   ")
             })
@@ -58,6 +62,6 @@ struct UpdateBookView: View {
 
 struct UpdateBookView_Previews: PreviewProvider {
     static var previews: some View {
-        UpdateBookView()
+        UpdateUBView()
     }
 }

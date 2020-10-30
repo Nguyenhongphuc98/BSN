@@ -26,7 +26,7 @@ struct MyBookDetailView: View {
                         print("did click edit book")
                     }, label: {
                         NavigationLink(
-                            destination: UpdateBookView(),
+                            destination: UpdateUBView(),
                             label: {
                                 Image(systemName: "pencil")
                                     .font(.system(size: 25))

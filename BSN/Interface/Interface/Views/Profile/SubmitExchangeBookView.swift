@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct CreateExchangeBookView: View {
+struct SubmitExchangeBookView: View {
     
     @StateObject private var viewModel = CreateExchangeBookViewModel()
+    
+    @EnvironmentObject var navState: NavigationState
     
     var body: some View {
         VStack(spacing: 30) {
@@ -24,9 +26,11 @@ struct CreateExchangeBookView: View {
             
             Spacer()
             Button(action: {
-                viewModel.addExchangeBook { (success) in
-                    print("did create exchange book")
-                }
+//                viewModel.addExchangeBook { (success) in
+//                    print("did create exchange book")
+//                }
+                
+                self.navState.popTo(viewName: .profileRoot)
             }, label: {
                 Text("   Hoàn tất   ")
             })
@@ -91,6 +95,6 @@ struct CreateExchangeBookView: View {
 
 struct CreateExchangeBookView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateExchangeBookView()
+        SubmitExchangeBookView()
     }
 }
