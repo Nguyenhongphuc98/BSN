@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum ExchangeProgess {
+enum ExchangeProgess: String {
     case new
     case decline
     case accept

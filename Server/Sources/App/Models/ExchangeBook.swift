@@ -18,17 +18,17 @@ final class ExchangeBook: Model {
     @Field(key: "first_user_book_id")
     var firstUserBookID: UserBook.IDValue
     
-    @Field(key: "second_user_book_id")
-    var secondUserBookID: UserBook.IDValue
+    @OptionalField(key: "second_user_book_id")
+    var secondUserBookID: UserBook.IDValue?
     
     @Field(key: "exchange_book_id")
     var exchangeBookID: Book.IDValue
     
-    @Field(key: "adress")
-    var adress: String
+    @OptionalField(key: "adress")
+    var adress: String?
     
-    @Field(key: "message")
-    var message: String
+    @OptionalField(key: "message")
+    var message: String?
     
     // we auto get from userBook
     @OptionalField(key: "first_status_des")

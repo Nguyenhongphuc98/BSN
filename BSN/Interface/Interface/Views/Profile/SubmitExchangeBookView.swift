@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SubmitExchangeBookView: View {
     
-    @StateObject private var viewModel = CreateExchangeBookViewModel()
+    @StateObject private var viewModel = SubmitExchangeBookViewModel()
     
     @EnvironmentObject private var navState: NavigationState
     
@@ -18,28 +18,31 @@ struct SubmitExchangeBookView: View {
     var body: some View {
         VStack(spacing: 30) {
             bookInfo(isMyBook: true)
-            
+
             Image(systemName: "repeat")
                 .foregroundColor(._primary)
                 .padding(.horizontal)
                 .font(.system(size: 28))
-            
+
             bookInfo(isMyBook: false)
-            
+
             Spacer()
+
             Button(action: {
-//                viewModel.addExchangeBook { (success) in
-//                    print("did create exchange book")
-//                }
-                
-                self.navState.popTo(viewName: .profileRoot)
+                viewModel.saveExchangeBook(passthroughtObj: pasthoughtObj)
+
             }, label: {
                 Text("   Hoàn tất   ")
             })
             .buttonStyle(BaseButtonStyle(size: .largeH))
+
             Spacer()
         }
         .padding()
+        .embededLoading(isLoading: $viewModel.isLoading)
+        .alert(isPresented: $viewModel.showAlert) {
+            alert()
+        }
     }
     
     func bookInfo(isMyBook: Bool) -> some View {
@@ -70,6 +73,30 @@ struct SubmitExchangeBookView: View {
             }
         }
         .frame(height: 120)
+    }
+    
+    func alert() -> Alert {
+        if viewModel.resourceInfo == .success {
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                dismissButton: .default(Text("OK")) {
+                    self.navState.popTo(viewName: .profileRoot)
+                }
+            )
+        } else {
+            
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                primaryButton: .default(Text("Thử lại")) {
+                    viewModel.saveExchangeBook(passthroughtObj: pasthoughtObj)
+                },
+                secondaryButton: .cancel(Text("Huỷ bỏ")) {
+                    self.navState.popTo(viewName: .profileRoot)
+                }
+            )
+        }
     }
     
     func getSubtitle(isMyBook: Bool) -> String {

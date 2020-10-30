@@ -16,7 +16,11 @@ struct SearchAddBookView: View {
     
     @State private var searchFound: Bool = false
     
-    @State private var activeNav: Bool = false
+    @State private var activeNav: Bool = false {
+        didSet {
+            print("did set activeNav - SearchAddBookView")
+        }
+    }
     
     // Mean can't create new book,
     // Search in store only
@@ -79,15 +83,6 @@ struct SearchAddBookView: View {
                             } label: {
                                 SearchBookItem(model: book)
                             }
-
-//                            NavigationLink(
-//                                destination: getDestination(id: book.id!)
-//                                    .environmentObject(navState)
-//                                    .environmentObject(pasthoughtObj.addBook(book: book)),
-//                                label: {
-//                                    SearchBookItem(model: book)
-//                                })
-//                                .padding(.horizontal)
                         }
                     }
                 }

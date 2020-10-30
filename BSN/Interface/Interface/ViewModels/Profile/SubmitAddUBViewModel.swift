@@ -27,11 +27,11 @@ class SubmitAddUBViewModel: ObservableObject {
     
     private var bookID: String?
     
-    // Handle reslut process resource
+    // Handle result process resource
     var resourceInfo: ResourceInfo
     
     //Cancellable
-    var searchCancellables = Set<AnyCancellable>()
+    var cancellables = Set<AnyCancellable>()
     
     init() {
         model = BUserBook()
@@ -114,7 +114,7 @@ class SubmitAddUBViewModel: ObservableObject {
                     }
                 }
             }
-            .store(in: &searchCancellables)
+            .store(in: &cancellables)
        
         /// Get book by isbn to save new UserBook
         bookManager
@@ -137,7 +137,7 @@ class SubmitAddUBViewModel: ObservableObject {
                 
                 self.userBookManager.saveUserBook(ub: userBook)
             }
-            .store(in: &searchCancellables)
+            .store(in: &cancellables)
     }
     
     /// Result book info from google api
@@ -173,7 +173,7 @@ class SubmitAddUBViewModel: ObservableObject {
                     
                 }
             }
-            .store(in: &searchCancellables)
+            .store(in: &cancellables)
     }
     
     private func setupReceiveSaveBookInfo() {
@@ -199,7 +199,7 @@ class SubmitAddUBViewModel: ObservableObject {
                     //self.showAlert.toggle()
                 }
             }
-            .store(in: &searchCancellables)
+            .store(in: &cancellables)
     }
     
     private func setupReceiveSaveUserBookInfo() {
@@ -219,6 +219,6 @@ class SubmitAddUBViewModel: ObservableObject {
                     self.showAlert.toggle()
                 }
             }
-            .store(in: &searchCancellables)
+            .store(in: &cancellables)
     }
 }
