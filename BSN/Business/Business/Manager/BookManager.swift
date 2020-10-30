@@ -11,9 +11,9 @@ public class BookManager {
     
     public static let shared: BookManager = BookManager()
     
-    private let searchBooksRequest: ResourceRequest<SearchBook>
+    private let searchBooksRequest: SearchBookRequest
     
-    private let booksRequest: ResourceRequest<Book>
+    private let booksRequest: BookRequest
     
     // List book searched from DB
     public let searchBooksPublisher: PassthroughSubject<[SearchBook], Never>
@@ -33,8 +33,8 @@ public class BookManager {
         searchBooksPublisher = PassthroughSubject<[SearchBook], Never>()
         
         // Init resource URL
-        searchBooksRequest = ResourceRequest<SearchBook>(componentPath: "books/")
-        booksRequest = ResourceRequest<Book>(componentPath: "books/")
+        searchBooksRequest = SearchBookRequest(componentPath: "books/")
+        booksRequest = BookRequest(componentPath: "books/")
         
         getBookPublisher = PassthroughSubject<Book, Never>()
         getGoogleBookPublisher = PassthroughSubject<Book, Never>()

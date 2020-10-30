@@ -11,8 +11,6 @@ public class UserBookManager {
     
     public static let shared: UserBookManager = UserBookManager()
     
-    private let booksRequest: ResourceRequest<UserBook>
-    
     private let networkRequest: UserBookRequest
     
     // Publisher for save new user book action
@@ -23,7 +21,6 @@ public class UserBookManager {
     
     public init() {
         // Init resource URL
-        booksRequest = ResourceRequest<UserBook>(componentPath: "userBooks/")
         networkRequest = UserBookRequest(componentPath: "userBooks/")
         
         savePublisher = PassthroughSubject<UserBook, Never>()
@@ -31,7 +28,7 @@ public class UserBookManager {
     }
     
     public func saveUserBook(ub: UserBook) {
-        booksRequest.saveUserBook(ub: ub, publisher: savePublisher)
+        networkRequest.saveUserBook(ub: ub, publisher: savePublisher)
     }
     
     public func getUserBooks(uid: String) {

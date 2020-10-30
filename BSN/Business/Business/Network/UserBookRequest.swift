@@ -43,25 +43,3 @@ class UserBookRequest: ResourceRequest<UserBook> {
         }
     }
 }
-
-extension ResourceRequest where ResourceType == UserBook {
-    
-    func saveUserBook(ub: UserBook, publisher: PassthroughSubject<UserBook, Never>) {
-        self.resetPath()
-        
-        self.save(ub) { result in
-            
-            switch result {
-            case .failure:
-                let message = "There was an error save user_book"
-                print(message)
-                var ub = UserBook()
-                ub.id = "undefine"
-                publisher.send(ub)
-                
-            case .success(let ub):
-                publisher.send(ub)
-            }
-        }
-    }
-}

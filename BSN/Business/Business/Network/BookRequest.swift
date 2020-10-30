@@ -7,7 +7,8 @@
 
 import Combine
 
-extension ResourceRequest where ResourceType == SearchBook {
+// MARK: - Search book
+class SearchBookRequest: ResourceRequest<SearchBook> {
     
     func searchBook(term:String, publisher: PassthroughSubject<[SearchBook], Never>) {
         self.setPath(resourcePath: "search", params: ["term":term])
@@ -40,7 +41,8 @@ extension ResourceRequest where ResourceType == SearchBook {
     }
 }
 
-extension ResourceRequest where ResourceType == Book {
+// MARK: - Search book
+class BookRequest: ResourceRequest<Book> {
     
     func fetchBook(bookID: String, publisher: PassthroughSubject<Book, Never>) {
         self.setPath(resourcePath: bookID)

@@ -71,8 +71,8 @@ public class ProfileViewModel: ObservableObject {
                                 ubid: ub.id!,
                                 uid: ub.userID,
                                 status: ub.status,
-                                title: ub.title,
-                                author: ub.author,
+                                title: ub.title!,
+                                author: ub.author!,
                                 state: ub.state
                             ))
                         }

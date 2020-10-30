@@ -22,9 +22,9 @@ public struct UserBook: Codable {
     public var createdAt: String?
     
     // Additon part
-    public var title: String
+    public var title: String?
     
-    public var author: String
+    public var author: String?
     
     public init() {
         userID = ""

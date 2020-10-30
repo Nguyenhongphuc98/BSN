@@ -78,6 +78,7 @@ class SubmitAddBookViewModel: ObservableObject {
     /// Perform get book by isbn
     func addUserBook() {
         /// After receive book in fo it will auto save userbook
+        isLoading = true
         bookManager.fetchBook(isbn: isbn)
     }
     
