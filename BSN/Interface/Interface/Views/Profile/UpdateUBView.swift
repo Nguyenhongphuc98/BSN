@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UpdateUBView: View {
     
-    @StateObject var viewModel: SubmitAddBookViewModel = SubmitAddBookViewModel()
+    @StateObject var viewModel: SubmitAddUBViewModel = SubmitAddUBViewModel()
     
     @Environment(\.presentationMode) var presentationMode
     

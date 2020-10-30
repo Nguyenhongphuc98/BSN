@@ -9,7 +9,7 @@ import SwiftUI
 import Business
 import Combine
 
-class SubmitAddBookViewModel: ObservableObject {
+class SubmitAddUBViewModel: ObservableObject {
     
     @Published var model: BUserBook
     

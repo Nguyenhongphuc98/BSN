@@ -16,13 +16,17 @@ struct SearchAddBookView: View {
     
     @State private var searchFound: Bool = false
     
+    @State private var activeNav: Bool = false
+    
     // Mean can't create new book,
     // Search in store only
     var useForExchangeBook: Bool = false
     
     @Environment(\.presentationMode) var presentationMode
     
-    @EnvironmentObject var navState: NavigationState
+    @EnvironmentObject private var navState: NavigationState
+    
+    @EnvironmentObject private var pasthoughtObj: PassthroughtEB
     
     public var body: some View {
         VStack {
@@ -59,12 +63,31 @@ struct SearchAddBookView: View {
                 ScrollView {
                     LazyVStack {
                         ForEach(viewModel.searchBooks) { book in
+                            
                             NavigationLink(
-                                destination: getDestination(id: book.id!).environmentObject(navState),
+                                destination: getDestination(id: book.id!)
+                                    .environmentObject(navState)
+                                    .environmentObject(pasthoughtObj),
+                                isActive: $activeNav,
                                 label: {
-                                    SearchBookItem(model: book)
+                                    EmptyView()
                                 })
-                                .padding(.horizontal)
+                            
+                            Button {
+                                _ = pasthoughtObj.addBook(book: book)
+                                activeNav = true
+                            } label: {
+                                SearchBookItem(model: book)
+                            }
+
+//                            NavigationLink(
+//                                destination: getDestination(id: book.id!)
+//                                    .environmentObject(navState)
+//                                    .environmentObject(pasthoughtObj.addBook(book: book)),
+//                                label: {
+//                                    SearchBookItem(model: book)
+//                                })
+//                                .padding(.horizontal)
                         }
                     }
                 }

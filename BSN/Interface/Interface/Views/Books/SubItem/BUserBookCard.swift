@@ -61,7 +61,9 @@ struct BUserBookCard: View, PopToable {
                     activeSearchBook.toggle()
                 }, label: {
                     NavigationLink(
-                        destination: SearchAddBookView(useForExchangeBook: true).environmentObject(navState),
+                        destination: SearchAddBookView(useForExchangeBook: true)
+                            .environmentObject(navState)
+                            .environmentObject(PassthroughtEB(userBook: model)),
                         isActive: $activeSearchBook,
                         label: {
                             Text(" Đổi sách  ")

@@ -11,7 +11,9 @@ struct SubmitExchangeBookView: View {
     
     @StateObject private var viewModel = CreateExchangeBookViewModel()
     
-    @EnvironmentObject var navState: NavigationState
+    @EnvironmentObject private var navState: NavigationState
+    
+    @EnvironmentObject private var pasthoughtObj: PassthroughtEB
     
     var body: some View {
         VStack(spacing: 30) {
@@ -46,13 +48,11 @@ struct SubmitExchangeBookView: View {
                 .robotoBold(size: 20)
             
             HStack(spacing: 20) {
-                Image(getBookCover(isMyBook: isMyBook), bundle: interfaceBundle)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                BSNImage(urlString: getBookCover(isMyBook: isMyBook), tempImage: "book_cover")
                     .frame(width: 80, height: 100)
                     .background(Color.white)
                     .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))
-               
+                
                 VStack(alignment: .leading, spacing: 4) {
                     Spacer()
                     
@@ -77,19 +77,19 @@ struct SubmitExchangeBookView: View {
     }
     
     func getBookName(isMyBook: Bool) -> String {
-        isMyBook ? viewModel.exchangeBook.needChangeBook.title : viewModel.exchangeBook.needChangeBook.title
+        isMyBook ? pasthoughtObj.needChangeUB.title : pasthoughtObj.wantChangeBook!.title
     }
     
     func getBookCover(isMyBook: Bool) -> String {
-        isMyBook ? viewModel.exchangeBook.needChangeBook.cover! : viewModel.exchangeBook.needChangeBook.cover!
+        isMyBook ? pasthoughtObj.needChangeUB.cover! : pasthoughtObj.wantChangeBook!.cover!
     }
     
     func getBookAuthor(isMyBook: Bool) -> String {
-        isMyBook ? viewModel.exchangeBook.needChangeBook.author : viewModel.exchangeBook.needChangeBook.author
+        isMyBook ? pasthoughtObj.needChangeUB.author : pasthoughtObj.wantChangeBook!.author
     }
     
     func getBookStatus(isMyBook: Bool) -> BookStatus {
-        isMyBook ? viewModel.exchangeBook.needChangeBook.status : viewModel.exchangeBook.needChangeBook.status
+        pasthoughtObj.needChangeUB.status
     }
 }
 

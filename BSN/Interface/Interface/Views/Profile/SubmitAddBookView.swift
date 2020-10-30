@@ -13,7 +13,7 @@ struct SubmitAddBookView: View {
     // If create new so it will be nil
     var bookID: String?
     
-    @StateObject var viewModel: SubmitAddBookViewModel = SubmitAddBookViewModel()
+    @StateObject var viewModel: SubmitAddUBViewModel = SubmitAddUBViewModel()
     
     init(bookID: String? = nil) {
         self.bookID = bookID
