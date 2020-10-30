@@ -16,7 +16,7 @@ struct BookStateText: View {
             Text("Trạng thái sách: ")
                 .robotoLight(size: 13)
             +
-                Text(state.getTitle())
+                Text(state.des())
                 .robotoBold(size: 13)
                 .foregroundColor(._primary)
         }

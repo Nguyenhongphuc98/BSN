@@ -15,28 +15,40 @@ public struct ProfileView: View {
     
     @EnvironmentObject var root: AppManager
     
-    public init() { }
+    /// User will display on profile
+    // If value is nil, get current userinfo
+    var userID: String?
+    
+    public init(uid: String? = nil) {
+        self.userID = uid
+    }
     
     public var body: some View {
-        ScrollView {
-            ScrollViewReader { value in
-                VStack {
-                    ZStack(alignment: .leading) {
-                        userInfo
-                        
-                        // Avatar
-                        VStack() {
-                            CircleImageOptions(image: viewModel.profile.user.avatar, diameter: 80)
-                                .padding(.top, 115)
-                                .padding(.leading)
+        ZStack {
+            ScrollView {
+                ScrollViewReader { value in
+                    VStack {
+                        ZStack(alignment: .leading) {
+                            userInfo
                             
-                            Spacer()
+                            // Avatar
+                            VStack() {
+                                CircleImageOptions(image: viewModel.profile.user.avatar, diameter: 80)
+                                    .padding(.top, 115)
+                                    .padding(.leading)
+                                
+                                Spacer()
+                            }
                         }
+                        
+                        dinamicContent(proxy: value)
+                            .frame(height: UIScreen.screenHeight)
                     }
-                    
-                    dinamicContent(proxy: value)
-                        .frame(height: UIScreen.screenHeight)
                 }
+            }
+            
+            if viewModel.isLoading {
+                Loading()
             }
         }
         .edgesIgnoringSafeArea(.all)
@@ -139,8 +151,8 @@ public struct ProfileView: View {
         }
     }
     
-    func viewAppeared() {
-        print("profile-appeard")
+    private func viewAppeared() {
+        viewModel.prepareData(uid: userID)
     }
 }
 

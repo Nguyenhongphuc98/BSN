@@ -159,9 +159,9 @@
 		84C8CB72253EDAD5004D5CD0 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				842C444E2547C240003C570D /* GoogleApiRequest.swift */,
 				848E1051253EE32F003C89C8 /* ResourceRequest.swift */,
 				848E1060253EEEEC003C89C8 /* BookRequest.swift */,
-				842C444E2547C240003C570D /* GoogleApiRequest.swift */,
 				84A0CC37254AFDD80074CBAC /* UserBookRequest.swift */,
 			);
 			path = Network;

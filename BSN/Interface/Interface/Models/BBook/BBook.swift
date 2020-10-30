@@ -8,14 +8,14 @@
 import SwiftUI
 
 // MARK: - Book state and status
-enum BookState: CaseIterable {
+enum BookState: String, CaseIterable {
     case borrowed
     case available //to be borrowed
     case reading
     case exchanged
     case unknown
 
-    func getTitle() -> String {
+    func des() -> String {
         switch self {
         case .available:
             return "Sẵn sàng cho mượn"

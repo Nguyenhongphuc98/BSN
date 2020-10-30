@@ -27,4 +27,19 @@ class BUserBook: BBook {
         statusDes = ""
         super.init()
     }
+    
+    init(ubid: String, uid: String, status: String, title: String, author: String, state: String) {
+        self.status = .new
+        self.state = .available
+        self.statusDes = ""
+        
+        super.init()
+        
+        self.id = ubid
+        self.ownerID = uid
+        self.status = BookStatus(rawValue: status) ?? .new
+        self.state = BookState(rawValue: state) ?? . available
+        self.title = title
+        self.author = author
+    }
 }

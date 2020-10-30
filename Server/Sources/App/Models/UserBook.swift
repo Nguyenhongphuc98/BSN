@@ -41,18 +41,41 @@ extension UserBook: Content { }
 extension UserBook {
     
     // Return model when user search book
-    func toUserSerchBook(cover: String, title: String, author: String) -> SearchUserBook {
-        SearchUserBook(
-            cover: cover,
-            title: title,
-            author: author,
-            status: self.status
-        )
-    }
+//    func toUserSerchBook(cover: String, title: String, author: String) -> SearchUserBook {
+//        SearchUserBook(
+//            id: self.id!.uuidString,
+//            user_id: self.user_id.uuidString,
+//            book_id: self.book_id.uuidString,
+//            cover: cover,
+//            title: title,
+//            author: author,
+//            status: self.status,
+//            state: self.state
+//        )
+//    }
+}
+
+// MARK: - Updte user book
+
+struct UpdateUserbook: Content {
+    
+    // Can't inheritance so don't neecd to using class
+    
+    var status: String?
+    
+    var state: String?
+    
+    var statusDes: String?
 }
 
 // MARK: - SearchUserBook
 struct SearchUserBook: Content {
+    
+    var id: String
+    
+    var userID: String
+    
+    var bookID: String
     
     var cover: String
     
@@ -61,4 +84,6 @@ struct SearchUserBook: Content {
     var author: String
     
     var status: String
+    
+    var state: String
 }

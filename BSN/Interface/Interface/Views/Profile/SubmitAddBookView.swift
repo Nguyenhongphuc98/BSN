@@ -48,7 +48,7 @@ struct SubmitAddBookView: View {
                         
                         Picker("Trạng thái", selection: $viewModel.model.state) {
                             ForEach(BookState.allCases, id: \.self) {
-                                Text("\($0.getTitle())")
+                                Text("\($0.des())")
                             }
                         }
                     }

@@ -63,7 +63,7 @@ class SubmitAddBookViewModel: ObservableObject {
     }
     
     /// Add new book to book system
-    func addBook() {
+    private func addBook() {
         let newBook = Book(
             title: model.title,
             author: model.author,
@@ -75,6 +75,7 @@ class SubmitAddBookViewModel: ObservableObject {
         bookManager.saveBook(book: newBook)
     }
     
+    /// Perform get book by isbn
     func addUserBook() {
         /// After receive book in fo it will auto save userbook
         bookManager.fetchBook(isbn: isbn)
@@ -85,7 +86,7 @@ class SubmitAddBookViewModel: ObservableObject {
     }
     
     /// Book get from server or google will received at this block
-    func setupReceiveBookInfo() {
+    private func setupReceiveBookInfo() {
         /// Get book by ID to load on UI
         bookManager
             .getBookPublisher
@@ -127,8 +128,11 @@ class SubmitAddBookViewModel: ObservableObject {
                     uid: AppManager.shared.currentUser.id,
                     bid: book.id,
                     status: self.model.status.getTitle(),
-                    state: self.model.state.getTitle(),
-                    statusDes: self.model.statusDes)
+                    state: self.model.state.des(),
+                    statusDes: self.model.statusDes,
+                    title: book.title,
+                    author: book.author
+                )
                 
                 self.userBookManager.saveUserBook(ub: userBook)
             }
@@ -136,7 +140,7 @@ class SubmitAddBookViewModel: ObservableObject {
     }
     
     /// Result book info from google api
-    func setupReceiveGoogleBookInfo() {
+    private func setupReceiveGoogleBookInfo() {
         bookManager
             .getGoogleBookPublisher
             .sink {[weak self] (book) in
@@ -171,7 +175,7 @@ class SubmitAddBookViewModel: ObservableObject {
             .store(in: &searchCancellables)
     }
     
-    func setupReceiveSaveBookInfo() {
+    private func setupReceiveSaveBookInfo() {
         bookManager
             .saveBookPublisher
             .sink {[weak self] (book) in
@@ -197,7 +201,7 @@ class SubmitAddBookViewModel: ObservableObject {
             .store(in: &searchCancellables)
     }
     
-    func setupReceiveSaveUserBookInfo() {
+    private func setupReceiveSaveUserBookInfo() {
         /// Get save user_book
         userBookManager
             .savePublisher

@@ -17,9 +17,14 @@ public struct UserBook: Codable {
     
     public var state: String
     
-    public var statusDes: String
+    public var statusDes: String?
     
     public var createdAt: String?
+    
+    // Additon part
+    public var title: String
+    
+    public var author: String
     
     public init() {
         userID = ""
@@ -27,9 +32,11 @@ public struct UserBook: Codable {
         state = ""
         status = ""
         statusDes = ""
+        title = ""
+        author = ""
     }
     
-    public init(id: String? = nil, uid: String, bid: String, status: String, state: String, statusDes: String, createdAt: String? = nil) {
+    public init(id: String? = nil, uid: String, bid: String, status: String, state: String, statusDes: String? = nil, createdAt: String? = nil, title: String, author: String) {
         self.id = id
         self.userID = uid
         self.bookID = bid
@@ -37,5 +44,7 @@ public struct UserBook: Codable {
         self.state = state
         self.statusDes = statusDes
         self.createdAt = createdAt
+        self.title = title
+        self.author = author
     }
 }
