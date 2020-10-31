@@ -84,11 +84,11 @@ struct MyBookDetailView: View {
                             .padding(.horizontal, 5)
                         Menu {
                             Button {
-                                
+                                viewModel.deleteNote(note: note)
                             } label: {
                                 Text("Xoá bài học")
                             }
-                            
+              
                             Button {
                                 passthroughtNote.content = note.content
                                 passthroughtNote.id = note.id

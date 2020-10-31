@@ -88,6 +88,13 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
        changeResource(resourceToSave, method: "PUT", completion: completion)
     }
     
+    func delete() {
+        var urlRequest = URLRequest(url: resourceURL)
+        urlRequest.httpMethod = "DELETE"
+        let dataTask = URLSession.shared.dataTask(with: urlRequest)
+        dataTask.resume()
+    }
+    
     func changeResource(_ resourceToSave: ResourceType, method: String, completion: @escaping (SaveResult<ResourceType>) -> Void) {
         do {
             

@@ -30,7 +30,7 @@ class NoteRequest: ResourceRequest<ENote> {
         self.resetPath()
         
         self.save(note) { result in
-            self.processChangeNote(result: result, method: "save", publisher: publisher)
+            self.processChangeNoteResult(result: result, method: "save", publisher: publisher)
         }
     }
     
@@ -38,11 +38,16 @@ class NoteRequest: ResourceRequest<ENote> {
         self.setPath(resourcePath: note.id!)
         
         self.update(note) { [self] result in
-            self.processChangeNote(result: result, method: "update", publisher: publisher)
+            self.processChangeNoteResult(result: result, method: "update", publisher: publisher)
         }
     }
     
-    func processChangeNote(result: SaveResult<ENote>, method: String, publisher: PassthroughSubject<ENote, Never>) {
+    func deleteNote(noteID: String) {
+        self.setPath(resourcePath: noteID)
+        self.delete()
+    }
+    
+    func processChangeNoteResult(result: SaveResult<ENote>, method: String, publisher: PassthroughSubject<ENote, Never>) {
         
         switch result {
         case .failure:

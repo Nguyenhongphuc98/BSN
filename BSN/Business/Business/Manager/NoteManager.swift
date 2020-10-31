@@ -36,4 +36,8 @@ public class NoteManager {
     public func updateNote(note: ENote) {
         networkRequest.updateNote(note: note, publisher: changePublisher)
     }
+    
+    public func deleteNote(noteID: String) {
+        networkRequest.deleteNote(noteID: noteID)
+    }
 }

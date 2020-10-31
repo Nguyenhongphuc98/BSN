@@ -47,10 +47,12 @@ class MyBookDetailViewModel: NetworkViewModel {
         }
     }
     
-    func updateNote(content: String) {
-        isLoading = true
-        noteManager.updateNote(note: ENote(userBookID: model.id, content: content))
+    func deleteNote(note: Note) {
+        notes.removeAll(where: { $0.id == note.id })
+        objectWillChange.send()
+        noteManager.deleteNote(noteID: note.id)
     }
+    
     
     /// User Book get from server will received at this block
     private func observerGetUserBook() {
