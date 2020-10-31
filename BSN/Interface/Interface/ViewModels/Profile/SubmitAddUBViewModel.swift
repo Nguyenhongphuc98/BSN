@@ -64,7 +64,7 @@ class SubmitAddUBViewModel: ObservableObject {
     
     /// Add new book to book system
     private func addBook() {
-        let newBook = Book(
+        let newBook = EBook(
             title: model.title,
             author: model.author,
             isbn: isbn,
@@ -125,7 +125,7 @@ class SubmitAddUBViewModel: ObservableObject {
                 }
                 
                 /// When receive info of book, save user book to server
-                let userBook = UserBook(
+                let userBook = EUserBook(
                     uid: AppManager.shared.currentUser.id,
                     bid: book.id,
                     status: self.model.status.rawValue,
@@ -215,7 +215,7 @@ class SubmitAddUBViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.isLoading = false
                     
-                    self.resourceInfo = (ub.id == "undefine") ? .failure : .success
+                    self.resourceInfo = (ub.id == "undefine") ? .savefailure : .success
                     self.showAlert.toggle()
                 }
             }

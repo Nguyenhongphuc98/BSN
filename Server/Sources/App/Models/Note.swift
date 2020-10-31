@@ -28,3 +28,7 @@ final class Note: Model {
 }
 
 extension Note: Content { }
+
+struct UpdateNote: Content {
+    var content: String
+}

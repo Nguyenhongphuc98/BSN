@@ -5,7 +5,7 @@
 //  Created by Phucnh on 10/20/20.
 //
 
-public struct SearchBook: Codable {
+public struct ESearchBook: Codable {
     
     public var id: String
     

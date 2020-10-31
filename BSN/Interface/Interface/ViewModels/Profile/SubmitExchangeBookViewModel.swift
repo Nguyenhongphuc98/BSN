@@ -23,7 +23,7 @@ class SubmitExchangeBookViewModel: NetworkViewModel {
     func saveExchangeBook(passthroughtObj: PassthroughtEB) {
         isLoading = true
         
-        let eb = ExchangeBook(
+        let eb = EExchangeBook(
             firstUserBookID: passthroughtObj.needChangeUB.id!,
             exchangeBookID: passthroughtObj.wantChangeBook!.id!,
             firstStatusDes: passthroughtObj.needChangeUB.statusDes,
@@ -46,7 +46,7 @@ class SubmitExchangeBookViewModel: NetworkViewModel {
                 DispatchQueue.main.async {
                     self.isLoading = false
                     
-                    self.resourceInfo = (eb.id == "undefine") ? .failure : .success
+                    self.resourceInfo = (eb.id == "undefine") ? .savefailure : .success
                     self.showAlert.toggle()
                 }
             }

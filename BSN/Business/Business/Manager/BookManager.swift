@@ -16,30 +16,30 @@ public class BookManager {
     private let booksRequest: BookRequest
     
     // List book searched from DB
-    public let searchBooksPublisher: PassthroughSubject<[SearchBook], Never>
+    public let searchBooksPublisher: PassthroughSubject<[ESearchBook], Never>
     
     // Get single book from server
-    public let getBookPublisher: PassthroughSubject<Book, Never>
+    public let getBookPublisher: PassthroughSubject<EBook, Never>
     
     // Get single book from google api
-    public let getGoogleBookPublisher: PassthroughSubject<Book, Never>
+    public let getGoogleBookPublisher: PassthroughSubject<EBook, Never>
     
-    public let getBookByIsbnPublisher: PassthroughSubject<SearchBook, Never>
+    public let getBookByIsbnPublisher: PassthroughSubject<ESearchBook, Never>
     
-    public let saveBookPublisher: PassthroughSubject<Book, Never>
+    public let saveBookPublisher: PassthroughSubject<EBook, Never>
     
     public init() {
         // Publisher
-        searchBooksPublisher = PassthroughSubject<[SearchBook], Never>()
+        searchBooksPublisher = PassthroughSubject<[ESearchBook], Never>()
         
         // Init resource URL
         searchBooksRequest = SearchBookRequest(componentPath: "books/")
         booksRequest = BookRequest(componentPath: "books/")
         
-        getBookPublisher = PassthroughSubject<Book, Never>()
-        getGoogleBookPublisher = PassthroughSubject<Book, Never>()
-        getBookByIsbnPublisher = PassthroughSubject<SearchBook, Never>()
-        saveBookPublisher = PassthroughSubject<Book, Never>()
+        getBookPublisher = PassthroughSubject<EBook, Never>()
+        getGoogleBookPublisher = PassthroughSubject<EBook, Never>()
+        getBookByIsbnPublisher = PassthroughSubject<ESearchBook, Never>()
+        saveBookPublisher = PassthroughSubject<EBook, Never>()
     }
     
     // Request books with title or author `term`
@@ -59,7 +59,7 @@ public class BookManager {
         searchBooksRequest.searchBook(isbn: isbn, publisher: getBookByIsbnPublisher)
     }
     
-    public func saveBook(book: Book) {
+    public func saveBook(book: EBook) {
         print("Did start save book \(book.title)")
         booksRequest.saveBook(book: book, publisher: saveBookPublisher)
     }

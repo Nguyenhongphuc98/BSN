@@ -8,9 +8,9 @@
 import Combine
 
 // MARK: - Search book
-class SearchBookRequest: ResourceRequest<SearchBook> {
+class SearchBookRequest: ResourceRequest<ESearchBook> {
     
-    func searchBook(term:String, publisher: PassthroughSubject<[SearchBook], Never>) {
+    func searchBook(term:String, publisher: PassthroughSubject<[ESearchBook], Never>) {
         self.setPath(resourcePath: "search", params: ["term":term])
         
         self.get { result in
@@ -25,7 +25,7 @@ class SearchBookRequest: ResourceRequest<SearchBook> {
         }
     }
     
-    func searchBook(isbn:String, publisher: PassthroughSubject<SearchBook, Never>) {
+    func searchBook(isbn:String, publisher: PassthroughSubject<ESearchBook, Never>) {
         self.setPath(resourcePath: "isbn", params: ["term":isbn])
         
         self.get(isAll: false) { result in
@@ -42,9 +42,9 @@ class SearchBookRequest: ResourceRequest<SearchBook> {
 }
 
 // MARK: - Search book
-class BookRequest: ResourceRequest<Book> {
+class BookRequest: ResourceRequest<EBook> {
     
-    func fetchBook(bookID: String, publisher: PassthroughSubject<Book, Never>) {
+    func fetchBook(bookID: String, publisher: PassthroughSubject<EBook, Never>) {
         self.setPath(resourcePath: bookID)
         
         self.get(isAll: false) { result in
@@ -59,7 +59,7 @@ class BookRequest: ResourceRequest<Book> {
         }
     }
     
-    func saveBook(book: Book, publisher: PassthroughSubject<Book, Never>) {
+    func saveBook(book: EBook, publisher: PassthroughSubject<EBook, Never>) {
         self.resetPath()
         
         self.save(book) { result in
@@ -68,7 +68,7 @@ class BookRequest: ResourceRequest<Book> {
             case .failure:
                 let message = "There was an error save book"
                 print(message)
-                var b = Book()
+                var b = EBook()
                 b.id = "undefine"
                 publisher.send(b)
             case .success(let book):

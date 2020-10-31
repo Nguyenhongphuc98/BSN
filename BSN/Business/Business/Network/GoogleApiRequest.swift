@@ -21,7 +21,7 @@ class GoogleApiRequest {
         baseURL = "https://www.googleapis.com/books/v1/volumes/?q=isbn:"
     }
     
-    func getBookInfo(by isbn:String, publisher: PassthroughSubject<Book, Never>) {
+    func getBookInfo(by isbn:String, publisher: PassthroughSubject<EBook, Never>) {
         let resourceURL = URL(string: baseURL + isbn)!
         
         let dataTask = URLSession.shared
@@ -35,7 +35,7 @@ class GoogleApiRequest {
                 do {
                     let json = JSON(jsonData)
                     let items = try json["items"].array
-                    var book = Book()
+                    var book = EBook()
                     
                     if items != nil {
                         for item in items! {
@@ -54,7 +54,7 @@ class GoogleApiRequest {
                         
                         publisher.send(book)
                     } else {
-                        var b = Book()
+                        var b = EBook()
                         b.id = "undefine"
                         publisher.send(b)
                     }

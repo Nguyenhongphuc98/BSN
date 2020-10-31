@@ -7,7 +7,7 @@
 
 import Combine
 
-class ExchangeBookRequest: ResourceRequest<ExchangeBook> {
+class ExchangeBookRequest: ResourceRequest<EExchangeBook> {
     
 //    func fetchExchangeBooks(uid: String, publisher: PassthroughSubject<[ExchangeBook], Never>) {
 //        self.setPath(resourcePath: "search", params: ["uid":uid])
@@ -24,7 +24,7 @@ class ExchangeBookRequest: ResourceRequest<ExchangeBook> {
 //        }
 //    }
     
-    func saveExchangeBook(eb: ExchangeBook, publisher: PassthroughSubject<ExchangeBook, Never>) {
+    func saveExchangeBook(eb: EExchangeBook, publisher: PassthroughSubject<EExchangeBook, Never>) {
         self.resetPath()
         
         self.save(eb) { result in
@@ -34,7 +34,7 @@ class ExchangeBookRequest: ResourceRequest<ExchangeBook> {
                 let message = "There was an error save user_book"
                 print(message)
                 /// Publish a undefine exchange book
-                let ub = ExchangeBook()
+                let ub = EExchangeBook()
                 publisher.send(ub)
                 
             case .success(let eb):

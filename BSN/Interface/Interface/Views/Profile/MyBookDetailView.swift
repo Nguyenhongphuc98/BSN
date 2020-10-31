@@ -89,6 +89,7 @@ struct MyBookDetailView: View {
                                 .background(Color.init(hex: 0xEFEFEF))
                                 .cornerRadius(25)
                                 .shadow(radius: 3)
+                                .padding(3)
                         })
                     }
                     .padding(.horizontal)

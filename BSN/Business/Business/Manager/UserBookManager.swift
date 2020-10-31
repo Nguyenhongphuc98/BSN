@@ -14,24 +14,24 @@ public class UserBookManager {
     private let networkRequest: UserBookRequest
     
     // Publisher for save new user book action
-    public let savePublisher: PassthroughSubject<UserBook, Never>
+    public let savePublisher: PassthroughSubject<EUserBook, Never>
     
     // Publisher for fetch user book by uid
-    public let getUserBooksPublisher: PassthroughSubject<[UserBook], Never>
+    public let getUserBooksPublisher: PassthroughSubject<[EUserBook], Never>
     
     // Publisher for fetch special user book have `id`
-    public let getUserBookPublisher: PassthroughSubject<UserBook, Never>
+    public let getUserBookPublisher: PassthroughSubject<EUserBook, Never>
     
     public init() {
         // Init resource URL
         networkRequest = UserBookRequest(componentPath: "userBooks/")
         
-        savePublisher = PassthroughSubject<UserBook, Never>()
-        getUserBooksPublisher = PassthroughSubject<[UserBook], Never>()
-        getUserBookPublisher = PassthroughSubject<UserBook, Never>()
+        savePublisher = PassthroughSubject<EUserBook, Never>()
+        getUserBooksPublisher = PassthroughSubject<[EUserBook], Never>()
+        getUserBookPublisher = PassthroughSubject<EUserBook, Never>()
     }
     
-    public func saveUserBook(ub: UserBook) {
+    public func saveUserBook(ub: EUserBook) {
         networkRequest.saveUserBook(ub: ub, publisher: savePublisher)
     }
     

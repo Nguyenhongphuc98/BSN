@@ -11,7 +11,8 @@ enum ResourceInfo: String {
     case notfound
     case exists
     case success
-    case failure
+    case getfailure
+    case savefailure
     
     func des() -> String {
         switch self {
@@ -21,8 +22,10 @@ enum ResourceInfo: String {
             return "Dữ liệu đã tồn tại"
         case .success:
             return "Xử lý thành công"
-        case .failure:
-            return "Xử lý thất bại"
+        case .getfailure:
+            return "Lấy dữ liệu thất bại"
+        case .savefailure:
+            return "Lưu dữ liệu thất bại"
         }
     }
 }

@@ -15,17 +15,14 @@ struct UserBookController: RouteCollection {
         let userBooks = routes.grouped("api", "v1", "userBooks")
         userBooks.get(use: index)
         userBooks.post(use: create)
-        userBooks.group(":ID") { user in
-            user.delete(use: delete)
-            user.put(use: update)
+        userBooks.group(":ID") { group in
+            group.delete(use: delete)
+            group.put(use: update)
         }
         
         // Advance
         // Get all UserBook of a User
         userBooks.get("search", use: search)
-        
-        // Get UserBook with full info (after joined)
-        //userBooks.get("full", use: getFull)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[UserBook]> {
@@ -84,18 +81,4 @@ struct UserBookController: RouteCollection {
         return db.raw(sqlQuery)
             .all(decoding: SearchUserBook.self)
     }
-    
-    // Get User book have id ubid
-//    func getFull(req: Request) throws -> EventLoopFuture<SearchUserBook> {
-//        guard let ubid: String = req.query["ubid"] else {
-//            throw Abort(.badRequest)
-//        }
-//
-//        let sqlQuery = SQLQueryString("SELECT b.title, b.cover, b.author, ub.status, ub.id, ub.user_id as \"userID\", ub.state, ub.book_id as \"bookID\" FROM user_book as ub, book as b where ub.id = '\(raw: ubid)' and ub.book_id = b.id")
-//
-//        let db = req.db as! SQLDatabase
-//        return db.raw(sqlQuery)
-//            .first(decoding: SearchUserBook.self)
-//            .unwrap(or: Abort(.notFound))
-//    }
 }

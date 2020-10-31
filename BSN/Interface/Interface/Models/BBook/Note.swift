@@ -26,4 +26,10 @@ class Note: Identifiable {
         createDate = fakedates.randomElement()!
         self.content = content
     }
+    
+    init(id: String, content: String, createAt: String) {
+        self.id = id
+        self.createDate = Date.getDate(dateStr: createAt)
+        self.content = content
+    }
 }

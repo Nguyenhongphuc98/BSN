@@ -7,9 +7,9 @@
 
 import Combine
 
-class UserBookRequest: ResourceRequest<UserBook> {
+class UserBookRequest: ResourceRequest<EUserBook> {
     
-    func fetchUserBooks(uid: String, publisher: PassthroughSubject<[UserBook], Never>) {
+    func fetchUserBooks(uid: String, publisher: PassthroughSubject<[EUserBook], Never>) {
         self.setPath(resourcePath: "search", params: ["uid":uid])
         
         self.get { result in
@@ -24,7 +24,7 @@ class UserBookRequest: ResourceRequest<UserBook> {
         }
     }
     
-    func fetchUserBooks(ubid: String, publisher: PassthroughSubject<UserBook, Never>) {
+    func fetchUserBooks(ubid: String, publisher: PassthroughSubject<EUserBook, Never>) {
         self.setPath(resourcePath: "search", params: ["ubid":ubid])
         
         self.get { result in
@@ -33,7 +33,7 @@ class UserBookRequest: ResourceRequest<UserBook> {
             case .failure:
                 let message = "There was an error searching the user-books"
                 print(message)
-                let ub = UserBook()
+                let ub = EUserBook()
                 publisher.send(ub)
                 
             case .success(let books):
@@ -42,7 +42,7 @@ class UserBookRequest: ResourceRequest<UserBook> {
         }
     }
     
-    func saveUserBook(ub: UserBook, publisher: PassthroughSubject<UserBook, Never>) {
+    func saveUserBook(ub: EUserBook, publisher: PassthroughSubject<EUserBook, Never>) {
         self.resetPath()
         
         self.save(ub) { result in
@@ -51,7 +51,7 @@ class UserBookRequest: ResourceRequest<UserBook> {
             case .failure:
                 let message = "There was an error save user_book"
                 print(message)
-                var ub = UserBook()
+                var ub = EUserBook()
                 ub.id = "undefine"
                 publisher.send(ub)
                 
