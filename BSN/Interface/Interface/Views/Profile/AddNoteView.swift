@@ -28,13 +28,7 @@ struct AddNoteView: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    viewModel.addNewNote(content: noteContent, complete: { (success) in
-                        print("did process: \(noteContent) - \(success)")
-                        presentationMode.wrappedValue.dismiss()
-                    })
-                    
-                }, label: {
+                Button(action: { viewModel.addNewNote(content: noteContent) }, label: {
                     Text("   Lưu bài học   ")
                 })
                 .buttonStyle(BaseButtonStyle(size: .large))
@@ -44,17 +38,42 @@ struct AddNoteView: View {
             .padding()
             
             HStack {
-                Button(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }, label: {
-                    Text("Huỷ")
-                        .padding()
+                Button(action: { dissmiss() }, label: {
+                    Text("Huỷ").padding()
                 })
                 
                 Spacer()
             }
         }
         .background(Color(.secondarySystemBackground))
+        .embededLoading(isLoading: $viewModel.isLoading)
+        .alert(isPresented: $viewModel.showAlert, content: alert)
+    }
+    
+    func alert() -> Alert {
+        if viewModel.resourceInfo == .success {
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                dismissButton: .default(Text("OK")) {
+                    dissmiss()
+                })
+        } else {
+            
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                primaryButton: .default(Text("Thử lại")) {
+                    viewModel.addNewNote(content: noteContent)
+                },
+                secondaryButton: .cancel(Text("Huỷ bỏ")) {
+                    dissmiss()
+                })
+        }
+    }
+    
+    private func dissmiss() {
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

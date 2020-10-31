@@ -13,6 +13,10 @@ struct MyBookDetailView: View {
     
     @State private var showAddNoteView: Bool = false
     
+    @State private var expansedNotes: Bool = true
+    
+    @State private var expansedStatusDes: Bool = true
+    
     @Environment(\.presentationMode) var presentationMode
     
     var ubid: String
@@ -68,59 +72,52 @@ struct MyBookDetailView: View {
     }
     
     private var notes: some View {
-        DisclosureGroup(
-            content: {
-                VStack {
-                    ForEach(viewModel.notes) { note in
-                        NoteCard(model: note)
-                            .padding(.vertical, 5)
-                            .padding(.horizontal, 5)
-                    }
-                    
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            print("did click new note")
-                            showAddNoteView.toggle()
-                        }, label: {
-                            Image(systemName: "plus")
-                                .font(.system(size: 35))
-                                .padding(10)
-                                .background(Color.init(hex: 0xEFEFEF))
-                                .cornerRadius(25)
-                                .shadow(radius: 3)
-                                .padding(3)
-                        })
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom)
-                    .sheet(isPresented: $showAddNoteView, content: {
-                        AddNoteView().environmentObject(viewModel)
+        DisclosureGroup(isExpanded: $expansedNotes) {
+            VStack {
+                ForEach(viewModel.notes) { note in
+                    NoteCard(model: note)
+                        .padding(.vertical, 5)
+                        .padding(.horizontal, 5)
+                }
+                
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        showAddNoteView.toggle()
+                        
+                    }, label: {
+                        Image(systemName: "plus")
+                            .font(.system(size: 35))
+                            .padding(10)
+                            .background(Color.init(hex: 0xEFEFEF))
+                            .cornerRadius(25)
+                            .shadow(radius: 3)
+                            .padding(3)
                     })
                 }
-            },
-            label: {
-                Text("Bài học rút ra")
-                    .robotoBold(size: 19)
+                .padding(.horizontal)
+                .padding(.bottom)
+                .sheet(isPresented: $showAddNoteView, content: {
+                    AddNoteView().environmentObject(viewModel)
+                })
             }
-        )
+        } label: {
+            Text("Bài học rút ra").robotoBold(size: 19)
+        }
         .padding(.trailing, 5)
     }
     
     private var bookStatus: some View {
-        DisclosureGroup(
-            content: {
-                Text(viewModel.model.statusDes)
-                    .robotoItalic(size: 15)
-                    .foregroundColor(.init(hex: 0x404040))
-                    .multilineTextAlignment(.center)
-                    .padding()
-            },
-            label: {
-                Text("Tình trạng sách")
-                    .robotoBold(size: 19)
-            }
-        )
+        DisclosureGroup(isExpanded: $expansedStatusDes) {
+            Text(viewModel.model.statusDes)
+                .robotoItalic(size: 15)
+                .foregroundColor(.init(hex: 0x404040))
+                .multilineTextAlignment(.center)
+                .padding()
+        }
+        label: {
+            Text("Tình trạng sách").robotoBold(size: 19)
+        }
         .padding(.trailing, 5)
     }
     

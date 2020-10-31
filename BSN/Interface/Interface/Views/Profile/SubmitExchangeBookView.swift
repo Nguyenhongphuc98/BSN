@@ -40,9 +40,7 @@ struct SubmitExchangeBookView: View {
         }
         .padding()
         .embededLoading(isLoading: $viewModel.isLoading)
-        .alert(isPresented: $viewModel.showAlert) {
-            alert()
-        }
+        .alert(isPresented: $viewModel.showAlert, content: alert)
     }
     
     func bookInfo(isMyBook: Bool) -> some View {
