@@ -30,17 +30,29 @@ class NoteRequest: ResourceRequest<ENote> {
         self.resetPath()
         
         self.save(note) { result in
+            self.processChangeNote(result: result, method: "save", publisher: publisher)
+        }
+    }
+    
+    func updateNote(note: ENote, publisher: PassthroughSubject<ENote, Never>) {
+        self.setPath(resourcePath: note.id!)
+        
+        self.update(note) { [self] result in
+            self.processChangeNote(result: result, method: "update", publisher: publisher)
+        }
+    }
+    
+    func processChangeNote(result: SaveResult<ENote>, method: String, publisher: PassthroughSubject<ENote, Never>) {
+        
+        switch result {
+        case .failure:
+            let message = "There was an \(method) update note"
+            print(message)
+            let note = ENote()
+            publisher.send(note)
             
-            switch result {
-            case .failure:
-                let message = "There was an error save note"
-                print(message)
-                let note = ENote()
-                publisher.send(note)
-                
-            case .success(let note):
-                publisher.send(note)
-            }
+        case .success(let note):
+            publisher.send(note)
         }
     }
 }

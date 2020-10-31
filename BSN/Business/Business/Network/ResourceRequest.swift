@@ -81,10 +81,18 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
     }
     
     func save(_ resourceToSave: ResourceType, completion: @escaping (SaveResult<ResourceType>) -> Void) {
+       changeResource(resourceToSave, method: "POST", completion: completion)
+    }
+    
+    func update(_ resourceToSave: ResourceType, completion: @escaping (SaveResult<ResourceType>) -> Void) {
+       changeResource(resourceToSave, method: "PUT", completion: completion)
+    }
+    
+    func changeResource(_ resourceToSave: ResourceType, method: String, completion: @escaping (SaveResult<ResourceType>) -> Void) {
         do {
             
             var urlRequest = URLRequest(url: resourceURL)
-            urlRequest.httpMethod = "POST"
+            urlRequest.httpMethod = method
             urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.httpBody = try JSONEncoder().encode(resourceToSave)
             
@@ -107,6 +115,7 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
             dataTask.resume()
             
         } catch {
-            completion(.failure) }
+            completion(.failure)
+        }
     }
 }

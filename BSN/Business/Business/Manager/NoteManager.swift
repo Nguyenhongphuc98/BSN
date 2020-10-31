@@ -11,8 +11,8 @@ public class NoteManager {
     
     private let networkRequest: NoteRequest
     
-    // Publisher for save new note action
-    public let savePublisher: PassthroughSubject<ENote, Never>
+    // Publisher for save new note and update note action
+    public let changePublisher: PassthroughSubject<ENote, Never>
     
     // Publisher for fetch notes by ubid
     public let getNotesPublisher: PassthroughSubject<[ENote], Never>
@@ -21,15 +21,19 @@ public class NoteManager {
         // Init resource URL
         networkRequest = NoteRequest(componentPath: "notes/")
         
-        savePublisher = PassthroughSubject<ENote, Never>()
+        changePublisher = PassthroughSubject<ENote, Never>()
         getNotesPublisher = PassthroughSubject<[ENote], Never>()
-    }
-    
-    public func saveNote(note: ENote) {
-        networkRequest.saveNote(note: note, publisher: savePublisher)
     }
     
     public func getNotes(ubid: String) {
         networkRequest.fetchNotes(ubid: ubid, publisher: getNotesPublisher)
+    }
+    
+    public func saveNote(note: ENote) {
+        networkRequest.saveNote(note: note, publisher: changePublisher)
+    }
+    
+    public func updateNote(note: ENote) {
+        networkRequest.updateNote(note: note, publisher: changePublisher)
     }
 }

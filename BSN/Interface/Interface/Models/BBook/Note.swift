@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class Note: Identifiable {
+class Note: Undefinable, ObservableObject {
     
     var id: String
     
@@ -16,14 +16,14 @@ class Note: Identifiable {
     var content: String
     
     init() {
-        id = UUID().uuidString
-        createDate = fakedates.randomElement()!
-        content = fakeComments.randomElement()!
+        id = kUndefine
+        createDate = Date()
+        content = ""
     }
     
     init(content: String) {
-        id = UUID().uuidString
-        createDate = fakedates.randomElement()!
+        id = kUndefine
+        createDate = Date()
         self.content = content
     }
     
@@ -31,5 +31,11 @@ class Note: Identifiable {
         self.id = id
         self.createDate = Date.getDate(dateStr: createAt)
         self.content = content
+    }
+    
+    func reset() {
+        self.id = kUndefine
+        self.content = ""
+        self.createDate = Date()
     }
 }

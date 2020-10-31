@@ -19,6 +19,9 @@ struct MyBookDetailView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
+    // Pass note to edit view
+    @ObservedObject private var passthroughtNote: Note = Note()
+    
     var ubid: String
     
     var body: some View {
@@ -75,9 +78,30 @@ struct MyBookDetailView: View {
         DisclosureGroup(isExpanded: $expansedNotes) {
             VStack {
                 ForEach(viewModel.notes) { note in
-                    NoteCard(model: note)
-                        .padding(.vertical, 5)
-                        .padding(.horizontal, 5)
+                    ZStack(alignment: .topTrailing) {
+                        NoteCard(model: note)
+                            .padding(.vertical, 5)
+                            .padding(.horizontal, 5)
+                        Menu {
+                            Button {
+                                
+                            } label: {
+                                Text("Xoá bài học")
+                            }
+                            
+                            Button {
+                                passthroughtNote.content = note.content
+                                passthroughtNote.id = note.id
+                                showAddNoteView.toggle()
+                            } label: {
+                                Text("Sửa bài học")
+                            }
+                        }
+                        label: {
+                            // More button
+                            Image(systemName: "ellipsis").padding()
+                        }
+                    }
                 }
                 
                 HStack {
@@ -98,7 +122,9 @@ struct MyBookDetailView: View {
                 .padding(.horizontal)
                 .padding(.bottom)
                 .sheet(isPresented: $showAddNoteView, content: {
-                    AddNoteView().environmentObject(viewModel)
+                    AddNoteView()
+                        .environmentObject(viewModel)
+                        .environmentObject(passthroughtNote)
                 })
             }
         } label: {

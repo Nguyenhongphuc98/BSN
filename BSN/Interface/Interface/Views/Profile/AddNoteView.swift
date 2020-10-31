@@ -11,9 +11,10 @@ struct AddNoteView: View {
     
     @EnvironmentObject var viewModel: MyBookDetailViewModel
     
-    @Environment(\.presentationMode) var presentationMode
+    /// Note `undefine` mean add new, else update
+    @EnvironmentObject private var passthroughtNote: Note
     
-    @State var noteContent: String = ""
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -21,15 +22,15 @@ struct AddNoteView: View {
                 Text("Thêm bài học")
                     .robotoBold(size: 18)
                 
-                EditorWithPlaceHolder(text: $noteContent, placeHolder: "Để lại bài học của bạn tại đây")
+                EditorWithPlaceHolder(text: $passthroughtNote.content, placeHolder: "Để lại bài học của bạn tại đây")
                     .frame(height: 100)
                     .cornerRadius(5)
                     .padding()
                 
                 Spacer()
                 
-                Button(action: { viewModel.addNewNote(content: noteContent) }, label: {
-                    Text("   Lưu bài học   ")
+                Button(action: { viewModel.processNote(note: passthroughtNote) }, label: {
+                    Text("   \(passthroughtNote.isUndefine() ? "Lưu" : "Cập nhật") bài học   ")
                 })
                 .buttonStyle(BaseButtonStyle(size: .large))
                 
@@ -64,7 +65,7 @@ struct AddNoteView: View {
                 title: Text("Kết quả"),
                 message: Text(viewModel.resourceInfo.des()),
                 primaryButton: .default(Text("Thử lại")) {
-                    viewModel.addNewNote(content: noteContent)
+                    viewModel.processNote(note: passthroughtNote)
                 },
                 secondaryButton: .cancel(Text("Huỷ bỏ")) {
                     dissmiss()
@@ -73,6 +74,7 @@ struct AddNoteView: View {
     }
     
     private func dissmiss() {
+        passthroughtNote.reset()
         presentationMode.wrappedValue.dismiss()
     }
 }

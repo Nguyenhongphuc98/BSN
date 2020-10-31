@@ -28,7 +28,7 @@ class MyBookDetailViewModel: NetworkViewModel {
         
         observerGetUserBook()
         observerGetNotes()
-        observerSaveNote()
+        observerChangeNote()
     }
     
     func prepareData(ubid: String) {
@@ -37,9 +37,19 @@ class MyBookDetailViewModel: NetworkViewModel {
         noteManager.getNotes(ubid: ubid)
     }
     
-    func addNewNote(content: String) {
+    func processNote(note: Note) {
         isLoading = true
-        noteManager.saveNote(note: ENote(userBookID: model.id, content: content))
+        // Undefine mean this is new note, we should save it
+        if note.isUndefine() {
+            noteManager.saveNote(note: ENote(userBookID: model.id, content: note.content))
+        } else {
+            noteManager.updateNote(note: ENote(id: note.id, content: note.content))
+        }
+    }
+    
+    func updateNote(content: String) {
+        isLoading = true
+        noteManager.updateNote(note: ENote(userBookID: model.id, content: content))
     }
     
     /// User Book get from server will received at this block
@@ -104,10 +114,10 @@ class MyBookDetailViewModel: NetworkViewModel {
     }
     
     /// Get save note info
-    /// Using for Add note View
-    private func observerSaveNote() {
+    /// Using for Add note View, update a note
+    private func observerChangeNote() {
         noteManager
-            .savePublisher
+            .changePublisher
             .sink {[weak self] (note) in
                 
                 guard let self = self else {
@@ -122,7 +132,19 @@ class MyBookDetailViewModel: NetworkViewModel {
                     } else {
                         
                         self.resourceInfo = .success
-                        self.notes.append(Note(id: note.id!, content: note.content, createAt: note.createdAt!))
+                        let newNote = Note(id: note.id!, content: note.content, createAt: note.createdAt!)
+                        
+                        let index = self.notes.firstIndex { n in
+                            n.id == note.id
+                        }
+                        
+                        // To determine action is save or update
+                        if let i = index {
+                            self.notes.remove(at: i)
+                            self.notes.insert(newNote, at: i)
+                        } else {
+                            self.notes.append(newNote)
+                        }
                     }
                     self.showAlert = true
                 }
