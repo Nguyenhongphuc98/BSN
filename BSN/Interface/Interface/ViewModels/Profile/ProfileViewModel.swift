@@ -67,15 +67,15 @@ public class ProfileViewModel: ObservableObject {
                         self.books = []
                         ubs.forEach { (ub) in
                             
-                            var userBook = BUserBook(
+                            let userBook = BUserBook(
                                 ubid: ub.id!,
-                                uid: ub.userID,
+                                uid: ub.userID!,
                                 status: ub.status,
                                 title: ub.title!,
                                 author: ub.author!,
-                                state: ub.state
+                                state: ub.state,
+                                cover: ub.cover
                             )
-                            userBook.cover = ub.cover
                             self.books.append(userBook)
                         }
                     }

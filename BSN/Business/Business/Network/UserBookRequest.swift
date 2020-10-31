@@ -46,18 +46,29 @@ class UserBookRequest: ResourceRequest<EUserBook> {
         self.resetPath()
         
         self.save(ub) { result in
+            self.processChangeUBResult(result: result, method: "save", publisher: publisher)
+        }
+    }
+    
+    func updateUserBook(ub: EUserBook, publisher: PassthroughSubject<EUserBook, Never>) {
+        self.setPath(resourcePath: ub.id!)
+        
+        self.update(ub) { [self] result in
+            self.processChangeUBResult(result: result, method: "update", publisher: publisher)
+        }
+    }
+    
+    func processChangeUBResult(result: SaveResult<EUserBook >, method: String, publisher: PassthroughSubject<EUserBook, Never>) {
+        
+        switch result {
+        case .failure:
+            let message = "There was an error \(method) user-book"
+            print(message)
+            let ub = EUserBook()
+            publisher.send(ub)
             
-            switch result {
-            case .failure:
-                let message = "There was an error save user_book"
-                print(message)
-                var ub = EUserBook()
-                ub.id = "undefine"
-                publisher.send(ub)
-                
-            case .success(let ub):
-                publisher.send(ub)
-            }
+        case .success(let ub):
+            publisher.send(ub)
         }
     }
 }

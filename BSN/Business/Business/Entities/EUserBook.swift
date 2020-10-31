@@ -9,9 +9,9 @@ public struct EUserBook: Codable {
     
     public var id: String?
     
-    public var userID: String
+    public var userID: String?
     
-    public var bookID: String
+    public var bookID: String?
     
     public var status: String
     
@@ -42,7 +42,7 @@ public struct EUserBook: Codable {
         cover = ""
     }
     
-    public init(id: String? = nil, uid: String, bid: String, status: String, state: String, statusDes: String? = nil, createdAt: String? = nil, title: String, author: String, cover: String? = nil, description: String? = nil) {
+    public init(id: String? = nil, uid: String? = nil, bid: String? = nil, status: String, state: String, statusDes: String? = nil, createdAt: String? = nil, title: String? = nil, author: String? = nil, cover: String? = nil, description: String? = nil) {
         self.id = id
         self.userID = uid
         self.bookID = bid

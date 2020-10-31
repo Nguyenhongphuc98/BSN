@@ -51,7 +51,7 @@ class NoteRequest: ResourceRequest<ENote> {
         
         switch result {
         case .failure:
-            let message = "There was an \(method) update note"
+            let message = "There was an error \(method) note"
             print(message)
             let note = ENote()
             publisher.send(note)

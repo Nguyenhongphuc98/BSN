@@ -82,10 +82,6 @@ class SubmitAddUBViewModel: ObservableObject {
         bookManager.fetchBook(isbn: isbn)
     }
     
-    func updateUserBook(complete: @escaping (Bool) -> Void) {
-        complete(true)
-    }
-    
     /// Book get from server or google will received at this block
     private func setupReceiveBookInfo() {
         /// Get book by ID to load on UI
@@ -205,7 +201,7 @@ class SubmitAddUBViewModel: ObservableObject {
     private func setupReceiveSaveUserBookInfo() {
         /// Get save user_book
         userBookManager
-            .savePublisher
+            .changePublisher
             .sink {[weak self] (ub) in
                 
                 guard let self = self else {

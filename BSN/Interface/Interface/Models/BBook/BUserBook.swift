@@ -28,7 +28,7 @@ class BUserBook: BBook {
         super.init()
     }
     
-    init(ubid: String, uid: String, status: String, title: String, author: String, state: String) {
+    init(ubid: String, uid: String, status: String, title: String, author: String, state: String, cover: String? = nil) {
         self.status = .new
         self.state = .available
         self.statusDes = ""
@@ -41,5 +41,6 @@ class BUserBook: BBook {
         self.state = BookState(rawValue: state) ?? . available
         self.title = title
         self.author = author
+        self.cover = cover
     }
 }

@@ -9,25 +9,27 @@ import SwiftUI
 
 struct UpdateUBView: View {
     
-    @StateObject var viewModel: SubmitAddUBViewModel = SubmitAddUBViewModel()
+    @StateObject var viewModel: UpdateUBViewModel = UpdateUBViewModel()
     
     @Environment(\.presentationMode) var presentationMode
     
+    @StateObject var model: BUserBook
+    
     var body: some View {
         VStack(spacing: 10) {
-            MyBookDetailViewHeader(model: viewModel.model, showDes: false)
+            MyBookDetailViewHeader(model: model, showDes: false)
                 .padding(.vertical, 10)
                 .frame(height: 120)
                 .padding(.horizontal)
             
             Form {
-                Picker("Tình trạng", selection: $viewModel.model.status) {
+                Picker("Tình trạng", selection: $model.status) {
                     ForEach(BookStatus.allCases, id: \.self) {
                         Text("\($0.getTitle())")
                     }
                 }
                 
-                Picker("Trạng thái", selection: $viewModel.model.state) {
+                Picker("Trạng thái", selection: $model.state) {
                     ForEach(BookState.allCases, id: \.self) {
                         Text("\($0.des())")
                     }
@@ -40,28 +42,53 @@ struct UpdateUBView: View {
             
             Spacer()
             Button(action: {
-//                viewModel.updateUserBook { (success) in
-//                    print("did update book")
-//                }
-                
-                presentationMode.wrappedValue.dismiss()
+                viewModel.update(model: model)
             }, label: {
-                Text("   Hoàn tất   ")
+                Text("   Cập nhật   ")
             })
             .buttonStyle(BaseButtonStyle(size: .largeH))
             Spacer()
         }
-        .padding(.bottom)
+        .padding(.bottom, 100)
         .background(Color(.secondarySystemBackground))
+        .embededLoading(isLoading: $viewModel.isLoading)
+        //.resignKeyboardOnDragGesture()
+        .alert(isPresented: $viewModel.showAlert, content: alert)
+    }
+    
+    func alert() -> Alert {
+        if viewModel.resourceInfo == .success {
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                dismissButton: .default(Text("OK")) {
+                    dissmiss()
+                })
+        } else {
+            
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                primaryButton: .default(Text("Thử lại")) {
+                    viewModel.update(model: model)
+                },
+                secondaryButton: .cancel(Text("Huỷ bỏ")) {
+                    dissmiss()
+                })
+        }
     }
     
     var textInput: some View {
-        InputWithTitle(content: $viewModel.model.statusDes, placeHolder: "Hãy mô tả càng chi tiết nhất có thể", title: "Mô tả tình trạng sách")
+        InputWithTitle(content: $model.statusDes, placeHolder: "Hãy mô tả càng chi tiết nhất có thể", title: "Mô tả tình trạng sách")
+    }
+    
+    private func dissmiss() {
+        presentationMode.wrappedValue.dismiss()
     }
 }
 
 struct UpdateBookView_Previews: PreviewProvider {
     static var previews: some View {
-        UpdateUBView()
+        UpdateUBView(model: BUserBook())
     }
 }
