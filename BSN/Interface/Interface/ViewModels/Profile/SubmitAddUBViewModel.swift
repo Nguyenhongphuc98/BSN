@@ -124,8 +124,8 @@ class SubmitAddUBViewModel: ObservableObject {
                 let userBook = EUserBook(
                     uid: AppManager.shared.currentUser.id,
                     bid: book.id,
-                    status: self.model.status.rawValue,
-                    state: self.model.state.rawValue,
+                    status: self.model.status!.rawValue,
+                    state: self.model.state!.rawValue,
                     statusDes: self.model.statusDes,
                     title: book.title,
                     author: book.author

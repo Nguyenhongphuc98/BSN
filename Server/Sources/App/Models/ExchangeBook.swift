@@ -116,7 +116,9 @@ struct GetExchangeBook: Content {
     
     var secondStatus: String?
     
-    init(id: String? = nil, firstTitle: String, firstAuthor: String, firstCover: String? = nil, location: String? = nil, secondTitle: String? = nil, secondAuthor: String? = nil, firstOwnerName: String? = nil, secondStatus: String? = nil) {
+    var state: String?
+    
+    init(id: String? = nil, firstTitle: String, firstAuthor: String, firstCover: String? = nil, location: String? = nil, secondTitle: String? = nil, secondAuthor: String? = nil, firstOwnerName: String? = nil, secondStatus: String? = nil, state: String? = nil) {
         
         self.id = id
         self.firstTitle = firstTitle
@@ -127,5 +129,6 @@ struct GetExchangeBook: Content {
         self.secondAuthor = secondAuthor
         self.firstOwnerName = firstOwnerName
         self.secondStatus = secondStatus
+        self.state = state
     }
 }

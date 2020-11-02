@@ -90,6 +90,7 @@ public struct ExploreBookView: View {
     
     private func viewAppeared() {
         print("search appeard")
+        viewModel.prepareData()
     }
 }
 

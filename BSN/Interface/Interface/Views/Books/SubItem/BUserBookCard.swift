@@ -30,7 +30,7 @@ struct BUserBookCard: View, PopToable {
             label: {
                 VStack {
                     BBookCard(model: model) {
-                        BookStatusText(status: model.status)
+                        BookStatusText(status: model.status!)
                     }
                     
                     footer

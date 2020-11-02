@@ -185,9 +185,9 @@ struct MyBookDetailViewHeader: View {
                     Text(model.author)
                         .robotoLight(size: 14)
                     
-                    BookStatusText(status: model.status)
+                    BookStatusText(status: model.status!)
                     
-                    BookStateText(state: model.state)
+                    BookStateText(state: model.state!)
                 }
                 
                 Spacer()

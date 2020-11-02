@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		842C444F2547C240003C570D /* GoogleApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C444E2547C240003C570D /* GoogleApiRequest.swift */; };
 		842C44832548181A003C570D /* libSwiftyJSON.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 842C44822548181A003C570D /* libSwiftyJSON.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		846C40B3255013A30045BCD4 /* BusinessConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846C40B2255013A30045BCD4 /* BusinessConfigure.swift */; };
 		846EFE6125465DD600F01805 /* EUserBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EFE6025465DD600F01805 /* EUserBook.swift */; };
 		846EFE6525465E4900F01805 /* EBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EFE6425465E4900F01805 /* EBook.swift */; };
 		848E1052253EE32F003C89C8 /* ResourceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E1051253EE32F003C89C8 /* ResourceRequest.swift */; };
@@ -45,6 +46,7 @@
 		33B5D422159A3197CBD77847 /* Pods-Business.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Business.debug.xcconfig"; path = "Target Support Files/Pods-Business/Pods-Business.debug.xcconfig"; sourceTree = "<group>"; };
 		842C444E2547C240003C570D /* GoogleApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleApiRequest.swift; sourceTree = "<group>"; };
 		842C44822548181A003C570D /* libSwiftyJSON.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libSwiftyJSON.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		846C40B2255013A30045BCD4 /* BusinessConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessConfigure.swift; sourceTree = "<group>"; };
 		846EFE6025465DD600F01805 /* EUserBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EUserBook.swift; sourceTree = "<group>"; };
 		846EFE6425465E4900F01805 /* EBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EBook.swift; sourceTree = "<group>"; };
 		848E1051253EE32F003C89C8 /* ResourceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceRequest.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				84A0CC33254ACDA10074CBAC /* UserBookManager.swift */,
 				84A61CBB254C4CCD00B50FE8 /* ExchangeBookManager.swift */,
 				84A61CD7254D13E200B50FE8 /* NoteManager.swift */,
+				846C40B2255013A30045BCD4 /* BusinessConfigure.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 				84A61CD4254D10F700B50FE8 /* ENote.swift in Sources */,
 				84A61CBC254C4CCD00B50FE8 /* ExchangeBookManager.swift in Sources */,
 				848E1061253EEEEC003C89C8 /* BookRequest.swift in Sources */,
+				846C40B3255013A30045BCD4 /* BusinessConfigure.swift in Sources */,
 				848E1052253EE32F003C89C8 /* ResourceRequest.swift in Sources */,
 				84A61CD8254D13E200B50FE8 /* NoteManager.swift in Sources */,
 				84A61CB4254C461E00B50FE8 /* ExchangeBookRequest.swift in Sources */,

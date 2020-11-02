@@ -114,7 +114,7 @@ struct SubmitExchangeBookView: View {
     }
     
     func getBookStatus(isMyBook: Bool) -> BookStatus {
-        pasthoughtObj.needChangeUB.status
+        pasthoughtObj.needChangeUB.status!
     }
 }
 

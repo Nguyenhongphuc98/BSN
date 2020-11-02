@@ -9,20 +9,20 @@ import Combine
 
 class ExchangeBookRequest: ResourceRequest<EExchangeBook> {
     
-//    func fetchExchangeBooks(uid: String, publisher: PassthroughSubject<[ExchangeBook], Never>) {
-//        self.setPath(resourcePath: "search", params: ["uid":uid])
-//
-//        self.get { result in
-//
-//            switch result {
-//            case .failure:
-//                let message = "There was an error searching the user-books"
-//                print(message)
-//            case .success(let books):
-//                publisher.send(books)
-//            }
-//        }
-//    }
+    func fetchExchangeBooks(page: Int, per: Int, publisher: PassthroughSubject<[EExchangeBook], Never>) {
+        self.setPath(resourcePath: "newest", params: ["page":String(page), "per":String(per)])
+
+        self.get { result in
+
+            switch result {
+            case .failure:
+                let message = "There was an error fetch newest exchange book - page: \(page)"
+                print(message)
+            case .success(let ebs):
+                publisher.send(ebs)
+            }
+        }
+    }
     
     func saveExchangeBook(eb: EExchangeBook, publisher: PassthroughSubject<EExchangeBook, Never>) {
         self.resetPath()

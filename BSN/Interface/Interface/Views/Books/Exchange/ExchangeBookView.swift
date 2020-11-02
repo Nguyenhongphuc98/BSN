@@ -102,7 +102,7 @@ struct ExchangeBookSecondHeader: View {
                         .robotoLight(size: 14)
                     
                     if isCanChange {
-                        BookStatusText(status: model.status)
+                        BookStatusText(status: model.status!)
                     } else {
                         Text("Bạn không có cuốn sách này")
                             .robotoBold(size: 14)

@@ -13,9 +13,9 @@ class BUserBook: BBook {
     
     var ownerID: String?
     
-    var status: BookStatus
+    var status: BookStatus?
     
-    var state: BookState
+    var state: BookState?
     
     var statusDes: String
     
@@ -39,6 +39,22 @@ class BUserBook: BBook {
         self.ownerID = uid
         self.status = BookStatus(rawValue: status) ?? .new
         self.state = BookState(rawValue: state) ?? . available
+        self.title = title
+        self.author = author
+        self.cover = cover
+    }
+    
+    init(ubid: String? = nil, uid: String? = nil, ownerName: String? = nil, status: String? = nil, title: String, author: String, state: String? = nil, cover: String? = nil, des: String? = nil) {
+        
+        self.ownerID = uid
+        self.ownerName = ownerName
+        self.status = BookStatus(rawValue: status ?? "new")
+        self.state = BookState(rawValue: state ?? "available")
+        self.statusDes = des ?? ""
+        
+        super.init()
+        
+        self.id = ubid
         self.title = title
         self.author = author
         self.cover = cover

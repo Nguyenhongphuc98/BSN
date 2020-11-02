@@ -23,8 +23,8 @@ class UpdateUBViewModel: NetworkViewModel {
     func update(model: BUserBook) {
         isLoading = true
         let eub = EUserBook(id: model.id,
-                            status: model.status.rawValue,
-                            state: model.state.rawValue,
+                            status: model.status!.rawValue,
+                            state: model.state!.rawValue,
                             statusDes: model.statusDes
                             )
         userbookManager.updateUserBook(ub: eub)

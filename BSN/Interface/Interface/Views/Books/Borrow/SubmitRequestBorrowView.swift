@@ -109,7 +109,7 @@ struct BorrowBookHeader: View {
                         .robotoLight(size: 14)
                     
                     HStack {
-                        BookStatusText(status: model.status)
+                        BookStatusText(status: model.status!)
                         Spacer()
                     }
                     

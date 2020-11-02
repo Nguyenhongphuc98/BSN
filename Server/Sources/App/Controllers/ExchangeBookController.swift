@@ -86,6 +86,7 @@ struct ExchangeBookController: RouteCollection {
                 
                 var sqlStr = "SELECT b.title, b.cover, b.author, ub.status, ub.status_des, u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.user_id = '\(curentUID)' and ub.book_id = b.id"
                 
+                // state != new
                 if eb.secondUserBookID != nil {
                     // it mean get info to accept or decline
                     // rather than submit final step exchange for current transaction
@@ -107,7 +108,8 @@ struct ExchangeBookController: RouteCollection {
                         secondTitle: u2 != nil ? u2!.title : nil,
                         secondAuthor: u2 != nil ? u2!.author : nil,
                         firstOwnerName: u1!.ownerName,
-                        secondStatus: u2 != nil ? u2!.status : nil
+                        secondStatus: u2 != nil ? u2!.status : nil,
+                        state: eb.state
                     )
                 }
             }

@@ -9,7 +9,7 @@ import SwiftUI
 import Business
 import Combine
 
-class SearchBookViewModel: ObservableObject {
+class SearchBookViewModel: NetworkViewModel {
     
     @Published var searchText: String
     
@@ -27,13 +27,15 @@ class SearchBookViewModel: ObservableObject {
     //Cancellable
     var searchCancellables = Set<AnyCancellable>()
     
-    init() {
+    override init() {
         searchBooks = []
         searchText = ""
         isSearching = false
         isfocus = false
         processText = ""
         bookManager = BookManager.shared
+        
+        super.init()
         
         setupReceiveSearchBook()
     }
