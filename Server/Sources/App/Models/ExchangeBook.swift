@@ -52,3 +52,19 @@ final class ExchangeBook: Model {
 }
 
 extension ExchangeBook: Content { }
+
+
+struct NewestEB: Content {
+    
+    var needChangeTitle: String
+    
+    var needChangeAuthor: String
+    
+    var needChangeCover: String
+    
+    var location: String
+    
+    var wantChangeTitle: String
+    
+    var wantChangeAuthor: String
+}
