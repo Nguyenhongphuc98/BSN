@@ -71,11 +71,11 @@ struct UpdateUserbook: Content {
 // MARK: - SearchUserBook
 struct SearchUserBook: Content {
     
-    var id: String
+    var id: String?
     
-    var userID: String
+    var userID: String?
     
-    var bookID: String
+    var bookID: String?
     
     var cover: String?
     
@@ -83,11 +83,13 @@ struct SearchUserBook: Content {
     
     var author: String
     
-    var status: String
+    var status: String?
     
-    var state: String
+    var state: String?
     
     var description: String?
     
     var statusDes: String?
+    
+    var ownerName: String?
 }
