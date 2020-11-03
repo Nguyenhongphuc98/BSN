@@ -43,3 +43,14 @@ class BExchangeBook: ObservableObject, Identifiable {
         self.distance = getDistanceFromLatLonInKm(lat1: la1, lon1: lo1)
     }
 }
+
+extension BExchangeBook: Hashable {
+    
+    static func == (lhs: BExchangeBook, rhs: BExchangeBook) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        return hasher.combine(self.id)
+    }
+}

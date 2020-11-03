@@ -51,6 +51,7 @@ class ExploreBookViewModel: SearchBookViewModel {
                     if !ebs.isEmpty {
                         ebs.forEach { (eb) in
                             let model = BExchangeBook(
+                                id: eb.id,
                                 firstTitle: eb.firstTitle!,
                                 firstAuthor: eb.firstAuthor!,
                                 firstCover: eb.firstCover!,
@@ -58,7 +59,7 @@ class ExploreBookViewModel: SearchBookViewModel {
                                 sencondTitle: eb.secondTitle!,
                                 secondAuthor: eb.secondAuthor!
                             )
-                            self.exchangeBooks.append(model)
+                            self.exchangeBooks.appendUnique(item: model)
                         }
                     }
                 }

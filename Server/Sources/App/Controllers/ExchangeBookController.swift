@@ -62,7 +62,7 @@ struct ExchangeBookController: RouteCollection {
         
         let offset = page * per
         
-        let sqlQuery = SQLQueryString("SELECT bu.title as \"firstTitle\", bu.author as \"firstAuthor\", bu.cover as \"firstCover\", u.location, b.title as \"secondTitle\", b.author as \"secondAuthor\" FROM exchange_book as ex, user_book as ub, public.user as u, book as bu, book as b where ex.first_user_book_id = ub.id and ub.user_id = u.id and ex.exchange_book_id = b.id and ub.book_id = bu.id order by ex.created_at desc limit \(raw: per.description) offset \(raw: offset.description)")
+        let sqlQuery = SQLQueryString("SELECT ex.id, bu.title as \"firstTitle\", bu.author as \"firstAuthor\", bu.cover as \"firstCover\", u.location, b.title as \"secondTitle\", b.author as \"secondAuthor\" FROM exchange_book as ex, user_book as ub, public.user as u, book as bu, book as b where ex.first_user_book_id = ub.id and ub.user_id = u.id and ex.exchange_book_id = b.id and ub.book_id = bu.id order by ex.created_at desc limit \(raw: per.description) offset \(raw: offset.description)")
         
         let db = req.db as! SQLDatabase
         return db.raw(sqlQuery)
