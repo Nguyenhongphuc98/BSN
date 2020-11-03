@@ -7,12 +7,14 @@
 
 import SwiftUI
 
-// Submit request exchange book View
+// Submit request exchange book View on available transaction
 struct ExchangeBookView: View {
     
     @StateObject var viewModel: ExchangeBookViewModel = ExchangeBookViewModel()
     
     @Environment(\.presentationMode) var presentationMode
+    
+    var ebID: String
     
     var body: some View {
         ScrollView(showsIndicators: false, content: {
@@ -53,14 +55,16 @@ struct ExchangeBookView: View {
             }
         })
         .padding()
-        //.background(Color(.secondarySystemBackground))
+        .embededLoading(isLoading: $viewModel.isLoading)
+        .alert(isPresented: $viewModel.showAlert, content: alert)
         .navigationBarTitle("Hoàn tất đổi sách", displayMode: .inline)
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
+        .onAppear(perform: viewAppeared)
     }
     
-    var backButton: some View {
+    private var backButton: some View {
         Button {
             dismiss()
         } label: {
@@ -69,14 +73,41 @@ struct ExchangeBookView: View {
         }
     }
     
-    func dismiss() {
+    func alert() -> Alert {
+        if viewModel.resourceInfo == .success {
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                dismissButton: .default(Text("OK")) {
+                    dismiss()
+                })
+        } else {
+            
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                primaryButton: .default(Text("Thử lại")) {
+                    // depen load or save
+                },
+                secondaryButton: .cancel(Text("Huỷ bỏ")) {
+                    dismiss()
+                })
+        }
+    }
+    
+    private func dismiss() {
         presentationMode.wrappedValue.dismiss()
+    }
+    
+    private func viewAppeared() {
+        print("Exchange book detail - submit available transaction appeared")
+        viewModel.prepareData(ebID: ebID)
     }
 }
 
 struct ExchangeBookJustVView_Previews: PreviewProvider {
     static var previews: some View {
-        ExchangeBookView()
+        ExchangeBookView(ebID: "uuid")
     }
 }
 
@@ -110,9 +141,7 @@ struct ExchangeBookSecondHeader: View {
                     }
                 }
                 
-                Image(model.cover!, bundle: interfaceBundle)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                BSNImage(urlString: model.cover, tempImage: "book_cover")
                     .frame(width: 80, height: 100)
                     .background(Color.white)
                     .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))

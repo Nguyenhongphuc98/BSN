@@ -67,7 +67,7 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
                         let resources  = try! JSONDecoder().decode([ResourceType].self, from: jsonData)
                         completion(.success(resources))
                     } else {
-                        let resources  = try JSONDecoder().decode(ResourceType.self, from: jsonData)
+                        let resources  = try! JSONDecoder().decode(ResourceType.self, from: jsonData)
                         completion(.success([resources]))
                     }
                 }

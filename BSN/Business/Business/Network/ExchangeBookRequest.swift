@@ -24,6 +24,22 @@ class ExchangeBookRequest: ResourceRequest<EExchangeBook> {
         }
     }
     
+    func fetchExchangeBook(ebid: String, publisher: PassthroughSubject<EExchangeBook, Never>) {
+        self.setPath(resourcePath: "detail/\(ebid)")
+
+        self.get(isAll: false) { result in
+
+            switch result {
+            case .failure:
+                let message = "There was an error fetch exchange book - id: \(ebid)"
+                print(message)
+                publisher.send(EExchangeBook())
+            case .success(let ebs):
+                publisher.send(ebs[0])
+            }
+        }
+    }
+    
     func saveExchangeBook(eb: EExchangeBook, publisher: PassthroughSubject<EExchangeBook, Never>) {
         self.resetPath()
         

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Business
 
 class BookDetailViewModel: ObservableObject {
     
@@ -13,9 +14,11 @@ class BookDetailViewModel: ObservableObject {
     
     var reviews: [Rating]
     
+    private var bookReviewManager: BookReviewManager
+    
     init() {
         model = BBookDetail()
-        reviews = [Rating(), Rating()]
+        reviews = []
     }
     
     func addNewRating(rate: Rating) {

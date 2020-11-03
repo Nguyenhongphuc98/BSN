@@ -17,7 +17,7 @@ struct ExchangeBookCell: View {
     var body: some View {
         HStack {
             NavigationLink(
-                destination: ExchangeBookView(),
+                destination: SubmitExchangeBookView(),
                 isActive: $nav,
                 label: {
                     EmptyView()

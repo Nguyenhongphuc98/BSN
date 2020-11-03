@@ -79,20 +79,19 @@ struct ExchangeBookController: RouteCollection {
             .flatMap { eb in
             
                 let db = req.db as! SQLDatabase
-                let ub1Query = SQLQueryString("SELECT b.title, b.cover, b.author, ub.status, ub.status_des, u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.id = '\(raw: eb.firstUserBookID!.uuidString)'")
+                let ub1Query = SQLQueryString("SELECT b.title, b.cover, b.author, ub.status, ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.id = '\(raw: eb.firstUserBookID!.uuidString)'")
                 
                 let ub1 =  db.raw(ub1Query)
                     .first(decoding: SearchUserBook.self)
                 
-                var sqlStr = "SELECT b.title, b.cover, b.author, ub.status, ub.status_des, u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.user_id = '\(curentUID)' and ub.book_id = b.id"
+                var sqlStr = "SELECT b.title, b.cover, b.author, ub.status, ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.user_id = '\(curentUID)' and ub.book_id = b.id"
                 
                 // state != new
                 if eb.secondUserBookID != nil {
                     // it mean get info to accept or decline
                     // rather than submit final step exchange for current transaction
-                    sqlStr = "SELECT b.title, b.cover, b.author, ub.status, ub.status_des, u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.id = '\(eb.secondUserBookID!.uuidString)'"
+                    sqlStr = "SELECT b.title, b.cover, b.author, ub.status, ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.id = '\(eb.secondUserBookID!.uuidString)'"
                 }
-                
                 
                 let ub2Query = SQLQueryString(sqlStr)
                 
@@ -108,7 +107,11 @@ struct ExchangeBookController: RouteCollection {
                         secondTitle: u2 != nil ? u2!.title : nil,
                         secondAuthor: u2 != nil ? u2!.author : nil,
                         firstOwnerName: u1!.ownerName,
+                        firstStatus: u1!.status,
+                        firstStatusDes: u1!.statusDes,
                         secondStatus: u2 != nil ? u2!.status : nil,
+                        secondStatusDes: u2!.statusDes,
+                        secondCover: u2!.cover,
                         state: eb.state
                     )
                 }

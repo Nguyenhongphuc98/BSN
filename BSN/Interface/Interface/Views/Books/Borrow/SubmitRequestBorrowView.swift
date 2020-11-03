@@ -92,9 +92,7 @@ struct BorrowBookHeader: View {
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 20) {
-                Image(model.cover!, bundle: interfaceBundle)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                BSNImage(urlString: model.cover, tempImage: "book_cover")
                     .frame(width: 80, height: 100)
                     .background(Color.white)
                     .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))

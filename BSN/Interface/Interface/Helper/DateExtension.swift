@@ -14,10 +14,13 @@ extension Date {
         return dateformat.string(from: self)
     }
     
-    static func getDate(dateStr: String) -> Date {
+    static func getDate(dateStr: String? = nil) -> Date {
+        guard let str = dateStr else {
+            return Date()
+        }
         let dateFormatter = DateFormatter()
         //dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        return dateFormatter.date(from: dateStr)!
+        return dateFormatter.date(from: str)!
     }
 }

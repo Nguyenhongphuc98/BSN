@@ -21,4 +21,31 @@ class BExchangeBookFull: BExchangeBook {
         )
         super.init()
     }
+    
+    // init for prepare submit with available transaction
+    init(id: String, firstTitle: String, firstAuthor: String, firstCover: String? = "book_cover", firstOwner: String, firstStatusDes: String, firstStatus: String, secondStatusDes: String?, secondStatus: String?, sencondTitle: String, secondAuthor: String, secondCover: String?) {
+        
+        transactionInfo = BTransactionInfo(
+            exchangeDate: nil,
+            numDay: nil,
+            adress: "",
+            message: "",
+            progess: .new
+        )
+        
+        super.init(
+            id: id,
+            firstTitle: firstTitle,
+            firstAuthor: firstAuthor,
+            firstCover: firstCover,
+            firstOwner: firstOwner,
+            firstStatusDes: firstStatusDes,
+            firstStatus: firstStatus,
+            secondStatusDes: secondStatusDes,
+            secondStatus: secondStatus,
+            secondTitle: sencondTitle,
+            secondAuthor: secondAuthor,
+            secondCover: secondCover
+        )
+    }
 }

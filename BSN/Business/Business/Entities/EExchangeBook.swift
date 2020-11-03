@@ -41,10 +41,14 @@ public class EExchangeBook: Codable {
     // Should fill when view detail
     public var firstOwnerName: String?
     
+    public var firstStatus: String?
+    
     public var secondStatus: String?
     
+    public var secondCover: String?
+    
     public init() {
-        
+        self.id = "undefine"
         self.firstUserBookID = "undefine"
         self.exchangeBookID = "undefine"
         self.state = "new"

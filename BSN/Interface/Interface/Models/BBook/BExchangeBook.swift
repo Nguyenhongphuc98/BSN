@@ -35,12 +35,40 @@ class BExchangeBook: ObservableObject, Identifiable {
         self.id = id
         needChangeBook = BUserBook(title: firstTitle, author: firstAuthor, cover: firstCover)
         wantChangeBook = BUserBook(title: sencondTitle, author: secondAuthor)
+        distance = 0
+        self.distance = caculateDistance(rawLocation: partnerLocation)
+    }
+    
+    // init for prepare submit with available transaction
+    init(id: String, firstTitle: String, firstAuthor: String, firstCover: String?, firstOwner: String, firstStatusDes: String, firstStatus: String, secondStatusDes: String?, secondStatus: String?, secondTitle: String, secondAuthor: String, secondCover: String?) {
+
+        self.id = id
+        needChangeBook = BUserBook(
+            ownerName: firstOwner,
+            status: firstStatus,
+            title: firstTitle,
+            author: firstAuthor,
+            cover: firstCover,
+            des: firstStatusDes
+        )
+        wantChangeBook = BUserBook(
+            status: secondStatus,
+            title: secondTitle,
+            author: secondAuthor,
+            cover: secondCover,
+            des: secondStatusDes
+        )
         
-        let los = partnerLocation.split(separator: "-")
+        self.distance = 0
+    }
+    
+    // Raw location "la-lo-name..."
+    func caculateDistance(rawLocation: String) -> Float {
+        let los = rawLocation.split(separator: "-")
         let la1 = Float(los[0])!
         let lo1 = Float(los[1])!
         
-        self.distance = getDistanceFromLatLonInKm(lat1: la1, lon1: lo1)
+        return getDistanceFromLatLonInKm(lat1: la1, lon1: lo1)
     }
 }
 

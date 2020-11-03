@@ -16,7 +16,7 @@ struct BExchangeBookCard: View {
     var body: some View {
         HStack(alignment: .center) {
             NavigationLink(
-                destination: ExchangeBookView(),
+                destination: ExchangeBookView(ebID: model.id!),
                 isActive: $nav,
                 label: {
                     EmptyView()
