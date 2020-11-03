@@ -6,6 +6,8 @@
 //
 
 import Vapor
+import Fluent
+import SQLKit
 
 struct BookReviewController: RouteCollection {
     
@@ -13,9 +15,11 @@ struct BookReviewController: RouteCollection {
         let bookReviews = routes.grouped("api" ,"v1", "bookReviews")
         bookReviews.get(use: index)
         bookReviews.post(use: create)
-        bookReviews.group(":ID") { user in
-            user.delete(use: delete)
+        bookReviews.group(":ID") { group in
+            group.delete(use: delete)
         }
+        
+        bookReviews.get("search", use: search)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[BookReview]> {
@@ -32,5 +36,18 @@ struct BookReviewController: RouteCollection {
             .unwrap(or: Abort(.notFound))
             .flatMap { $0.delete(on: req.db) }
             .transform(to: .ok)
+    }
+    
+    func search(req: Request) throws -> EventLoopFuture<[GetBookReview]> {
+        
+        guard let bid: String = req.query["bid"] else {
+            throw Abort(.badRequest)
+        }
+        
+        let sqlQuery = SQLQueryString("select br.id, br.user_id as \"userID\", br.book_id as \"bookID\", br.title, br.description, br.character_rating as \"characterRating\", br.info_rating as \"infoRating\", br.target_rating as \"targetRating\", br.write_rating as \"writeRating\", br.created_at as \"createdAt\", u.avatar from book_review as br, public.user as u where br.book_id = '\(raw: bid)' and br.user_id = u.id")
+        
+        let db = req.db as! SQLDatabase
+        return db.raw(sqlQuery)
+            .all(decoding: GetBookReview.self)
     }
 }

@@ -72,3 +72,14 @@ class Rating: Identifiable {
         }
     }
 }
+
+extension Rating: Hashable {
+    
+    static func == (lhs: Rating, rhs: Rating) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        return hasher.combine(self.id)
+    }
+}

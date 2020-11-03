@@ -11,12 +11,13 @@ import Combine
 
 class SearchBookViewModel: NetworkViewModel {
     
-    @Published var searchText: String
+    //@Published var searchText: String
+    var searchText: String
     
     //@Published var searchBooks: [Book]
     @Published var searchBooks: [BBook]
     
-    @Published var isSearching: Bool
+    //@Published var isSearching: Bool
     
     @Published var isfocus: Bool
     
@@ -25,12 +26,12 @@ class SearchBookViewModel: NetworkViewModel {
     private var bookManager: BookManager
     
     //Cancellable
-    var searchCancellables = Set<AnyCancellable>()
+    //var cancellables = Set<AnyCancellable>()
     
     override init() {
         searchBooks = []
         searchText = ""
-        isSearching = false
+        //isSearching = false
         isfocus = false
         processText = ""
         bookManager = BookManager.shared
@@ -40,10 +41,13 @@ class SearchBookViewModel: NetworkViewModel {
         setupReceiveSearchBook()
     }
     
-    func searchBook() {
+    func searchBook(text: String) {
+        searchText = text
         // Ignore any request when searching
-        if !isSearching {
-            isSearching = true
+//        if !isSearching {
+//            isSearching = true
+        if !isLoading {
+            isLoading = true
             
             // Make a lacenty for user type too fast
             DispatchQueue.global().asyncAfter(deadline: .now() + 0.25) { [self] in
@@ -51,11 +55,13 @@ class SearchBookViewModel: NetworkViewModel {
                 if searchText == "" {
                     if Thread.isMainThread {
                         searchBooks = []
-                        isSearching = false
+                        //isSearching = false
+                        isLoading = false
                     } else {
                         DispatchQueue.main.sync {
                             searchBooks = []
-                            isSearching = false
+                            //isSearching = false
+                            isLoading = false
                         }
                     }
                     return
@@ -91,16 +97,18 @@ class SearchBookViewModel: NetworkViewModel {
                         BBook(id: book.id, title: book.title, author: book.author, cover: book.cover)
                     }
                     
-                    self.isSearching = false
+                    //self.isSearching = false
+                    self.isLoading = false
+                    self.objectWillChange.send()
                 }
                 
                 // This result is not lastest key
                 // Try to continue searching
                 if self.processText != self.searchText {
-                    self.searchBook()
+                    self.searchBook(text: self.searchText)
                 }
             }
-            .store(in: &searchCancellables)
+            .store(in: &cancellables)
         print("Finish setup search book receive")
     }
     

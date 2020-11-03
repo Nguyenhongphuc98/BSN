@@ -32,12 +32,14 @@ struct SearchAddBookView: View {
     
     @EnvironmentObject private var pasthoughtObj: PassthroughtEB
     
+    @State var searchText: String = ""
+    
     public var body: some View {
         VStack {
-            SearchBar(isfocus: $viewModel.isfocus, searchText: $viewModel.searchText)
+            SearchBar(isfocus: $viewModel.isfocus, searchText: $searchText)
                 .padding(.top, 20)
-                .onChange(of: viewModel.searchText) { _ in
-                    viewModel.searchBook()
+                .onChange(of: searchText) { _ in
+                    viewModel.searchBook(text: searchText)
                 }
             
             searchContent
@@ -60,7 +62,7 @@ struct SearchAddBookView: View {
     
     private var searchContent: some View {
         Group {
-            if viewModel.isSearching {
+            if viewModel.isLoading {
                 Loading()
                     .padding(.top, 100)
             } else {

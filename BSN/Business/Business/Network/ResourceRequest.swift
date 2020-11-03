@@ -53,7 +53,7 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
     // Get all data from base url
     func get(isAll: Bool = true, completion: @escaping (GetResourcesRequest<ResourceType>) -> Void) {
         //let desUrl = url ?? self.resourceURL
-        
+        print("url: \(resourceURL.absoluteURL)")
         let dataTask = URLSession.shared
             .dataTask(with: resourceURL) { data, _, _ in
                 

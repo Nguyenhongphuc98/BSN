@@ -21,16 +21,16 @@ public struct ExploreBookView: View {
     
     @State private var searchFound: Bool = false
     
-    public init() {
-        
-    }
+    @State private var searchText: String = ""
+    
+    public init() { }
     
     public var body: some View {
         VStack {
-            SearchBar(isfocus: $viewModel.isfocus, searchText: $viewModel.searchText)
+            SearchBar(isfocus: $viewModel.isfocus, searchText: $searchText)
                 .padding(.top, 20)
-                .onChange(of: viewModel.searchText) { _ in
-                    viewModel.searchBook()
+                .onChange(of: searchText) { _ in
+                    viewModel.searchBook(text: searchText)
                 }
             
                 if viewModel.isfocus {
@@ -52,8 +52,6 @@ public struct ExploreBookView: View {
             
             TabView(selection: self.$selectedSegment){
                 
-//                BookGrid(models: viewModel.books)
-//                    .tag(0)
                 BBookGrid(models: viewModel.suggestBooks, style: .suggestbook)
                 
                 ExchangeBookList(models: viewModel.exchangeBooks)
@@ -65,13 +63,13 @@ public struct ExploreBookView: View {
     
     private var viewSearchMode: some View {
         Group {
-            if viewModel.isSearching {
+            if viewModel.isLoading {
                 Loading()
                     .padding(.top, 100)
             } else {
                 ForEach(viewModel.searchBooks) { book in
                     NavigationLink(
-                        destination: BookDetailView(),
+                        destination: BookDetailView(bookID: book.id!),
                         label: {
                             SearchBookItem(model: book)
                         })

@@ -13,7 +13,7 @@ struct SuggestBookCard: View {
     
     var body: some View {
         NavigationLink(
-            destination: BookDetailView(),
+            destination: BookDetailView(bookID: model.id!),
             label: {
                 BBookCard(model: model) {
                     HStack {

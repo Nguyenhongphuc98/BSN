@@ -21,6 +21,8 @@ struct BookDetailView: View {
     
     @State var showExchangeBook: Bool = false
     
+    var bookID: String
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             NavigationLink(
@@ -61,6 +63,9 @@ struct BookDetailView: View {
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
+        .embededLoading(isLoading: $viewModel.isLoading)
+        .alert(isPresented: $viewModel.showAlert, content: alert)
+        .onAppear(perform: viewAppeared)
     }
     
     private var basicInfo: some View {
@@ -207,6 +212,7 @@ struct BookDetailView: View {
                     }
                 }
                 .padding(.leading, 5)
+                .padding(.vertical)
             },
             label: {
                 Text("Có tất cả \(viewModel.reviews.count) đánh giá")
@@ -248,10 +254,41 @@ struct BookDetailView: View {
                 .foregroundColor(.gray)
         }
     }
+    
+    func alert() -> Alert {
+        if viewModel.resourceInfo == .success {
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                dismissButton: .default(Text("OK")) {
+                    dismiss()
+                })
+        } else {
+            
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                primaryButton: .default(Text("Thử lại")) {
+                    // depen load or save
+                },
+                secondaryButton: .cancel(Text("Huỷ bỏ")) {
+                    dismiss()
+                })
+        }
+    }
+    
+    private func dismiss() {
+        presentationMode.wrappedValue.dismiss()
+    }
+    
+    private func viewAppeared() {
+        print("Book detail appeared")
+        viewModel.prepareData(bid: bookID)
+    }
 }
 
 struct BookDetailBiew_Previews: PreviewProvider {
     static var previews: some View {
-        BookDetailView()
+        BookDetailView(bookID: "bid")
     }
 }

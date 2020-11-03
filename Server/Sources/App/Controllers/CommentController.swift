@@ -13,9 +13,11 @@ struct CommentController: RouteCollection {
         let comments = routes.grouped("api", "v1", "comments")
         comments.get(use: index)
         comments.post(use: create)
-        comments.group(":commentID") { user in
-            user.delete(use: delete)
+        comments.group(":commentID") { group in
+            group.delete(use: delete)
         }
+        
+        //comments.get("search", use: search)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[Comment]> {
@@ -33,4 +35,8 @@ struct CommentController: RouteCollection {
             .flatMap { $0.delete(on: req.db) }
             .transform(to: .ok)
     }
+    
+//    func search(req: Request) throws -> EventLoopFuture<[Comment]> {
+//        return Comment.query(on: req.db).all()
+//    }
 }

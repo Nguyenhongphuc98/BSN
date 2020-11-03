@@ -15,6 +15,8 @@ public struct ProfileView: View {
     
     @EnvironmentObject var root: AppManager
     
+    @EnvironmentObject var navState: NavigationState
+    
     /// User will display on profile
     // If value is nil, get current userinfo
     var userID: String?
@@ -118,7 +120,9 @@ public struct ProfileView: View {
             BBookGrid(models: viewModel.books, style: .mybook)
             
             NavigationLink(
-                destination: SearchAddBookView(),
+                destination: SearchAddBookView()
+                    .environmentObject(navState)
+                    .environmentObject(PassthroughtEB(userBook: BUserBook())), // just temp
                 label: {
                     
                     Image(systemName: "plus")

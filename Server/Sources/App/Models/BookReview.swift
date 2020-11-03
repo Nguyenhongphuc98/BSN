@@ -49,3 +49,29 @@ final class BookReview: Model {
 }
 
 extension BookReview: Content { }
+
+struct GetBookReview: Content {
+    
+    var id: String?
+    
+    var userID: String?
+    
+    var bookID: String?
+    
+    var title: String
+    
+    var description: String?
+    
+    var writeRating: Int
+    
+    var characterRating: Int
+    
+    var targetRating: Int
+    
+    var infoRating: Int
+    
+    var createdAt: Date?
+    
+    // Addition part
+    var avatar: String?
+}
