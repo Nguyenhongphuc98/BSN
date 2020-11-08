@@ -29,10 +29,10 @@ public class BookReviewManager {
         networkRequest.fetchBookReviews(bid: bid, publisher: getReviewsPublisher)
     }
     
-//    public func saveReview(review: EBookReview) {
-//        networkRequest.saveNote(note: note, publisher: changePublisher)
-//    }
-//
+    public func saveReview(review: EBookReview) {
+        networkRequest.saveBookReview(bookReview: review, publisher: changePublisher)
+    }
+
 //    public func deleteReview(reivewID: String) {
 //        networkRequest.deleteNote(noteID: noteID)
 //    }

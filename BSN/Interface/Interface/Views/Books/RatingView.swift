@@ -16,9 +16,11 @@ struct RatingView: View {
     
     @StateObject var viewModel: RatingViewModel = RatingViewModel()
     
-    var didRating: ((Rating) -> Void)?
+    var didRating: (() -> Void)?
     
     @Environment(\.presentationMode) var presentationMode
+    
+    @State var lastMessage: String = ""
     
     var body: some View {
         VStack(spacing: 20) {
@@ -49,13 +51,46 @@ struct RatingView: View {
                 .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color._primary))
             
             CoreMessageEditor(placeHolder: "Để lại đánh giá của bạn tại đây") { (message) in
-                viewModel.didRating(message: message, bookID: bookID) { (rate) in
-                    didRating?(rate)
-                    presentationMode.wrappedValue.dismiss()
-                }
+                lastMessage = message
+                viewModel.didRating(message: lastMessage, bookID: bookID)
             }
         }
         .padding()
+        .embededLoading(isLoading: $viewModel.isLoading)
+        .alert(isPresented: $viewModel.showAlert, content: alert)
+        .onAppear(perform: viewAppeared)
+    }
+    
+    func alert() -> Alert {
+        if viewModel.resourceInfo == .success {
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                dismissButton: .default(Text("OK")) {
+                    didRating?()
+                    dismiss()
+                })
+        } else {
+            
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                primaryButton: .default(Text("Thử lại")) {
+                    // it actualy just save
+                    viewModel.didRating(message: lastMessage, bookID: bookID)
+                },
+                secondaryButton: .cancel(Text("Huỷ bỏ")) {
+                    dismiss()
+                })
+        }
+    }
+    
+    private func dismiss() {
+        presentationMode.wrappedValue.dismiss()
+    }
+    
+    private func viewAppeared() {
+        print("Book review appeared")
     }
 }
 

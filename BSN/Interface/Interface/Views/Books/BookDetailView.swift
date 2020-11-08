@@ -240,8 +240,8 @@ struct BookDetailView: View {
         )
         .shadow(radius: 2, y: -2)
         .sheet(isPresented: $showRatingView, content: {
-            RatingView(bookName: viewModel.model.title, bookID: viewModel.model.id!) { rating in
-                viewModel.addNewRating(rate: rating)
+            RatingView(bookName: viewModel.model.title, bookID: viewModel.model.id!) {
+                viewModel.reloadReviews()
             }
         })
     }

@@ -25,4 +25,26 @@ class BookReviewRequest: ResourceRequest<EBookReview> {
             }
         }
     }
+    
+    func saveBookReview(bookReview: EBookReview, publisher: PassthroughSubject<EBookReview, Never>) {
+        self.resetPath()
+        
+        self.save(bookReview) { result in
+            self.processChangeBookReviewResult(result: result, method: "save", publisher: publisher)
+        }
+    }
+    
+    func processChangeBookReviewResult(result: SaveResult<EBookReview>, method: String, publisher: PassthroughSubject<EBookReview, Never>) {
+        
+        switch result {
+        case .failure:
+            let message = "There was an error \(method) book review"
+            print(message)
+            let br = EBookReview()
+            publisher.send(br)
+            
+        case .success(let br):
+            publisher.send(br)
+        }
+    }
 }

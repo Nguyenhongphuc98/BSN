@@ -27,7 +27,7 @@ class Rating: Identifiable {
     var ratingBookID: String
     
     init() {
-        id = UUID().uuidString
+        id = "undefine"
         authorPhoto = fakeAvatars.randomElement()!
         authorID = UUID().uuidString
         title = "Sách hay nên đọc"
@@ -37,8 +37,9 @@ class Rating: Identifiable {
         ratingBookID = UUID().uuidString
     }
     
-    init(authorPhoto: String, authorID: String, title: String, rating: Float, content: String, bookID: String) {
-        self.id = UUID().uuidString
+    init(id: String? = nil, authorPhoto: String, authorID: String, title: String, rating: Float, content: String, bookID: String) {
+
+        self.id = id ?? "undefine"
         self.authorID = authorID
         self.authorPhoto = authorPhoto
         self.title = title

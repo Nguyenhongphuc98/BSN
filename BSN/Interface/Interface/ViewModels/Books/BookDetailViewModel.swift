@@ -33,6 +33,10 @@ class BookDetailViewModel: NetworkViewModel {
         bookReviewManager.getReviews(bid: bid)
     }
     
+    func reloadReviews() {
+        bookReviewManager.getReviews(bid: model.id!)
+    }
+    
     func addNewRating(rate: Rating) {
         // Update UI with new rating
         reviews.append(rate)
@@ -54,6 +58,7 @@ class BookDetailViewModel: NetworkViewModel {
                     if !brs.isEmpty {
                         brs.forEach { (br) in
                             let model = Rating(
+                                id: br.id,
                                 authorPhoto: br.avatar!,
                                 authorID: br.userID!,
                                 title: br.title,
