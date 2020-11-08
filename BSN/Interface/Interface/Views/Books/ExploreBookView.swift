@@ -67,13 +67,15 @@ public struct ExploreBookView: View {
                 Loading()
                     .padding(.top, 100)
             } else {
-                ForEach(viewModel.searchBooks) { book in
-                    NavigationLink(
-                        destination: BookDetailView(bookID: book.id!),
-                        label: {
-                            SearchBookItem(model: book)
-                        })
-                        .padding(.horizontal)
+                ScrollView {
+                    ForEach(viewModel.searchBooks) { book in
+                        NavigationLink(
+                            destination: BookDetailView(bookID: book.id!),
+                            label: {
+                                SearchBookItem(model: book)
+                            })
+                            .padding(.horizontal)
+                    }
                 }
                 
                 if viewModel.searchBooks.isEmpty {

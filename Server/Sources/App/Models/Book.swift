@@ -31,9 +31,6 @@ final class Book: Model {
     @Field(key: "category_id")
     var categoryID: Category.IDValue
     
-//    @Parent(key: "category_id")
-//    var category: Category
-    
     @Field(key: "isbn")
     var isbn: String
     
@@ -58,54 +55,88 @@ final class Book: Model {
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
     
+    // add in second step
+    @OptionalField(key: "num_review")
+    var numReview: Int?
+    
     init() { }
 }
 
 // MARK: - Extension
 extension Book: Content { }
 
-extension Book {
-    
-    public func toSearchBook() -> SearchBook {
-        SearchBook(
-            id: self.id,
-            title: self.title,
-            author: self.author,
-            cover: self.cover
-        )
-    }
-    
-    public func toBookDetail(numRead: Int, numAvailable: Int) -> BookDetail {
-        BookDetail(
-            id: self.id,
-            book: self,
-            numReading: numRead,
-            numAvailable: numAvailable
-        )
-    }
-}
+//extension Book {
+//    
+//    public func toSearchBook() -> SearchBook {
+//        SearchBook(
+//            id: self.id,
+//            title: self.title,
+//            author: self.author,
+//            cover: self.cover
+//        )
+//    }
+//    
+//    public func toBookDetail(numRead: Int, numAvailable: Int) -> BookDetail {
+//        BookDetail(
+//            id: self.id,
+//            book: self,
+//            numReading: numRead,
+//            numAvailable: numAvailable
+//        )
+//    }
+//}
 
 
 // MARK: - Custom model
-struct SearchBook: Content {
+//struct SearchBook: Content {
+//
+//    var id: Book.IDValue?
+//
+//    var title: String
+//
+//    var author: String
+//
+//    var cover: String?
+//}
+
+
+struct GetBook: Content {
     
-    var id: Book.IDValue?
+    // Any request should have this properties
+    var id: String?
     
     var title: String
     
     var author: String
     
-    var cover: String?
-}
-
-
-struct BookDetail: Content {
+    var cover:  String?
     
-    var id: Book.IDValue?
+    //====================
     
-    var book: Book
+    var description: String?
     
-    var numReading: Int
+    var categoryID: String?
     
-    var numAvailable: Int
+    var isbn: String?
+    
+    var avgRating: Float?
+    
+    var writeRating: Float?
+    
+    var characterRating: Float?
+    
+    var targetRating: Float?
+    
+    var infoRating: Float?
+    
+    var confirmed: Bool?
+    
+    var createdAt: Date?
+    
+    var numReview: Int?
+    
+    // Addition
+    var numReading: Int?
+    
+    var numAvailable: Int?
 }

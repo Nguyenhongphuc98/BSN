@@ -6,19 +6,37 @@
 //
 
 import SwiftUI
+import Business
 
 class BBookDetail: BBook {
     
-    var numReading: Int
+    @Published var numReading: Int
     
-    var numAvailable: Int
+    @Published var numAvailable: Int
     
-    var ratingCriteria: RatingCriteria
+    @Published var ratingCriteria: RatingCriteria
     
     override init() {
-        numReading = 10
-        numAvailable = 20
+        numReading = 0
+        numAvailable = 0
         ratingCriteria = RatingCriteria()
         super.init()
+    }
+    
+    init(book: EBook) {
+        numReading = book.numReading ?? 0
+        numAvailable = book.numAvailable ?? 0
+        ratingCriteria = RatingCriteria()
+        super.init()
+        
+        ratingCriteria.writing = book.writeRating ?? 0
+        ratingCriteria.target = book.targetRating ?? 0
+        ratingCriteria.character = book.characterRating ?? 0
+        ratingCriteria.info = book.infoRating ?? 0
+        
+        title = book.title
+        author = book.author
+        cover = book.cover
+        description = book.description
     }
 }

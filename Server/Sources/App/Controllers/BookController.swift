@@ -52,7 +52,7 @@ struct BookController: RouteCollection {
     }
     
     // Advance function
-    func searchAuthorandTitle(req: Request) throws -> EventLoopFuture<[SearchBook]> {
+    func searchAuthorandTitle(req: Request) throws -> EventLoopFuture<[GetBook]> {
         guard let term: String = req.query["term"] else {
             throw Abort(.badRequest)
         }
@@ -66,11 +66,16 @@ struct BookController: RouteCollection {
             .range(0..<BusinessConfig.searchBookLimit)
             .all()
             .mapEach { book in
-                book.toSearchBook()
+                GetBook(
+                    id: book.id?.uuidString,
+                    title: book.title,
+                    author: book.author,
+                    cover: book.cover
+                )
             }
     }
     
-    func searchIsbn(req: Request) throws -> EventLoopFuture<SearchBook> {
+    func searchIsbn(req: Request) throws -> EventLoopFuture<GetBook> {
         guard let term: String = req.query["term"] else {
             throw Abort(.badRequest)
         }
@@ -80,31 +85,53 @@ struct BookController: RouteCollection {
             .first()
             .unwrap(or: Abort(.notFound))
             .map { book in
-                book.toSearchBook()
+                GetBook(
+                    id: book.id?.uuidString,
+                    title: book.title,
+                    author: book.author,
+                    cover: book.cover
+                )
             }
     }
     
     // Add num read and num available
-    func getBookDetail(req: Request) throws -> EventLoopFuture<BookDetail> {
+    func getBookDetail(req: Request) throws -> EventLoopFuture<GetBook> {
         return Book.find(req.parameters.get("bookID"), on: req.db)
             .unwrap(or: Abort(.notFound))
             .flatMap { book in
-                
+
                 let reading = UserBook
                     .query(on: req.db)
                     .filter(UserBook.self, \.$state == "reading")
                     .filter(UserBook.self, \.$bookID == book.id!)
                     .count()
-                
-                
+
+
                 let available = UserBook
                     .query(on: req.db)
                     .filter(UserBook.self, \.$state == "available")
                     .filter(UserBook.self, \.$bookID == book.id!)
                     .count()
-                
-                return reading.and(available).map { (r, a) -> (BookDetail) in
-                    book.toBookDetail(numRead: r, numAvailable: a)
+
+                return reading.and(available).map { (r, a) -> (GetBook) in
+                    
+                    GetBook(id: book.id?.uuidString,
+                            title: book.title,
+                            author: book.author,
+                            cover: book.cover,
+                            description: book.description,
+                            categoryID: book.categoryID.uuidString,
+                            isbn: book.isbn,
+                            avgRating: book.avgRating,
+                            writeRating: book.writeRating,
+                            characterRating: book.characterRating,
+                            targetRating: book.targetRating,
+                            infoRating: book.infoRating,
+                            createdAt: book.createdAt,
+                            numReview: book.numReview,
+                            numReading: r,
+                            numAvailable: a
+                    )
                 }
             }
     }

@@ -45,7 +45,7 @@ class SearchBookRequest: ResourceRequest<ESearchBook> {
 class BookRequest: ResourceRequest<EBook> {
     
     func fetchBook(bookID: String, publisher: PassthroughSubject<EBook, Never>) {
-        self.setPath(resourcePath: bookID)
+        self.setPath(resourcePath: "detail/\(bookID)")
         
         self.get(isAll: false) { result in
             

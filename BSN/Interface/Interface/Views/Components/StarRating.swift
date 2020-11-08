@@ -23,7 +23,6 @@ struct StarRating: View {
             if rating.remain != 0 {
                 Image(systemName: "star.leadinghalf.fill")
                     .foregroundColor(.yellow)
-                    
             }
             
             ForEach(0..<rating.lastStar(total: total)) { _ in

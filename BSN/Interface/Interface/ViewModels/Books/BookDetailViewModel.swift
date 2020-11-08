@@ -10,26 +10,30 @@ import Business
 
 class BookDetailViewModel: NetworkViewModel {
     
-    var model: BBookDetail
+    @Published var model: BBookDetail
     
     var reviews: [Rating]
     
     private var bookReviewManager: BookReviewManager
     
+    private var bookManager: BookManager
+    
     override init() {
         model = BBookDetail()
         reviews = []
         bookReviewManager = BookReviewManager()
+        bookManager = BookManager()
         
         super.init()
         setupReceiveReivews()
+        setupReceiveBook()
     }
     
     func prepareData(bid: String) {
         isLoading = true
-        // load core book info
-        //load reivew
         model.id = bid
+        
+        bookManager.fetchBook(bookID: bid)
         bookReviewManager.getReviews(bid: bid)
     }
     
@@ -45,8 +49,30 @@ class BookDetailViewModel: NetworkViewModel {
         }
     }
     
+    private func setupReceiveBook() {
+        bookManager
+            .getBookPublisher
+            .sink {[weak self] (b) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    
+                    if b.id == kUndefine {
+                        self.resourceInfo = .getfailure
+                        self.showAlert = true
+                    } else {
+                        self.model = BBookDetail(book: b)
+                    }
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
     private func setupReceiveReivews() {
-        /// Get save user_book
         bookReviewManager
             .getReviewsPublisher
             .sink {[weak self] (brs) in
@@ -73,7 +99,6 @@ class BookDetailViewModel: NetworkViewModel {
                             self.reviews.appendUnique(item: model)
                         }
                     }
-                    self.isLoading = false
                 }
             }
             .store(in: &cancellables)

@@ -70,9 +70,7 @@ struct BookDetailView: View {
     
     private var basicInfo: some View {
         HStack(alignment: .center) {
-            Image(viewModel.model.cover!, bundle: interfaceBundle)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+            BSNImage(urlString: viewModel.model.cover, tempImage: "book_cover")
                 .frame(width: 90, height: 130)
                 .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))
             
@@ -137,41 +135,41 @@ struct BookDetailView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         Text("Giọng văn cuốn hút:")
-                            .robotoItalic(size: 15)
+                            .robotoItalic(size: 13)
                         Spacer()
                         StarRating(rating: viewModel.model.ratingCriteria.writing)
                         Text("(\(String(format: "%.1f", viewModel.model.ratingCriteria.writing)))")
-                            .robotoItalic(size: 15)
+                            .robotoItalic(size: 13)
                             .foregroundColor(._primary)
                     }
                     
                     HStack {
                         Text("Có mục đích rõ ràng:")
-                            .robotoItalic(size: 15)
+                            .robotoItalic(size: 13)
                         Spacer()
                         StarRating(rating: viewModel.model.ratingCriteria.target)
                         Text("(\(String(format: "%.1f", viewModel.model.ratingCriteria.target)))")
-                            .robotoItalic(size: 15)
+                            .robotoItalic(size: 13)
                             .foregroundColor(._primary)
                     }
                     
                     HStack {
                         Text("Nhân vật chính lôi cuốn:")
-                            .robotoItalic(size: 15)
+                            .robotoItalic(size: 13)
                         Spacer()
                         StarRating(rating: viewModel.model.ratingCriteria.character)
                         Text("(\(String(format: "%.1f", viewModel.model.ratingCriteria.character)))")
-                            .robotoItalic(size: 15)
+                            .robotoItalic(size: 13)
                             .foregroundColor(._primary)
                     }
                     
                     HStack {
                         Text("Cung cấp thông tin hữu ích:")
-                            .robotoItalic(size: 15)
+                            .robotoItalic(size: 13)
                         Spacer()
                         StarRating(rating: viewModel.model.ratingCriteria.info)
                         Text("(\(String(format: "%.1f", viewModel.model.ratingCriteria.info)))")
-                            .robotoItalic(size: 15)
+                            .robotoItalic(size: 13)
                             .foregroundColor(._primary)
                     }
                 }

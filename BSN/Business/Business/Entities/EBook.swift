@@ -35,19 +35,26 @@ public struct EBook: Codable {
     
     public var createdAt: String?
     
-    init() {
+    public var numReview: Int?
+    
+    // Addition
+    public var numReading: Int?
+    
+    public var numAvailable: Int?
+    
+    public init() {
         title = ""
         author = ""
         isbn = ""
     }
     
-    public init(title: String, author: String, isbn: String, cover: String? = nil, des: String? = nil) {
+    public init(title: String, author: String, isbn: String, cover: String? = nil, des: String? = nil, categoryId: String? = nil) {
         self.title = title
         self.author = author
         self.cover = cover
         self.description = des
         self.isbn = isbn
         // Default category is Undefine have ID as bellow
-        self.categoryID = "59EB6BBF-1C9A-44CB-A680-D09416248485"
+        self.categoryID = categoryID ?? "59EB6BBF-1C9A-44CB-A680-D09416248485"
     }
 }
