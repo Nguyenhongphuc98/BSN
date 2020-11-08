@@ -65,41 +65,6 @@ final class Book: Model {
 // MARK: - Extension
 extension Book: Content { }
 
-//extension Book {
-//    
-//    public func toSearchBook() -> SearchBook {
-//        SearchBook(
-//            id: self.id,
-//            title: self.title,
-//            author: self.author,
-//            cover: self.cover
-//        )
-//    }
-//    
-//    public func toBookDetail(numRead: Int, numAvailable: Int) -> BookDetail {
-//        BookDetail(
-//            id: self.id,
-//            book: self,
-//            numReading: numRead,
-//            numAvailable: numAvailable
-//        )
-//    }
-//}
-
-
-// MARK: - Custom model
-//struct SearchBook: Content {
-//
-//    var id: Book.IDValue?
-//
-//    var title: String
-//
-//    var author: String
-//
-//    var cover: String?
-//}
-
-
 struct GetBook: Content {
     
     // Any request should have this properties

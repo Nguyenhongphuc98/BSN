@@ -37,7 +37,10 @@ class BookDetailViewModel: NetworkViewModel {
         bookReviewManager.getReviews(bid: bid)
     }
     
-    func reloadReviews() {
+    func reloadData() {
+        // reload to change rating number
+        bookManager.fetchBook(bookID: model.id!)
+        // append new reviews
         bookReviewManager.getReviews(bid: model.id!)
     }
     
@@ -46,6 +49,11 @@ class BookDetailViewModel: NetworkViewModel {
         withAnimation {
             reviews.removeAll { $0.id == rid }
             objectWillChange.send()
+        }
+        
+        // Reload base info
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.bookManager.fetchBook(bookID: self.model.id!)
         }
     }
     
@@ -66,6 +74,7 @@ class BookDetailViewModel: NetworkViewModel {
                         self.showAlert = true
                     } else {
                         self.model = BBookDetail(book: b)
+                        self.objectWillChange.send()
                     }
                 }
             }

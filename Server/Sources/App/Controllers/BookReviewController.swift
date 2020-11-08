@@ -26,15 +26,62 @@ struct BookReviewController: RouteCollection {
         return BookReview.query(on: req.db).all()
     }
 
+    // when create or delete a review
+    // we should update rating info for book
     func create(req: Request) throws -> EventLoopFuture<BookReview> {
         let br = try req.content.decode(BookReview.self)
-        return br.save(on: req.db).map { br }
+        
+        return Book
+            .find(br.bookID, on: req.db)
+            .unwrap(or: Abort(.notFound))
+            .flatMap { (book) -> EventLoopFuture<BookReview> in
+                
+                let n: Float = Float(book.numReview!)
+                
+                book.characterRating = (book.characterRating! * n + Float(br.characterRating)) / (n + 1)
+                book.writeRating = (book.writeRating! * n + Float(br.writeRating)) / (n + 1)
+                book.infoRating = (book.infoRating! * n + Float(br.infoRating)) / (n + 1)
+                book.targetRating = (book.targetRating! * n + Float(br.targetRating)) / (n + 1)
+                book.numReview! += 1
+                
+                _ = book.update(on: req.db)
+                
+                return br.save(on: req.db).map { br }
+            }
     }
 
     func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {
+        
         return BookReview.find(req.parameters.get("ID"), on: req.db)
             .unwrap(or: Abort(.notFound))
-            .flatMap { $0.delete(on: req.db) }
+            .flatMap { br in
+                Book
+                    .find(br.bookID, on: req.db)
+                    .unwrap(or: Abort(.notFound))
+                    .flatMap { (book) -> EventLoopFuture<BookReview> in
+                        
+                        let n: Float = Float(book.numReview!)
+                        
+                        if n == 1 {
+                            // We can't div for n-1 (0)
+                            book.characterRating = 0.0
+                            book.writeRating = 0.0
+                            book.infoRating = 0.0
+                            book.targetRating = 0.0
+                        } else {
+                            book.characterRating = (book.characterRating! * n - Float(br.characterRating)) / Float(n - 1)
+                            book.writeRating = (book.writeRating! * n - Float(br.writeRating)) / Float(n - 1)
+                            book.infoRating = (book.infoRating! * n - Float(br.infoRating)) / Float(n - 1)
+                            book.targetRating = (book.targetRating! * n - Float(br.targetRating)) / Float(n - 1)
+                        }
+                        
+                        book.numReview! -= 1
+        
+                        _ = book.update(on: req.db)
+                        
+                        return br.delete(on: req.db).map { br }
+                    }
+            }
             .transform(to: .ok)
     }
     

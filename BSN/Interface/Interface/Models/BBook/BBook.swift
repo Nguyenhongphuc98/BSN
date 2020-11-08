@@ -88,7 +88,7 @@ class BBook: ObservableObject, Identifiable {
     }
     
     init() {
-        self.id = UUID().uuidString
+        self.id = UUID().uuidString // temp to run foearch dummy view, should relpace later
         self.title = "Tiêu đề sách"
         self.author = "Tác giả"
         self.cover = "book_cover"

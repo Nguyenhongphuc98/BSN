@@ -82,7 +82,8 @@ struct BookDetailView: View {
                     .robotoLight(size: 14)
                 
                 HStack {
-                    StarRating(rating: viewModel.model.ratingCriteria.avg)
+                    StarRating(rating: viewModel.model.avgRating)
+                        .id(UUID())
                     Text(String(format: "%.1f", viewModel.model.ratingCriteria.avg))
                         .roboto(size: 15)
                 }
@@ -135,41 +136,53 @@ struct BookDetailView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         Text("Giọng văn cuốn hút:")
-                            .robotoItalic(size: 13)
+                            .robotoItalic(size: 15)
                         Spacer()
+                        
                         StarRating(rating: viewModel.model.ratingCriteria.writing)
+                            .id(UUID())
+                        
                         Text("(\(String(format: "%.1f", viewModel.model.ratingCriteria.writing)))")
-                            .robotoItalic(size: 13)
+                            .robotoItalic(size: 15)
                             .foregroundColor(._primary)
                     }
                     
                     HStack {
                         Text("Có mục đích rõ ràng:")
-                            .robotoItalic(size: 13)
+                            .robotoItalic(size: 15)
                         Spacer()
+                        
                         StarRating(rating: viewModel.model.ratingCriteria.target)
+                            .id(UUID())
+                        
                         Text("(\(String(format: "%.1f", viewModel.model.ratingCriteria.target)))")
-                            .robotoItalic(size: 13)
+                            .robotoItalic(size: 15)
                             .foregroundColor(._primary)
                     }
                     
                     HStack {
                         Text("Nhân vật chính lôi cuốn:")
-                            .robotoItalic(size: 13)
+                            .robotoItalic(size: 15)
                         Spacer()
+                        
                         StarRating(rating: viewModel.model.ratingCriteria.character)
+                            .id(UUID())
+                        
                         Text("(\(String(format: "%.1f", viewModel.model.ratingCriteria.character)))")
-                            .robotoItalic(size: 13)
+                            .robotoItalic(size: 15)
                             .foregroundColor(._primary)
                     }
                     
                     HStack {
                         Text("Cung cấp thông tin hữu ích:")
-                            .robotoItalic(size: 13)
+                            .robotoItalic(size: 15)
                         Spacer()
+                        
                         StarRating(rating: viewModel.model.ratingCriteria.info)
+                            .id(UUID())
+                        
                         Text("(\(String(format: "%.1f", viewModel.model.ratingCriteria.info)))")
-                            .robotoItalic(size: 13)
+                            .robotoItalic(size: 15)
                             .foregroundColor(._primary)
                     }
                 }
@@ -256,7 +269,7 @@ struct BookDetailView: View {
         .shadow(radius: 2, y: -2)
         .sheet(isPresented: $showRatingView, content: {
             RatingView(bookName: viewModel.model.title, bookID: viewModel.model.id!) {
-                viewModel.reloadReviews()
+                viewModel.reloadData()
             }
         })
     }

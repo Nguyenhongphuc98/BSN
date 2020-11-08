@@ -109,7 +109,7 @@ struct SubRatingItem: View {
     
     var didRate: ((Int) -> Void)?
     
-    @State private var rating: Int = 5
+    @State private var rating: Int = 0
     
     var body: some View {
         HStack {
@@ -122,12 +122,12 @@ struct SubRatingItem: View {
                     .robotoBold(size: 17)
                 
                 HStack {
-                    ForEach(0..<rating) { i in
+                    ForEach(1..<6) { i in
                         Image(systemName: i <= rating ? "star.fill" : "star")
                             .foregroundColor(i <= rating ? .yellow : .gray)
                             .onTapGesture(perform: {
                                 rating = i
-                                didRate?(i)
+                                didRate?(rating)
                             })
                     }
                 }

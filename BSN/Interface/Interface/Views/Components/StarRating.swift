@@ -20,7 +20,7 @@ struct StarRating: View {
                     .foregroundColor(.yellow)
             }
             
-            if rating.remain != 0 {
+            if rating.remain != Float.zero {
                 Image(systemName: "star.leadinghalf.fill")
                     .foregroundColor(.yellow)
             }
@@ -31,6 +31,9 @@ struct StarRating: View {
             }
         }
         .font(.system(size: 12))
+        .onReload {
+            print("rating: \(rating)")
+        }
     }
 }
 
