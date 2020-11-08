@@ -33,7 +33,7 @@ public class BookReviewManager {
         networkRequest.saveBookReview(bookReview: review, publisher: changePublisher)
     }
 
-//    public func deleteReview(reivewID: String) {
-//        networkRequest.deleteNote(noteID: noteID)
-//    }
+    public func deleteReview(reivewID: String) {
+        networkRequest.deleteReview(reviewID: reivewID)
+    }
 }

@@ -37,7 +37,7 @@ class Rating: Identifiable {
         ratingBookID = UUID().uuidString
     }
     
-    init(id: String? = nil, authorPhoto: String, authorID: String, title: String, rating: Float, content: String, bookID: String) {
+    init(id: String? = nil, authorPhoto: String, authorID: String, title: String, rating: Float, content: String, bookID: String, createAt: String? = nil) {
 
         self.id = id ?? "undefine"
         self.authorID = authorID
@@ -47,6 +47,7 @@ class Rating: Identifiable {
         self.content = content
         self.createDate = Date()
         self.ratingBookID = bookID
+        self.createDate = Date.getDate(dateStr: createAt)
         
         // ReCheck title
         self.title = genrateAutoTitle(title: title)

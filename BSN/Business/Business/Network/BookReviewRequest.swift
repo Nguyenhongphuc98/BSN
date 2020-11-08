@@ -34,6 +34,11 @@ class BookReviewRequest: ResourceRequest<EBookReview> {
         }
     }
     
+    func deleteReview(reviewID: String) {
+        self.setPath(resourcePath: reviewID)
+        self.delete()
+    }
+    
     func processChangeBookReviewResult(result: SaveResult<EBookReview>, method: String, publisher: PassthroughSubject<EBookReview, Never>) {
         
         switch result {

@@ -20,6 +20,8 @@ public func configure(_ app: Application) throws {
         password: Environment.get("DATABASE_PASSWORD") ?? "password",
         database: Environment.get("DATABASE_NAME") ?? "vapor"
     ), as: .psql)
+    
+    app.http.server.configuration.hostname = "0.0.0.0"
 
     // User - account info
     app.migrations.add(CreateAccount())

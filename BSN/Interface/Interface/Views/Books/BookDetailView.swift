@@ -42,10 +42,10 @@ struct BookDetailView: View {
             VStack() {
                 basicInfo
                 
+                Separator(height: 1)
+                
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 10) {
-                        Separator(height: 1)
-                        
                         ratingDetail
                         
                         description
@@ -207,7 +207,24 @@ struct BookDetailView: View {
             content: {
                 ForEach(viewModel.reviews) { review in
                     VStack {
-                        RatingCell(model: review)
+                        ZStack(alignment: .topTrailing) {
+                            RatingCell(model: review)
+                            
+                            if review.authorID == AppManager.shared.currenUID {
+                                Menu {
+                                    Button {
+                                        viewModel.deleteReview(rid: review.id)
+                                    } label: {
+                                        Text("Xoá đánh giá")
+                                    }
+                                }
+                                label: {
+                                    // More button
+                                    Image(systemName: "ellipsis").padding()
+                                }
+                            }
+                        }
+                        
                         Separator(height: 1)
                     }
                 }

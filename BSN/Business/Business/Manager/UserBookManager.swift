@@ -40,7 +40,7 @@ public class UserBookManager {
     }
     
     public func getUserBook(ubid: String) {
-        networkRequest.fetchUserBooks(ubid: ubid, publisher: getUserBookPublisher)
+        networkRequest.fetchUserBook(ubid: ubid, publisher: getUserBookPublisher)
     }
     
     public func updateUserBook(ub: EUserBook) {

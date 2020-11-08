@@ -37,9 +37,12 @@ class BookDetailViewModel: NetworkViewModel {
         bookReviewManager.getReviews(bid: model.id!)
     }
     
-    func addNewRating(rate: Rating) {
-        // Update UI with new rating
-        reviews.append(rate)
+    func deleteReview(rid: String) {
+        bookReviewManager.deleteReview(reivewID: rid)
+        withAnimation {
+            reviews.removeAll { $0.id == rid }
+            objectWillChange.send()
+        }
     }
     
     private func setupReceiveReivews() {
@@ -64,7 +67,8 @@ class BookDetailViewModel: NetworkViewModel {
                                 title: br.title,
                                 rating: br.avgRating,
                                 content: br.description!,
-                                bookID: br.bookID!
+                                bookID: br.bookID!,
+                                createAt: br.createdAt
                             )
                             self.reviews.appendUnique(item: model)
                         }

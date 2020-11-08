@@ -82,6 +82,7 @@ struct MyBookDetailView: View {
                         NoteCard(model: note)
                             .padding(.vertical, 5)
                             .padding(.horizontal, 5)
+                        
                         Menu {
                             Button {
                                 viewModel.deleteNote(note: note)

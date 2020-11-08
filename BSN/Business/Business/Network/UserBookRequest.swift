@@ -24,14 +24,14 @@ class UserBookRequest: ResourceRequest<EUserBook> {
         }
     }
     
-    func fetchUserBooks(ubid: String, publisher: PassthroughSubject<EUserBook, Never>) {
+    func fetchUserBook(ubid: String, publisher: PassthroughSubject<EUserBook, Never>) {
         self.setPath(resourcePath: "search", params: ["ubid":ubid])
         
         self.get { result in
             
             switch result {
             case .failure:
-                let message = "There was an error searching the user-books"
+                let message = "There was an error searching the user-book"
                 print(message)
                 let ub = EUserBook()
                 publisher.send(ub)

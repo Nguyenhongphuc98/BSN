@@ -18,16 +18,17 @@ struct RatingCell: View {
                 CircleImage(image: model.authorPhoto, diameter: 36)
                 
                 VStack(alignment: .leading) {
-                    Text(model.title)
-                        .robotoBold(size: 15)
+                    HStack {
+                        Text(model.title)
+                            .robotoBold(size: 15)
+                        
+                        CountTimeText(date: model.createDate)
+                        
+                        Spacer()
+                    }
                     
                     StarRating(rating: model.rating)
                 }
-                
-                CountTimeText(date: model.createDate)
-                    .padding(.bottom)
-                
-                Spacer()
             }
             
             Text(model.content)
