@@ -41,8 +41,8 @@ extension UserBook: Content { }
 extension UserBook {
     
     // Return model when user search book
-    func toUserSerchBook(cover: String? = nil, title: String, author: String) -> SearchUserBook {
-        SearchUserBook(
+    func toUserSerchBook(cover: String? = nil, title: String, author: String) -> GetUserBook {
+        GetUserBook(
             id: self.id!.uuidString,
             userID: self.userID.uuidString,
             bookID: self.bookID.uuidString,
@@ -69,7 +69,7 @@ struct UpdateUserbook: Content {
 }
 
 // MARK: - SearchUserBook
-struct SearchUserBook: Content {
+struct GetUserBook: Content {
     
     var id: String?
     
@@ -79,9 +79,9 @@ struct SearchUserBook: Content {
     
     var cover: String?
     
-    var title: String
+    var title: String?
     
-    var author: String
+    var author: String?
     
     var status: String?
     
@@ -92,4 +92,8 @@ struct SearchUserBook: Content {
     var statusDes: String?
     
     var ownerName: String?
+    
+    var ownerAvatar: String?
+    
+    var location: String? // location of user owner this book
 }

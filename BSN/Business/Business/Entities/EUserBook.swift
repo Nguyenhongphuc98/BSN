@@ -13,9 +13,9 @@ public struct EUserBook: Codable {
     
     public var bookID: String?
     
-    public var status: String
+    public var status: String?
     
-    public var state: String
+    public var state: String?
     
     public var statusDes: String?
     
@@ -29,6 +29,12 @@ public struct EUserBook: Codable {
     public var cover: String?
     
     public var description: String?
+    
+    public var ownerName: String?
+    
+    public var ownerAvatar: String?
+    
+    public var location: String?
     
     public init() {
         id = "undefine"

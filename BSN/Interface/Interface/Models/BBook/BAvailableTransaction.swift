@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import Business
 
-class BAvailableTransaction: ObservableObject, Identifiable {
+class BAvailableTransaction: ObservableObject, Identifiable, Equatable {
     
     var id: String?
     
@@ -32,6 +33,16 @@ class BAvailableTransaction: ObservableObject, Identifiable {
         status = .old
         distance = 678
     }
+    
+    init(userBook: EUserBook) {
+        self.id = userBook.id
+        self.createrID = userBook.userID!
+        self.createrPhoto = userBook.ownerAvatar!
+        self.createrName = userBook.ownerName!
+        self.bookID = userBook.bookID!
+        self.status = BookStatus(rawValue: userBook.status!)!
+        self.distance = caculateDistance(rawLocation: userBook.location!)
+    }
 }
 
 class BAvailableExchange: BAvailableTransaction {
@@ -44,5 +55,17 @@ class BAvailableExchange: BAvailableTransaction {
         exchangeBookID = UUID().uuidString
         exchangeBookName = "Muốn giỏi phải học"
         super.init()
+    }
+}
+
+// MARK: - extension
+extension BAvailableTransaction: Hashable {
+    
+    static func == (lhs: BAvailableTransaction, rhs: BAvailableTransaction) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        return hasher.combine(self.id)
     }
 }

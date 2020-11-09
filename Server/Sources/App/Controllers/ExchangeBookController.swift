@@ -82,7 +82,7 @@ struct ExchangeBookController: RouteCollection {
                 let ub1Query = SQLQueryString("SELECT b.title, b.cover, b.author, ub.status, ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.id = '\(raw: eb.firstUserBookID!.uuidString)'")
                 
                 let ub1 =  db.raw(ub1Query)
-                    .first(decoding: SearchUserBook.self)
+                    .first(decoding: GetUserBook.self)
                 
                 var sqlStr = "SELECT b.title, b.cover, b.author, ub.status, ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.user_id = '\(curentUID)' and ub.book_id = b.id"
                 
@@ -96,13 +96,13 @@ struct ExchangeBookController: RouteCollection {
                 let ub2Query = SQLQueryString(sqlStr)
                 
                 let ub2 =  db.raw(ub2Query)
-                    .first(decoding: SearchUserBook.self)
+                    .first(decoding: GetUserBook.self)
                 
                 return ub1.and(ub2).map { (u1, u2) -> (GetExchangeBook) in
                     GetExchangeBook(
                         id: eb.id!.uuidString,
-                        firstTitle: u1!.title,
-                        firstAuthor: u1!.author,
+                        firstTitle: u1!.title!,
+                        firstAuthor: u1!.author!,
                         firstCover: u1!.cover!,
                         secondTitle: u2 != nil ? u2!.title : nil,
                         secondAuthor: u2 != nil ? u2!.author : nil,

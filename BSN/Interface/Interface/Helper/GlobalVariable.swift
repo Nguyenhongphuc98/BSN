@@ -11,6 +11,15 @@ public let interfaceBundle = Bundle(for: Profile.self)
 
 public let stickers = ["bear", "cat", "chicken", "circleFrog", "elephant", "frog", "monkey", "mouse", "pig", "polarBear", "puppy", "rabbit", "rooster", "sheep", "squirrel", "tiger"]
 
+// Raw location "la-lo-name..."
+func caculateDistance(rawLocation: String) -> Float {
+    let los = rawLocation.split(separator: "-")
+    let la1 = Float(los[0])!
+    let lo1 = Float(los[1])!
+    
+    return getDistanceFromLatLonInKm(lat1: la1, lon1: lo1)
+}
+
 func getDistanceFromLatLonInKm(lat1: Float, lon1: Float) -> Float {
     
     // get current locaton of this user

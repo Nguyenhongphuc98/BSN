@@ -62,14 +62,14 @@ class BExchangeBook: ObservableObject, Identifiable {
         self.distance = 0
     }
     
-    // Raw location "la-lo-name..."
-    func caculateDistance(rawLocation: String) -> Float {
-        let los = rawLocation.split(separator: "-")
-        let la1 = Float(los[0])!
-        let lo1 = Float(los[1])!
-        
-        return getDistanceFromLatLonInKm(lat1: la1, lon1: lo1)
-    }
+//    // Raw location "la-lo-name..."
+//    func caculateDistance(rawLocation: String) -> Float {
+//        let los = rawLocation.split(separator: "-")
+//        let la1 = Float(los[0])!
+//        let lo1 = Float(los[1])!
+//        
+//        return getDistanceFromLatLonInKm(lat1: la1, lon1: lo1)
+//    }
 }
 
 extension BExchangeBook: Hashable {

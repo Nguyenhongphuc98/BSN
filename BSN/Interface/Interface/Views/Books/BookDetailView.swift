@@ -26,7 +26,7 @@ struct BookDetailView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             NavigationLink(
-                destination: BorrowListView(),
+                destination: BorrowListView(bid: bookID),
                 isActive: $showBorrowBook,
                 label: {
                     EmptyView()

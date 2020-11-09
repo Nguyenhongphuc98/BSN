@@ -39,6 +39,10 @@ public class UserBookManager {
         networkRequest.fetchUserBooks(uid: uid, publisher: getUserBooksPublisher)
     }
     
+    public func getAvailableUserBooks(bid: String) {
+        networkRequest.fetchAvailableBooks(bid: bid, publisher: getUserBooksPublisher)
+    }
+    
     public func getUserBook(ubid: String) {
         networkRequest.fetchUserBook(ubid: ubid, publisher: getUserBookPublisher)
     }
