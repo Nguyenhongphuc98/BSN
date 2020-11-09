@@ -12,13 +12,13 @@ class BBorrowBook: ObservableObject, Identifiable {
     
     var id: String?
     
-    var book: BUserBook
+    var userbook: BUserBook
     
     var transactionInfo: BTransactionInfo
     
     init() {
         id = UUID().uuidString
-        book = BUserBook()
+        userbook = BUserBook()
         transactionInfo = BTransactionInfo(
             exchangeDate: Date(),
             numDay: 0,
@@ -29,7 +29,7 @@ class BBorrowBook: ObservableObject, Identifiable {
     }
     
     init(userbook: EUserBook) {
-        book = BUserBook(
+        self.userbook = BUserBook(
             ubid: userbook.id,
             uid: userbook.userID,
             ownerName: userbook.ownerName,

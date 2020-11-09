@@ -21,8 +21,8 @@ final class BorrowBook: Model {
     @Field(key: "author")
     var borrowerID: User.IDValue
     
-    @Field(key: "cover")
-    var borrowDate:  Date
+    @Field(key: "borrow_date")
+    var borrowDate: Date
     
     @Field(key: "description")
     var borrowDays: Int
@@ -51,3 +51,30 @@ final class BorrowBook: Model {
 }
 
 extension BorrowBook: Content { }
+
+struct GetBorrowBook: Content {
+    
+    var id: String?
+    
+    var userBookID: String?
+    
+    var borrowerID: String?
+    
+    var borrowDate:  Date?
+    
+    var borrowDays: Int?
+    
+    var adress: String?
+    
+    var message: String?
+    
+    var statusDes: String?
+    
+    var state: String?
+    
+    var createdAt: Date?
+    
+    var updatedAt: Date?
+    
+    init() { }
+}

@@ -17,6 +17,8 @@ struct BSNApp: App {
     
     var profileNavState: NavigationState = NavigationState()
     
+    var exploreNavState: NavigationState = NavigationState()
+    
     var body: some Scene {
         WindowGroup {
             TabView(selection: $viewModel.selectedIndex) {
@@ -32,6 +34,7 @@ struct BSNApp: App {
                     ExploreBookView()
                         .navigationTitle("Khám phá")
                         .navigationBarHidden(true)
+                        .environmentObject(exploreNavState)
                 }
                 .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .search) }
                 .tag(1)

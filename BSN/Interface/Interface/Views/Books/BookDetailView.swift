@@ -7,8 +7,12 @@
 
 import SwiftUI
 
-struct BookDetailView: View {
+struct BookDetailView: View, PopToable {
+    // Pop able
+    var viewName: ViewName = .bookDetail
+    @EnvironmentObject var navState: NavigationState
     
+    // Main properties
     @StateObject var viewModel: BookDetailViewModel = BookDetailViewModel()
     
     @State var isExpandRating: Bool = true
@@ -26,14 +30,14 @@ struct BookDetailView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             NavigationLink(
-                destination: BorrowListView(bid: bookID),
+                destination: BorrowListView(bid: bookID).environmentObject(navState),
                 isActive: $showBorrowBook,
                 label: {
                     EmptyView()
                 })
             
             NavigationLink(
-                destination: ExchangeListView(),
+                destination: ExchangeListView().environmentObject(navState),
                 isActive: $showExchangeBook,
                 label: {
                     EmptyView()
@@ -66,6 +70,12 @@ struct BookDetailView: View {
         .embededLoading(isLoading: $viewModel.isLoading)
         .alert(isPresented: $viewModel.showAlert, content: alert)
         .onAppear(perform: viewAppeared)
+//        .onReceive(navState.$viewName) { (viewName) in
+//            if viewName == self.viewName {
+//                self.showBorrowBook = false
+//                self.showExchangeBook = false
+//            }
+//        }
     }
     
     private var basicInfo: some View {
@@ -108,14 +118,14 @@ struct BookDetailView: View {
                 
                 HStack {
                     Button(action: {
-                        showBorrowBook.toggle()
+                        showBorrowBook = true
                     }, label: {
                         Text("Mượn sách")
                     })
                     .buttonStyle(BaseButtonStyle())
                     
                     Button(action: {
-                        showExchangeBook.toggle()
+                        showExchangeBook = true
                     }, label: {
                         Text("  Đổi sách  ")
                     })

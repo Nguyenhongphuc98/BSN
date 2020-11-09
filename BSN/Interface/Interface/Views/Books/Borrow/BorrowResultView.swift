@@ -26,7 +26,7 @@ struct BorrowResultView: View {
                     .fixedSize(horizontal: false, vertical: false)
                     .padding(.vertical)
                 
-                BorrowBookHeader(model: viewModel.borrowBook.book)
+                BorrowBookHeader(model: viewModel.borrowBook.userbook)
                     .padding(.horizontal, 8)
                 
                 VStack(alignment: .leading) {

@@ -23,16 +23,20 @@ class BorrowBookViewModel: NetworkViewModel {
     
     private var userbookManager: UserBookManager
     
+    private var borrowbookManager: BorrowBookManager
+    
     override init() {
         model = BBorrowBook()
         borrowDate = Date()
         numOfDay = 7
         userbookManager = UserBookManager()
+        borrowbookManager = BorrowBookManager()
         address = ""
         message = ""
         
         super.init()
         observerCoreUserBook()
+        observerSaveBorrowBook()
     }
     
     func prepareData(ubid: String) {
@@ -40,11 +44,19 @@ class BorrowBookViewModel: NetworkViewModel {
         userbookManager.getUserBook(ubid: ubid)
     }
     
-    func didRequestBorrowBook(complete: @escaping (Bool) -> Void) {
-     
-        // To- Do
-        // Call BL
-        complete(true)
+    func saveBorrowBook() {
+        isLoading = true
+        let bb = EBorrowBook(
+            userBookID: model.userbook.id,
+            borrowerID: AppManager.shared.currenUID,
+            borrowDate: borrowDate,
+            borrowDays: numOfDay,
+            adress: address,
+            message: message,
+            statusDes: model.userbook.statusDes,
+            state: ExchangeProgess.new.rawValue
+        )
+        borrowbookManager.saveBorrowBook(borrowBook: bb)
     }
     
     private func observerCoreUserBook() {
@@ -60,13 +72,33 @@ class BorrowBookViewModel: NetworkViewModel {
                     self.isLoading = false
                     
                     if ub.id == kUndefine {
-//                        self.resourceInfo = .getfailure
-//                        self.showAlert = true
+                        //self.resourceInfo = .getfailure
+                        //self.showAlert = true
                         // It shoud be load ok
                         // we just show alert when save failute :(
                     } else {
                         self.model = BBorrowBook(userbook: ub)
                     }
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func observerSaveBorrowBook() {
+        borrowbookManager
+            .changePublisher
+            .sink {[weak self] (bb) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    
+                    self.resourceInfo = (bb.id == kUndefine) ?  .savefailure : .success
+                    
+                    self.showAlert = true
                 }
             }
             .store(in: &cancellables)

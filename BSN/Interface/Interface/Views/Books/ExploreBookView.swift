@@ -7,8 +7,13 @@
 
 import SwiftUI
 
-public struct ExploreBookView: View {
+public struct ExploreBookView: View, PopToable {
     
+    //Popable
+    var viewName: ViewName = .exploreRoot
+    @EnvironmentObject var navState: NavigationState
+    
+    // Main properties
     @StateObject var viewModel: ExploreBookViewModel = ExploreBookViewModel()
     
     @EnvironmentObject var root: AppManager
@@ -70,7 +75,7 @@ public struct ExploreBookView: View {
                 ScrollView {
                     ForEach(viewModel.searchBooks) { book in
                         NavigationLink(
-                            destination: BookDetailView(bookID: book.id!),
+                            destination: BookDetailView(bookID: book.id!).environmentObject(navState),
                             label: {
                                 SearchBookItem(model: book)
                             })

@@ -8,16 +8,20 @@
 import SwiftUI
 
 // Using in list available book-user can borrow
-struct BorrowBookCell: View {
+struct BorrowBookCell: View, PopToable {
+    
+    var viewName: ViewName = .bookDetail
     
     var model: BAvailableTransaction
     
     @State private var nav: Bool = false
     
+    @EnvironmentObject var navState: NavigationState
+    
     var body: some View {
         HStack {
             NavigationLink(
-                destination: SubmitRequestBorrowView(ubid: model.userBookID!),
+                destination: SubmitRequestBorrowView(ubid: model.userBookID!).environmentObject(navState),
                 isActive: $nav,
                 label: {
                     EmptyView()
@@ -48,6 +52,11 @@ struct BorrowBookCell: View {
             }
         }
         .padding(.vertical, 5)
+        .onReceive(navState.$viewName) { (viewName) in
+            if viewName == self.viewName {
+                nav = false
+            }
+        }
     }
 }
 

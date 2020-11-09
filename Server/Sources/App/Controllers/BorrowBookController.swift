@@ -13,8 +13,8 @@ struct BorrowBookController: RouteCollection {
         let borrowBooks = routes.grouped("api" ,"v1", "borrowBooks")
         borrowBooks.get(use: index)
         borrowBooks.post(use: create)
-        borrowBooks.group(":ID") { user in
-            user.delete(use: delete)
+        borrowBooks.group(":ID") { group in
+            group.delete(use: delete)
         }
     }
 

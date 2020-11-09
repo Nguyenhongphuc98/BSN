@@ -7,7 +7,11 @@
 
 import SwiftUI
 
-struct BorrowListView: View {
+struct BorrowListView: View, PopToable {
+    
+    var viewName: ViewName = .bookDetail
+    
+    @EnvironmentObject var navState: NavigationState
     
     @StateObject var viewModel: BorrowListViewModel = BorrowListViewModel()
     
@@ -21,6 +25,7 @@ struct BorrowListView: View {
             List {
                 ForEach(viewModel.models) { item in
                     BorrowBookCell(model: item)
+                        .environmentObject(navState)
                 }
             }
             if viewModel.models.isEmpty {
@@ -37,6 +42,13 @@ struct BorrowListView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
         .onAppear(perform: viewAppeared)
+        .onReceive(navState.$viewName) { (viewName) in
+            if viewName == self.viewName {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
+        }
     }
     
     var backButton: some View {

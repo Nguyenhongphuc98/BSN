@@ -9,11 +9,14 @@ import SwiftUI
 
 public enum ViewName: String {
     case profileRoot
+    case exploreRoot
+    case bookDetail
     case undefine
 }
 
 protocol PopToable {
     var viewName: ViewName { get set }
+    var navState: NavigationState { get }
 }
 
 public class NavigationState: ObservableObject {

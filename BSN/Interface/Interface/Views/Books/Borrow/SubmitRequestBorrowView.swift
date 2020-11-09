@@ -13,11 +13,15 @@ struct SubmitRequestBorrowView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
+    @EnvironmentObject private var navState: NavigationState
+    
+    @State private var disableSubmitBtn: Bool = false
+    
     var ubid: String
     
     var body: some View {
         VStack {
-            BorrowBookHeader(model: viewModel.model.book)
+            BorrowBookHeader(model: viewModel.model.userbook)
                 .padding(.top, 20)
             
             Separator(color: .init(hex: 0xE2DFDF), height: 1)
@@ -25,7 +29,7 @@ struct SubmitRequestBorrowView: View {
             
             Form {
                 Section {
-                    DatePicker(selection: $viewModel.borrowDate, in: ...Date(), displayedComponents: .date) {
+                    DatePicker(selection: $viewModel.borrowDate, in: Date()..., displayedComponents: .date) {
                         Text("Thời điểm mượn")
                     }
                    
@@ -38,18 +42,19 @@ struct SubmitRequestBorrowView: View {
             }
             
             InputWithTitle(content: $viewModel.address, placeHolder: "Địa chỉ thuận tiện nhất cho giao dịch", title: "Địa chỉ giao dịch")
+                .onReceive(viewModel.$address) { (adress) in
+                    self.disableSubmitBtn = adress.isEmpty
+                }
             
             InputWithTitle(content: $viewModel.message, placeHolder: "ex: Bạn ơi cho mình mượn cuốn này nhé!", title: "Lời nhắn")
             
             Button(action: {
-                viewModel.didRequestBorrowBook { (success) in
-                    dismiss()
-                    AppManager.shared.selectedIndex = 1
-                }
+                viewModel.saveBorrowBook()
             }, label: {
                 Text("    Hoàn tất    ")
             })
             .buttonStyle(BaseButtonStyle(size: .large))
+            .disabled(disableSubmitBtn)
             
             Spacer()
         }
@@ -79,7 +84,7 @@ struct SubmitRequestBorrowView: View {
                 title: Text("Kết quả"),
                 message: Text(viewModel.resourceInfo.des()),
                 dismissButton: .default(Text("OK")) {
-                    dismiss()
+                    popToBookDetail()
                 })
         } else {
             
@@ -87,10 +92,11 @@ struct SubmitRequestBorrowView: View {
                 title: Text("Kết quả"),
                 message: Text(viewModel.resourceInfo.des()),
                 primaryButton: .default(Text("Thử lại")) {
-                    // depen load or save
+                    // Resave borrowbook
+                    viewModel.saveBorrowBook()
                 },
                 secondaryButton: .cancel(Text("Huỷ bỏ")) {
-                    dismiss()
+                    popToBookDetail()
                 })
         }
     }
@@ -100,8 +106,12 @@ struct SubmitRequestBorrowView: View {
         viewModel.prepareData(ubid: ubid)
     }
     
-    func dismiss() {
+    private func dismiss() {
         presentationMode.wrappedValue.dismiss()
+    }
+    
+    private func popToBookDetail() {
+        self.navState.popTo(viewName: .bookDetail)
     }
 }
 
