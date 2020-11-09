@@ -24,6 +24,8 @@ class BAvailableTransaction: ObservableObject, Identifiable, Equatable {
     
     var distance: Float
     
+    var userBookID: String?
+    
     init() {
         id = UUID().uuidString
         createrID = UUID().uuidString
@@ -42,6 +44,7 @@ class BAvailableTransaction: ObservableObject, Identifiable, Equatable {
         self.bookID = userBook.bookID!
         self.status = BookStatus(rawValue: userBook.status!)!
         self.distance = caculateDistance(rawLocation: userBook.location!)
+        self.userBookID = userBook.id
     }
 }
 

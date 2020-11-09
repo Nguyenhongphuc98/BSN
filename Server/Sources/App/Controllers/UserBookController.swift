@@ -78,7 +78,7 @@ struct UserBookController: RouteCollection {
             throw Abort(.badRequest)
         }
         
-        let sqlQuery = SQLQueryString("SELECT b.title, b.cover, b.author, ub.status, ub.id, ub.user_id as \"userID\", ub.state, ub.book_id as \"bookID\", b.description, ub.status_des as \"statusDes\" FROM user_book as ub, book as b where \(raw: key) = '\(raw: value)' and ub.book_id = b.id")
+        let sqlQuery = SQLQueryString("SELECT b.title, b.cover, b.author, ub.status, ub.id, ub.user_id as \"userID\", ub.state, ub.book_id as \"bookID\", b.description, ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u where ub.book_id = b.id and ub.user_id = u.id and \(raw: key) = '\(raw: value)'")
         
         let db = req.db as! SQLDatabase
         return db.raw(sqlQuery)

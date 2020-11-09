@@ -13,11 +13,12 @@ struct SubmitRequestBorrowView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
+    var ubid: String
+    
     var body: some View {
         VStack {
             BorrowBookHeader(model: viewModel.model.book)
                 .padding(.top, 20)
-                //.padding(.horizontal)
             
             Separator(color: .init(hex: 0xE2DFDF), height: 1)
                 .padding(.horizontal, 30)
@@ -34,7 +35,6 @@ struct SubmitRequestBorrowView: View {
                             }
                         }
                 }
-                
             }
             
             InputWithTitle(content: $viewModel.address, placeHolder: "Địa chỉ thuận tiện nhất cho giao dịch", title: "Địa chỉ giao dịch")
@@ -53,12 +53,15 @@ struct SubmitRequestBorrowView: View {
             
             Spacer()
         }
+        .embededLoading(isLoading: $viewModel.isLoading)
         .padding(.horizontal)
         .background(Color(.secondarySystemBackground))
         .navigationBarTitle("Hoàn tất mượn sách", displayMode: .inline)
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
+        .alert(isPresented: $viewModel.showAlert, content: alert)
+        .onAppear(perform: viewAppeared)
     }
     
     var backButton: some View {
@@ -70,6 +73,33 @@ struct SubmitRequestBorrowView: View {
         }
     }
     
+    func alert() -> Alert {
+        if viewModel.resourceInfo == .success {
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                dismissButton: .default(Text("OK")) {
+                    dismiss()
+                })
+        } else {
+            
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                primaryButton: .default(Text("Thử lại")) {
+                    // depen load or save
+                },
+                secondaryButton: .cancel(Text("Huỷ bỏ")) {
+                    dismiss()
+                })
+        }
+    }
+    
+    private func viewAppeared() {
+        print("Submit borrow book appeared")
+        viewModel.prepareData(ubid: ubid)
+    }
+    
     func dismiss() {
         presentationMode.wrappedValue.dismiss()
     }
@@ -77,7 +107,7 @@ struct SubmitRequestBorrowView: View {
 
 struct SubmitRequestBorrowView_Previews: PreviewProvider {
     static var previews: some View {
-        SubmitRequestBorrowView()
+        SubmitRequestBorrowView(ubid: "---")
     }
 }
 

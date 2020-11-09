@@ -17,7 +17,7 @@ struct BorrowBookCell: View {
     var body: some View {
         HStack {
             NavigationLink(
-                destination: SubmitRequestBorrowView(),
+                destination: SubmitRequestBorrowView(ubid: model.userBookID!),
                 isActive: $nav,
                 label: {
                     EmptyView()

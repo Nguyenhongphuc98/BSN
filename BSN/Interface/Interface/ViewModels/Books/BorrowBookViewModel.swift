@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import Business
 
 // In submit request borrow book
-class BorrowBookViewModel: ObservableObject {
+class BorrowBookViewModel: NetworkViewModel {
     
-    var model: BBorrowBook
+    @Published var model: BBorrowBook
     
     @Published var borrowDate: Date
     
@@ -20,12 +21,23 @@ class BorrowBookViewModel: ObservableObject {
     
     @Published var message: String
     
-    init() {
+    private var userbookManager: UserBookManager
+    
+    override init() {
         model = BBorrowBook()
         borrowDate = Date()
         numOfDay = 7
-        address = model.transactionInfo.adress
-        message = model.transactionInfo.message
+        userbookManager = UserBookManager()
+        address = ""
+        message = ""
+        
+        super.init()
+        observerCoreUserBook()
+    }
+    
+    func prepareData(ubid: String) {
+        isLoading = true
+        userbookManager.getUserBook(ubid: ubid)
     }
     
     func didRequestBorrowBook(complete: @escaping (Bool) -> Void) {
@@ -33,5 +45,30 @@ class BorrowBookViewModel: ObservableObject {
         // To- Do
         // Call BL
         complete(true)
+    }
+    
+    private func observerCoreUserBook() {
+        userbookManager
+            .getUserBookPublisher
+            .sink {[weak self] (ub) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    
+                    if ub.id == kUndefine {
+//                        self.resourceInfo = .getfailure
+//                        self.showAlert = true
+                        // It shoud be load ok
+                        // we just show alert when save failute :(
+                    } else {
+                        self.model = BBorrowBook(userbook: ub)
+                    }
+                }
+            }
+            .store(in: &cancellables)
     }
 }
