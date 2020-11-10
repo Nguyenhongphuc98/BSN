@@ -37,7 +37,7 @@ struct ConfirmExchangeBookView: View {
                     .padding(.horizontal)
                     .font(.system(size: 28))
                 
-                ExchangeBookSecondHeader(model: viewModel.exchangeBook.wantChangeBook!, isCanChange: viewModel.canExchange)
+                ExchangeBookSecondHeader(model: viewModel.exchangeBook.wantChangeBook!)
                     .padding(.bottom)
                 
                 TextWithIconInfo(icon: "clock", title: "Địa chỉ giao dịch", content: viewModel.exchangeBook.transactionInfo.adress)

@@ -71,7 +71,7 @@ class BBook: ObservableObject, Identifiable {
     
     var id: String?
     
-    //var isbn: String
+    //var isbn: String?
     
     @Published var title: String
     

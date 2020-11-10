@@ -32,6 +32,7 @@ struct BUserBookCard: View, PopToable {
                     BBookCard(model: model) {
                         BookStatusText(status: model.status!)
                     }
+                    
                 })
             
             footer

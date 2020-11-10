@@ -79,41 +79,71 @@ struct ExchangeBookController: RouteCollection {
             .flatMap { eb in
             
                 let db = req.db as! SQLDatabase
-                let ub1Query = SQLQueryString("SELECT b.title, b.cover, b.author, ub.status, ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.id = '\(raw: eb.firstUserBookID!.uuidString)'")
+                let ub1Query = SQLQueryString("SELECT b.title, b.cover, b.author, ub.id, ub.status, ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.id = '\(raw: eb.firstUserBookID!.uuidString)'")
                 
-                let ub1 =  db.raw(ub1Query)
+                let ub1 = db.raw(ub1Query)
                     .first(decoding: GetUserBook.self)
                 
-                var sqlStr = "SELECT b.title, b.cover, b.author, ub.status, ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.user_id = '\(curentUID)' and ub.book_id = b.id"
+                var sqlStr = "SELECT b.title, b.cover, b.author, ub.status, ub.id,ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and b.id = '\(eb.exchangeBookID!.uuidString)' and ub.user_id = '\(curentUID)'"
                 
                 // state != new
                 if eb.secondUserBookID != nil {
                     // it mean get info to accept or decline
                     // rather than submit final step exchange for current transaction
-                    sqlStr = "SELECT b.title, b.cover, b.author, ub.status, ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.id = '\(eb.secondUserBookID!.uuidString)'"
+                    sqlStr = "SELECT b.title, b.cover, b.author, ub.id, ub.status, ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.id = '\(eb.secondUserBookID!.uuidString)'"
                 }
                 
                 let ub2Query = SQLQueryString(sqlStr)
                 
-                let ub2 =  db.raw(ub2Query)
+                let ub2 = db.raw(ub2Query)
                     .first(decoding: GetUserBook.self)
                 
-                return ub1.and(ub2).map { (u1, u2) -> (GetExchangeBook) in
-                    GetExchangeBook(
-                        id: eb.id!.uuidString,
-                        firstTitle: u1!.title!,
-                        firstAuthor: u1!.author!,
-                        firstCover: u1!.cover!,
-                        secondTitle: u2 != nil ? u2!.title : nil,
-                        secondAuthor: u2 != nil ? u2!.author : nil,
-                        firstOwnerName: u1!.ownerName,
-                        firstStatus: u1!.status,
-                        firstStatusDes: u1!.statusDes,
-                        secondStatus: u2 != nil ? u2!.status : nil,
-                        secondStatusDes: u2!.statusDes,
-                        secondCover: u2!.cover,
-                        state: eb.state
-                    )
+                let bookQuery = SQLQueryString("SELECT b.title, b.cover, b.author FROM book as b WHERE b.id = '\(raw: eb.exchangeBookID!.uuidString)'")
+                
+                let book = db.raw(bookQuery)
+                    .first(decoding: GetUserBook.self)
+                
+                return book.flatMap { (b) -> EventLoopFuture<GetExchangeBook> in
+                    return ub1.and(ub2).map { (u1, u2) -> (GetExchangeBook) in
+                        if u2 == nil {
+                            
+                            return GetExchangeBook(
+                                id: eb.id!.uuidString,
+                                firstubid: u1?.id,
+                                firstTitle: u1!.title!,
+                                firstAuthor: u1!.author!,
+                                firstCover: u1!.cover!,
+                                secondTitle: b?.title,
+                                secondAuthor: b?.author,
+                                firstOwnerName: u1!.ownerName,
+                                firstStatus: u1!.status,
+                                firstStatusDes: u1!.statusDes,
+                                secondStatus: b?.status,
+                                secondStatusDes: b?.statusDes,
+                                secondCover: b?.cover,
+                                state: eb.state
+                            )
+                        } else {
+                            
+                            return GetExchangeBook(
+                                id: eb.id!.uuidString,
+                                firstubid: u1?.id,
+                                secondubid: u2?.id,
+                                firstTitle: u1!.title!,
+                                firstAuthor: u1!.author!,
+                                firstCover: u1!.cover!,
+                                secondTitle: u2 != nil ? u2!.title : nil,
+                                secondAuthor: u2 != nil ? u2!.author : nil,
+                                firstOwnerName: u1!.ownerName,
+                                firstStatus: u1!.status,
+                                firstStatusDes: u1!.statusDes,
+                                secondStatus: u2?.status,
+                                secondStatusDes: u2?.statusDes,
+                                secondCover: u2?.cover,
+                                state: eb.state
+                            )
+                        }
+                    }
                 }
             }
     }

@@ -126,9 +126,15 @@ struct GetExchangeBook: Content {
     
     var state: String?
     
-    init(id: String? = nil, firstTitle: String, firstAuthor: String, firstCover: String? = nil, location: String? = nil, secondTitle: String? = nil, secondAuthor: String? = nil, firstOwnerName: String? = nil, firstStatus: String? = nil, firstStatusDes: String? = nil, secondStatus: String? = nil, secondStatusDes: String? = nil, secondCover: String? = nil, state: String? = nil) {
+    var firstubid: String?
+    
+    var secondubid: String?
+    
+    init(id: String? = nil, firstubid: String? = nil, secondubid: String? = nil, firstTitle: String, firstAuthor: String, firstCover: String? = nil, location: String? = nil, secondTitle: String? = nil, secondAuthor: String? = nil, firstOwnerName: String? = nil, firstStatus: String? = nil, firstStatusDes: String? = nil, secondStatus: String? = nil, secondStatusDes: String? = nil, secondCover: String? = nil, state: String? = nil) {
         
         self.id = id
+        self.firstubid = firstubid
+        self.secondubid = secondubid
         self.firstTitle = firstTitle
         self.firstAuthor = firstAuthor
         self.firstCover = firstCover

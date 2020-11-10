@@ -30,7 +30,7 @@ struct BBookCard<Content: View>: View {
             VStack(alignment: .leading) {
                 Text(model.title)
                     .roboto(size: 15)
-                    .lineLimit(2)
+                    .lineLimit(1)
                 
                 Text(model.author)
                     .robotoLight(size: 14)

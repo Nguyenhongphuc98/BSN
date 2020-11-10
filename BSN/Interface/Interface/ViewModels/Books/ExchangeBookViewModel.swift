@@ -57,6 +57,8 @@ class ExchangeBookViewModel: NetworkViewModel {
                     } else {
                         self.exchangeBook = BExchangeBookFull(
                             id: eb.id!,
+                            firstubid: eb.firstubid,
+                            secondubid: eb.secondubid,
                             firstTitle: eb.firstTitle!,
                             firstAuthor: eb.firstAuthor!,
                             firstCover: eb.firstCover,

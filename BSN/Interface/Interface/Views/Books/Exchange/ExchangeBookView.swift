@@ -28,7 +28,7 @@ struct ExchangeBookView: View {
                     .padding(.horizontal)
                     .font(.system(size: 28))
                 
-                ExchangeBookSecondHeader(model: viewModel.exchangeBook.wantChangeBook!, isCanChange: viewModel.canExchange)
+                ExchangeBookSecondHeader(model: viewModel.exchangeBook.wantChangeBook!)
                 
                 if viewModel.canExchange {
                     InputWithTitle(content: $viewModel.traddingAdress, placeHolder: "Địa chỉ thuận tiện nhất cho giao dịch", title: "Địa chỉ giao dịch")
@@ -118,7 +118,7 @@ struct ExchangeBookSecondHeader: View {
     
     var model: BUserBook
     
-    var isCanChange: Bool = true
+    //var isCanChange: Bool = true
     
     var body: some View {
         VStack {
@@ -134,7 +134,7 @@ struct ExchangeBookSecondHeader: View {
                     Text(model.author)
                         .robotoLight(size: 14)
                     
-                    if isCanChange {
+                    if model.id != nil {
                         BookStatusText(status: model.status!)
                     } else {
                         Text("Bạn không có cuốn sách này")
@@ -149,7 +149,7 @@ struct ExchangeBookSecondHeader: View {
                     .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))
             }
             
-            if isCanChange {
+            if model.id != nil {
                 Text(model.statusDes)
                     .roboto(size: 13)
                     .padding(.vertical)
@@ -160,7 +160,7 @@ struct ExchangeBookSecondHeader: View {
     }
     
     var height: CGFloat {
-        isCanChange ? 155 : 100
+        (model.id != nil) ? 155 : 100
     }
 }
 

@@ -122,6 +122,7 @@ public struct ProfileView: View, PopToable {
     var books: some View {
         ZStack(alignment: .trailing) {
             BBookGrid(models: viewModel.books, style: .mybook)
+                .padding(.bottom, 100)
             
             NavigationLink(
                 destination: SearchAddBookView()
@@ -143,6 +144,8 @@ public struct ProfileView: View, PopToable {
         .onReceive(navState.$viewName) { (viewName) in
             if viewName == self.viewName {
                 navAddUB = false
+                // reload data when pop to root (this view)
+                viewModel.prepareData(uid: userID)
             }
         }
     }

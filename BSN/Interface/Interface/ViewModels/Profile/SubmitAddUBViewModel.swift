@@ -107,6 +107,7 @@ class SubmitAddUBViewModel: ObservableObject {
                         self.showAlert.toggle()
                     } else {
                         
+                        self.isbn = book.isbn
                         self.model.title = book.title
                         self.model.author = book.author
                         self.model.description = book.description!
