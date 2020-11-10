@@ -13,7 +13,7 @@ class Note: Undefinable, ObservableObject {
     
     var createDate: Date
     
-    var content: String
+    @Published var content: String
     
     init() {
         id = kUndefine

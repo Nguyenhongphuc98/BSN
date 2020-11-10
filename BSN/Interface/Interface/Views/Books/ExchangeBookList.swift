@@ -12,18 +12,14 @@ struct ExchangeBookList: View {
     var models: [BExchangeBook]
     
     var body: some View {
-        VStack {
-            Separator(color: .white, height: 3)
-            
-            List {
-                ForEach(models) { item in
-                    VStack {
-                        BExchangeBookCard(model: item)
-                        Separator(color: .white, height: 3)
-                    }
+        List {
+            ForEach(models) { item in
+                VStack {
+                    BExchangeBookCard(model: item)
+                    Separator(color: .white, height: 3)
                 }
-                .listRowInsets(.zero)
             }
+            .listRowInsets(.zero)
         }
     }
 }

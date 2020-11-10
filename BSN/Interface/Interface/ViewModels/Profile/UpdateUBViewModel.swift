@@ -13,8 +13,14 @@ class UpdateUBViewModel: NetworkViewModel {
     
     var userbookManager: UserBookManager
     
+    @Published var bState: BookState
+    
+    @Published var bStatus: BookStatus
+    
     override init() {
         userbookManager = UserBookManager()
+        bState = .available
+        bStatus = .new
         super.init()
         
         observerUpdate()

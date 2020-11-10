@@ -76,11 +76,11 @@ struct NewsFeedCard: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(maxHeight: 200)
+                    .clipped()
+                    .padding(2)
                     .onTapGesture {
                         self.presentPhoto.toggle()
                     }
-                    .clipped()
-                    .padding(2)
             }
             
             actionComponent

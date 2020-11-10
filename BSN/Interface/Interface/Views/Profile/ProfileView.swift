@@ -7,7 +7,13 @@
 
 import SwiftUI
 
-public struct ProfileView: View {
+public struct ProfileView: View, PopToable {
+    
+    var viewName: ViewName = .profileRoot
+    
+    @EnvironmentObject var navState: NavigationState
+    
+    // =========================
     
     @ObservedObject var viewModel: ProfileViewModel = ProfileViewModel.shared
 
@@ -15,11 +21,11 @@ public struct ProfileView: View {
     
     @EnvironmentObject var root: AppManager
     
-    @EnvironmentObject var navState: NavigationState
-    
     /// User will display on profile
     // If value is nil, get current userinfo
     var userID: String?
+    
+    @State private var navAddUB: Bool = false
     
     public init(uid: String? = nil) {
         self.userID = uid
@@ -121,6 +127,7 @@ public struct ProfileView: View {
                 destination: SearchAddBookView()
                     .environmentObject(navState)
                     .environmentObject(PassthroughtEB(userBook: BUserBook())), // just temp
+                isActive: $navAddUB,
                 label: {
                     
                     Image(systemName: "plus")
@@ -132,6 +139,11 @@ public struct ProfileView: View {
                         .padding()
                 })
                 .position(x: 50, y: 450)
+        }
+        .onReceive(navState.$viewName) { (viewName) in
+            if viewName == self.viewName {
+                navAddUB = false
+            }
         }
     }
     

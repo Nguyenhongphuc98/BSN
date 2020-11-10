@@ -17,6 +17,7 @@ class PassthroughtEB: ObservableObject {
     
     init(userBook: BUserBook) {
         self.needChangeUB = userBook
+        //wantChangeBook = BBook()
     }
     
     func addBook(book: BBook) -> Self {

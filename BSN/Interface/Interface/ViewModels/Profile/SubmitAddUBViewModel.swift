@@ -21,6 +21,10 @@ class SubmitAddUBViewModel: ObservableObject {
     
     @Published var isLoading: Bool
     
+    @Published var bState: BookState
+    
+    @Published var bStatus: BookStatus
+    
     private var bookManager: BookManager
     
     private var userBookManager: UserBookManager
@@ -42,6 +46,8 @@ class SubmitAddUBViewModel: ObservableObject {
         enableDoneBtn = false
         isLoading = false
         resourceInfo = .success
+        bState = .available
+        bStatus = .new
         
         setupReceiveBookInfo()
         setupReceiveSaveBookInfo()
@@ -124,8 +130,8 @@ class SubmitAddUBViewModel: ObservableObject {
                 let userBook = EUserBook(
                     uid: AppManager.shared.currentUser.id,
                     bid: book.id,
-                    status: self.model.status!.rawValue,
-                    state: self.model.state!.rawValue,
+                    status: self.bStatus.rawValue,
+                    state: self.bState.rawValue,
                     statusDes: self.model.statusDes,
                     title: book.title,
                     author: book.author

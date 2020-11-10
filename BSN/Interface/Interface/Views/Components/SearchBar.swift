@@ -15,6 +15,8 @@ struct SearchBar: View {
     
     var onchange: (() -> Void)?
     
+    //var oncancel: (() -> Void)?
+    
     var body: some View {
         HStack {
             // Text search content

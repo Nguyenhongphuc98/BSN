@@ -35,7 +35,7 @@ struct MyBookDetailView: View {
                         print("did click edit book")
                     }, label: {
                         NavigationLink(
-                            destination: UpdateUBView(model: viewModel.model),
+                            destination: UpdateUBView().environmentObject(viewModel.model),
                             label: {
                                 Image(systemName: "pencil")
                                     .font(.system(size: 25))
@@ -171,7 +171,6 @@ struct MyBookDetailViewHeader: View {
     var body: some View {
         VStack {
             HStack(alignment: .center) {
-                //Image(model.cover!, bundle: interfaceBundle)
                 BSNImage(urlString: model.cover, tempImage: "book_cover")
                     .frame(width: 80, height: 100)
                     .background(Color.white)

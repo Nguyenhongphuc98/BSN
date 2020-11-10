@@ -34,10 +34,10 @@ struct SubmitRequestBorrowView: View {
                     }
                    
                     Picker("Thời gian mượn", selection: $viewModel.numOfDay) {
-                            ForEach(1 ..< 30) {
-                                Text("\($0) ngày")
-                            }
+                        ForEach(1 ..< 30) {
+                            Text("\($0) ngày")
                         }
+                    }
                 }
             }
             

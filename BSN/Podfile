@@ -20,4 +20,5 @@ target 'BSN' do
   project 'BSN/BSN.xcodeproj'
   pod 'AlamofireImage', '~> 4.1'
   pod 'SwiftyJSON', '~> 4.0'
+  pod 'FBSDKLoginKit'
 end

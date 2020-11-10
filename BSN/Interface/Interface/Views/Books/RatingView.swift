@@ -28,34 +28,38 @@ struct RatingView: View {
                 .robotoBold(size: 17)
                 .padding()
             
-            Spacer()
-            
-            SubRatingItem(icon: "newspaper", title: "Giọng văn cuốn hút") { rate in
-                viewModel.rating.writing = Float(rate)
-            }
-            
-            SubRatingItem(icon: "target", title: "Có mục đích rõ ràng") { rate in
-                viewModel.rating.target = Float(rate)
-            }
-            
-            SubRatingItem(icon: "person.fill.checkmark", title: "Nhân vật chính lôi cuốn") { rate in
-                viewModel.rating.character = Float(rate)
-            }
-            
-            SubRatingItem(icon: "info.circle", title: "Cung cấp thông tin hữu ích") { rate in
-                viewModel.rating.info = Float(rate)
-            }
-            
-            TextField("Mô tả ngắn (tiêu đề)", text: $viewModel.title)
+            ScrollView(showsIndicators: false) {
+                VStack {
+                    SubRatingItem(icon: "newspaper", title: "Giọng văn cuốn hút") { rate in
+                        viewModel.rating.writing = Float(rate)
+                    }
+                    
+                    SubRatingItem(icon: "target", title: "Có mục đích rõ ràng") { rate in
+                        viewModel.rating.target = Float(rate)
+                    }
+                    
+                    SubRatingItem(icon: "person.fill.checkmark", title: "Nhân vật chính lôi cuốn") { rate in
+                        viewModel.rating.character = Float(rate)
+                    }
+                    
+                    SubRatingItem(icon: "info.circle", title: "Cung cấp thông tin hữu ích") { rate in
+                        viewModel.rating.info = Float(rate)
+                    }
+                    
+                    TextField("Mô tả ngắn (tiêu đề)", text: $viewModel.title)
+                        .padding()
+                        .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color._primary))
+                    
+                    CoreMessageEditor(placeHolder: "Để lại đánh giá của bạn tại đây") { (message) in
+                        lastMessage = message
+                        viewModel.didRating(message: lastMessage, bookID: bookID)
+                    }
+                    
+                    Spacer()
+                }
                 .padding()
-                .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color._primary))
-            
-            CoreMessageEditor(placeHolder: "Để lại đánh giá của bạn tại đây") { (message) in
-                lastMessage = message
-                viewModel.didRating(message: lastMessage, bookID: bookID)
             }
         }
-        .padding()
         .embededLoading(isLoading: $viewModel.isLoading)
         .alert(isPresented: $viewModel.showAlert, content: alert)
         .onAppear(perform: viewAppeared)

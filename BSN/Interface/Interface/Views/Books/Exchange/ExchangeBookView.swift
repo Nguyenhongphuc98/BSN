@@ -14,6 +14,8 @@ struct ExchangeBookView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
+    @EnvironmentObject private var navState: NavigationState
+    
     var ebID: String
     
     var body: some View {

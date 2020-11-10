@@ -16,20 +16,26 @@ struct AddNoteView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
+    @State var message: String = ""
+    
     var body: some View {
         ZStack(alignment: .top) {
             VStack(spacing: 20) {
-                Text("Thêm bài học")
+                Text("\(passthroughtNote.isUndefine() ? "Thêm" : "Cập nhật") bài học")
                     .robotoBold(size: 18)
                 
-                EditorWithPlaceHolder(text: $passthroughtNote.content, placeHolder: "Để lại bài học của bạn tại đây")
+                EditorWithPlaceHolder(text: $message, placeHolder: "Để lại bài học của bạn tại đây")
                     .frame(height: 100)
                     .cornerRadius(5)
                     .padding()
                 
                 Spacer()
                 
-                Button(action: { viewModel.processNote(note: passthroughtNote) }, label: {
+                Button(action: {
+                    passthroughtNote.content = message
+                    viewModel.processNote(note: passthroughtNote)
+                },
+                label: {
                     Text("   \(passthroughtNote.isUndefine() ? "Lưu" : "Cập nhật") bài học   ")
                 })
                 .buttonStyle(BaseButtonStyle(size: .large))
@@ -49,6 +55,9 @@ struct AddNoteView: View {
         .background(Color(.secondarySystemBackground))
         .embededLoading(isLoading: $viewModel.isLoading)
         .alert(isPresented: $viewModel.showAlert, content: alert)
+        .onAppear {
+            message = passthroughtNote.content
+        }
     }
     
     func alert() -> Alert {

@@ -16,11 +16,7 @@ struct SearchAddBookView: View {
     
     @State private var searchFound: Bool = false
     
-    @State private var activeNav: Bool = false {
-        didSet {
-            print("did set activeNav - SearchAddBookView")
-        }
-    }
+    @State private var activeNav: Bool = false
     
     // Mean can't create new book,
     // Search in store only
@@ -34,6 +30,8 @@ struct SearchAddBookView: View {
     
     @State var searchText: String = ""
     
+    @State var destinationID: String = "undefine"
+    
     public var body: some View {
         VStack {
             SearchBar(isfocus: $viewModel.isfocus, searchText: $searchText)
@@ -43,7 +41,6 @@ struct SearchAddBookView: View {
                 }
             
             searchContent
-                .resignKeyboardOnDragGesture()
             
             Spacer()
         }
@@ -66,28 +63,41 @@ struct SearchAddBookView: View {
                 Loading()
                     .padding(.top, 100)
             } else {
-                ScrollView {
-                    LazyVStack {
-                        ForEach(viewModel.searchBooks) { book in
-                            
-                            NavigationLink(
-                                destination: getDestination(id: book.id!)
-                                    .environmentObject(navState)
-                                    .environmentObject(pasthoughtObj),
-                                isActive: $activeNav,
-                                label: {
-                                    EmptyView()
-                                })
-                            
+               
+                    NavigationLink(
+                        destination:
+                            getDestination(id: destinationID)
+                            .environmentObject(navState)
+                            .environmentObject(pasthoughtObj),
+                        isActive: $activeNav,
+                        label: {
+                            EmptyView()
+                        })
+                        .frame(width: 0, height: 0)
+                        .opacity(0)
+            
+                List {
+                    ForEach(viewModel.searchBooks) { book in
+                        
+                        VStack {
                             Button {
+                                // exchange
                                 _ = pasthoughtObj.addBook(book: book)
+                                // add book
+                                destinationID = book.id!
                                 activeNav = true
                             } label: {
                                 SearchBookItem(model: book)
                             }
+                            
+                            Separator(color: .white, height: 2)
                         }
                     }
+                    .listRowInsets(.zeroNegativeTop)
                 }
+                .padding(.horizontal)
+                .padding(.top, 20)
+                .resignKeyboardOnDragGesture()
                 
                 if viewModel.searchBooks.isEmpty {
                     Text("Không tìm thấy sách")
@@ -111,7 +121,8 @@ struct SearchAddBookView: View {
                 
             }, label: {
                 NavigationLink(
-                    destination: SubmitAddBookView().environmentObject(navState),
+                    destination: SubmitAddBookView()
+                        .environmentObject(navState),
                     label: {
                         Text("Nhập thủ công")
                             .robotoBold(size: 18)

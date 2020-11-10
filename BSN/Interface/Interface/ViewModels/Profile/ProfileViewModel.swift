@@ -78,6 +78,7 @@ public class ProfileViewModel: ObservableObject {
                             )
                             self.books.append(userBook)
                         }
+                        self.objectWillChange.send()
                     }
                 }
             }

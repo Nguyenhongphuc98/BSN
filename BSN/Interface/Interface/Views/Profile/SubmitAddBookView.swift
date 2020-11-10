@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SubmitAddBookView: View {
     
+    @EnvironmentObject var navState: NavigationState
+    
     // Book will add to User book
     // If create new so it will be nil
     var bookID: String?
@@ -40,16 +42,23 @@ struct SubmitAddBookView: View {
                     .padding(.horizontal)
                     
                     Form {
-                        Picker("Tình trạng", selection: $viewModel.model.status) {
+                        Picker("Tình trạng", selection: $viewModel.bStatus) {
                             ForEach(BookStatus.allCases, id: \.self) {
-                                Text("\($0.getTitle())")
+                                Text("\($0.des())")
+                                    .tag($0)
                             }
                         }
+                        .onReceive(viewModel.$bStatus) { (status) in
+                            viewModel.model.status = status
+                        }
                         
-                        Picker("Trạng thái", selection: $viewModel.model.state) {
+                        Picker("Trạng thái", selection: $viewModel.bState) {
                             ForEach(BookState.allCases, id: \.self) {
                                 Text("\($0.des())")
                             }
+                        }
+                        .onReceive(viewModel.$bState) { (state) in
+                            viewModel.model.state = state
                         }
                     }
                     .frame(height: 130)
@@ -74,12 +83,7 @@ struct SubmitAddBookView: View {
             }
         }
         .onAppear(perform: viewAppeared)
-        .alert(isPresented: $viewModel.showAlert) {
-            Alert(
-                title: Text("Kết quả"),
-                message: Text(viewModel.resourceInfo.des())
-            )
-        }
+        .alert(isPresented: $viewModel.showAlert, content: alert)
     }
     
     private var isbnInfo: some View {
@@ -100,10 +104,36 @@ struct SubmitAddBookView: View {
         }
     }
     
+    func alert() -> Alert {
+        if viewModel.resourceInfo == .success {
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                dismissButton: .default(Text("OK")) {
+                    popToRoot()
+                })
+        } else {
+            
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                primaryButton: .default(Text("Thử lại")) {
+                    viewModel.addUserBook()
+                },
+                secondaryButton: .cancel(Text("Huỷ bỏ")) {
+                    popToRoot()
+                })
+        }
+    }
+    
     private func viewAppeared() {
         if let id = bookID {
             viewModel.prepareData(bookID: id)
         }
+    }
+    
+    private func popToRoot() {
+        navState.popTo(viewName: .profileRoot)
     }
 }
 

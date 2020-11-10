@@ -8,7 +8,7 @@
 import SwiftUI
 
 // MARK: - Book state and status
-enum BookState: String, CaseIterable {
+enum BookState: String, CaseIterable, Equatable {
     case borrowed
     case available //to be borrowed
     case reading
@@ -29,6 +29,8 @@ enum BookState: String, CaseIterable {
             return "Không xác định"
         }
     }
+    
+    var localizedName: LocalizedStringKey { LocalizedStringKey(rawValue) }
 }
 
 enum BookStatus: String, CaseIterable {
@@ -37,7 +39,7 @@ enum BookStatus: String, CaseIterable {
     case old
     case veryOld
 
-    func getTitle() -> String {
+    func des() -> String {
         switch self {
         case .new:
             return "Mới"

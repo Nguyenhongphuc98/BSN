@@ -13,14 +13,7 @@ struct SearchBookItem: View {
     var model: BBook
     
     var body: some View {
-//        NavigationLink(
-//            destination: BookDetailView(),
-//            label: {
-//
-//            })
-        
         HStack(alignment: .center) {
-            //Image(model.photo, bundle: interfaceBundle)
             BSNImage(urlString: model.cover, tempImage: "book_cover")
                 .frame(width: 50, height: 60)
             

@@ -16,7 +16,7 @@ struct BookStatusText: View {
             Text("Tình trạng: ")
                 .robotoLight(size: 13)
             +
-                Text(status.getTitle())
+                Text(status.des())
                 .robotoBold(size: 13)
                 .foregroundColor(status.getColor())
         }

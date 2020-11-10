@@ -14,7 +14,7 @@ struct BExchangeBookCard: View {
     @State private var nav: Bool = false
     
     var body: some View {
-        HStack(alignment: .center) {
+        ZStack {
             NavigationLink(
                 destination: ExchangeBookView(ebID: model.id!),
                 isActive: $nav,
@@ -23,41 +23,47 @@ struct BExchangeBookCard: View {
                 })
                 .frame(width: 0, height: 0)
                 .opacity(0)
-            
-            BSNImage(urlString: model.needChangeBook.cover!, tempImage: "book_cover")
-                .frame(width: 110, height: 130)
-                
-            VStack(alignment: .leading) {
-                Text(model.needChangeBook.title)
-                    .roboto(size: 15)
-                    .lineLimit(1)
-                
-                Text(model.needChangeBook.author)
-                    .robotoLight(size: 14)
-                    .lineLimit(1)
-                
-                Spacer()
-                
-                HStack {
-                    Image(systemName: "repeat")
-                        .foregroundColor(._primary)
-                        .padding(.horizontal)
-                    
-                    DistanceText(distance: model.distance, style: .short)
+
+            Button {
+                nav = true
+            } label: {
+                HStack(alignment: .center) {
+                    BSNImage(urlString: model.needChangeBook.cover!, tempImage: "book_cover")
+                        .frame(width: 110, height: 130)
+
+                    VStack(alignment: .leading) {
+                        Text(model.needChangeBook.title)
+                            .roboto(size: 15)
+                            .lineLimit(1)
+
+                        Text(model.needChangeBook.author)
+                            .robotoLight(size: 14)
+                            .lineLimit(1)
+
+                        Spacer()
+
+                        HStack {
+                            Image(systemName: "repeat")
+                                .foregroundColor(._primary)
+                                .padding(.horizontal)
+
+                            DistanceText(distance: model.distance, style: .short)
+                        }
+
+                        Spacer()
+
+                        Text(model.wantChangeBook!.title)
+                            .roboto(size: 15)
+                            .lineLimit(1)
+
+                        Text(model.wantChangeBook!.author)
+                            .robotoLight(size: 14)
+                            .lineLimit(1)
+                    }
+
+                    Spacer()
                 }
-                
-                Spacer()
-                
-                Text(model.wantChangeBook!.title)
-                    .roboto(size: 15)
-                    .lineLimit(1)
-                
-                Text(model.wantChangeBook!.author)
-                    .robotoLight(size: 14)
-                    .lineLimit(1)
             }
-            
-            Spacer()
         }
         .padding(.vertical)
         .padding(.trailing)

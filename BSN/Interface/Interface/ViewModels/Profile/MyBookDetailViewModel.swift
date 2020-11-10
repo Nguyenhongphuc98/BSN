@@ -79,6 +79,8 @@ class MyBookDetailViewModel: NetworkViewModel {
                         self.model.description = ub.description!
                         self.model.cover = ub.cover
                         self.model.statusDes = ub.statusDes!
+                        self.model.state = ub.state.map { BookState(rawValue: $0)! }
+                        self.model.status = ub.status.map { BookStatus(rawValue: $0)! }
                     }
                 }
             }

@@ -13,7 +13,11 @@ struct UpdateUBView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @StateObject var model: BUserBook
+    @EnvironmentObject var model: BUserBook
+    
+    @State private var firstimeState: Bool = true
+    
+    @State private var firstimeStatus: Bool = true
     
     var body: some View {
         VStack(spacing: 10) {
@@ -23,15 +27,31 @@ struct UpdateUBView: View {
                 .padding(.horizontal)
             
             Form {
-                Picker("Tình trạng", selection: $model.status) {
+                Picker("Tình trạng", selection: $viewModel.bStatus) {
                     ForEach(BookStatus.allCases, id: \.self) {
-                        Text("\($0.getTitle())")
+                        Text("\($0.des())")
+                    }
+                }
+                .onReceive(viewModel.$bStatus) { (status) in
+                    if firstimeStatus {
+                        firstimeStatus = false
+                        viewModel.bStatus = model.status!
+                    } else {
+                        model.status = status
                     }
                 }
                 
-                Picker("Trạng thái", selection: $model.state) {
+                Picker("Trạng thái", selection: $viewModel.bState) {
                     ForEach(BookState.allCases, id: \.self) {
                         Text("\($0.des())")
+                    }
+                }
+                .onReceive(viewModel.$bState) { (state) in
+                    if firstimeState {
+                        firstimeState = false
+                        viewModel.bState = model.state!
+                    } else {
+                        model.state = state
                     }
                 }
             }
@@ -89,6 +109,6 @@ struct UpdateUBView: View {
 
 struct UpdateBookView_Previews: PreviewProvider {
     static var previews: some View {
-        UpdateUBView(model: BUserBook())
+        UpdateUBView().environmentObject(BUserBook())
     }
 }

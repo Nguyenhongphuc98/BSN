@@ -28,6 +28,9 @@ public struct ExploreBookView: View, PopToable {
     
     @State private var searchText: String = ""
     
+    // nav to book detail when search
+    @State private var navToBookDetail: Bool = false
+    
     public init() { }
     
     public var body: some View {
@@ -40,7 +43,6 @@ public struct ExploreBookView: View, PopToable {
             
                 if viewModel.isfocus {
                     viewSearchMode
-                        .resignKeyboardOnDragGesture()
                 } else {
                     viewNormalMode
                 }
@@ -72,16 +74,31 @@ public struct ExploreBookView: View, PopToable {
                 Loading()
                     .padding(.top, 100)
             } else {
-                ScrollView {
+                List {
                     ForEach(viewModel.searchBooks) { book in
-                        NavigationLink(
-                            destination: BookDetailView(bookID: book.id!).environmentObject(navState),
-                            label: {
+                        VStack {
+                            NavigationLink(
+                                destination: BookDetailView(bookID: book.id!).environmentObject(navState),
+                                label: {
+                                    EmptyView()
+                                })
+                                .frame(width:0, height: 0)
+                                .opacity(0)
+                            
+                            Button {
+                                navToBookDetail = true
+                            } label: {
                                 SearchBookItem(model: book)
-                            })
-                            .padding(.horizontal)
+                                    .padding(.horizontal)
+                            }
+                            
+                            Separator(color: .white, height: 3)
+                        }
                     }
+                    .listRowInsets(.zeroNegativeTop)
                 }
+                .listStyle(PlainListStyle())
+                .resignKeyboardOnDragGesture()
                 
                 if viewModel.searchBooks.isEmpty {
                     Text("Không tìm thấy sách")

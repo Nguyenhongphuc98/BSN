@@ -13,9 +13,9 @@ class BUserBook: BBook {
     
     var ownerID: String?
     
-    var status: BookStatus?
+    @Published var status: BookStatus?
     
-    var state: BookState?
+    @Published var state: BookState?
     
     var statusDes: String
     

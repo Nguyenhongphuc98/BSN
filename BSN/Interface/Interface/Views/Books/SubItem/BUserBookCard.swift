@@ -24,24 +24,24 @@ struct BUserBookCard: View, PopToable {
     @State private var ubid: String = ""
     
     var body: some View {
-        NavigationLink(
-            destination:navigateView,
-            isActive: $activeBookDetail,
-            label: {
-                VStack {
+        VStack {
+            NavigationLink(
+                destination:navigateView,
+                isActive: $activeBookDetail,
+                label: {
                     BBookCard(model: model) {
                         BookStatusText(status: model.status!)
                     }
-                    
-                    footer
-                }
-            })
-            .onReceive(navState.$viewName) { (viewName) in
-                if viewName == self.viewName {
-                    activeBookDetail = false
-                    activeSearchBook = false
-                }
+                })
+            
+            footer
+        }
+        .onReceive(navState.$viewName) { (viewName) in
+            if viewName == self.viewName {
+                activeBookDetail = false
+                activeSearchBook = false
             }
+        }
     }
     
     var navigateView: AnyView {
@@ -61,6 +61,7 @@ struct BUserBookCard: View, PopToable {
                 Button(action: {
                     print("did click exchange book")
                     activeSearchBook.toggle()
+                    navState.viewName = .undefine
                 }, label: {
                     NavigationLink(
                         destination: SearchAddBookView(useForExchangeBook: true)
