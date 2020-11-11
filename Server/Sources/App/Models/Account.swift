@@ -26,7 +26,7 @@ final class Account: Model {
     
     init() { }
     
-    init(id: UUID? = nil, username: String, password: String) {
+    init(id: UUID? = nil, username: String, password: String, isOnboard: Bool = false) {
         self.id = id
         self.username = username
         self.password = password
@@ -35,3 +35,40 @@ final class Account: Model {
 }
 
 extension Account: Content { }
+
+extension Account {
+    func asPublic() -> Account {
+        return Account(
+            id: self.id,
+            username: self.username,
+            password: "",
+            isOnboard: self.isOnboarded
+        )
+    }
+}
+
+extension Account {
+    struct Create: Content {
+        var name: String
+        var username: String // in this case, we using email
+        var password: String
+        var confirmPassword: String
+    }
+}
+
+extension Account.Create: Validatable {
+    static func validations(_ validations: inout Validations) {
+        validations.add("name", as: String.self, is: !.empty)
+        validations.add("username", as: String.self, is: .email)
+        validations.add("password", as: String.self, is: .count(8...))
+    }
+}
+
+extension Account: ModelAuthenticatable {
+    static let usernameKey = \Account.$username
+    static let passwordHashKey = \Account.$password
+
+    func verify(password: String) throws -> Bool {
+        try Bcrypt.verify(password, created: self.password)
+    }
+}

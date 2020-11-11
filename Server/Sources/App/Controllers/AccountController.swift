@@ -11,11 +11,15 @@ struct AccountController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
         let accounts = routes.grouped("api", "v1", "accounts")
-        accounts.get(use: index)
-        accounts.post(use: create)
-        accounts.group(":accountID") { user in
+        let authen = accounts.grouped(Account.authenticator())
+        
+        authen.get(use: index)
+        authen.post(use: create)
+        authen.group(":accountID") { user in
             user.delete(use: delete)
         }
+        
+        authen.post("login", use: login)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[Account]> {
@@ -23,8 +27,27 @@ struct AccountController: RouteCollection {
     }
 
     func create(req: Request) throws -> EventLoopFuture<Account> {
-        let account = try req.content.decode(Account.self)
-        return account.save(on: req.db).map { account }
+        try Account.Create.validate(content: req)
+        let create = try req.content.decode(Account.Create.self)
+        
+        guard create.password == create.confirmPassword else {
+            throw Abort(.badRequest, reason: "Passwords did not match")
+        }
+        
+        let account = try Account(
+            username: create.username,
+            password: Bcrypt.hash(create.password)
+        )
+        return account.save(on: req.db)
+            .flatMap {
+                let user = User(
+                    username: create.username,
+                    displayname: create.name,
+                    accountID: account.id!)
+                
+                return user.save(on: req.db)
+                    .map { return account }
+            }
     }
 
     func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {
@@ -32,5 +55,10 @@ struct AccountController: RouteCollection {
             .unwrap(or: Abort(.notFound))
             .flatMap { $0.delete(on: req.db) }
             .transform(to: .ok)
+    }
+    
+    // Advance func
+    func login(req: Request) throws -> Account {
+        try req.auth.require(Account.self).asPublic()
     }
 }

@@ -22,18 +22,18 @@ final class User: Model {
     @Field(key: "displayname")
     var displayname: String
     
-    @Field(key: "avatar")
-    var avatar: String
+    @OptionalField(key: "avatar")
+    var avatar: String?
         
-    @Field(key: "cover")
-    var cover: String
+    @OptionalField(key: "cover")
+    var cover: String?
     
     // Format: longitude, latitude -Name on map
-    @Field(key: "location")
-    var location: String
+    @OptionalField(key: "location")
+    var location: String?
         
-    @Field(key: "about")
-    var about: String
+    @OptionalField(key: "about")
+    var about: String?
         
     @Field(key: "account_id")
     var accountID: Account.IDValue
@@ -43,7 +43,7 @@ final class User: Model {
         
     init() { }
     
-    init(id: UUID? = nil, username: String, displayname: String, avatar: String, cover: String, location: String, about: String, accountID: Account.IDValue) {
+    init(id: UUID? = nil, username: String, displayname: String, avatar: String? = nil, cover: String? = nil, location: String? = nil, about: String? = nil, accountID: Account.IDValue) {
         self.id = id
         //self.username = username
         self.displayname = displayname
