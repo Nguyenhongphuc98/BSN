@@ -16,13 +16,19 @@ enum RootIndex: Int {
     case profile
 }
 
+public enum AppState {
+    case loading
+    case login
+    case inapp
+}
+
 public class AppManager: ObservableObject {
     
     public static var shared: AppManager = AppManager()
     
     @Published public var selectedIndex: Int
     
-    @Published public var logined: Bool
+    @Published public var appState: AppState // to handle view display
     
     @Published public var currentAccount: Account
     
@@ -38,11 +44,11 @@ public class AppManager: ObservableObject {
     
     public init() {
         self.selectedIndex = 4
-        self.logined = true
         self.currentAccount = Account()
         self.currentUser = User()
         self.navBarTitle = "SEB"
         self.keyboardHeight = 0
+        self.appState = .loading
         print("did init root with user: \(currentUser.displayname)")
         
         self.currentUser.id = "C4285ABE-F520-46F3-97A3-508D94177D9C"

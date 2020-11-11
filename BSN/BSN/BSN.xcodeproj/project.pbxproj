@@ -3,11 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		65151F95923C646F69F68B15 /* libPods-BSN.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC0276D056E4D9B3857004C /* libPods-BSN.a */; };
+		841CED6F255BCFC3007CCACC /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CED6E255BCFC3007CCACC /* Login.swift */; };
+		841CED71255BDAC4007CCACC /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CED70255BDAC4007CCACC /* LoginViewModel.swift */; };
+		841CED7B255BED15007CCACC /* Launching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CED7A255BED15007CCACC /* Launching.swift */; };
+		841CED8D255C2EB5007CCACC /* LaunchingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CED8C255C2EB5007CCACC /* LaunchingViewModel.swift */; };
 		842C44AD2548271C003C570D /* Business.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842C44AC2548271C003C570D /* Business.framework */; };
 		842C44AE2548271C003C570D /* Business.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 842C44AC2548271C003C570D /* Business.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84AA95C0251AFEB70029BB1E /* Pattaya-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AA95BF251AFEB70029BB1E /* Pattaya-Regular.ttf */; };
@@ -49,6 +53,10 @@
 /* Begin PBXFileReference section */
 		03C31E3AC0F9113697D31C72 /* Pods-BSN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSN.debug.xcconfig"; path = "Target Support Files/Pods-BSN/Pods-BSN.debug.xcconfig"; sourceTree = "<group>"; };
 		2CC0276D056E4D9B3857004C /* libPods-BSN.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BSN.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		841CED6E255BCFC3007CCACC /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		841CED70255BDAC4007CCACC /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		841CED7A255BED15007CCACC /* Launching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launching.swift; sourceTree = "<group>"; };
+		841CED8C255C2EB5007CCACC /* LaunchingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchingViewModel.swift; sourceTree = "<group>"; };
 		842C44AC2548271C003C570D /* Business.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Business.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84AA95BF251AFEB70029BB1E /* Pattaya-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pattaya-Regular.ttf"; sourceTree = "<group>"; };
 		84AA95C1251B01010029BB1E /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
@@ -144,6 +152,10 @@
 				84FA98E5251860DE00CB92CB /* Info.plist */,
 				84FA98E2251860DE00CB92CB /* Preview Content */,
 				84AA969A252031780029BB1E /* LaunchScreen.storyboard */,
+				841CED6E255BCFC3007CCACC /* Login.swift */,
+				841CED70255BDAC4007CCACC /* LoginViewModel.swift */,
+				841CED7A255BED15007CCACC /* Launching.swift */,
+				841CED8C255C2EB5007CCACC /* LaunchingViewModel.swift */,
 			);
 			path = BSN;
 			sourceTree = "<group>";
@@ -295,6 +307,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				84FA98DD251860DB00CB92CB /* BSNApp.swift in Sources */,
+				841CED6F255BCFC3007CCACC /* Login.swift in Sources */,
+				841CED8D255C2EB5007CCACC /* LaunchingViewModel.swift in Sources */,
+				841CED71255BDAC4007CCACC /* LoginViewModel.swift in Sources */,
+				841CED7B255BED15007CCACC /* Launching.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

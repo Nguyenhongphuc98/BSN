@@ -15,16 +15,29 @@ public class User: ObservableObject, Identifiable {
 
     public var displayname: String
 
-    public var avatar: String
-
-    public var gender: Gender
-
+    public var avatar: String?
+    
+    public var cover: String?
+    
+    public var location: String?
+    
+    public var about: String?
+    
     public init() {
         id = UUID().uuidString
         username = UUID().uuidString
         displayname = fakeNames.randomElement()!
         avatar = fakeAvatars.randomElement()!
-        gender = .male
+    }
+    
+    public init(id: String, username: String, displayname: String, avatar: String? = nil, cover: String? = nil, location: String? = nil, about: String? = nil) {
+        self.id = id
+        self.username = username
+        self.displayname = displayname
+        self.avatar = avatar
+        self.cover = cover
+        self.location = location
+        self.about = about
     }
     
     public init(isDummy: Bool) {
@@ -32,7 +45,7 @@ public class User: ObservableObject, Identifiable {
         username = "Dummy"
         displayname = "Dummy"
         avatar = fakeAvatars.randomElement()!
-        gender = .male
+        //gender = .male
     }
     
     func isCurrentUser() -> Bool {

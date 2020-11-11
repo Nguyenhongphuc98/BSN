@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 enum GetResourcesRequest<ResourceType> {
     case success([ResourceType])
-    case failure
+    case failure(String)
 }
 
 enum SaveResult<ResourceType> {
@@ -56,26 +57,32 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
     func get(isAll: Bool = true, completion: @escaping (GetResourcesRequest<ResourceType>) -> Void) {
         //let desUrl = url ?? self.resourceURL
         print("url: \(resourceURL.absoluteURL)")
+        
+        var urlRequest = URLRequest(url: resourceURL)
+        urlRequest.httpMethod = "get"
+        urlRequest.addValue(AccountRequest.authorization, forHTTPHeaderField: "Authorization")
+        
         let dataTask = URLSession.shared
-            .dataTask(with: resourceURL) { data, _, _ in
+            .dataTask(with: urlRequest) { data, _, _ in
                 
                 guard let jsonData = data else {
-                    completion(.failure)
+                    completion(.failure("parse error"))
                     return
                 }
                 
                 do {
                     if isAll {
-                        let resources  = try! JSONDecoder().decode([ResourceType].self, from: jsonData)
+                        let resources  = try JSONDecoder().decode([ResourceType].self, from: jsonData)
                         completion(.success(resources))
                     } else {
-                        let resources  = try! JSONDecoder().decode(ResourceType.self, from: jsonData)
+                        let resources  = try JSONDecoder().decode(ResourceType.self, from: jsonData)
                         completion(.success([resources]))
                     }
                 }
                 catch {
-                    
-                    completion(.failure)
+                    let json = JSON(jsonData)
+                    let reason = json["reason"].string!
+                    completion(.failure(reason))
                 }
             }
         

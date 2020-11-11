@@ -7,14 +7,14 @@
 
 import Foundation
 
-enum ResourceInfo: String {
+public enum ResourceInfo: String {
     case notfound
     case exists
     case success
     case getfailure
     case savefailure
     
-    func des() -> String {
+    public func des() -> String {
         switch self {
         case .notfound:
             return "Không tìm thấy dữ liệu"

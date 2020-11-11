@@ -13,7 +13,7 @@ struct BSNApp: App {
     
     @Environment(\.scenePhase) private var phase
     
-    @ObservedObject var viewModel: AppManager = AppManager.shared
+    @ObservedObject var appManager: AppManager = AppManager.shared
     
     var profileNavState: NavigationState = NavigationState()
     
@@ -21,48 +21,13 @@ struct BSNApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TabView(selection: $viewModel.selectedIndex) {
-                NavigationView {
-                    NewsFeedView()
-                        .navigationTitle("Bài viết")
-                        .navigationBarHidden(true)
-                }
-                .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .news) }
-                .tag(0)
-                
-                NavigationView {
-                    ExploreBookView()
-                        .navigationTitle("Khám phá")
-                        .navigationBarHidden(true)
-                        .environmentObject(exploreNavState)
-                }
-                .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .search) }
-                .tag(1)
-                
-                NavigationView {
-                    ChatView()
-                        .navigationTitle("Tin nhắn")
-                }
-                .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .chat) }
-                .tag(2)
-                
-                NavigationView {
-                    NotifyView()
-                        .navigationTitle("Thông báo")
-                }
-                .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .notify) }
-                .tag(3)
-                
-                NavigationView {
-                    ProfileView()
-                        .navigationBarTitle(Text("Trang cá nhân"), displayMode: .inline)
-                        .navigationBarHidden(true)
-                        .environmentObject(profileNavState)
-                }
-                .tabItem { ItemContent(selectedIndex: $viewModel.selectedIndex, type: .profile) }
-                .tag(4)
+            if appManager.appState == .loading {
+                Launching()
+            } else if appManager.appState == .login {
+                Login()
+            } else if appManager.appState == .inapp {
+                inapp
             }
-            .environmentObject(viewModel)
         }
         .onChange(of: phase) { newPhase in
             switch newPhase {
@@ -77,6 +42,51 @@ struct BSNApp: App {
                 print("Fallback for future cases")
             }
         }
+    }
+    
+    var inapp: some View {
+        TabView(selection: $appManager.selectedIndex) {
+            NavigationView {
+                NewsFeedView()
+                    .navigationTitle("Bài viết")
+                    .navigationBarHidden(true)
+            }
+            .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .news) }
+            .tag(0)
+            
+            NavigationView {
+                ExploreBookView()
+                    .navigationTitle("Khám phá")
+                    .navigationBarHidden(true)
+                    .environmentObject(exploreNavState)
+            }
+            .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .search) }
+            .tag(1)
+            
+            NavigationView {
+                ChatView()
+                    .navigationTitle("Tin nhắn")
+            }
+            .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .chat) }
+            .tag(2)
+            
+            NavigationView {
+                NotifyView()
+                    .navigationTitle("Thông báo")
+            }
+            .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .notify) }
+            .tag(3)
+            
+            NavigationView {
+                ProfileView()
+                    .navigationBarTitle(Text("Trang cá nhân"), displayMode: .inline)
+                    .navigationBarHidden(true)
+                    .environmentObject(profileNavState)
+            }
+            .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .profile) }
+            .tag(4)
+        }
+        .environmentObject(appManager)
     }
     
     func configureAppearance() {

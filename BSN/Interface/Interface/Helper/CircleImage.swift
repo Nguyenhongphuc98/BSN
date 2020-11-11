@@ -9,14 +9,12 @@ import SwiftUI
 
 public struct CircleImage: View {
     
-    var image: String = "avatar"
+    var image: String? = "avatar"
     
     var diameter: CGFloat = 50
     
     public var body: some View {
-        Image(image, bundle: interfaceBundle)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
+        BSNImage(urlString: image, tempImage: "avatar")
             .frame(width: diameter, height: diameter)
             .clipShape(Circle())
     }
@@ -24,7 +22,7 @@ public struct CircleImage: View {
 
 public struct CircleImageOptions: View {
     
-    var image: String
+    var image: String?
     
     var strokeColor: Color
     
@@ -38,7 +36,7 @@ public struct CircleImageOptions: View {
     
     var shadowy: CGFloat
     
-    public init(image: String = "avatar",
+    public init(image: String? = nil,
          strokeColor: Color = Color.white, strokeWidth: CGFloat = 3,
          diameter: CGFloat = 50,
          hasShadow: Bool = false,

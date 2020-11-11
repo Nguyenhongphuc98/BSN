@@ -9,46 +9,46 @@ import SwiftUI
 
 extension Text {
     
-    func roboto(size: CGFloat) -> Self {
+    public func roboto(size: CGFloat) -> Self {
         self.font(.custom("Roboto-Regular", size: size))
     }
     
-    func robotoItalic(size: CGFloat) -> Self {
+    public func robotoItalic(size: CGFloat) -> Self {
         self.font(.custom("Roboto-Italic", size: size))
     }
     
-    func robotoBold(size: CGFloat) -> Self {
+    public func robotoBold(size: CGFloat) -> Self {
         self.font(.custom("Roboto-Bold", size: size))
     }
     
-    func robotoLightItalic(size: CGFloat) -> Self {
+    public func robotoLightItalic(size: CGFloat) -> Self {
         self.font(.custom("Roboto-LightItalic", size: size))
     }
     
-    func robotoLight(size: CGFloat) -> Self {
+    public func robotoLight(size: CGFloat) -> Self {
         self.font(.custom("Roboto-Light", size: size))
     }
     
-    func robotoMedium(size: CGFloat) -> Self {
+    public func robotoMedium(size: CGFloat) -> Self {
         self.font(.custom("Roboto-Medium", size: size))
     }
     
-    func pattaya(size: CGFloat) -> Self {
+    public func pattaya(size: CGFloat) -> Self {
         self.font(.custom("Pattaya-Regular", size: size))
     }
     
-    func bFont(name: String, size: CGFloat) -> Self {
+    public func bFont(name: String, size: CGFloat) -> Self {
         self.font(.custom(name, size: size))
     }
 }
 
 extension TextEditor {
 
-    func robontoBold(size: CGFloat) -> some View {
+    public func robontoBold(size: CGFloat) -> some View {
         self.font(.custom("Roboto-Bold", size: size))
     }
     
-    func bFont(name: String, size: CGFloat) -> some View {
+    public func bFont(name: String, size: CGFloat) -> some View {
         self.font(.custom(name, size: size))
     }
 }

@@ -9,12 +9,20 @@ import Foundation
 
 public class Account {
     
-    var username: String
+    public var id: String?
     
-    var password: String
+    public var username: String
+    
+    public var password: String
     
     public init() {
         username = ""
         password = ""
+    }
+    
+    public init(id: String? = nil, username: String, password: String) {
+        self.id = id
+        self.username = username
+        self.password = password
     }
 }

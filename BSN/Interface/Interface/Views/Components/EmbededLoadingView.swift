@@ -24,7 +24,7 @@ struct EmbededLoadingView: ViewModifier {
 
 extension View {
     
-    func embededLoading(isLoading: Binding<Bool>) -> some View {
+    public func embededLoading(isLoading: Binding<Bool>) -> some View {
         self.modifier(EmbededLoadingView(isLoading: isLoading))
     }
 }

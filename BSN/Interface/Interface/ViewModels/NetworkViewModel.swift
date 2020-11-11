@@ -7,18 +7,18 @@
 
 import Combine
 
-class NetworkViewModel: ObservableObject {
+open class NetworkViewModel: ObservableObject {
     
-    @Published var isLoading: Bool
+    @Published open var isLoading: Bool
     
-    @Published var showAlert: Bool
+    @Published open var showAlert: Bool
     
-    var cancellables = Set<AnyCancellable>()
+    open var cancellables = Set<AnyCancellable>()
     
     // Handle result process resource
-    var resourceInfo: ResourceInfo
+    open var resourceInfo: ResourceInfo
     
-    init() {
+    public init() {
         isLoading = false
         showAlert = false
         resourceInfo = .success

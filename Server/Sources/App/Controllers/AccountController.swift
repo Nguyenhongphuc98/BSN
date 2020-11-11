@@ -19,7 +19,7 @@ struct AccountController: RouteCollection {
             user.delete(use: delete)
         }
         
-        authen.post("login", use: login)
+        authen.get("login", use: login)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[Account]> {

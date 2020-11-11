@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum ButtonSize {
+public enum ButtonSize {
     case small
     case medium
     case large
@@ -45,7 +45,7 @@ enum ButtonSize {
     }
 }
 
-enum ButtonType {
+public enum ButtonType {
     case primary
     case secondary
     
@@ -69,13 +69,18 @@ enum ButtonType {
 }
 
 // MARK: - Button Style
-struct BaseButtonStyle: ButtonStyle {
+public struct BaseButtonStyle: ButtonStyle {
     
-    var size: ButtonSize = .small
+    var size: ButtonSize
     
-    var type: ButtonType = .primary
+    var type: ButtonType
     
-    func makeBody(configuration: ButtonStyle.Configuration) -> some View {
+    public init(size: ButtonSize = .small, type: ButtonType = .primary) {
+        self.size = size
+        self.type = type
+    }
+    
+    public func makeBody(configuration: ButtonStyle.Configuration) -> some View {
         MyButton(configuration: configuration, size: size, type: type)
     }
     
