@@ -30,29 +30,32 @@ struct ExchangeBookView: View {
                 
                 ExchangeBookSecondHeader(model: viewModel.exchangeBook.wantChangeBook!)
                 
-                if viewModel.canExchange {
-                    InputWithTitle(content: $viewModel.traddingAdress, placeHolder: "Địa chỉ thuận tiện nhất cho giao dịch", title: "Địa chỉ giao dịch")
-                    
-                    InputWithTitle(content: $viewModel.message, placeHolder: "ex: Bạn ơi cho mình đổi cuốn này nhé!", title: "Lời nhắn")
-                    
-                    Button(action: {
-                        dismiss()
-                    }, label: {
-                        Text("   Hoàn tất   ")
-                    })
-                    .buttonStyle(BaseButtonStyle(size: .largeH))
-                    .padding()
-                    
-                } else {
-                    Spacer(minLength: 80)
+                Group {
+                    if viewModel.canExchange {
+                        InputWithTitle(content: $viewModel.traddingAdress, placeHolder: "Địa chỉ thuận tiện nhất cho giao dịch", title: "Địa chỉ giao dịch")
                         
-                    Button(action: {
-                        dismiss()
-                    }, label: {
-                        Text("    Quay lại    ")
-                    })
-                    .buttonStyle(BaseButtonStyle(size: .largeH))
+                        InputWithTitle(content: $viewModel.message, placeHolder: "ex: Bạn ơi cho mình đổi cuốn này nhé!", title: "Lời nhắn")
+                        
+                        Button(action: {
+                            dismiss()
+                        }, label: {
+                            Text("   Hoàn tất   ")
+                        })
+                        .buttonStyle(BaseButtonStyle(size: .largeH))
+                        .padding()
+                        
+                    } else {
+                        Spacer(minLength: 80)
+                            
+                        Button(action: {
+                            dismiss()
+                        }, label: {
+                            Text("    Quay lại    ")
+                        })
+                        .buttonStyle(BaseButtonStyle(size: .largeH))
+                    }
                 }
+                
                 Spacer()
             }
         })
@@ -64,6 +67,7 @@ struct ExchangeBookView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
         .onAppear(perform: viewAppeared)
+        .transition(.opacity)
     }
     
     private var backButton: some View {

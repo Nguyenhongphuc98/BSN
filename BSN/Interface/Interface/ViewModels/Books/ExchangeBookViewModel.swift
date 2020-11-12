@@ -13,7 +13,7 @@ class ExchangeBookViewModel: NetworkViewModel {
     
     var exchangeBook: BExchangeBookFull
     
-    var canExchange: Bool
+    @Published var canExchange: Bool
     
     @Published var message: String
     
@@ -26,7 +26,7 @@ class ExchangeBookViewModel: NetworkViewModel {
         message = ""
         traddingAdress = ""
         //canExchange = Int.random(in: 0..<2) == 1
-        canExchange = true
+        canExchange = false
         ebManager = ExchangeBookManager()
         
         super.init()
@@ -34,6 +34,7 @@ class ExchangeBookViewModel: NetworkViewModel {
     }
     
     func prepareData(ebID: String) {
+        isLoading = true
         exchangeBook.id = ebID
         ebManager.getExchangeBook(ebid: ebID)
     }
@@ -55,22 +56,27 @@ class ExchangeBookViewModel: NetworkViewModel {
                         self.resourceInfo = .getfailure
                         self.showAlert = true
                     } else {
-                        self.exchangeBook = BExchangeBookFull(
-                            id: eb.id!,
-                            firstubid: eb.firstubid,
-                            secondubid: eb.secondubid,
-                            firstTitle: eb.firstTitle!,
-                            firstAuthor: eb.firstAuthor!,
-                            firstCover: eb.firstCover,
-                            firstOwner: eb.firstOwnerName!,
-                            firstStatusDes: eb.firstStatusDes!,
-                            firstStatus: eb.firstStatus!,
-                            secondStatusDes: eb.secondStatusDes,
-                            secondStatus: eb.secondStatus,
-                            sencondTitle: eb.secondTitle!,
-                            secondAuthor: eb.secondAuthor!,
-                            secondCover: eb.secondCover
-                        )
+                        
+                        withAnimation {
+                            self.exchangeBook = BExchangeBookFull(
+                                id: eb.id!,
+                                firstubid: eb.firstubid,
+                                secondubid: eb.secondubid,
+                                firstTitle: eb.firstTitle!,
+                                firstAuthor: eb.firstAuthor!,
+                                firstCover: eb.firstCover,
+                                firstOwner: eb.firstOwnerName!,
+                                firstStatusDes: eb.firstStatusDes!,
+                                firstStatus: eb.firstStatus!,
+                                secondStatusDes: eb.secondStatusDes,
+                                secondStatus: eb.secondStatus,
+                                sencondTitle: eb.secondTitle!,
+                                secondAuthor: eb.secondAuthor!,
+                                secondCover: eb.secondCover
+                            )
+                            
+                            self.canExchange = self.exchangeBook.wantChangeBook?.id != nil
+                        }
                     }
                 }
             }

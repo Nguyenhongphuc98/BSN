@@ -26,7 +26,7 @@ struct BorrowBookController: RouteCollection {
     func create(req: Request) throws -> EventLoopFuture<BorrowBook> {
         let bb = try req.content.decode(BorrowBook.self)
         
-        
+        // Find owner of this userbook
         _ = UserBook.query(on: req.db)
             .filter(\.$id == bb.userBookID)
             .field(\.$userID)
@@ -34,9 +34,9 @@ struct BorrowBookController: RouteCollection {
             .unwrap(or: Abort(.notFound))
             .map { (ub) in
                 
-                // insert notify for uid
+                // insert notify for owner
                 let notify = Notify(
-                    typeID: UUID(uuidString: "208F948B-E3F4-4F33-98A0-0D17976180DD")!,
+                    typeID: UUID(uuidString: "208F948B-E3F4-4F33-98A0-0D17976180DD")!, // id of borrow action
                     actor: bb.borrowerID, // who submit
                     receiver: ub.userID, // who owner this book (userbook)
                     des: bb.id!
