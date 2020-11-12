@@ -17,8 +17,9 @@ struct NotifyController: RouteCollection {
 //        types.get(use: index)
         authen.get(use: search)
         authen.post(use: create)
-        authen.group(":notifyID") { type in
-            type.delete(use: delete)
+        authen.group(":notifyID") { group in
+            group.delete(use: delete)
+            group.put(use: update)
         }
     }
 
@@ -30,6 +31,21 @@ struct NotifyController: RouteCollection {
     func create(req: Request) throws -> EventLoopFuture<Notify> {
         let notify = try req.content.decode(Notify.self)
         return notify.save(on: req.db).map { notify }
+    }
+    
+    func update(req: Request) throws -> EventLoopFuture<Notify> {
+        
+        // Authen
+        _ = try req.auth.require(Account.self)
+        
+        return Notify
+            .find(req.parameters.get("notifyID"), on: req.db)
+            .unwrap(or: Abort(.notFound))
+            .flatMap { (notify)  in
+                let newNotify = try! req.content.decode(Notify.Update.self)
+                notify.seen = newNotify.seen
+                return notify.update(on: req.db).map { notify }
+            }
     }
 
     func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {

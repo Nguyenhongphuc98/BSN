@@ -25,4 +25,21 @@ class NotifyRequest: ResourceRequest<ENotify> {
             }
         }
     }
+    
+    // Actualy, it just can update seen field to true or false
+    func updateNotify(notify: ENotify, publisher: PassthroughSubject<ENotify, Never>) {
+        self.setPath(resourcePath: notify.id)
+        
+        self.update(notify) { result in
+            switch result {
+            case .failure:
+                let message = "There was an error when update notify"
+                print(message)
+                // We don't care result, it's not too importance
+                
+            case .success(let n):
+                publisher.send(n)
+            }
+        }
+    }
 }

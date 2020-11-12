@@ -56,6 +56,7 @@ class NotifyViewModel: NetworkViewModel {
     func notifyDidReaded(notify: Notify) {
         notify.seen = true
         // request to server
+        notifyManager.updateNotify(notify: ENotify(id: notify.id, seen: true))
     }
     
     private func observerNotifies() {

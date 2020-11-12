@@ -30,4 +30,17 @@ public struct ENotify: Codable {
         self.actorName = "undefine"
         self.notifyName = "undefine"
     }
+    
+    // using for update seen
+    public init(id: String, seen: Bool) {
+        self.id = id
+        self.notifyTypeID = "undefine"
+        self.actorID = "undefine"
+        self.receiverID = "undefine"
+        self.destionationID = "undefine"
+        self.seen = seen
+        self.createdAt = "undefine"
+        self.actorName = "undefine"
+        self.notifyName = "undefine"
+    }
 }

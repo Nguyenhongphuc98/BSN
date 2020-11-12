@@ -60,4 +60,9 @@ extension Notify {
         var actorPhoto: String?
         var notifyName: String
     }
+    
+    struct Update: Content {
+        var id: String
+        var seen: Bool
+    }
 }

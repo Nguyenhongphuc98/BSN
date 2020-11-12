@@ -110,6 +110,7 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
             var urlRequest = URLRequest(url: resourceURL)
             urlRequest.httpMethod = method
             urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            urlRequest.addValue(AccountRequest.authorization, forHTTPHeaderField: "Authorization")
             urlRequest.httpBody = try JSONEncoder().encode(resourceToSave)
             
             let dataTask = URLSession.shared
