@@ -63,7 +63,7 @@ struct NotifyController: RouteCollection {
             .unwrap(or: Abort(.notFound))
             .flatMap { (u)  in
                 
-                let sqlQuery = SQLQueryString("SELECT n.notify_type_id as \"notifyTypeID\", n.actor_id as \"actorID\", n.receiver_id as \"receiverID\", n.destination_id as \"destionationID\", n.created_at as \"createdAt\", n.id, u.displayname as \"actorName\", u.avatar as \"actorPhoto\", nt.name as \"notifyName\" from notify as n, public.user as u, notify_type as nt where n.actor_id = u.id and n.notify_type_id = nt.id and n.receiver_id = '\(raw: u.id!.uuidString)' order by n.created_at desc limit \(raw: per.description) offset \(raw: offset.description)")
+                let sqlQuery = SQLQueryString("SELECT n.notify_type_id as \"notifyTypeID\", n.actor_id as \"actorID\", n.receiver_id as \"receiverID\", n.destination_id as \"destionationID\", n.created_at as \"createdAt\", n.id, u.displayname as \"actorName\", u.avatar as \"actorPhoto\", nt.name as \"notifyName\", n.seen from notify as n, public.user as u, notify_type as nt where n.actor_id = u.id and n.notify_type_id = nt.id and n.receiver_id = '\(raw: u.id!.uuidString)' order by n.created_at desc limit \(raw: per.description) offset \(raw: offset.description)")
                 
                 let db = req.db as! SQLDatabase
                 return db.raw(sqlQuery)

@@ -12,6 +12,7 @@ public struct ENotify: Codable {
     public var actorID: String
     public var receiverID: String
     public var destionationID: String
+    public var seen: Bool
     public var createdAt: String?
     
     public var actorName: String
@@ -24,6 +25,7 @@ public struct ENotify: Codable {
         self.actorID = "undefine"
         self.receiverID = "undefine"
         self.destionationID = "undefine"
+        self.seen = false
         self.createdAt = "undefine"
         self.actorName = "undefine"
         self.notifyName = "undefine"

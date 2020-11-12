@@ -80,7 +80,7 @@ class Notify: Identifiable {
         action = NotifyAction(rawValue: enotify.notifyName)!
         destinationID = enotify.destionationID
         createDate = Date.getDate(dateStr: enotify.createdAt)
-        seen = false
+        seen = enotify.seen
     }
 }
 

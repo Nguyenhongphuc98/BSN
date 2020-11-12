@@ -6,11 +6,13 @@
 //
 
 import Fluent
+import FluentPostgresDriver
 
 struct CreateNotify: Migration {
     
     func prepare(on database: Database) -> EventLoopFuture<Void> {
         let notify = Notify()
+        let defaultSeen = SQLColumnConstraintAlgorithm.default(false)
         
         return database.schema(Notify.schema)
             .id()
@@ -18,6 +20,7 @@ struct CreateNotify: Migration {
             .field(notify.$actorID.key, .uuid, .references(User.schema, "id"))
             .field(notify.$receiverID.key, .uuid, .references(User.schema, "id"))
             .field(notify.$destionationID.key, .uuid)
+            .field(notify.$seen.key, .bool, .sql(defaultSeen))
             .field("created_at", .datetime)
             .create()
     }

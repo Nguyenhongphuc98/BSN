@@ -27,6 +27,9 @@ final class Notify: Model {
     @Field(key: "destination_id")
     var destionationID: UUID
     
+    @Field(key: "seen")
+    var seen: Bool
+    
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
     
@@ -50,6 +53,7 @@ extension Notify {
         var actorID: String
         var receiverID: String
         var destionationID: String
+        var seen: Bool
         var createdAt: Date?
         
         var actorName: String
