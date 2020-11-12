@@ -10,5 +10,7 @@ public class BusinessConfig {
     public static let searchBookLimit: Int = 5
     
     public static let newestEBLimit: Int = 6
+    
+    public static let newestNotifyLimit: Int = 9
 }
 

@@ -41,3 +41,19 @@ final class Notify: Model {
 }
 
 extension Notify: Content { }
+
+extension Notify {
+    
+    struct GetFull: Content {
+        var id: String
+        var notifyTypeID: String
+        var actorID: String
+        var receiverID: String
+        var destionationID: String
+        var createdAt: Date?
+        
+        var actorName: String
+        var actorPhoto: String?
+        var notifyName: String
+    }
+}
