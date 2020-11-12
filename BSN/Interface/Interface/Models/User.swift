@@ -13,7 +13,7 @@ public class User: ObservableObject, Identifiable {
 
     public var username: String
 
-    public var displayname: String
+    @Published public var displayname: String
 
     public var avatar: String?
     
@@ -21,21 +21,23 @@ public class User: ObservableObject, Identifiable {
     
     public var location: String?
     
-    public var about: String?
+    @Published public var about: String
     
     public init() {
-        id = UUID().uuidString
+        id = kUndefine
         username = UUID().uuidString
         displayname = fakeNames.randomElement()!
         avatar = fakeAvatars.randomElement()!
+        about = ""
     }
     
     // init sender for notify list
     public init(id: String, photo: String?, name: String) {
         self.id = id
-        username = "undefine"
+        username = kUndefine
         self.displayname = name
         self.avatar = photo
+        about = ""
     }
     
     public init(id: String, username: String, displayname: String, avatar: String? = nil, cover: String? = nil, location: String? = nil, about: String? = nil) {
@@ -45,15 +47,15 @@ public class User: ObservableObject, Identifiable {
         self.avatar = avatar
         self.cover = cover
         self.location = location
-        self.about = about
+        self.about = about ?? ""
     }
     
     public init(isDummy: Bool) {
-        id = "Dummy"
-        username = "Dummy"
-        displayname = "Dummy"
+        id = kUndefine
+        username = kUndefine
+        displayname = kUndefine
         avatar = fakeAvatars.randomElement()!
-        //gender = .male
+        about = ""
     }
     
     func isCurrentUser() -> Bool {

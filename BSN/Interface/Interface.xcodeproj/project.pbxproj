@@ -77,6 +77,8 @@
 		8414F2632521A52E003CF799 /* NewsFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F2622521A52E003CF799 /* NewsFeedView.swift */; };
 		8414F2672521D7EA003CF799 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F2662521D7EA003CF799 /* DummyData.swift */; };
 		8414F26B2521E484003CF799 /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F26A2521E484003CF799 /* TimeIntervalExtension.swift */; };
+		841CED9E255D67AE007CCACC /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CED9D255D67AD007CCACC /* SettingView.swift */; };
+		841CEDA1255D7356007CCACC /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CEDA0255D7356007CCACC /* SettingViewModel.swift */; };
 		842C446E2547CBE4003C570D /* BBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C446D2547CBE4003C570D /* BBook.swift */; };
 		842C447425480C5C003C570D /* BSusggestBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C447325480C5C003C570D /* BSusggestBook.swift */; };
 		842C447925480F0C003C570D /* SuggestBookCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C447825480F0C003C570D /* SuggestBookCard.swift */; };
@@ -263,6 +265,8 @@
 		8414F2622521A52E003CF799 /* NewsFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedView.swift; sourceTree = "<group>"; };
 		8414F2662521D7EA003CF799 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 		8414F26A2521E484003CF799 /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
+		841CED9D255D67AD007CCACC /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		841CEDA0255D7356007CCACC /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		842C446D2547CBE4003C570D /* BBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBook.swift; sourceTree = "<group>"; };
 		842C447325480C5C003C570D /* BSusggestBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BSusggestBook.swift; sourceTree = "<group>"; };
 		842C447825480F0C003C570D /* SuggestBookCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestBookCard.swift; sourceTree = "<group>"; };
@@ -511,6 +515,7 @@
 				8401CA202532B07E00A722CE /* SubmitAddBookView.swift */,
 				8401CA2E2532FB2C00A722CE /* UpdateUBView.swift */,
 				8401CA322533056200A722CE /* SubmitExchangeBookView.swift */,
+				841CED9D255D67AD007CCACC /* SettingView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -524,6 +529,7 @@
 				8401CA242532B0BC00A722CE /* SubmitAddUBViewModel.swift */,
 				8401CA36253305F900A722CE /* SubmitExchangeBookViewModel.swift */,
 				84783C73254DAECC0043F625 /* UpdateUBViewModel.swift */,
+				841CEDA0255D7356007CCACC /* SettingViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -996,6 +1002,7 @@
 				8401C921252C086300A722CE /* RatingView.swift in Sources */,
 				8436100925246FC2009FF4BF /* BViewModifier.swift in Sources */,
 				8401C8722527590D00A722CE /* MessageCel.swift in Sources */,
+				841CEDA1255D7356007CCACC /* SettingViewModel.swift in Sources */,
 				8401C982252F0BB600A722CE /* BorrowResultView.swift in Sources */,
 				8401C917252B6B7400A722CE /* BookDetailViewModel.swift in Sources */,
 				845BA212254031F300CC9140 /* BSNImage.swift in Sources */,
@@ -1048,6 +1055,7 @@
 				8401C9A62530034500A722CE /* ExchangeBookViewModel.swift in Sources */,
 				8401C976252EFB6B00A722CE /* ConfirmBorrowBookViewModel.swift in Sources */,
 				84A61CA5254C0A3F00B50FE8 /* NavigationState.swift in Sources */,
+				841CED9E255D67AE007CCACC /* SettingView.swift in Sources */,
 				842C44BA25484DEC003C570D /* BExchangeBookCard.swift in Sources */,
 				8401C8DD252B1B7500A722CE /* BookDetailView.swift in Sources */,
 				8401C966252EAB9A00A722CE /* BorrowBookViewModel.swift in Sources */,

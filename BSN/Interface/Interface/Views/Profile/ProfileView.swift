@@ -36,7 +36,7 @@ public struct ProfileView: View, PopToable {
             ScrollView {
                 ScrollViewReader { value in
                     VStack {
-                        ZStack(alignment: .leading) {
+                        ZStack(alignment: .topLeading) {
                             userInfo
                             
                             // Avatar
@@ -46,6 +46,21 @@ public struct ProfileView: View, PopToable {
                                     .padding(.leading)
                                 
                                 Spacer()
+                            }
+                            
+                            HStack {
+                                Spacer()
+                                NavigationLink(
+                                    destination: SettingView(),
+                                    label: {
+                                        Image(systemName: "gearshape.fill")
+                                            .font(.system(size: 20))
+                                            .padding(10)
+                                            .background(Color.init(hex: 0xEFEFEF))
+                                            .cornerRadius(25)
+                                            .shadow(radius: 3)
+                                    })
+                                    .padding()
                             }
                         }
                         
@@ -68,7 +83,7 @@ public struct ProfileView: View, PopToable {
             // Cover
             Image(viewModel.profile.cover, bundle: interfaceBundle)
                 .resizable()
-                .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                .aspectRatio(contentMode: .fill)
                 .frame(height: 180)
                 .clipped()
             
