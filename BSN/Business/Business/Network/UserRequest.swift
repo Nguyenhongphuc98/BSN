@@ -8,8 +8,6 @@ import Combine
 
 class UserRequest: ResourceRequest<EUser> {
     
-    static var authorization: String = ""
-    
     func getUser(aid: String, publisher: PassthroughSubject<EUser, Never>) {
         self.setPath(resourcePath: "search", params: ["aid":aid])
         

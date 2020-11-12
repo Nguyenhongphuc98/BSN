@@ -6,31 +6,49 @@
 //
 
 import SwiftUI
+import Business
 
-class NotifyViewModel: ObservableObject {
-    
-    // Loading new news when sroll to last news
-    @Published  var isLoading: Bool
+class NotifyViewModel: NetworkViewModel {
     
     @Published var notifies: [Notify]
     
-    init() {
-        isLoading = false
-        notifies = fakeNotifies
+    @Published var message: String
+    
+    private var notifyManager: NotifyManager
+    
+    override init() {
+        message = "Tạm thời chưa có thông báo"
+        notifies = []
+        notifyManager = NotifyManager()
+        
+        super.init()
+        observerNotifies()
+    }
+    
+    func prepareData() {
+        fetchNotifies(page: 0)
+    }
+    
+    func fetchNotifies(page: Int) {
+        isLoading = true
+        notifyManager.getNotifies(page: page)
     }
     
     func loadMoreIfNeeded(item: Notify) {
+        //get last index of fetched notifies
         let thresholdIndex = notifies.index(notifies.endIndex, offsetBy: -2)
+        
+        // if item reached is same threshold, we shoud load more
         if notifies.firstIndex(where: { $0.id == item.id }) == thresholdIndex {
             print("reached \(item.id)")
             self.isLoading = true
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                for _ in 1...7 {
-                    self.notifies.append(Notify())
-                }
+//                for _ in 1...7 {
+//                    self.notifies.append(Notify())
+//                }
                 self.isLoading = false
-                print("total notifies: \(self.notifies.count)")
+                //print("total notifies: \(self.notifies.count)")
             }
         }
     }
@@ -38,5 +56,32 @@ class NotifyViewModel: ObservableObject {
     func notifyDidReaded(notify: Notify) {
         notify.seen = true
         // request to server
+    }
+    
+    private func observerNotifies() {
+        notifyManager
+            .getNotifiesPublisher
+            .sink {[weak self] (notifies) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    
+                    if !notifies.isEmpty {
+                        if notifies[0].id == kUndefine {
+                            self.message = "Có lỗi xảy ra khi tải dữ liệu!"
+                        } else {
+                            notifies.forEach { (n) in
+                                let notify = Notify(enotify: n)
+                                self.notifies.appendUnique(item: notify)
+                            }
+                        }
+                    }
+                }
+            }
+            .store(in: &cancellables)
     }
 }

@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import Business
 
-enum NotifyAction: Int, CaseIterable {
+enum NotifyAction: String, CaseIterable {
     
     case heart
     
@@ -56,8 +57,6 @@ class Notify: Identifiable {
     
     var sender: User
     
-    var receive: User
-    
     var action: NotifyAction
     
     var destinationID: String
@@ -69,10 +68,29 @@ class Notify: Identifiable {
     init() {
         id = UUID().uuidString
         sender = User()
-        receive = User()
         action = NotifyAction.allCases.randomElement()!
         destinationID = UUID().uuidString
         createDate = fakedates.randomElement()!
         seen = Int.random(in: 0...1) == 0 ? true : false
+    }
+    
+    init(enotify: ENotify) {
+        id = enotify.id
+        sender = User(id: enotify.actorID, photo: enotify.actorPhoto, name: enotify.actorName)
+        action = NotifyAction(rawValue: enotify.notifyTypeID)!
+        destinationID = enotify.destionationID
+        createDate = Date.getDate(dateStr: enotify.createdAt)
+        seen = false
+    }
+}
+
+extension Notify: Hashable {
+    
+    static func == (lhs: Notify, rhs: Notify) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        return hasher.combine(self.id)
     }
 }

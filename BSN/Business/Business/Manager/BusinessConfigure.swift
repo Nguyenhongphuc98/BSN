@@ -8,4 +8,5 @@
 public class BusinessConfigure {
     
     public static var exchangebookPerPage: Int = 6
+    public static var notifiesPerPage: Int = 9
 }

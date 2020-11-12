@@ -13,13 +13,16 @@ public struct NotifyView: View {
     
     @EnvironmentObject var root: AppManager
     
-    public init() {
-        
-    }
+    public init() { }
     
     public var body: some View {
         VStack {
             // Notify
+            if viewModel.notifies.isEmpty {
+                Text(viewModel.message)
+                    .robotoItalic(size: 15)
+            }
+            
             List {
                 ForEach(viewModel.notifies) { notify in
                     VStack {
@@ -46,6 +49,7 @@ public struct NotifyView: View {
     
     func viewAppeared() {
         print("notifi appeared")
+        viewModel.prepareData()
     }
 }
 

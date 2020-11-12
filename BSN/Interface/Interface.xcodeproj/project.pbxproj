@@ -665,10 +665,10 @@
 			children = (
 				8401C95E252EAABA00A722CE /* News */,
 				8401C9F92531ABE200A722CE /* Profile */,
-				84B964F72525CBBD00F37571 /* NotifyViewModel.swift */,
 				8401C962252EAB4A00A722CE /* Chat */,
 				8401C95F252EAAFB00A722CE /* Books */,
 				84A61CC0254C51DE00B50FE8 /* NetworkViewModel.swift */,
+				84B964F72525CBBD00F37571 /* NotifyViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";

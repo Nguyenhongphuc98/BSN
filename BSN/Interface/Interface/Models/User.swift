@@ -30,6 +30,14 @@ public class User: ObservableObject, Identifiable {
         avatar = fakeAvatars.randomElement()!
     }
     
+    // init sender for notify list
+    public init(id: String, photo: String?, name: String) {
+        self.id = id
+        username = "undefine"
+        self.displayname = name
+        self.avatar = photo
+    }
+    
     public init(id: String, username: String, displayname: String, avatar: String? = nil, cover: String? = nil, location: String? = nil, about: String? = nil) {
         self.id = id
         self.username = username
