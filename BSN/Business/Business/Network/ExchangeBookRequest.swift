@@ -58,4 +58,23 @@ class ExchangeBookRequest: ResourceRequest<EExchangeBook> {
             }
         }
     }
+    
+    func updateExchangeBook(eb: EExchangeBook, publisher: PassthroughSubject<EExchangeBook, Never>) {
+        self.setPath(resourcePath: "\(eb.id!)")
+        
+        self.update(eb) { result in
+            
+            switch result {
+            case .failure:
+                let message = "There was an error when update exchange book"
+                print(message)
+                /// Publish a undefine exchange book
+                let ub = EExchangeBook()
+                publisher.send(ub)
+                
+            case .success(let eb):
+                publisher.send(eb)
+            }
+        }
+    }
 }

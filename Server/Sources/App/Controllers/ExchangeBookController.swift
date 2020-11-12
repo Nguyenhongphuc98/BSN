@@ -20,6 +20,7 @@ struct ExchangeBookController: RouteCollection {
         authen.group(":ID") { group in
             group.delete(use: delete)
             group.get(use: get)
+            group.put(use: update)
         }
         
         authen.get("newest", use: getNewest)
@@ -39,36 +40,55 @@ struct ExchangeBookController: RouteCollection {
 
     func create(req: Request) throws -> EventLoopFuture<ExchangeBook> {
         let eb = try req.content.decode(ExchangeBook.self)
-        
-        // Find owner of first user book
-        let firstUser = UserBook.query(on: req.db)
-            .filter(\.$id == eb.firstUserBookID!)
-            .field(\.$userID)
-            .first()
-            .unwrap(or: Abort(.notFound))
-          
-        // Find owner of second user book
-        let secondUser = UserBook.query(on: req.db)
-            .filter(\.$id == eb.secondUserBookID!)
-            .field(\.$userID)
-            .first()
-            .unwrap(or: Abort(.notFound))
-        
-        _ = firstUser.and(secondUser).map { (ub1, ub2)  in
-            // insert notify for owner
-            let notify = Notify(
-                typeID: UUID(uuidString: "B5C0EA0E-EAF6-47DC-A15B-12869159F875")!, // id of exchange action
-                actor: ub2.userID, // who submit
-                receiver: ub1.userID, // who owner this book (userbook)
-                des: eb.id!
-            )
-            
-            _ = notify.save(on: req.db)
-        }
-        
         return eb.save(on: req.db).map { eb }
     }
 
+    func update(req: Request) throws -> EventLoopFuture<ExchangeBook> {
+        ExchangeBook
+            .find(req.parameters.get("ID"), on: req.db)
+            .unwrap(or: Abort(.notFound))
+            .flatMap { eb in
+                // Decode
+                let newEB = try! req.content.decode(ExchangeBook.self)
+                
+                // Setup new value for update
+                if let secondUbid = newEB.secondUserBookID { eb.secondUserBookID = secondUbid }
+                if let address = newEB.adress { eb.adress = address }
+                if let message = newEB.message { eb.message = message }
+                if let progess = newEB.state { eb.state = progess }
+                if let statusDes = newEB.secondStatusDes { eb.secondStatusDes = statusDes }
+                
+                // Setup to notify
+                // Find owner of first user book
+                let firstUser = UserBook.query(on: req.db)
+                    .filter(\.$id == eb.firstUserBookID!)
+                    .field(\.$userID)
+                    .first()
+                    .unwrap(or: Abort(.notFound))
+                  
+                // Find owner of second user book
+                let secondUser = UserBook.query(on: req.db)
+                    .filter(\.$id == eb.secondUserBookID!)
+                    .field(\.$userID)
+                    .first()
+                    .unwrap(or: Abort(.notFound))
+                
+                _ = firstUser.and(secondUser).map { (ub1, ub2)  in
+                    // insert notify for owner
+                    let notify = Notify(
+                        typeID: UUID(uuidString: "B5C0EA0E-EAF6-47DC-A15B-12869159F875")!, // id of exchange action
+                        actor: ub2.userID, // who submit
+                        receiver: ub1.userID, // who owner this book (userbook)
+                        des: eb.id!
+                    )
+                    
+                    _ = notify.save(on: req.db)
+                }
+                
+                return eb.update(on: req.db).map { eb }
+            }
+    }
+    
     func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {
         return ExchangeBook.find(req.parameters.get("ID"), on: req.db)
             .unwrap(or: Abort(.notFound))
@@ -90,7 +110,7 @@ struct ExchangeBookController: RouteCollection {
         
         let offset = page * per
         
-        let sqlQuery = SQLQueryString("SELECT ex.id, bu.title as \"firstTitle\", bu.author as \"firstAuthor\", bu.cover as \"firstCover\", u.location, b.title as \"secondTitle\", b.author as \"secondAuthor\" FROM exchange_book as ex, user_book as ub, public.user as u, book as bu, book as b where ex.first_user_book_id = ub.id and ub.user_id = u.id and ex.exchange_book_id = b.id and ub.book_id = bu.id order by ex.created_at desc limit \(raw: per.description) offset \(raw: offset.description)")
+        let sqlQuery = SQLQueryString("SELECT ex.id, bu.title as \"firstTitle\", bu.author as \"firstAuthor\", bu.cover as \"firstCover\", u.location, b.title as \"secondTitle\", b.author as \"secondAuthor\" FROM exchange_book as ex, user_book as ub, public.user as u, book as bu, book as b where ex.first_user_book_id = ub.id and ub.user_id = u.id and ex.exchange_book_id = b.id and ub.book_id = bu.id and ex.state = 'new' order by ex.created_at desc limit \(raw: per.description) offset \(raw: offset.description)")
         
         let db = req.db as! SQLDatabase
         return db.raw(sqlQuery)

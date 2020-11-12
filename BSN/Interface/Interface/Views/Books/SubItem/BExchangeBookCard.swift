@@ -13,10 +13,12 @@ struct BExchangeBookCard: View {
     
     @State private var nav: Bool = false
     
+    @EnvironmentObject var viewModel: ExploreBookViewModel
+    
     var body: some View {
         ZStack {
             NavigationLink(
-                destination: ExchangeBookView(ebID: model.id!),
+                destination: ExchangeBookView(ebID: model.id!).environmentObject(viewModel),
                 isActive: $nav,
                 label: {
                     EmptyView()

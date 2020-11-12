@@ -66,4 +66,8 @@ class ExploreBookViewModel: SearchBookViewModel {
             }
             .store(in: &cancellables)
     }
+    
+    func removeEB(ebid: String) {
+        exchangeBooks.removeAll { $0.id == ebid }
+    }
 }

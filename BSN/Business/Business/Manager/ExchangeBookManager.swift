@@ -35,6 +35,10 @@ public class ExchangeBookManager {
         resourceRequest.saveExchangeBook(eb: eb, publisher: savePublisher)
     }
     
+    public func updateExchangeBook(eb: EExchangeBook) {
+        resourceRequest.updateExchangeBook(eb: eb, publisher: savePublisher)
+    }
+    
     public func getExchangeBooks(page: Int) {
         resourceRequest.fetchExchangeBooks(page: page, per: BusinessConfigure.exchangebookPerPage, publisher: getExchangeBooksPublisher)
     }

@@ -16,6 +16,8 @@ struct ExchangeBookView: View {
     
     @EnvironmentObject private var navState: NavigationState
     
+    @EnvironmentObject var exploreVM: ExploreBookViewModel
+    
     var ebID: String
     
     var body: some View {
@@ -37,7 +39,7 @@ struct ExchangeBookView: View {
                         InputWithTitle(content: $viewModel.message, placeHolder: "ex: Bạn ơi cho mình đổi cuốn này nhé!", title: "Lời nhắn")
                         
                         Button(action: {
-                            dismiss()
+                            viewModel.requestExchangeBook()
                         }, label: {
                             Text("   Hoàn tất   ")
                         })
@@ -85,6 +87,7 @@ struct ExchangeBookView: View {
                 title: Text("Kết quả"),
                 message: Text(viewModel.resourceInfo.des()),
                 dismissButton: .default(Text("OK")) {
+                    exploreVM.removeEB(ebid: viewModel.exchangeBook.id!)
                     dismiss()
                 })
         } else {
@@ -93,7 +96,7 @@ struct ExchangeBookView: View {
                 title: Text("Kết quả"),
                 message: Text(viewModel.resourceInfo.des()),
                 primaryButton: .default(Text("Thử lại")) {
-                    // depen load or save
+                    viewModel.requestExchangeBook()
                 },
                 secondaryButton: .cancel(Text("Huỷ bỏ")) {
                     dismiss()

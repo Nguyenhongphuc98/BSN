@@ -63,6 +63,7 @@ public struct ExploreBookView: View, PopToable {
                 
                 ExchangeBookList(models: viewModel.exchangeBooks)
                     .tag(1)
+                    .environmentObject(viewModel) // to delete exbs when submit success
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         }

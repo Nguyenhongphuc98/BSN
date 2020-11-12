@@ -30,7 +30,8 @@ class ExchangeBookViewModel: NetworkViewModel {
         ebManager = ExchangeBookManager()
         
         super.init()
-        setupReceiveEB()
+        observerEBInfo()
+        observerSaveresult()
     }
     
     func prepareData(ebID: String) {
@@ -39,8 +40,23 @@ class ExchangeBookViewModel: NetworkViewModel {
         ebManager.getExchangeBook(ebid: ebID)
     }
     
-    private func setupReceiveEB() {
-        /// Get save user_book
+    func requestExchangeBook() {
+        // add second user book to available exchange
+        isLoading = true
+        let newEB = EExchangeBook(
+            id: exchangeBook.id!,
+            firstUserBookID: exchangeBook.needChangeBook.id!,
+            secondUserBookID: exchangeBook.wantChangeBook?.id,
+            adress: traddingAdress,
+            message: message,
+            secondStatusDes: exchangeBook.wantChangeBook?.statusDes,
+            state: ExchangeProgess.waiting.rawValue
+            )
+        ebManager.updateExchangeBook(eb: newEB)
+    }
+    
+    private func observerEBInfo() {
+        /// Get exchange book info (full)
         ebManager
             .getExchangeBookPublisher
             .sink {[weak self] (eb) in
@@ -78,6 +94,24 @@ class ExchangeBookViewModel: NetworkViewModel {
                             self.canExchange = self.exchangeBook.wantChangeBook?.id != nil
                         }
                     }
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func observerSaveresult() {
+        ebManager
+            .savePublisher
+            .sink {[weak self] (eb) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.resourceInfo = (eb.id == kUndefine) ? .savefailure : .success
+                    self.isLoading = false
+                    self.showAlert = true
                 }
             }
             .store(in: &cancellables)
