@@ -21,10 +21,10 @@ struct NotifyCard: View {
         case .comment, .breakHeart, .heart:
             return "text.bubble"
             
-        case .borrowBook, .exchangeBook, .borrowFail, .borrowSuccess, .exchangeFail, .exchangeSuccess:
+        case .borrow, .exchange, .borrowFail, .borrowSuccess, .exchangeFail, .exchangeSuccess:
             return "text.book.closed"
             
-        case .following:
+        case .follow:
             return "heart.circle"
         }
     }
@@ -34,19 +34,19 @@ struct NotifyCard: View {
         case .comment, .breakHeart, .heart:
             return AnyView(PostDetailView(postID: model.destinationID))
             
-        case .borrowBook:
+        case .borrow:
             return AnyView(ConfirmBorrowBookView())
             
         case .borrowFail, .borrowSuccess:
             return AnyView(BorrowResultView())
             
-        case .exchangeBook:
+        case .exchange:
             return AnyView(ConfirmExchangeBookView())
             
         case .exchangeFail, .exchangeSuccess:
             return AnyView(ConfirmExchangeBookView(resultView: true))
             
-        case .following:
+        case .follow:
             return AnyView(ProfileView())
         }
     }

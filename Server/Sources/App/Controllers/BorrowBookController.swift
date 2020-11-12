@@ -6,6 +6,7 @@
 //
 
 import Vapor
+import Fluent
 
 struct BorrowBookController: RouteCollection {
     
@@ -24,6 +25,26 @@ struct BorrowBookController: RouteCollection {
 
     func create(req: Request) throws -> EventLoopFuture<BorrowBook> {
         let bb = try req.content.decode(BorrowBook.self)
+        
+        
+        _ = UserBook.query(on: req.db)
+            .filter(\.$id == bb.userBookID)
+            .field(\.$userID)
+            .first()
+            .unwrap(or: Abort(.notFound))
+            .map { (ub) in
+                
+                // insert notify for uid
+                let notify = Notify(
+                    typeID: UUID(uuidString: "208F948B-E3F4-4F33-98A0-0D17976180DD")!,
+                    actor: bb.borrowerID, // who submit
+                    receiver: ub.userID, // who owner this book (userbook)
+                    des: bb.id!
+                )
+                
+                _ = notify.save(on: req.db)
+            }
+        
         return bb.save(on: req.db).map { bb }
     }
 

@@ -15,15 +15,15 @@ enum NotifyAction: Int, CaseIterable {
     
     case comment
     
-    case following
+    case follow
     
-    case borrowBook
+    case borrow
     
     case borrowFail
     
     case borrowSuccess
     
-    case exchangeBook
+    case exchange
     
     case exchangeFail
     
@@ -36,11 +36,11 @@ enum NotifyAction: Int, CaseIterable {
         case .heart: des = "thả tim bài viết của bạn"
         case .breakHeart: des = "thả trái tim tãn vỡ bài viết của bạn"
         case .comment: des = "bình luận bài viết của bạn"
-        case .following: des = "theo dõi bạn"
-        case .borrowBook: des = "gửi cho bạn yêu cầu mượn sách"
+        case .follow: des = "theo dõi bạn"
+        case .borrow: des = "gửi cho bạn yêu cầu mượn sách"
         case .borrowFail: des = "từ chối yêu cầu mượn sách của bạn"
         case .borrowSuccess: des = "chấp nhận yêu cầu mượn sách của bạn"
-        case .exchangeBook: des = "gửi cho bạn yêu cầu đổi sách"
+        case .exchange: des = "gửi cho bạn yêu cầu đổi sách"
         case .exchangeFail: des = "từ chối yêu cầu đổi sách của bạn"
         case .exchangeSuccess: des = "chấp nhận yêu đổi sách của bạn"
         }

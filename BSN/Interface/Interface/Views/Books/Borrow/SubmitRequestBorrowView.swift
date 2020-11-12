@@ -20,43 +20,45 @@ struct SubmitRequestBorrowView: View {
     var ubid: String
     
     var body: some View {
-        VStack {
-            BorrowBookHeader(model: viewModel.model.userbook)
-                .padding(.top, 20)
-            
-            Separator(color: .init(hex: 0xE2DFDF), height: 1)
-                .padding(.horizontal, 30)
-            
-            Form {
-                Section {
-                    DatePicker(selection: $viewModel.borrowDate, in: Date()..., displayedComponents: .date) {
-                        Text("Thời điểm mượn")
-                    }
-                   
-                    Picker("Thời gian mượn", selection: $viewModel.numOfDay) {
-                        ForEach(1 ..< 30) {
-                            Text("\($0) ngày")
+        ScrollView(showsIndicators: false) {
+            VStack {
+                BorrowBookHeader(model: viewModel.model.userbook)
+                    .padding(.top, 20)
+                
+                Separator(color: .init(hex: 0xE2DFDF), height: 1)
+                    .padding(.horizontal, 30)
+                
+                Form {
+                    Section {
+                        DatePicker(selection: $viewModel.borrowDate, in: Date()..., displayedComponents: .date) {
+                            Text("Thời điểm mượn")
+                        }
+                       
+                        Picker("Thời gian mượn", selection: $viewModel.numOfDay) {
+                            ForEach(1 ..< 30) {
+                                Text("\($0) ngày")
+                            }
                         }
                     }
                 }
+                
+                InputWithTitle(content: $viewModel.address, placeHolder: "Địa chỉ thuận tiện nhất cho giao dịch", title: "Địa chỉ giao dịch")
+                    .onReceive(viewModel.$address) { (adress) in
+                        self.disableSubmitBtn = adress.isEmpty
+                    }
+                
+                InputWithTitle(content: $viewModel.message, placeHolder: "ex: Bạn ơi cho mình mượn cuốn này nhé!", title: "Lời nhắn")
+                
+                Button(action: {
+                    viewModel.saveBorrowBook()
+                }, label: {
+                    Text("    Hoàn tất    ")
+                })
+                .buttonStyle(BaseButtonStyle(size: .large))
+                .disabled(disableSubmitBtn)
+                
+                Spacer()
             }
-            
-            InputWithTitle(content: $viewModel.address, placeHolder: "Địa chỉ thuận tiện nhất cho giao dịch", title: "Địa chỉ giao dịch")
-                .onReceive(viewModel.$address) { (adress) in
-                    self.disableSubmitBtn = adress.isEmpty
-                }
-            
-            InputWithTitle(content: $viewModel.message, placeHolder: "ex: Bạn ơi cho mình mượn cuốn này nhé!", title: "Lời nhắn")
-            
-            Button(action: {
-                viewModel.saveBorrowBook()
-            }, label: {
-                Text("    Hoàn tất    ")
-            })
-            .buttonStyle(BaseButtonStyle(size: .large))
-            .disabled(disableSubmitBtn)
-            
-            Spacer()
         }
         .embededLoading(isLoading: $viewModel.isLoading)
         .padding(.horizontal)
