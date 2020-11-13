@@ -15,16 +15,16 @@ final class BorrowBook: Model {
     @ID(key: .id)
     var id: UUID?
     
-    @Field(key: "title")
+    @Field(key: "userbook_id")
     var userBookID: UserBook.IDValue
     
-    @Field(key: "author")
+    @Field(key: "borrower_id")
     var borrowerID: User.IDValue
     
     @Field(key: "borrow_date")
     var borrowDate: Date
     
-    @Field(key: "description")
+    @Field(key: "borrow_days")
     var borrowDays: Int
     
     @Field(key: "adress")
@@ -52,29 +52,26 @@ final class BorrowBook: Model {
 
 extension BorrowBook: Content { }
 
-struct GetBorrowBook: Content {
+extension BorrowBook {
     
-    var id: String?
-    
-    var userBookID: String?
-    
-    var borrowerID: String?
-    
-    var borrowDate:  Date?
-    
-    var borrowDays: Int?
-    
-    var adress: String?
-    
-    var message: String?
-    
-    var statusDes: String?
-    
-    var state: String?
-    
-    var createdAt: Date?
-    
-    var updatedAt: Date?
-    
-    init() { }
+    struct GetFull: Content {
+        
+        var id: String?
+        var userBookID: String?
+        var borrowerID: String?
+        var borrowDate:  Date?
+        var borrowDays: Int?
+        var adress: String?
+        var message: String?
+        var statusDes: String?
+        var state: String?
+        var createdAt: Date?
+        var updatedAt: Date?
+        
+        var bookCover: String?
+        var bookTitle: String?
+        var bookAuthor: String?
+        var bookStatus: String?
+        var brorrowerName: String?
+    }
 }

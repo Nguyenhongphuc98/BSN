@@ -15,9 +15,9 @@ public struct ENotify: Codable {
     public var seen: Bool
     public var createdAt: String?
     
-    public var actorName: String
+    public var actorName: String?
     public var actorPhoto: String?
-    public var notifyName: String
+    public var notifyName: String?
         
     public init() {
         self.id = "undefine"

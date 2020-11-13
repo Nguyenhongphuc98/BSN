@@ -8,26 +8,22 @@
 public struct EBorrowBook: Codable {
     
     public var id: String?
-    
     public var userBookID: String?
-    
     public var borrowerID: String?
-    
     public var borrowDate:  String?
-    
     public var borrowDays: Int?
-    
     public var adress: String?
-    
     public var message: String?
-    
     public var statusDes: String?
-    
     public var state: String?
-    
     public var createdAt: String?
-    
     public var updatedAt: String?
+    
+    public var bookCover: String?
+    public var bookTitle: String?
+    public var bookAuthor: String?
+    public var bookStatus: String?
+    public var brorrowerName: String?
     
     init() {
         id = "undefine"

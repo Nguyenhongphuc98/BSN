@@ -6,17 +6,22 @@
 //
 
 import Vapor
+import SQLKit
 import Fluent
 
 struct BorrowBookController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
         let borrowBooks = routes.grouped("api" ,"v1", "borrowBooks")
-        borrowBooks.get(use: index)
-        borrowBooks.post(use: create)
-        borrowBooks.group(":ID") { group in
+        let authen = borrowBooks.grouped(Account.authenticator())
+        
+        authen.get(use: index)
+        authen.post(use: create)
+        authen.group(":ID") { group in
             group.delete(use: delete)
         }
+        
+        authen.get("detail", ":ID", use: getDetail)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[BorrowBook]> {
@@ -53,5 +58,22 @@ struct BorrowBookController: RouteCollection {
             .unwrap(or: Abort(.notFound))
             .flatMap { $0.delete(on: req.db) }
             .transform(to: .ok)
+    }
+    
+    func getDetail(req: Request) throws -> EventLoopFuture<BorrowBook.GetFull> {
+        
+        guard let id: String = req.parameters.get("ID"), let _ = UUID(uuidString: id) else {
+            throw Abort(.badRequest)
+        }
+        
+        // Authen
+        _ = try req.auth.require(Account.self)
+        
+        let sqlQuery = SQLQueryString("SELECT bb.userbook_id as \"userBookID\", bb.borrower_id as \"borrowerID\", bb.borrow_date as \"borrowDate\", bb.borrow_days as \"borrowDays\", bb.adress, bb.message, bb.status_des as \"statusDes\", bb.state, b.cover  as \"bookCover\", b.title  as \"bookTitle\",b.author  as \"bookAuthor\", ub.status  as \"bookStatus\", u.displayname  as \"brorrowerName\" from borrow_book as bb, user_book as ub, public.user as u, book as b where bb.userbook_id = ub.id and ub.user_id = u.id and ub.book_id = b.id and bb.id = '\(raw: id)'")
+        
+        let db = req.db as! SQLDatabase
+        return db.raw(sqlQuery)
+            .first(decoding: BorrowBook.GetFull.self)
+            .unwrap(or: Abort(.notFound))
     }
 }

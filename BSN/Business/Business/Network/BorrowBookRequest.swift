@@ -9,6 +9,24 @@ import Combine
 
 class BorrowBookRequest: ResourceRequest<EBorrowBook> {
     
+    func fetchBorowBook(bbid: String, publisher: PassthroughSubject<EBorrowBook, Never>) {
+        self.setPath(resourcePath: "detail/\(bbid)")
+        
+        self.get(isAll: false) { result in
+            
+            switch result {
+            case .failure(let message):
+                print(message)
+                var bb = EBorrowBook()
+                bb.bookTitle = message
+                publisher.send(bb)
+                
+            case .success(let bbs):
+                publisher.send(bbs[0])
+            }
+        }
+    }
+    
     func saveBorrowBook(borrowBook: EBorrowBook, publisher: PassthroughSubject<EBorrowBook, Never>) {
         self.resetPath()
         

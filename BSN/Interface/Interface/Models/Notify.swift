@@ -76,8 +76,8 @@ class Notify: Identifiable {
     
     init(enotify: ENotify) {
         id = enotify.id
-        sender = User(id: enotify.actorID, photo: enotify.actorPhoto, name: enotify.actorName)
-        action = NotifyAction(rawValue: enotify.notifyName)!
+        sender = User(id: enotify.actorID, photo: enotify.actorPhoto, name: enotify.actorName!)
+        action = NotifyAction(rawValue: enotify.notifyName!)!
         destinationID = enotify.destionationID
         createDate = Date.getDate(dateStr: enotify.createdAt)
         seen = enotify.seen

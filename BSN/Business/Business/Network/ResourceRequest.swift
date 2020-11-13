@@ -113,6 +113,8 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
             urlRequest.addValue(AccountRequest.authorization, forHTTPHeaderField: "Authorization")
             urlRequest.httpBody = try JSONEncoder().encode(resourceToSave)
             
+            print("url: \(urlRequest)")
+            
             let dataTask = URLSession.shared
                 .dataTask(with: urlRequest) { data, response, _ in
                     
@@ -122,7 +124,7 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
                         return
                     }
                     do {
-                        let resource = try JSONDecoder().decode(ResourceType.self,
+                        let resource = try! JSONDecoder().decode(ResourceType.self,
                                                      from: jsonData)
                         completion(.success(resource))
                     } catch {

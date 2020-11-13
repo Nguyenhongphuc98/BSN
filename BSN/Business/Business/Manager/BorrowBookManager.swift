@@ -11,10 +11,13 @@ public class BorrowBookManager {
     
     private let networkRequest: BorrowBookRequest
     
-    // Publisher for save new note and update note action
+    // Publisher for save new bb and update bb action
     public let changePublisher: PassthroughSubject<EBorrowBook, Never>
     
-    // Publisher for fetch notes by ubid
+    // Publisher for get single bb
+    public let getBorrowBookPublisher: PassthroughSubject<EBorrowBook, Never>
+    
+    // Publisher for fetch borrowbooks by ...
     public let getBorrowBooksPublisher: PassthroughSubject<[EBorrowBook], Never>
     
     public init() {
@@ -22,10 +25,15 @@ public class BorrowBookManager {
         networkRequest = BorrowBookRequest(componentPath: "borrowBooks/")
         
         changePublisher = PassthroughSubject<EBorrowBook, Never>()
+        getBorrowBookPublisher = PassthroughSubject<EBorrowBook, Never>()
         getBorrowBooksPublisher = PassthroughSubject<[EBorrowBook], Never>()
     }
     
     public func saveBorrowBook(borrowBook: EBorrowBook) {
         networkRequest.saveBorrowBook(borrowBook: borrowBook, publisher: changePublisher)
+    }
+    
+    public func getBorrowBook(bbid: String) {
+        networkRequest.fetchBorowBook(bbid: bbid, publisher: getBorrowBookPublisher)
     }
 }

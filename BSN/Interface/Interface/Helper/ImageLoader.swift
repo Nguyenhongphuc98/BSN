@@ -36,7 +36,7 @@ public class ImageLoader: ObservableObject {
     }
 
     private func download(urlString: String?) {
-        guard let url = URL(string: urlString!) else {
+        guard let url = URL(string: urlString ?? "") else {
             self.uiImage = UIImage(named: self.instate, in: interfaceBundle, with: nil)!
             return
         }

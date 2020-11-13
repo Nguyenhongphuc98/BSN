@@ -10,6 +10,8 @@ import SwiftUI
 // View showing when click notify receive request from others
 struct ConfirmBorrowBookView: View {
     
+    var bbid: String
+    
     var viewModel: ConfirmBorrowBookViewModel = ConfirmBorrowBookViewModel()
     
     var formater: String = "EEEE, MMM d, yyyy"
@@ -64,6 +66,7 @@ struct ConfirmBorrowBookView: View {
             }
         }
         .padding()
+        
         .navigationBarTitle("Xem yêu cầu mượn sách", displayMode: .inline)
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
@@ -71,6 +74,7 @@ struct ConfirmBorrowBookView: View {
         .sheet(isPresented: $showDeclineView, content: {
             DeclineEoBBookView()
         })
+        .onAppear(perform: viewAppeared)
     }
     
     var backButton: some View {
@@ -85,10 +89,14 @@ struct ConfirmBorrowBookView: View {
     func shouldShowAction(proges: ExchangeProgess) -> Bool {
         !(proges == .decline) || (proges == .accept)
     }
+    
+    func viewAppeared() {
+        viewModel.prepareData(bbid: bbid)
+    }
 }
 
 struct ConfirmBorrowBookView_Previews: PreviewProvider {
     static var previews: some View {
-        ConfirmBorrowBookView()
+        ConfirmBorrowBookView(bbid: "")
     }
 }

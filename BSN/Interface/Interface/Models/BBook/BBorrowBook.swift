@@ -28,6 +28,7 @@ class BBorrowBook: ObservableObject, Identifiable {
         )
     }
     
+    // using for load and submit new borrowbook
     init(userbook: EUserBook) {
         self.userbook = BUserBook(
             ubid: userbook.id,
@@ -47,6 +48,26 @@ class BBorrowBook: ObservableObject, Identifiable {
             adress: "",
             message: "",
             progess: .new
+        )
+    }
+    
+    init(ebb: EBorrowBook) {
+        self.id = ebb.id
+        self.userbook = BUserBook(
+            ownerName: ebb.brorrowerName,
+            status: ebb.bookStatus,
+            title: ebb.bookTitle!,
+            author: ebb.bookAuthor!,
+            state: BookState.unknown.rawValue, // in this case we don't care this value
+            cover: ebb.bookCover,
+            des: ebb.message)
+        
+        transactionInfo = BTransactionInfo(
+            exchangeDate: Date.getDate(dateStr: ebb.borrowDate),
+            numDay: ebb.borrowDays,
+            adress: ebb.adress!,
+            message: ebb.message!,
+            progess: ExchangeProgess(rawValue: ebb.state!)!
         )
     }
 }
