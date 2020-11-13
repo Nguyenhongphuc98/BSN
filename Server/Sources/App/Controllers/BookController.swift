@@ -26,6 +26,7 @@ struct BookController: RouteCollection {
         
         // Get detail book for view in client (not full info book store in DB)
         books.get("detail",":bookID", use: getBookDetail)
+        books.get("top", use: getTopRating)
     }
     
     // Base function
@@ -49,6 +50,15 @@ struct BookController: RouteCollection {
         return Book.find(req.parameters.get("bookID"), on: req.db)
             .unwrap(or: Abort(.notFound))
             .map { $0 }
+    }
+    
+    func getTopRating(req: Request) throws -> EventLoopFuture<[Book]> {
+        return Book.query(on: req.db)
+            .sort(\.$avgRating, .descending)
+            .paginate(for: req)
+            .map { page in
+                return page.items
+            }
     }
     
     // Advance function

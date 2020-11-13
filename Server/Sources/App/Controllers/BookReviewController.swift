@@ -44,6 +44,8 @@ struct BookReviewController: RouteCollection {
                 book.targetRating = (book.targetRating! * n + Float(br.targetRating)) / (n + 1)
                 book.numReview! += 1
                 
+                book.avgRating = (book.characterRating! + book.targetRating! + book.infoRating! + book.writeRating!) / 4.0
+                
                 _ = book.update(on: req.db)
                 
                 return br.save(on: req.db).map { br }
@@ -68,11 +70,13 @@ struct BookReviewController: RouteCollection {
                             book.writeRating = 0.0
                             book.infoRating = 0.0
                             book.targetRating = 0.0
+                            book.avgRating = 0.0
                         } else {
                             book.characterRating = (book.characterRating! * n - Float(br.characterRating)) / Float(n - 1)
                             book.writeRating = (book.writeRating! * n - Float(br.writeRating)) / Float(n - 1)
                             book.infoRating = (book.infoRating! * n - Float(br.infoRating)) / Float(n - 1)
                             book.targetRating = (book.targetRating! * n - Float(br.targetRating)) / Float(n - 1)
+                            book.avgRating = (book.characterRating! + book.targetRating! + book.infoRating! + book.writeRating!) / 4.0
                         }
                         
                         book.numReview! -= 1
