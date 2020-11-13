@@ -28,3 +28,18 @@ final class UserFollow: Model {
 }
 
 extension UserFollow: Content { }
+
+extension UserFollow {
+    
+    struct GetFull: Content {
+        var id: String
+        
+        var userID: String?
+        var userName: String?
+        var userPhoto: String?
+        
+        var followerID: String?
+        var followerName: String?
+        var followerPhoto: String?
+    }
+}

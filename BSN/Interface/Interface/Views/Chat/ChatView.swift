@@ -90,7 +90,9 @@ public struct ChatView: View {
         .sheet(isPresented: $presentNewChat) {
             NewChatView() { user in
                 viewModel.selectedUserNewChat = user
-                action = 1
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    action = 1
+                }
             }
         }
     }

@@ -71,7 +71,9 @@ struct BookController: RouteCollection {
         // Get first 5 book match term
         return Book.query(on: req.db)
             .group(.or) { (group) in
-                group.filter(\.$title ~~ term).filter(\.$author ~~ term)
+                group.filter(\.$title,.custom("ilike"), "%\(term)%")
+                    .filter(\.$author,.custom("ilike"), "%\(term)%")
+                //group.filter(\.$title ~~ term).filter(\.$author ~~ term)
             }
             .range(0..<BusinessConfig.searchBookLimit)
             .all()

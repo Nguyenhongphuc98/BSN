@@ -20,14 +20,12 @@ struct NewChatView: View {
             SearchBar(isfocus: $viewModel.isFocus, searchText: $viewModel.searchText)
                 .padding(.top, 20)
                 .onChange(of: viewModel.searchText) { _ in
-                    viewModel.searchChat { (success) in
-                        print("did search: \(success)")
-                    }
+                    viewModel.searchUser(text: viewModel.searchText)
                 }
             
             Group {
                 List {
-                    ForEach(viewModel.displayContacts) { u in
+                    ForEach(viewModel.searchedContacts) { u in
                         SearchUserItem(user: u) {
                             didRequestChatTo?(u)
                             presentationMode.wrappedValue.dismiss()
@@ -35,7 +33,7 @@ struct NewChatView: View {
                     }
                 }
                 
-                if viewModel.displayContacts.isEmpty {
+                if viewModel.searchedContacts.isEmpty {
                     Text("Không tìm thấy người dùng")
                         .robotoLightItalic(size: 13)
                         .foregroundColor(.gray)
