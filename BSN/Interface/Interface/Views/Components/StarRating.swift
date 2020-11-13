@@ -31,9 +31,6 @@ struct StarRating: View {
             }
         }
         .font(.system(size: 12))
-        .onReload {
-            print("rating: \(rating)")
-        }
     }
 }
 

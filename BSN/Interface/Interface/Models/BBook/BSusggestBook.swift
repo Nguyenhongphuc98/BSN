@@ -18,4 +18,15 @@ class BSusggestBook: BBook {
         numReview = 10
         super.init()
     }
+    
+    init(id: String, title: String, author: String, cover: String?, avgRating: Float, numReview: Int) {
+        self.avgRating = avgRating
+        self.numReview = numReview
+        
+        super.init()
+        self.id = id
+        self.title = title
+        self.author = author
+        self.cover = cover
+    }
 }

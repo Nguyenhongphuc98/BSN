@@ -15,3 +15,17 @@ extension Array where Element: Identifiable & Hashable {
         self.append(item)
     }
 }
+
+protocol AppendUniqueAble: Hashable, Identifiable {
+ 
+}
+
+extension AppendUniqueAble {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        return hasher.combine(self.id)
+    }
+}

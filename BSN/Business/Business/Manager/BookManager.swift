@@ -28,6 +28,9 @@ public class BookManager {
     
     public let saveBookPublisher: PassthroughSubject<EBook, Never>
     
+    // publish when get top review book for explore view
+    public let getBooksPublisher: PassthroughSubject<[EBook], Never>
+    
     public init() {
         // Publisher
         searchBooksPublisher = PassthroughSubject<[ESearchBook], Never>()
@@ -40,6 +43,7 @@ public class BookManager {
         getGoogleBookPublisher = PassthroughSubject<EBook, Never>()
         getBookByIsbnPublisher = PassthroughSubject<ESearchBook, Never>()
         saveBookPublisher = PassthroughSubject<EBook, Never>()
+        getBooksPublisher = PassthroughSubject<[EBook], Never>()
     }
     
     // Request books with title or author `term`
@@ -52,6 +56,11 @@ public class BookManager {
     public func fetchBook(bookID: String) {
         print("Did start fetch book id: \(bookID)")
         booksRequest.fetchBook(bookID: bookID, publisher: getBookPublisher)
+    }
+    
+    public func fetchTopBooks(page: Int, per: Int = BusinessConfigure.topBooksPerPage) {
+        print("Did start fetch top book id")
+        booksRequest.fetchTopBooks(page: page, per: per, publisher: getBooksPublisher)
     }
     
     public func fetchBook(isbn: String) {

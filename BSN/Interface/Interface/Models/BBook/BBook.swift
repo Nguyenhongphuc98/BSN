@@ -67,7 +67,7 @@ enum BookStatus: String, CaseIterable {
 }
 
 // MARK: - Book models
-class BBook: ObservableObject, Identifiable {
+class BBook: ObservableObject, AppendUniqueAble {
     
     var id: String?
     

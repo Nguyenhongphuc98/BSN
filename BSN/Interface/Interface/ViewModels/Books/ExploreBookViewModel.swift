@@ -16,23 +16,32 @@ class ExploreBookViewModel: SearchBookViewModel {
     
     private var ebManager: ExchangeBookManager
     
+    private var bookManager: BookManager
+    
     override init() {
-        suggestBooks = [BSusggestBook(), BSusggestBook(), BSusggestBook(), BSusggestBook()]
+        suggestBooks = []
         exchangeBooks = []
         ebManager = ExchangeBookManager()
+        bookManager = BookManager()
         super.init()
         
         setupReceiveEBs()
+        setupReceiveTopBooks()
     }
     
     func prepareData() {
         // load favorite book
         // load page 0 exchange book
         loadExchangeBooks(page: 0)
+        loadTopBooks(page: 1) // using defaul paginate so it begin with 1 index
     }
     
     func loadExchangeBooks(page: Int) {
         ebManager.getExchangeBooks(page: page)
+    }
+    
+    func loadTopBooks(page: Int) {
+        bookManager.fetchTopBooks(page: page)
     }
     
     private func setupReceiveEBs() {
@@ -69,5 +78,36 @@ class ExploreBookViewModel: SearchBookViewModel {
     
     func removeEB(ebid: String) {
         exchangeBooks.removeAll { $0.id == ebid }
+    }
+    
+    private func setupReceiveTopBooks() {
+        /// Get save user_book
+        bookManager
+            .getBooksPublisher
+            .sink {[weak self] (bs) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    
+                    if !bs.isEmpty {
+                        bs.forEach { (b) in
+                            let model = BSusggestBook(
+                                id: b.id!,
+                                title: b.title,
+                                author: b.author,
+                                cover: b.cover,
+                                avgRating: b.avgRating!,
+                                numReview: b.numReview!
+                            )
+                            self.suggestBooks.appendUnique(item: model)
+                        }
+                    }
+                }
+            }
+            .store(in: &cancellables)
     }
 }

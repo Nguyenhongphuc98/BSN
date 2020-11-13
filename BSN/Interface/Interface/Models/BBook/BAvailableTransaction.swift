@@ -8,7 +8,7 @@
 import SwiftUI
 import Business
 
-class BAvailableTransaction: ObservableObject, Identifiable, Equatable {
+class BAvailableTransaction: ObservableObject, AppendUniqueAble, Equatable {
     
     var id: String?
     
@@ -58,17 +58,5 @@ class BAvailableExchange: BAvailableTransaction {
         exchangeBookID = UUID().uuidString
         exchangeBookName = "Muốn giỏi phải học"
         super.init()
-    }
-}
-
-// MARK: - extension
-extension BAvailableTransaction: Hashable {
-    
-    static func == (lhs: BAvailableTransaction, rhs: BAvailableTransaction) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        return hasher.combine(self.id)
     }
 }

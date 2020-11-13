@@ -51,7 +51,7 @@ enum NotifyAction: String, CaseIterable {
 }
 
 // MARK: - Notify base
-class Notify: Identifiable {
+class Notify: AppendUniqueAble {
     
     var id: String
     
@@ -81,16 +81,5 @@ class Notify: Identifiable {
         destinationID = enotify.destionationID
         createDate = Date.getDate(dateStr: enotify.createdAt)
         seen = enotify.seen
-    }
-}
-
-extension Notify: Hashable {
-    
-    static func == (lhs: Notify, rhs: Notify) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        return hasher.combine(self.id)
     }
 }

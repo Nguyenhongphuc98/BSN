@@ -26,14 +26,18 @@ struct BBookGrid: View {
     // Did select book have name 'Book'
     var didSelect: ((BBook) -> Void)?
     
+    @EnvironmentObject var navState: NavigationState
+    
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns, content: {
                 ForEach(models) { book in
                     if style == .mybook {
                         BUserBookCard(model: book as! BUserBook)
+                            .environmentObject(navState)
                     } else {
                         SuggestBookCard(model: book as! BSusggestBook)
+                            .environmentObject(navState)
                     }
                 }
             })

@@ -59,6 +59,20 @@ class BookRequest: ResourceRequest<EBook> {
         }
     }
     
+    func fetchTopBooks(page: Int, per: Int, publisher: PassthroughSubject<[EBook], Never>) {
+        self.setPath(resourcePath: "top", params: ["page":String(page), "per":String(per)])
+        
+        self.get { result in
+            
+            switch result {
+            case .failure(let message):
+                print(message)
+            case .success(let books):
+                publisher.send(books)
+            }
+        }
+    }
+    
     func saveBook(book: EBook, publisher: PassthroughSubject<EBook, Never>) {
         self.resetPath()
         

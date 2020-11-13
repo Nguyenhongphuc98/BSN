@@ -11,9 +11,11 @@ struct SuggestBookCard: View {
     
     var model: BSusggestBook
     
+    @EnvironmentObject var navState: NavigationState
+    
     var body: some View {
         NavigationLink(
-            destination: BookDetailView(bookID: model.id!),
+            destination: BookDetailView(bookID: model.id!).environmentObject(navState),
             label: {
                 BBookCard(model: model) {
                     HStack {

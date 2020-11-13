@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class BExchangeBook: ObservableObject, Identifiable {
+class BExchangeBook: ObservableObject, AppendUniqueAble {
     
     var id: String?
     
@@ -62,16 +62,5 @@ class BExchangeBook: ObservableObject, Identifiable {
         )
         
         self.distance = 0
-    }
-}
-
-extension BExchangeBook: Hashable {
-    
-    static func == (lhs: BExchangeBook, rhs: BExchangeBook) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        return hasher.combine(self.id)
     }
 }

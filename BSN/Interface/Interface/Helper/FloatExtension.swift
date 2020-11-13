@@ -19,7 +19,7 @@ extension Float {
     // Get remainder Float value
     // Divide for smaller Int value closest,
     var remain: Float {
-        self.remainder(dividingBy: Float(div))
+        div == 0 ? 0 : self.remainder(dividingBy: Float(div))
     }
     
     // Remain star in total

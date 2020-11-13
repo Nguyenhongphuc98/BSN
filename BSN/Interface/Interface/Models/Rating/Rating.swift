@@ -8,7 +8,7 @@
 import SwiftUI
 
 // Model in review book view
-class Rating: Identifiable {
+class Rating: AppendUniqueAble {
     
     var id: String
     
@@ -72,16 +72,5 @@ class Rating: Identifiable {
         } else {
             return "Rất không Hài lòng"
         }
-    }
-}
-
-extension Rating: Hashable {
-    
-    static func == (lhs: Rating, rhs: Rating) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        return hasher.combine(self.id)
     }
 }
