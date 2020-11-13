@@ -10,6 +10,8 @@ import SwiftUI
 // Instance for a message: sender - content
 struct MessageCel: View {
     
+    @EnvironmentObject var chat: Chat
+    
     @StateObject var message: Message
     
     @State private var presentViewFull: Bool = false
@@ -20,7 +22,7 @@ struct MessageCel: View {
                 Spacer(minLength: 50)
                
             } else {
-                CircleImage(image: message.sender.avatar, diameter: 35)
+                CircleImage(image: chat.partnerPhoto, diameter: 35)
             }
 
             if message.type == .text {

@@ -79,6 +79,7 @@
 		8414F26B2521E484003CF799 /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414F26A2521E484003CF799 /* TimeIntervalExtension.swift */; };
 		841CED9E255D67AE007CCACC /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CED9D255D67AD007CCACC /* SettingView.swift */; };
 		841CEDA1255D7356007CCACC /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CEDA0255D7356007CCACC /* SettingViewModel.swift */; };
+		841CEDB0255EB331007CCACC /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CEDAF255EB331007CCACC /* Chat.swift */; };
 		842C446E2547CBE4003C570D /* BBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C446D2547CBE4003C570D /* BBook.swift */; };
 		842C447425480C5C003C570D /* BSusggestBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C447325480C5C003C570D /* BSusggestBook.swift */; };
 		842C447925480F0C003C570D /* SuggestBookCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C447825480F0C003C570D /* SuggestBookCard.swift */; };
@@ -267,6 +268,7 @@
 		8414F26A2521E484003CF799 /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
 		841CED9D255D67AD007CCACC /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		841CEDA0255D7356007CCACC /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		841CEDAF255EB331007CCACC /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		842C446D2547CBE4003C570D /* BBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBook.swift; sourceTree = "<group>"; };
 		842C447325480C5C003C570D /* BSusggestBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BSusggestBook.swift; sourceTree = "<group>"; };
 		842C447825480F0C003C570D /* SuggestBookCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestBookCard.swift; sourceTree = "<group>"; };
@@ -534,6 +536,15 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		841CEDB2255EB33B007CCACC /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				843E5229252708FA00B16995 /* Message.swift */,
+				841CEDAF255EB331007CCACC /* Chat.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
 		842C44712547CF3A003C570D /* BBook */ = {
 			isa = PBXGroup;
 			children = (
@@ -682,13 +693,13 @@
 		84AA95B9251AFBF00029BB1E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				841CEDB2255EB33B007CCACC /* Chat */,
 				84AA95F2251B453F0029BB1E /* Profile.swift */,
 				84AA960A251B469F0029BB1E /* User.swift */,
 				84AA961A251B47640029BB1E /* Account.swift */,
 				8414F242252187C3003CF799 /* NewsFeed.swift */,
 				8436100E25247DD2009FF4BF /* Comment.swift */,
 				84B964F32525C6E600F37571 /* Notify.swift */,
-				843E5229252708FA00B16995 /* Message.swift */,
 				8401C9CE2530687D00A722CE /* Rating */,
 				842C44712547CF3A003C570D /* BBook */,
 				84A61CAF254C148700B50FE8 /* PassthroughtEB.swift */,
@@ -968,6 +979,7 @@
 				84B964FC2526063F00F37571 /* CoreMessageEditor.swift in Sources */,
 				8401C98A252F152400A722CE /* DeclineEoBBookView.swift in Sources */,
 				842C44CB25490392003C570D /* BAvailableTransaction.swift in Sources */,
+				841CEDB0255EB331007CCACC /* Chat.swift in Sources */,
 				842C44C82548FA01003C570D /* BExchangeBookFull.swift in Sources */,
 				84B964F82525CBBD00F37571 /* NotifyViewModel.swift in Sources */,
 				8401C8BD252ACC6400A722CE /* FloatExtension.swift in Sources */,

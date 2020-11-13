@@ -11,7 +11,7 @@ public class User: ObservableObject, Identifiable {
     
     public var id: String
 
-    public var username: String
+    public var username: String?
 
     @Published public var displayname: String
 
@@ -40,7 +40,7 @@ public class User: ObservableObject, Identifiable {
         about = ""
     }
     
-    public init(id: String, username: String, displayname: String, avatar: String? = nil, cover: String? = nil, location: String? = nil, about: String? = nil) {
+    public init(id: String, username: String? = nil, displayname: String, avatar: String? = nil, cover: String? = nil, location: String? = nil, about: String? = nil) {
         self.id = id
         self.username = username
         self.displayname = displayname

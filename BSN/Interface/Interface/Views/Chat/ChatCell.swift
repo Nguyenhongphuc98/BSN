@@ -10,44 +10,49 @@ import SwiftUI
 // The item that display as cell in ChatTab
 struct ChatCell: View {
     
-    @ObservedObject var message: Message
+    @ObservedObject var chat: Chat
     
-    @State private var action: Int? = 0
+    @State private var showInchat: Bool = false
     
-    @EnvironmentObject var root: AppManager
+    @EnvironmentObject var appManager: AppManager
     
     var body: some View {
-        HStack {
+        ZStack {
             NavigationLink(
-                destination: InChatView().environmentObject(message.sender).environmentObject(root),
-                tag: 1,
-                selection: $action
+                destination: InChatView()
+                    .environmentObject(chat)
+                    .environmentObject(appManager),
+                isActive: $showInchat
             ) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)
             .opacity(0)
             
-            CircleImage(image: message.sender.avatar, diameter: 45)
-            
-            VStack(alignment: .leading) {
-                Text(message.sender.displayname)
-                    .robotoBold(size: 16)
+            Button {
+                showInchat = true
+            } label: {
                 
-                Text(messageContent(message: message))
-                    .robotoBold(size: 14)
-                    .lineLimit(1)
-                    .foregroundColor(.init(hex: 0x6D6D6D))
+                HStack {
+                    CircleImage(image: chat.partnerPhoto, diameter: 45)
+                    
+                    VStack(alignment: .leading) {
+                        Text(chat.partnerName)
+                            .robotoBold(size: 16)
+                        
+                        Text(messageContent(message: chat.lastMessage!))
+                            .robotoBold(size: 14)
+                            .lineLimit(1)
+                            .foregroundColor(.init(hex: 0x6D6D6D))
+                    }
+                    
+                    Spacer()
+                    CountTimeText(date: chat.lastMessage!.createDate)
+                }
             }
-            
-            Spacer()
-            CountTimeText(date: message.createDate)
         }
         .padding(.trailing)
         .padding(.vertical, 5)
-        .onTapGesture {
-            action = 1
-        }
     }
     
     func messageContent(message: Message) -> String {
@@ -57,6 +62,6 @@ struct ChatCell: View {
 
 struct ChatItem_Previews: PreviewProvider {
     static var previews: some View {
-        ChatCell(message: Message())
+        ChatCell(chat: Chat())
     }
 }

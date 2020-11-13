@@ -20,7 +20,9 @@ struct SearchUserItem: View {
     var body: some View {
         HStack {
             NavigationLink(
-                destination: InChatView().environmentObject(user).environmentObject(root),
+                destination: InChatView()
+                    .environmentObject(Chat(partner: user))
+                    .environmentObject(root),
                 tag: 1,
                 selection: $action
             ) {

@@ -26,7 +26,8 @@ public struct ChatView: View {
     public var body: some View {
         VStack {
             NavigationLink(
-                destination: InChatView().environmentObject(viewModel.selectedUserNewChat),
+                destination: InChatView()
+                    .environmentObject(Chat(partner: viewModel.selectedUserNewChat)),
                 tag: 1,
                 selection: $action) {
                 EmptyView()
@@ -50,9 +51,14 @@ public struct ChatView: View {
                             .padding(.top, 100)
                     } else {
                         ForEach(viewModel.searchChats) { c in
-                            SearchUserItem(user: c.sender)
+                            SearchUserItem(
+                                user: User(
+                                    id: c.partnerID,
+                                    displayname: c.partnerName,
+                                    avatar: c.partnerPhoto)
+                            )
                         }
-                        
+
                         if !searchFound {
                             Text("Không tìm thấy người dùng")
                                 .robotoLightItalic(size: 13)
@@ -62,8 +68,8 @@ public struct ChatView: View {
                     }
                 } else {
                     List {
-                        ForEach(viewModel.chats) { m in
-                            ChatCell(message: m)
+                        ForEach(viewModel.chats) { c in
+                            ChatCell(chat: c)
                         }
                     }
                     .listStyle(PlainListStyle())

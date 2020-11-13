@@ -9,11 +9,11 @@ import SwiftUI
 
 class ChatViewModel: ObservableObject {
     
-    @Published var chats: [Message]
+    @Published var chats: [Chat]
     
     @Published var searchText: String
     
-    @Published var searchChats: [Message]
+    @Published var searchChats: [Chat]
     
     @Published var isSearching: Bool
     
@@ -24,7 +24,7 @@ class ChatViewModel: ObservableObject {
     var selectedUserNewChat: User
     
     init() {
-        chats = [Message(), Message(), Message(), Message(), Message(), Message(), Message()]
+        chats = [Chat(), Chat()]
         searchChats = []
         searchText = ""
         isSearching = false
@@ -71,8 +71,8 @@ class ChatViewModel: ObservableObject {
         }
     }
     
-    private func filterInternalChat(key: String, complete: @escaping ([Message]) -> Void) {
-        let result = chats.filter { $0.sender.displayname.contains(key) }
+    private func filterInternalChat(key: String, complete: @escaping ([Chat]) -> Void) {
+        let result = chats.filter { $0.partnerName.contains(key) }
         complete(result)
     }
 }

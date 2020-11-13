@@ -75,11 +75,9 @@ class NewChatViewModel: NetworkViewModel {
                 DispatchQueue.main.async {
                     self.searchedContacts = []
                     self.searchedContacts = sb.map { (u) in
-                        
                         User(id: u.userID!, photo: u.userPhoto, name: u.userName!)
                     }
                     
-                    //self.isSearching = false
                     self.isLoading = false
                     self.objectWillChange.send()
                 }

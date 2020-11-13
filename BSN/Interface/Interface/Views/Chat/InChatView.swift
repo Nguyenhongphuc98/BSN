@@ -9,17 +9,17 @@ import SwiftUI
 
 struct InChatView: View {
     
+    @EnvironmentObject var chat: Chat
+    
     @StateObject var viewModel: InChatViewModel = InChatViewModel()
     
     @EnvironmentObject var root: AppManager
     
-    @EnvironmentObject var partner: User
-    
     @Environment(\.presentationMode) var presentationMode
     
-    @State var goProfile: Int? = 0
+    @State private var goProfile: Int? = 0
     
-    @State var chatBottom: CGFloat = 45
+    @State private var chatBottom: CGFloat = 45
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -39,15 +39,16 @@ struct InChatView: View {
                                 ForEach(viewModel.messages) { message in
                                     MessageCel(message: message)
                                         .id(message.id)
+                                        .environmentObject(viewModel.chat)
                                 }
                             }
                             .onAppear {
                                 
-                                value.scrollTo(viewModel.messages.last!.id)
+                                value.scrollTo(viewModel.messages.last?.id ?? "")
                                 viewModel.updateUIIfNeedes = {
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.15, execute: {
                                         withAnimation {
-                                            value.scrollTo(viewModel.messages.last!.id)
+                                            value.scrollTo(viewModel.messages.last?.id ?? "")
                                             print("did force update UI")
                                         }
                                     })
@@ -97,7 +98,7 @@ struct InChatView: View {
                 })
             }
         }
-        .navigationBarTitle(viewModel.partner.displayname, displayMode: .inline)
+        .navigationBarTitle(viewModel.chat.partnerName, displayMode: .inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton, trailing: profileButton)
         .onAppear(perform: viewAppeard)
@@ -116,12 +117,12 @@ struct InChatView: View {
         Button {
             goProfile = 1
         } label: {
-            CircleImage(image: viewModel.partner.avatar, diameter: 20)
+            CircleImage(image: viewModel.chat.partnerPhoto, diameter: 20)
         }
     }
     
     func viewAppeard() {
-        viewModel.fetchData(partner: partner)
+        viewModel.fetchData(chat: chat)
     }
 }
 
