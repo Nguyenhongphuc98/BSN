@@ -40,5 +40,16 @@ extension Chat {
         var id: String?
         var firstUserID: String
         var secondUserID: String
+        
+        // User info
+        var firstUserName: String?
+        var firstUserPhoto: String?
+        var secondUserName: String?
+        var secondUserPhoto: String?
+        
+        // Last message
+        var messageContent: String?
+        var messageCreateAt: String?
+        var messageTypeName: String?
     }
 }
