@@ -12,10 +12,8 @@ struct SearchBar: View {
     @Binding var isfocus: Bool
     
     @Binding var searchText: String
-    
-    var onchange: (() -> Void)?
-    
-    //var oncancel: (() -> Void)?
+
+    var oncancel: (() -> Void)?
     
     var body: some View {
         HStack {
@@ -51,6 +49,7 @@ struct SearchBar: View {
                         self.searchText = ""
                         self.isfocus = false
                     }
+                    oncancel?()
                 }
             }
         }

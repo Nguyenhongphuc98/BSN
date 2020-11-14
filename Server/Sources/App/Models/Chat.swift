@@ -25,6 +25,20 @@ final class Chat: Model {
     var createdAt: Date?
     
     init() { }
+    
+    init(firstUid: String, secondUid: String) {
+        self.firstUser = UUID(uuidString: firstUid)!
+        self.secondUser = UUID(uuidString: secondUid)!
+    }
 }
 
 extension Chat: Content { }
+
+extension Chat {
+    
+    struct GetFull: Content {
+        var id: String?
+        var firstUserID: String
+        var secondUserID: String
+    }
+}

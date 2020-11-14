@@ -20,7 +20,7 @@ class Chat: ObservableObject, Identifiable {
     var lastMessage: Message?
     
     init() {
-        id = kUndefine
+        id = nil
         partnerID = kUndefine
         partnerName = kUndefine
         lastMessage = Message()

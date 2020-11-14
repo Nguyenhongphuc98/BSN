@@ -73,18 +73,12 @@ struct InChatView: View {
 
                 //editorBox
                 RichMessageEditor(didChat: { (type, message) in
-                    
-                    viewModel.didChat(type: type, content: message) { (success) in
-                        print("did send: \(message) - \(success)")
-                    }
+                    viewModel.didChat(type: type, content: message)
                 }, didPickPhoto: { (data) in
                     
                     viewModel.photo = data
-                    viewModel.didChat(type: .photo) { (success) in
-                        print("did send photo :\(success)")
-                    }
-                }
-                , didExpand: { expand, type in
+                    viewModel.didChat(type: .photo)
+                }, didExpand: { expand, type in
                     
                     // Keyboard height (253) +  editText height (45) = 298
                     // Just need adapt sticker showing
@@ -98,6 +92,7 @@ struct InChatView: View {
                 })
             }
         }
+        .alert(isPresented: $viewModel.showAlert, content: alert)
         .navigationBarTitle(viewModel.chat.partnerName, displayMode: .inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton, trailing: profileButton)
@@ -119,6 +114,18 @@ struct InChatView: View {
         } label: {
             CircleImage(image: viewModel.chat.partnerPhoto, diameter: 20)
         }
+    }
+    
+    func alert() -> Alert {
+        return Alert(
+            title: Text("Kết quả"),
+            message: Text(viewModel.resourceInfo.des()),
+            dismissButton: .default(Text("OK")) {
+                // Remove last message because save fail
+                if viewModel.resourceInfo == .savefailure {
+                    viewModel.messages.removeAll()
+                }
+            })
     }
     
     func viewAppeard() {

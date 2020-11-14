@@ -18,7 +18,7 @@ enum MessageStatus {
     case seen
 }
 
-enum MessageType {
+enum MessageType: String {
     
     case sticker
     

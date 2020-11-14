@@ -17,18 +17,20 @@ struct NewChatView: View {
     
     var body: some View {
         VStack {
-            SearchBar(isfocus: $viewModel.isFocus, searchText: $viewModel.searchText)
-                .padding(.top, 20)
-                .onChange(of: viewModel.searchText) { _ in
-                    viewModel.searchUser(text: viewModel.searchText)
-                }
+            SearchBar(isfocus: $viewModel.isFocus, searchText: $viewModel.searchText, oncancel: {
+                dismiss()
+            })
+            .onChange(of: viewModel.searchText) { _ in
+                viewModel.searchUser(text: viewModel.searchText)
+            }
+            .padding(.top, 20)
             
             Group {
                 List {
                     ForEach(viewModel.searchedContacts) { u in
                         SearchUserItem(user: u) {
                             didRequestChatTo?(u)
-                            presentationMode.wrappedValue.dismiss()
+                            dismiss()
                         }
                     }
                 }
@@ -45,6 +47,10 @@ struct NewChatView: View {
             
             Spacer()
         }
+    }
+    
+    private func dismiss() {
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

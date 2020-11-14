@@ -22,11 +22,14 @@
 		841CEDA4255E82D2007CCACC /* EUserfollow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CEDA3255E82D1007CCACC /* EUserfollow.swift */; };
 		841CEDA8255E83CA007CCACC /* UserFollowRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CEDA7255E83CA007CCACC /* UserFollowRequest.swift */; };
 		841CEDAC255E852B007CCACC /* UserFollowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CEDAB255E852B007CCACC /* UserFollowManager.swift */; };
+		841CEDB5255ED45C007CCACC /* EMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CEDB4255ED45C007CCACC /* EMessage.swift */; };
+		841CEDB9255ED68C007CCACC /* MessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CEDB8255ED68C007CCACC /* MessageRequest.swift */; };
 		842C444F2547C240003C570D /* GoogleApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C444E2547C240003C570D /* GoogleApiRequest.swift */; };
 		842C44832548181A003C570D /* libSwiftyJSON.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 842C44822548181A003C570D /* libSwiftyJSON.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		844EACBF25515E8000CACEEB /* EBookReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EACBE25515E8000CACEEB /* EBookReview.swift */; };
 		844EACC325515ED700CACEEB /* BookReviewRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EACC225515ED700CACEEB /* BookReviewRequest.swift */; };
 		844EACC725515FE400CACEEB /* BookReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EACC625515FE400CACEEB /* BookReviewManager.swift */; };
+		845A537B255ED7F60038F0A1 /* MessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A537A255ED7F60038F0A1 /* MessageManager.swift */; };
 		846C40B3255013A30045BCD4 /* BusinessConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846C40B2255013A30045BCD4 /* BusinessConfigure.swift */; };
 		846EFE6125465DD600F01805 /* EUserBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EFE6025465DD600F01805 /* EUserBook.swift */; };
 		846EFE6525465E4900F01805 /* EBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EFE6425465E4900F01805 /* EBook.swift */; };
@@ -77,11 +80,14 @@
 		841CEDA3255E82D1007CCACC /* EUserfollow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EUserfollow.swift; sourceTree = "<group>"; };
 		841CEDA7255E83CA007CCACC /* UserFollowRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFollowRequest.swift; sourceTree = "<group>"; };
 		841CEDAB255E852B007CCACC /* UserFollowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFollowManager.swift; sourceTree = "<group>"; };
+		841CEDB4255ED45C007CCACC /* EMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMessage.swift; sourceTree = "<group>"; };
+		841CEDB8255ED68C007CCACC /* MessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRequest.swift; sourceTree = "<group>"; };
 		842C444E2547C240003C570D /* GoogleApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleApiRequest.swift; sourceTree = "<group>"; };
 		842C44822548181A003C570D /* libSwiftyJSON.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libSwiftyJSON.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		844EACBE25515E8000CACEEB /* EBookReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EBookReview.swift; sourceTree = "<group>"; };
 		844EACC225515ED700CACEEB /* BookReviewRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReviewRequest.swift; sourceTree = "<group>"; };
 		844EACC625515FE400CACEEB /* BookReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReviewManager.swift; sourceTree = "<group>"; };
+		845A537A255ED7F60038F0A1 /* MessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManager.swift; sourceTree = "<group>"; };
 		846C40B2255013A30045BCD4 /* BusinessConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessConfigure.swift; sourceTree = "<group>"; };
 		846EFE6025465DD600F01805 /* EUserBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EUserBook.swift; sourceTree = "<group>"; };
 		846EFE6425465E4900F01805 /* EBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EBook.swift; sourceTree = "<group>"; };
@@ -159,6 +165,7 @@
 				841CED80255C1C4C007CCACC /* EUser.swift */,
 				841CED8E255D3555007CCACC /* ENotify.swift */,
 				841CEDA3255E82D1007CCACC /* EUserfollow.swift */,
+				841CEDB4255ED45C007CCACC /* EMessage.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -219,6 +226,7 @@
 				841CED88255C1DD3007CCACC /* UserManager.swift */,
 				841CED96255D36C8007CCACC /* NotifyManager.swift */,
 				841CEDAB255E852B007CCACC /* UserFollowManager.swift */,
+				845A537A255ED7F60038F0A1 /* MessageManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -238,6 +246,7 @@
 				841CED84255C1D37007CCACC /* UserRequest.swift */,
 				841CED92255D35D1007CCACC /* NotifyRequest.swift */,
 				841CEDA7255E83CA007CCACC /* UserFollowRequest.swift */,
+				841CEDB8255ED68C007CCACC /* MessageRequest.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -412,12 +421,15 @@
 				84A61CBC254C4CCD00B50FE8 /* ExchangeBookManager.swift in Sources */,
 				844EACC325515ED700CACEEB /* BookReviewRequest.swift in Sources */,
 				848E1061253EEEEC003C89C8 /* BookRequest.swift in Sources */,
+				845A537B255ED7F60038F0A1 /* MessageManager.swift in Sources */,
 				841C3E4C25593DF5000393AA /* BorrowBookManager.swift in Sources */,
 				846C40B3255013A30045BCD4 /* BusinessConfigure.swift in Sources */,
 				841CED85255C1D37007CCACC /* UserRequest.swift in Sources */,
+				841CEDB9255ED68C007CCACC /* MessageRequest.swift in Sources */,
 				848E1052253EE32F003C89C8 /* ResourceRequest.swift in Sources */,
 				84A61CD8254D13E200B50FE8 /* NoteManager.swift in Sources */,
 				841CED7D255C18A0007CCACC /* AccountManager.swift in Sources */,
+				841CEDB5255ED45C007CCACC /* EMessage.swift in Sources */,
 				84A61CB4254C461E00B50FE8 /* ExchangeBookRequest.swift in Sources */,
 				844EACC725515FE400CACEEB /* BookReviewManager.swift in Sources */,
 				84A61CC8254D108200B50FE8 /* NoteRequest.swift in Sources */,

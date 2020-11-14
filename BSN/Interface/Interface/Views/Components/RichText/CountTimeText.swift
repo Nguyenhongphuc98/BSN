@@ -26,9 +26,9 @@ class CountTimeModel: ObservableObject {
         let interval = date.timeIntervalSinceNow
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
-        print("interval: \(interval)")
-        print("date: \(formatter.string(from: date))")
-        print("now: \(formatter.string(from: Date()))")
+        //print("interval: \(interval)")
+        //print("date: \(formatter.string(from: date))")
+        //print("now: \(formatter.string(from: Date()))")
         
         if interval.days > 7 {
             displayText = formatter.string(from: date)

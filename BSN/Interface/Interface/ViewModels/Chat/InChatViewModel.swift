@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Business
 
 class InChatViewModel: NetworkViewModel {
     
@@ -16,6 +17,8 @@ class InChatViewModel: NetworkViewModel {
     // Photo to send if select from gallery
     @Published var photo: Data
     
+    private var messageManager: MessageManager
+    
     // Did send new message
     // It's content should be force UI scroll to bottom
     var updateUIIfNeedes: (() -> Void)?
@@ -24,12 +27,14 @@ class InChatViewModel: NetworkViewModel {
         messages = []
         chat = Chat()
         photo = Data()
+        messageManager = MessageManager()
         
         super.init()
+        observerSaveMessage()
     }
     
     func fetchData(chat: Chat) {
-        self.isLoading = true
+        //self.isLoading = true
         self.chat = chat
         
         if self.chat.id != kUndefine {
@@ -38,24 +43,24 @@ class InChatViewModel: NetworkViewModel {
             // Get chat info by curren user and parter user
             // It called usualy because user search new chat
             // It can be new or exists chat in DB
+            // then fetch message of this chat if exists
         }
-        self.isLoading = false
     }
     
     // if message type is photo. no need using content
-    func didChat(type:MessageType, content: String = "", complete: @escaping (Bool) -> Void) {
+    func didChat(type:MessageType, content: String = "") {
         
         switch type {
         case .text:
-            didChat(message: content, complete: complete)
+            didChat(message: content)
         case .sticker:
-            didChat(sticker: content, complete: complete)
+            didChat(sticker: content)
         case .photo:
-            didChat(photo: self.photo, complete: complete)
+            didChat(photo: self.photo)
         }
     }
     
-    func didChat(message: String, complete: @escaping (Bool) -> Void) {
+    func didChat(message: String) {
         let newMessage = Message(
             sender: AppManager.shared.currenUID,
             receiver: chat.partnerID,
@@ -65,10 +70,10 @@ class InChatViewModel: NetworkViewModel {
 
         pushToUI(mess: newMessage)
 
-        pushToServer(mess: newMessage, complete: complete)
+        pushToServer(mess: newMessage)
     }
     
-    func didChat(sticker: String, complete: @escaping (Bool) -> Void) {
+    func didChat(sticker: String) {
         let newMessage = Message(
             sender: AppManager.shared.currenUID,
             receiver: chat.partnerID,
@@ -78,10 +83,10 @@ class InChatViewModel: NetworkViewModel {
         
         pushToUI(mess: newMessage)
         
-        pushToServer(mess: newMessage, complete: complete)
+        pushToServer(mess: newMessage)
     }
     
-    func didChat(photo: Data, complete: @escaping (Bool) -> Void) {
+    func didChat(photo: Data) {
         let newMessage = Message(
             sender: AppManager.shared.currenUID,
             receiver: chat.partnerID,
@@ -91,7 +96,7 @@ class InChatViewModel: NetworkViewModel {
         
         pushToUI(mess: newMessage)
         
-        pushToServer(mess: newMessage, complete: complete)
+        pushToServer(mess: newMessage)
     }
     
     func pushToUI(mess: Message) {
@@ -101,9 +106,42 @@ class InChatViewModel: NetworkViewModel {
         self.updateUIIfNeedes?()
     }
     
-    func pushToServer(mess: Message, complete: @escaping (Bool) -> Void) {
+    func pushToServer(mess: Message) {
         // To -Do
         // Call to bussiness layer to call server
-        complete(true)
+        let newMessage = EMessage(
+            chatID: chat.id,
+            senderID: AppManager.shared.currenUID,
+            typeName: mess.type.rawValue,
+            content: mess.content!,
+            receiverID: chat.partnerID
+        )
+        
+        messageManager.saveMess(message: newMessage)
+    }
+    
+    private func observerSaveMessage() {
+        messageManager
+            .saveMessPublisher
+            .sink {[weak self] (mess) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    
+                    if mess.id == kUndefine {
+                        self.resourceInfo = .savefailure
+                        self.showAlert = true
+                    } else {
+                        
+                        self.resourceInfo = .success
+                    }
+                    
+                }
+            }
+            .store(in: &cancellables)
     }
 }
