@@ -38,33 +38,28 @@ public struct ChatView: View {
             SearchBar(isfocus: $viewModel.isfocus, searchText: $viewModel.searchText)
                 .padding(.top, 20)
                 .onChange(of: viewModel.searchText) { _ in
-                    viewModel.searchChat { (success) in
-                        print("did search: \(success)")
-                        self.searchFound = success
-                    }
+                    //                    viewModel.searchChat { (success) in
+                    //                        print("did search: \(success)")
+                    //                        self.searchFound = success
+                    //                    }
                 }
             
             Group {
                 if viewModel.isfocus {
-                    if viewModel.isSearching {
-                        Loading()
-                            .padding(.top, 100)
-                    } else {
-                        ForEach(viewModel.searchChats) { c in
-                            SearchUserItem(
-                                user: User(
-                                    id: c.partnerID,
-                                    displayname: c.partnerName,
-                                    avatar: c.partnerPhoto)
-                            )
-                        }
-
-                        if !searchFound {
-                            Text("Không tìm thấy người dùng")
-                                .robotoLightItalic(size: 13)
-                                .foregroundColor(.gray)
-                                .padding()
-                        }
+                    ForEach(viewModel.searchChats) { c in
+                        SearchUserItem(
+                            user: User(
+                                id: c.partnerID,
+                                displayname: c.partnerName,
+                                avatar: c.partnerPhoto)
+                        )
+                    }
+                    
+                    if !searchFound {
+                        Text("Không tìm thấy người dùng")
+                            .robotoLightItalic(size: 13)
+                            .foregroundColor(.gray)
+                            .padding()
                     }
                 } else {
                     List {
@@ -79,6 +74,7 @@ public struct ChatView: View {
             
             Spacer()
         }
+        .embededLoading(isLoading: $viewModel.isLoading)
         .onAppear(perform: viewAppeared)
         .navigationBarHidden(viewModel.isfocus)
         .navigationBarItems(trailing: newChatButton)

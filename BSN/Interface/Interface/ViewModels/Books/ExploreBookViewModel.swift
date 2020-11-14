@@ -27,9 +27,11 @@ class ExploreBookViewModel: SearchBookViewModel {
         
         setupReceiveEBs()
         setupReceiveTopBooks()
+        prepareData()
     }
     
-    func prepareData() {
+    private func prepareData() {
+        print("did prepare data explore book VM")
         // load favorite book
         // load page 0 exchange book
         loadExchangeBooks(page: 0)

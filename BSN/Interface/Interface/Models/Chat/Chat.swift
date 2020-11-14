@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Chat: ObservableObject, Identifiable {
+class Chat: ObservableObject, AppendUniqueAble {
     
     var id: String?
     
@@ -15,7 +15,7 @@ class Chat: ObservableObject, Identifiable {
     
     var partnerName: String
     
-    var partnerPhoto: String?
+    @Published var partnerPhoto: String?
     
     var lastMessage: Message?
     

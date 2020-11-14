@@ -24,7 +24,6 @@ public struct EMessage: Codable {
         self.content = "undefine"
     }
     
-    // using for update seen
     public init(chatID: String? = nil, senderID: String, typeName: String, content: String, receiverID: String) {
         // In case this is first message
         // We have to know sender and receiver to create Chat room

@@ -30,6 +30,9 @@
 		844EACC325515ED700CACEEB /* BookReviewRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EACC225515ED700CACEEB /* BookReviewRequest.swift */; };
 		844EACC725515FE400CACEEB /* BookReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EACC625515FE400CACEEB /* BookReviewManager.swift */; };
 		845A537B255ED7F60038F0A1 /* MessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A537A255ED7F60038F0A1 /* MessageManager.swift */; };
+		845A537F255FB6C00038F0A1 /* EChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A537E255FB6C00038F0A1 /* EChat.swift */; };
+		845A5383255FB7790038F0A1 /* ChatRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A5382255FB7790038F0A1 /* ChatRequest.swift */; };
+		845A5387255FB8F70038F0A1 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A5386255FB8F70038F0A1 /* ChatManager.swift */; };
 		846C40B3255013A30045BCD4 /* BusinessConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846C40B2255013A30045BCD4 /* BusinessConfigure.swift */; };
 		846EFE6125465DD600F01805 /* EUserBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EFE6025465DD600F01805 /* EUserBook.swift */; };
 		846EFE6525465E4900F01805 /* EBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EFE6425465E4900F01805 /* EBook.swift */; };
@@ -88,6 +91,9 @@
 		844EACC225515ED700CACEEB /* BookReviewRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReviewRequest.swift; sourceTree = "<group>"; };
 		844EACC625515FE400CACEEB /* BookReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReviewManager.swift; sourceTree = "<group>"; };
 		845A537A255ED7F60038F0A1 /* MessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManager.swift; sourceTree = "<group>"; };
+		845A537E255FB6C00038F0A1 /* EChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EChat.swift; sourceTree = "<group>"; };
+		845A5382255FB7790038F0A1 /* ChatRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRequest.swift; sourceTree = "<group>"; };
+		845A5386255FB8F70038F0A1 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
 		846C40B2255013A30045BCD4 /* BusinessConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessConfigure.swift; sourceTree = "<group>"; };
 		846EFE6025465DD600F01805 /* EUserBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EUserBook.swift; sourceTree = "<group>"; };
 		846EFE6425465E4900F01805 /* EBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EBook.swift; sourceTree = "<group>"; };
@@ -166,6 +172,7 @@
 				841CED8E255D3555007CCACC /* ENotify.swift */,
 				841CEDA3255E82D1007CCACC /* EUserfollow.swift */,
 				841CEDB4255ED45C007CCACC /* EMessage.swift */,
+				845A537E255FB6C00038F0A1 /* EChat.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -227,6 +234,7 @@
 				841CED96255D36C8007CCACC /* NotifyManager.swift */,
 				841CEDAB255E852B007CCACC /* UserFollowManager.swift */,
 				845A537A255ED7F60038F0A1 /* MessageManager.swift */,
+				845A5386255FB8F70038F0A1 /* ChatManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -247,6 +255,7 @@
 				841CED92255D35D1007CCACC /* NotifyRequest.swift */,
 				841CEDA7255E83CA007CCACC /* UserFollowRequest.swift */,
 				841CEDB8255ED68C007CCACC /* MessageRequest.swift */,
+				845A5382255FB7790038F0A1 /* ChatRequest.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -401,6 +410,7 @@
 				841CED97255D36C8007CCACC /* NotifyManager.swift in Sources */,
 				841CEDAC255E852B007CCACC /* UserFollowManager.swift in Sources */,
 				841CED8F255D3555007CCACC /* ENotify.swift in Sources */,
+				845A5383255FB7790038F0A1 /* ChatRequest.swift in Sources */,
 				84A0CC34254ACDA10074CBAC /* UserBookManager.swift in Sources */,
 				848E105D253EE770003C89C8 /* ESearchBook.swift in Sources */,
 				841CEDA4255E82D2007CCACC /* EUserfollow.swift in Sources */,
@@ -422,6 +432,7 @@
 				844EACC325515ED700CACEEB /* BookReviewRequest.swift in Sources */,
 				848E1061253EEEEC003C89C8 /* BookRequest.swift in Sources */,
 				845A537B255ED7F60038F0A1 /* MessageManager.swift in Sources */,
+				845A537F255FB6C00038F0A1 /* EChat.swift in Sources */,
 				841C3E4C25593DF5000393AA /* BorrowBookManager.swift in Sources */,
 				846C40B3255013A30045BCD4 /* BusinessConfigure.swift in Sources */,
 				841CED85255C1D37007CCACC /* UserRequest.swift in Sources */,
@@ -432,6 +443,7 @@
 				841CEDB5255ED45C007CCACC /* EMessage.swift in Sources */,
 				84A61CB4254C461E00B50FE8 /* ExchangeBookRequest.swift in Sources */,
 				844EACC725515FE400CACEEB /* BookReviewManager.swift in Sources */,
+				845A5387255FB8F70038F0A1 /* ChatManager.swift in Sources */,
 				84A61CC8254D108200B50FE8 /* NoteRequest.swift in Sources */,
 				841C3E4425593B0F000393AA /* EBorrowBook.swift in Sources */,
 			);

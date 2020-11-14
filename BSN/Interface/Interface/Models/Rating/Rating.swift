@@ -45,7 +45,7 @@ class Rating: AppendUniqueAble {
         self.title = title
         self.rating = rating
         self.content = content
-        self.createDate = Date()
+        //self.createDate = Date()
         self.ratingBookID = bookID
         self.createDate = Date.getDate(dateStr: createAt)
         

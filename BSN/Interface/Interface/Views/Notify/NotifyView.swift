@@ -49,7 +49,6 @@ public struct NotifyView: View {
     
     func viewAppeared() {
         print("notifi appeared")
-        viewModel.prepareData()
     }
 }
 

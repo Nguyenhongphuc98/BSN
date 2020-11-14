@@ -67,19 +67,29 @@ class Message: ObservableObject, Identifiable {
         self.type = type
     }
     
+    // Init message send text content
     convenience init(sender: String, receiver: String, content: String, type: MessageType) {
         self.init(sender: sender, receiver: receiver, type: type)
         self.content = content
     }
     
+    // Init message send sticker content
     convenience init(sender: String, receiver: String, sticker: String, type: MessageType) {
         self.init(sender: sender, receiver: receiver, type: type)
         self.sticker = sticker
     }
     
+    // Init message send photo content
     convenience init(sender: String, receiver: String, photo: Data, type: MessageType) {
         self.init(sender: sender, receiver: receiver, type: type)
         self.photo = photo
+    }
+    
+    // Init message as last message of a chat
+    convenience init(content: String, type: String, createAt: String) {
+        self.init(sender: "", receiver: "", type: MessageType(rawValue: type)!)
+        self.content = content
+        self.createDate = Date.getDate(dateStr: createAt)
     }
     
     func isSendByMe() -> Bool {

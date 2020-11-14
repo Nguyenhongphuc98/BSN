@@ -23,9 +23,11 @@ class NotifyViewModel: NetworkViewModel {
         
         super.init()
         observerNotifies()
+        prepareData()
     }
     
-    func prepareData() {
+    private func prepareData() {
+        print("did prepare data explore book VM")
         fetchNotifies(page: 0)
     }
     
