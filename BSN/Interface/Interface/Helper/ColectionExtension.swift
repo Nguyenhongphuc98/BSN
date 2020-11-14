@@ -14,6 +14,12 @@ extension Array where Element: Identifiable & Hashable {
         if index != nil { return }
         self.append(item)
     }
+    
+    mutating func insertUnique(item: Element) {
+        let index = self.firstIndex { $0 == item }
+        if index != nil { return }
+        self.insert(item, at: 0)
+    }
 }
 
 protocol AppendUniqueAble: Hashable, Identifiable {

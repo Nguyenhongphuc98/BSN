@@ -28,7 +28,7 @@ enum MessageType: String {
 }
 
 // MARK: - Message model
-class Message: ObservableObject, Identifiable {
+class Message: ObservableObject, AppendUniqueAble {
     
     var id: String?
     

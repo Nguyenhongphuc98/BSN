@@ -15,6 +15,7 @@ public struct EMessage: Codable {
     
     public var receiverID: String?
     public var typeName: String?
+    public var createAt: String?
         
     public init() {
         self.id = "undefine"
@@ -22,6 +23,7 @@ public struct EMessage: Codable {
         self.senderID = "undefine"
         self.typeID = "undefine"
         self.content = "undefine"
+        self.createAt = "undefine"
     }
     
     public init(chatID: String? = nil, senderID: String, typeName: String, content: String, receiverID: String) {

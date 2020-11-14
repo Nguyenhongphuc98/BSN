@@ -7,24 +7,29 @@
 
 import Vapor
 import Fluent
+import SQLKit
 
 struct MessageController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
         let messages = routes.grouped("api", "v1", "messages")
-        messages.get(use: index)
-        messages.post(use: create)
-        messages.group(":messageID") { user in
-            user.delete(use: delete)
+        let authen = messages.grouped(Account.authenticator())
+        
+        //authen.get(use: index)
+        authen.post(use: create)
+        authen.group(":messageID") { group in
+            group.delete(use: delete)
         }
+        
+        authen.get("newest", use: getNewest)
     }
 
-    func index(req: Request) throws -> EventLoopFuture<[Message]> {
-        return Message.query(on: req.db).all()
-    }
+    //func index(req: Request) throws -> EventLoopFuture<[Message]> {
+    //    return Message.query(on: req.db).all()
+    //}
 
     func create(req: Request) throws -> EventLoopFuture<Message> {
-        let message = try req.content.decode(Message.Create.self)
+        let message = try req.content.decode(Message.GetFull.self)
         let saveMess = message.toMessage()
         
         if message.chatID != nil {
@@ -70,5 +75,43 @@ struct MessageController: RouteCollection {
             .unwrap(or: Abort(.notFound))
             .flatMap { $0.delete(on: req.db) }
             .transform(to: .ok)
+    }
+    
+    func getNewest(req: Request) throws -> EventLoopFuture<[Message.GetFull]> {
+        
+        guard let page: Int = req.query["page"] else {
+            throw Abort(.badRequest)
+        }
+        
+        guard let chatId: String = req.query["chatid"] else {
+            throw Abort(.badRequest)
+        }
+        
+        var per = BusinessConfig.newestChatLimit
+        if let p: Int = req.query["per"] {
+            per = p
+        }
+        
+        
+        let offset = page * per
+        
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        // Determine current user
+        // Then get all notify of its
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .first()
+            .unwrap(or: Abort(.notFound))
+            .flatMap { (u)  in
+                
+                
+                let sqlQuery = SQLQueryString("SELECT m.id, m.chat_id as \"chatID\", m.sender_id as \"senderID\", m.content, m.created_at as \"createAt\", mt.name as \"typeName\" from message as m, message_type as mt where m.type_id = mt.id and m.chat_id = '\(raw: chatId)' order by m.created_at desc limit \(raw: per.description) offset \(raw: offset.description)");
+                
+                let db = req.db as! SQLDatabase
+                return db.raw(sqlQuery)
+                    .all(decoding: Message.GetFull.self)
+            }
     }
 }

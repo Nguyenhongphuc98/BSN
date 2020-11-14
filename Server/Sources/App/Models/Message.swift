@@ -45,7 +45,7 @@ extension Message: Content { }
 
 extension Message {
     
-    struct Create: Content {
+    struct GetFull: Content {
         
         enum MessageType: String {
             
@@ -61,7 +61,8 @@ extension Message {
         var content: String
         
         var receiverID: String?
-        public var typeName: String?
+        var typeName: String?
+        var createAt: String?
         
         func toMessage() -> Message {
             Message(

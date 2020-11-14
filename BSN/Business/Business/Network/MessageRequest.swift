@@ -24,4 +24,21 @@ class MessageRequest: ResourceRequest<EMessage> {
             }
         }
     }
+    
+    func fetchMessages(page: Int, per: Int, chatID: String, publisher: PassthroughSubject<[EMessage], Never>) {
+        self.setPath(resourcePath: "newest", params: ["page":String(page), "per":String(per), "chatid":String(chatID)])
+        
+        self.get { result in
+            
+            switch result {
+            case .failure(let reason):
+                print(reason)
+                let mess = EMessage()
+                publisher.send([mess])
+                
+            case .success(let messages):
+                publisher.send(messages)
+            }
+        }
+    }
 }
