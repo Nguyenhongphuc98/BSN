@@ -15,17 +15,19 @@ struct ChatController: RouteCollection {
         let chats = routes.grouped("api", "v1", "chats")
         let authen = chats.grouped(Account.authenticator())
         
-        //authen.get(use: index)
+        authen.get(use: index)
         authen.get("newest", use: getNewest)
         authen.post(use: create)
         authen.group(":chatID") { group in
             group.delete(use: delete)
         }
+        
+        authen.get("search", use: getChatBaseOnUser)
     }
 
-    //func index(req: Request) throws -> EventLoopFuture<[Chat]> {
-    //    return Chat.query(on: req.db).all()
-    //}
+    func index(req: Request) throws -> EventLoopFuture<[Chat]> {
+        return Chat.query(on: req.db).all()
+    }
 
     func create(req: Request) throws -> EventLoopFuture<Chat> {
         let chat = try req.content.decode(Chat.self)
@@ -72,6 +74,48 @@ struct ChatController: RouteCollection {
                 return db.raw(sqlQuery)
                     .all(decoding: Chat.GetFull.self)
             }
+    }
+    
+    // Get chat where 2 user id match chat
+    func getChatBaseOnUser(req: Request) throws -> EventLoopFuture<Chat> {
+       
+        guard let uid1: UUID = req.query["uid1"], let uid2: UUID = req.query["uid2"] else {
+            throw Abort(.badRequest)
+        }
+        
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        // Author
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .group(.or, { (or) in
+                // Searcher have to in chat to get this chat
+                or.filter(\.$id == uid1).filter(\.$id == uid2)
+            })
+            .first()
+            .unwrap(or: Abort(.forbidden))
+            .flatMap { (u)  in
+                    
+                    // try to find chat hold this message
+                    // Chat need find will have two id sender and receiver same
+                    return Chat.query(on: req.db)
+                        .group(.or, { (or) in
+                            or.group(.and) { (and) in
+                                and
+                                    .filter(\.$firstUser == uid1)
+                                    .filter(\.$secondUser == uid2)
+                            }
+                            .group(.and) { (and) in
+                                and
+                                    .filter(\.$firstUser == uid2)
+                                    .filter(\.$secondUser == uid1)
+                            }
+                        })
+                        .first()
+                        .unwrap(or: Abort(.notFound))
+                        .map { $0 }
+                }
     }
 }
 

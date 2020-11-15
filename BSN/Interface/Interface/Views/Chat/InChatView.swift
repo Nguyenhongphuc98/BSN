@@ -123,7 +123,7 @@ struct InChatView: View {
             dismissButton: .default(Text("OK")) {
                 // Remove last message because save fail
                 if viewModel.resourceInfo == .savefailure {
-                    viewModel.messages.removeAll()
+                    viewModel.messages.removeLast()
                 }
             })
     }
