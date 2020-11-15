@@ -49,7 +49,6 @@ public class AppManager: ObservableObject {
         self.navBarTitle = "SEB"
         self.keyboardHeight = 0
         self.appState = .loading
-        print("did init root with user: \(currentUser.displayname)")
     
         registerKeyboardEvent()
     }

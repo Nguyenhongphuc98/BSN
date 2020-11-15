@@ -26,6 +26,24 @@ class ChatRequest: ResourceRequest<EChat> {
         }
     }
     
+    func searchChats(partnerName: String, publisher: PassthroughSubject<[EChat], Never>) {
+        self.setPath(resourcePath: "user", params: ["name":partnerName])
+        
+        self.get { result in
+            
+            switch result {
+            case .failure(let reason):
+                print(reason)
+                var c = EChat()
+                c.firstUserName = reason
+                publisher.send([c])
+                
+            case .success(let chats):
+                publisher.send(chats)
+            }
+        }
+    }
+    
     func getChat(uid1: String, uid2: String, publisher: PassthroughSubject<EChat, Never>) {
         self.setPath(resourcePath: "search", params: ["uid1":uid1, "uid2": uid2])
         

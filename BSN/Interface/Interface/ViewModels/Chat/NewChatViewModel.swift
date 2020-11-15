@@ -31,8 +31,7 @@ class NewChatViewModel: NetworkViewModel {
         setupReceiveSearchUser()
     }
     
-    func searchUser(text: String) {
-        searchText = text
+    func searchUser() {
         // Ignore any request when searching
         if !isLoading {
             isLoading = true
@@ -85,7 +84,7 @@ class NewChatViewModel: NetworkViewModel {
                 // This result is not lastest key
                 // Try to continue searching
                 if self.processText != self.searchText {
-                    self.searchUser(text: self.searchText)
+                    self.searchUser()
                 }
             }
             .store(in: &cancellables)

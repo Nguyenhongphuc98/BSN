@@ -10,8 +10,10 @@ public class ChatManager {
     
     private let networkRequest: ChatRequest
     
-    // Publisher for fetch notifies of current user in session
-    public let getChatsPublisher: PassthroughSubject<[EChat], Never>
+    // Publisher for fetch chats of current user in session
+    public let getRecentlyChatsPublisher: PassthroughSubject<[EChat], Never>
+    
+    public let getSearchChatsPublisher: PassthroughSubject<[EChat], Never>
     
     public let getChatPublisher: PassthroughSubject<EChat, Never>
     
@@ -19,12 +21,17 @@ public class ChatManager {
         // Init resource URL
         networkRequest = ChatRequest(componentPath: "chats/")
         
-        getChatsPublisher = PassthroughSubject<[EChat], Never>()
+        getRecentlyChatsPublisher = PassthroughSubject<[EChat], Never>()
+        getSearchChatsPublisher = PassthroughSubject<[EChat], Never>()
         getChatPublisher = PassthroughSubject<EChat, Never>()
     }
     
     public func getChats(page: Int, per: Int = BusinessConfigure.newestChatsPerPage) {
-        networkRequest.getNewestChats(page: page, per: per, publisher: getChatsPublisher)
+        networkRequest.getNewestChats(page: page, per: per, publisher: getRecentlyChatsPublisher)
+    }
+    
+    public func getChats(partnerName: String) {
+        networkRequest.searchChats(partnerName: partnerName, publisher: getSearchChatsPublisher)
     }
     
     public func getChat(uid1: String, uid2: String) {

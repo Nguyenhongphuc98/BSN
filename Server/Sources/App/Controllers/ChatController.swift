@@ -23,6 +23,7 @@ struct ChatController: RouteCollection {
         }
         
         authen.get("search", use: getChatBaseOnUser)
+        authen.get("user", use: searchChats)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[Chat]> {
@@ -58,7 +59,7 @@ struct ChatController: RouteCollection {
         let account = try req.auth.require(Account.self)
         
         // Determine current user
-        // Then get all notify of its
+        // Then get all chats of its
         return User.query(on: req.db)
             .filter(\.$accountID == account.id!)
             .first()
@@ -117,7 +118,37 @@ struct ChatController: RouteCollection {
                         .map { $0 }
                 }
     }
+    
+    func searchChats(req: Request) throws -> EventLoopFuture<[Chat.GetFull]> {
+        
+        guard let name: String = req.query["name"] else {
+            throw Abort(.badRequest)
+        }
+        
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        // Determine current user
+        // Then get all notify of its
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .first()
+            .unwrap(or: Abort(.notFound))
+            .flatMap { (u)  in
+                
+                // Get chat have first or second user is current user searching
+                // Get 2 users info of this chat
+                // Get last message (join message type to get type name)
+                // This chat have partner name as query partam req
+                let sqlQuery = SQLQueryString("SELECT c.id, c.first_user as \"firstUserID\", c.second_user as \"secondUserID\", u1.displayname as \"firstUserName\", u1.avatar as \"firstUserPhoto\", u2.displayname as \"secondUserName\", u2.avatar as \"secondUserPhoto\", m.content as \"messageContent\", m.created_at as \"messageCreateAt\", mt.name  as \"messageTypeName\" from chat as c, public.user as u1, public.user as u2, message as m, message_type as mt where ((c.first_user = '\(raw: u.id!.uuidString)' and LOWER(u2.displayname) LIKE LOWER('%\(raw: name)%')) or (c.second_user = '\(raw: u.id!.uuidString)' and LOWER(u1.displayname) LIKE LOWER('%\(raw: name)%'))) and c.first_user = u1.id and c.second_user = u2.id and m.chat_id = c.id and m.type_id = mt.id and m.id in (select m2.id from message as m2 order by created_at desc limit 1)");
+                
+                let db = req.db as! SQLDatabase
+                return db.raw(sqlQuery)
+                    .all(decoding: Chat.GetFull.self)
+            }
+    }
 }
 
 //SELECT c.id, c.first_user , c.second_user, u1.displayname, u1.avatar, u2.displayname, u2.avatar, m.content, m.created_at, mt.name from chat as c, public.user as u1, public.user as u2, message as m, message_type as mt where (c.first_user = 'c4285abe-f520-46f3-97a3-508d94177d9c' or c.second_user = 'c4285abe-f520-46f3-97a3-508d94177d9c') and c.first_user = u1.id and c.second_user = u2.id and m.chat_id = c.id and m.type_id = mt.id and m.id in (select m2.id from message as m2 order by created_at desc limit 1) order by c.created_at desc limit 5 offset 0;
 
+//SELECT c.id, c.first_user as \"firstUserID\", c.second_user as \"secondUserID\", u1.displayname as \"firstUserName\", u1.avatar as \"firstUserPhoto\", u2.displayname as \"secondUserName\", u2.avatar as \"secondUserPhoto\", m.content as \"messageContent\", m.created_at as \"messageCreateAt\", mt.name  as \"messageTypeName\" from chat as c, public.user as u1, public.user as u2, message as m, message_type as mt where ((c.first_user = '\(raw: u.id!.uuidString)' and LOWER(u2.displayname) LIKE LOWER('%\(raw: name)%') or (c.second_user = '\(raw: u.id!.uuidString)' and LOWER(u1.displayname) LIKE LOWER('%\(raw: name)%')) and c.first_user = u1.id and c.second_user = u2.id and m.chat_id = c.id and m.type_id = mt.id and m.id in (select m2.id from message as m2 order by created_at desc limit 1)

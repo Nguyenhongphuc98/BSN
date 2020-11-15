@@ -20,9 +20,10 @@ struct NewChatView: View {
             SearchBar(isfocus: $viewModel.isFocus, searchText: $viewModel.searchText, oncancel: {
                 dismiss()
             })
-            .onChange(of: viewModel.searchText) { _ in
-                viewModel.searchUser(text: viewModel.searchText)
-            }
+            .onReceive(viewModel.$searchText, perform: { text in
+                print("did receive text: \(text)")
+                viewModel.searchUser()
+            })
             .padding(.top, 20)
             
             Group {

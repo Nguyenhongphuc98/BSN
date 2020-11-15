@@ -13,8 +13,6 @@ public struct ChatView: View {
     
     @EnvironmentObject var root: AppManager
     
-    @State var searchFound: Bool = false
-    
     @State private var presentNewChat: Bool = false
     
     @State private var action: Int? = 0
@@ -36,13 +34,10 @@ public struct ChatView: View {
             .opacity(0)
             
             SearchBar(isfocus: $viewModel.isfocus, searchText: $viewModel.searchText)
+                .onReceive(viewModel.$searchText, perform: { _ in
+                    viewModel.searchChat()
+                })
                 .padding(.top, 20)
-                .onChange(of: viewModel.searchText) { _ in
-                    //                    viewModel.searchChat { (success) in
-                    //                        print("did search: \(success)")
-                    //                        self.searchFound = success
-                    //                    }
-                }
             
             Group {
                 if viewModel.isfocus {
@@ -55,7 +50,7 @@ public struct ChatView: View {
                         )
                     }
                     
-                    if !searchFound {
+                    if viewModel.searchChats.isEmpty {
                         Text("Không tìm thấy người dùng")
                             .robotoLightItalic(size: 13)
                             .foregroundColor(.gray)
