@@ -23,7 +23,7 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
     // Connect to root server
     //let baseURL = "http://localhost:8080/api/v1/"
     //let baseURL = "http://bsn.local:8080/api/v1/"
-    let baseURL = "http://192.168.0.100:8080/api/v1/"
+    let baseURL = "http://192.168.137.105:8080/api/v1/"
     
     // Connect to a component of server
     var componentPath: String

@@ -22,6 +22,8 @@ class InChatViewModel: NetworkViewModel {
     
     private var messageManager: MessageManager
     
+    private var chatManager: ChatManager
+    
     // Did send new message
     // It's content should be force UI scroll to bottom
     var updateUIIfNeedes: (() -> Void)?
@@ -32,17 +34,19 @@ class InChatViewModel: NetworkViewModel {
         photo = Data()
         info = ""
         messageManager = MessageManager()
+        chatManager = ChatManager()
         
         super.init()
         observerSaveMessage()
         observerGetMessages()
+        observerGetChat()
     }
     
     func fetchData(chat: Chat) {
         //self.isLoading = true
         self.chat = chat
         
-        if self.chat.id != kUndefine {
+        if chat.id != kUndefine && chat.id != nil {
             // fetch message of this chat
             fetchMessages(page: 0)
         } else {
@@ -50,6 +54,7 @@ class InChatViewModel: NetworkViewModel {
             // It called usualy because user search new chat
             // It can be new or exists chat in DB
             // then fetch message of this chat if exists
+            chatManager.getChat(uid1: chat.partnerID, uid2: AppManager.shared.currenUID)
         }
     }
     
@@ -136,6 +141,29 @@ extension InChatViewModel {
                         }
                     }
                     
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func observerGetChat() {
+        chatManager
+            .getChatPublisher
+            .sink {[weak self] (chat) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    
+                    // This chat was text before (not new),
+                    // So we need get message of this chat
+                    if chat.id! != kUndefine {
+                        self.chat.id = chat.id
+                        self.fetchMessages(page: 0)
+                    }
                 }
             }
             .store(in: &cancellables)

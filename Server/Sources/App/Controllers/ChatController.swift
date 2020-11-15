@@ -103,13 +103,13 @@ struct ChatController: RouteCollection {
                         .group(.or, { (or) in
                             or.group(.and) { (and) in
                                 and
-                                    .filter(\.$firstUser == uid1)
-                                    .filter(\.$secondUser == uid2)
+                                    .filter(\.$firstUserID == uid1)
+                                    .filter(\.$secondUserID == uid2)
                             }
                             .group(.and) { (and) in
                                 and
-                                    .filter(\.$firstUser == uid2)
-                                    .filter(\.$secondUser == uid1)
+                                    .filter(\.$firstUserID == uid2)
+                                    .filter(\.$secondUserID == uid1)
                             }
                         })
                         .first()

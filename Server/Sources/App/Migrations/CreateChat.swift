@@ -14,8 +14,8 @@ struct CreateChat: Migration {
         
         return database.schema(Chat.schema)
             .id()
-            .field(chat.$firstUser.key, .uuid, .references(User.schema, "id"))
-            .field(chat.$secondUser.key, .uuid, .references(User.schema, "id"))
+            .field(chat.$firstUserID.key, .uuid, .references(User.schema, "id"))
+            .field(chat.$secondUserID.key, .uuid, .references(User.schema, "id"))
             .field("created_at", .datetime)
             .create()
     }

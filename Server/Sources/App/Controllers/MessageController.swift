@@ -44,13 +44,13 @@ struct MessageController: RouteCollection {
                 .group(.or, { (or) in
                     or.group(.and) { (and) in
                         and
-                            .filter(\.$firstUser == UUID(uuidString: message.senderID)!)
-                            .filter(\.$secondUser == UUID(uuidString: message.receiverID!)!)
+                            .filter(\.$firstUserID == UUID(uuidString: message.senderID)!)
+                            .filter(\.$secondUserID == UUID(uuidString: message.receiverID!)!)
                     }
                     .group(.and) { (and) in
                         and
-                            .filter(\.$firstUser == UUID(uuidString: message.receiverID!)!)
-                            .filter(\.$secondUser == UUID(uuidString: message.senderID)!)
+                            .filter(\.$firstUserID == UUID(uuidString: message.receiverID!)!)
+                            .filter(\.$secondUserID == UUID(uuidString: message.senderID)!)
                     }
                 })
                 .first()

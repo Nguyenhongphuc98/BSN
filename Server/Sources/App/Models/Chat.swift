@@ -16,10 +16,10 @@ final class Chat: Model {
     var id: UUID?
     
     @Field(key: "first_user")
-    var firstUser: User.IDValue
+    var firstUserID: User.IDValue
     
     @Field(key: "second_user")
-    var secondUser: User.IDValue
+    var secondUserID: User.IDValue
     
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
@@ -27,8 +27,8 @@ final class Chat: Model {
     init() { }
     
     init(firstUid: String, secondUid: String) {
-        self.firstUser = UUID(uuidString: firstUid)!
-        self.secondUser = UUID(uuidString: secondUid)!
+        self.firstUserID = UUID(uuidString: firstUid)!
+        self.secondUserID = UUID(uuidString: secondUid)!
     }
 }
 
