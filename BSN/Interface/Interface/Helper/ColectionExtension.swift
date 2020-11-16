@@ -27,11 +27,11 @@ protocol AppendUniqueAble: Hashable, Identifiable {
 }
 
 extension AppendUniqueAble {
-    static func == (lhs: Self, rhs: Self) -> Bool {
+    static public func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.id == rhs.id
     }
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         return hasher.combine(self.id)
     }
 }

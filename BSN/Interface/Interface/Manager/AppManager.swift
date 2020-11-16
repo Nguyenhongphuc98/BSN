@@ -48,7 +48,7 @@ public class AppManager: ObservableObject {
         self.currentUser = User()
         self.navBarTitle = "SEB"
         self.keyboardHeight = 0
-        self.appState = .loading
+        self.appState = .loading        
     
         registerKeyboardEvent()
     }

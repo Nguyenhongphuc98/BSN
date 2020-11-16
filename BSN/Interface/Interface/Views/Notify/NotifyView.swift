@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct NotifyView: View {
     
-    @StateObject var viewModel: NotifyViewModel = NotifyViewModel()
+    @StateObject var viewModel: NotifyViewModel = NotifyViewModel.shared
     
     @EnvironmentObject var root: AppManager
     

@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct ChatView: View {
     
-    @StateObject var viewModel: ChatViewModel = ChatViewModel()
+    @StateObject var viewModel: ChatViewModel = ChatViewModel.shared
     
     @EnvironmentObject var root: AppManager
     
@@ -60,6 +60,7 @@ public struct ChatView: View {
                     List {
                         ForEach(viewModel.chats) { c in
                             ChatCell(chat: c)
+                                .id("\(c.id!)\(c.partnerID)")
                         }
                     }
                     .listStyle(PlainListStyle())

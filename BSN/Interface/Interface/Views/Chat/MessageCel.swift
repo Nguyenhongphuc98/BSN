@@ -30,7 +30,7 @@ struct MessageCel: View {
             }
             else if message.type == .sticker {
                 
-                Image(message.sticker!, bundle: interfaceBundle)
+                Image(message.content!, bundle: interfaceBundle)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100)
@@ -40,7 +40,6 @@ struct MessageCel: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 200)
-                    //.clipShape(RoundedRectangle(cornerRadius: 5))
                     .cornerRadius(5)
                     .onTapGesture {
                         presentViewFull.toggle()

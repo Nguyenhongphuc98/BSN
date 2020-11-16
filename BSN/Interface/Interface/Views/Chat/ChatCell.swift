@@ -56,7 +56,14 @@ struct ChatCell: View {
     }
     
     func messageContent(message: Message) -> String {
-        message.content ?? "File đính kèm"
+        switch message.type {
+        case .text:
+            return message.content!
+        case .sticker:
+            return "[Sticker]"
+        case .photo:
+            return "[Photo]"
+        }
     }
 }
 

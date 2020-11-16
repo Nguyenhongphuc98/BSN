@@ -42,9 +42,9 @@ class Message: ObservableObject, AppendUniqueAble {
     
     var status: MessageStatus
     
+    // Depent on type message, it will hold special value
+    // ex text, photoUrl, sticker name
     var content: String?
-    
-    var sticker: String?
     
     var photo: Data?
     
@@ -73,12 +73,6 @@ class Message: ObservableObject, AppendUniqueAble {
         self.content = content
     }
     
-    // Init message send sticker content
-    convenience init(sender: String, receiver: String, sticker: String, type: MessageType) {
-        self.init(sender: sender, receiver: receiver, type: type)
-        self.sticker = sticker
-    }
-    
     // Init message send photo content
     convenience init(sender: String, receiver: String, photo: Data, type: MessageType) {
         self.init(sender: sender, receiver: receiver, type: type)
@@ -86,8 +80,8 @@ class Message: ObservableObject, AppendUniqueAble {
     }
     
     // Init message as last message of a chat
-    convenience init(content: String, type: String, createAt: String) {
-        self.init(sender: "", receiver: "", type: MessageType(rawValue: type)!)
+    convenience init(sender: String = "", content: String, type: String, createAt: String) {
+        self.init(sender: sender, receiver: "", type: MessageType(rawValue: type)!)
         self.content = content
         self.createDate = Date.getDate(dateStr: createAt)
     }

@@ -8,7 +8,9 @@
 import SwiftUI
 import Business
 
-class NotifyViewModel: NetworkViewModel {
+public class NotifyViewModel: NetworkViewModel {
+    
+    public static var shared: NotifyViewModel = NotifyViewModel()
     
     @Published var notifies: [Notify]
     
@@ -26,14 +28,10 @@ class NotifyViewModel: NetworkViewModel {
         prepareData()
     }
     
-    private func prepareData() {
+    public func prepareData() {
         print("did prepare data explore book VM")
-        fetchNotifies(page: 0)
-    }
-    
-    func fetchNotifies(page: Int) {
         isLoading = true
-        notifyManager.getNotifies(page: page)
+        notifyManager.getNotifies(page: 0)
     }
     
     func loadMoreIfNeeded(item: Notify) {
@@ -61,6 +59,7 @@ class NotifyViewModel: NetworkViewModel {
         notifyManager.updateNotify(notify: ENotify(id: notify.id, seen: true))
     }
     
+    // receive data for first time
     private func observerNotifies() {
         notifyManager
             .getNotifiesPublisher
@@ -72,6 +71,7 @@ class NotifyViewModel: NetworkViewModel {
                 
                 DispatchQueue.main.async {
                     self.isLoading = false
+                    self.notifies = []
                     
                     if !notifies.isEmpty {
                         if notifies[0].id == kUndefine {

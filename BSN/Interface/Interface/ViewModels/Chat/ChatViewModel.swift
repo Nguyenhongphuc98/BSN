@@ -8,9 +8,11 @@
 import SwiftUI
 import Business
 
-class ChatViewModel: NetworkViewModel {
+public class ChatViewModel: NetworkViewModel {
     
-    @Published var chats: [Chat]
+    public static var shared: ChatViewModel = ChatViewModel()
+    
+    @Published public var chats: [Chat]
     
     @Published var searchText: String
     
@@ -24,6 +26,8 @@ class ChatViewModel: NetworkViewModel {
     
     private var chatManager: ChatManager
     
+    private var app: AppManager
+    
     override init() {
         chats = []
         searchChats = []
@@ -32,6 +36,7 @@ class ChatViewModel: NetworkViewModel {
         processText = ""
         selectedUserNewChat = User(isDummy: true)
         chatManager = ChatManager()
+        app = AppManager.shared
         
         super.init()
         observerRecentlyChats()
@@ -39,7 +44,7 @@ class ChatViewModel: NetworkViewModel {
         prepareData()
     }
     
-    func prepareData() {
+    public func prepareData() {
         print("did call prepare data for chat view")
         isLoading = true
         chatManager.getChats(page: 0) // Load recently chats
@@ -84,6 +89,7 @@ class ChatViewModel: NetworkViewModel {
 
 // MARK: - Observer data
 extension ChatViewModel {
+    // Receive first page
     private func observerRecentlyChats() {
         chatManager
             .getRecentlyChatsPublisher
@@ -94,6 +100,8 @@ extension ChatViewModel {
                 }
                 
                 DispatchQueue.main.async {
+                    
+                    self.chats = []
                     
                     chats.forEach { (c) in
                         

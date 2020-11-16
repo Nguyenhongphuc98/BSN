@@ -135,7 +135,7 @@ extension InChatViewModel {
                             self.showAlert = true
                         } else {
                             messages.forEach { (m) in
-                                let model = Message(content: m.content, type: m.typeName!, createAt: m.createAt!)
+                                let model = Message(sender: m.senderID ,content: m.content, type: m.typeName!, createAt: m.createAt!)
                                 self.messages.insertUnique(item: model)
                             }
                         }
@@ -176,38 +176,23 @@ extension InChatViewModel {
     func didChat(type:MessageType, content: String = "") {
         
         switch type {
-        case .text:
-            didChat(message: content)
-        case .sticker:
-            didChat(sticker: content)
+        case .text, .sticker:
+            didChat(content: content, type: type)
         case .photo:
             didChat(photo: self.photo)
         }
     }
     
-    func didChat(message: String) {
+    func didChat(content: String, type: MessageType) {
         let newMessage = Message(
             sender: AppManager.shared.currenUID,
             receiver: chat.partnerID,
-            content: message,
-            type: .text
+            content: content,
+            type: type
         )
 
         pushToUI(mess: newMessage)
 
-        pushToServer(mess: newMessage)
-    }
-    
-    func didChat(sticker: String) {
-        let newMessage = Message(
-            sender: AppManager.shared.currenUID,
-            receiver: chat.partnerID,
-            sticker: sticker,
-            type: .sticker
-        )
-        
-        pushToUI(mess: newMessage)
-        
         pushToServer(mess: newMessage)
     }
     

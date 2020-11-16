@@ -7,9 +7,9 @@
 
 import Foundation
 
-class Chat: ObservableObject, AppendUniqueAble {
+public class Chat: ObservableObject, AppendUniqueAble {
     
-    var id: String?
+    public var id: String?
     
     var partnerID: String
     
