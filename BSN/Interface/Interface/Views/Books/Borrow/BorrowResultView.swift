@@ -9,75 +9,75 @@ import SwiftUI
 
 struct BorrowResultView: View {
     
-    var viewModel: BorrowResultViewModel = BorrowResultViewModel()
+    @StateObject var viewModel: BorrowResultViewModel = BorrowResultViewModel()
     
     var formater: String = "EEEE, MMM d, yyyy"
     
     @Environment(\.presentationMode) var presentationMode
     
+    var bbid: String
+    
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .center) {
-                Text(title)
-                    .foregroundColor(titleforeground)
-                    .font(.system(size: 22))
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .fixedSize(horizontal: false, vertical: false)
-                    .padding(.vertical)
+        VStack(alignment: .center, spacing: 20) {
+            Text(title)
+                .foregroundColor(titleforeground)
+                .font(.system(size: 22))
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: false)
+                .padding(.vertical)
+            
+            BorrowBookHeader(model: viewModel.borrowBook.userbook, isRequest: false)
+                .padding(.horizontal, 8)
+            
+            VStack(alignment: .leading) {
+                TextWithIconInfo(icon: "mappin.and.ellipse", title: "Địa chỉ giao dịch", content: viewModel.borrowBook.transactionInfo.adress)
                 
-                BorrowBookHeader(model: viewModel.borrowBook.userbook)
-                    .padding(.horizontal, 8)
+                TextWithIconInfo(icon: "clock", title: "Thời điểm mượn", content: viewModel.borrowBook.transactionInfo.exchangeDate!.getDateStr(format: formater))
                 
-                VStack(alignment: .leading) {
-                    TextWithIconInfo(icon: "mappin.and.ellipse", title: "Địa chỉ giao dịch", content: viewModel.borrowBook.transactionInfo.adress)
-                    
-                    TextWithIconInfo(icon: "clock", title: "Thời điểm mượn", content: viewModel.borrowBook.transactionInfo.exchangeDate!.getDateStr(format: formater))
-                    
-                    TextWithIconInfo(icon: "clock.arrow.circlepath", title: "Thời gian mượn", content: "\(viewModel.borrowBook.transactionInfo.numDay!) Ngày")
-                }
-                .padding()
-                
-                Spacer()
-                
-                Text(des)
-                    .roboto(size: 15)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.gray)
-                    .padding()
-                    .fixedSize(horizontal: false, vertical: false)
-                
-                if viewModel.borrowBook.transactionInfo.progess == .accept {
-                    Button(action: {
-                        
-                    }, label: {
-                        Text("Đi tới tin nhắn")
-                    })
-                    .buttonStyle(BaseButtonStyle(size: .large))
-                } else {
-                    
-                    Button(action: {
-                        AppManager.shared.selectedIndex = 2
-                        presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Về trang chủ")
-                    })
-                    .buttonStyle(BaseButtonStyle(size: .large))
-                }
-                
-                Spacer()
+                TextWithIconInfo(icon: "clock.arrow.circlepath", title: "Thời gian mượn", content: "\(viewModel.borrowBook.transactionInfo.numDay!) Ngày")
             }
+            .padding()
+            
+            Text(des)
+                .roboto(size: 15)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.gray)
+                .padding()
+                .fixedSize(horizontal: false, vertical: false)
+            
+            if viewModel.borrowBook.transactionInfo.progess == .accept {
+                Button(action: {
+                    
+                }, label: {
+                    Text("Đi tới tin nhắn")
+                })
+                .buttonStyle(BaseButtonStyle(size: .large))
+            } else {
+                
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Text("Về trang chủ")
+                })
+                .buttonStyle(BaseButtonStyle(size: .large))
+            }
+            
+            Spacer()
         }
+        .embededLoadingFull(isLoading: $viewModel.isLoading)
         .padding(.horizontal)
         .navigationBarTitle("Kết quả mượn sách", displayMode: .inline)
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
+        .transition(.scale)
+        .onAppear(perform: viewAppeared)
     }
     
     var backButton: some View {
         Button {
-            presentationMode.wrappedValue.dismiss()
+            dismiss()
         } label: {
             Image(systemName: "chevron.backward")
                 .foregroundColor(.gray)
@@ -101,10 +101,18 @@ struct BorrowResultView: View {
             return "\"\(viewModel.borrowBook.transactionInfo.message)\""
         }
     }
+    
+    private func viewAppeared() {
+        viewModel.prepareData(bbid: bbid)
+    }
+    
+    private func dismiss() {
+        presentationMode.wrappedValue.dismiss()
+    }
 }
 
 struct BorrowResultView_Previews: PreviewProvider {
     static var previews: some View {
-        BorrowResultView()
+        BorrowResultView(bbid: "")
     }
 }

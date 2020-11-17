@@ -25,15 +25,15 @@ struct Loading: View {
             .progressViewStyle(CircularProgressViewStyle())
     }
     
-    func viewAppead() {
-        animate = true
-        print("loading apeard")
-    }
-    
-    func viewDisAppead() {
-        animate = false
-        print("loading DisApeard")
-    }
+//    func viewAppead() {
+//        animate = true
+//        print("loading apeard")
+//    }
+//    
+//    func viewDisAppead() {
+//        animate = false
+//        print("loading DisApeard")
+//    }
 }
 
 struct Loading_Previews: PreviewProvider {

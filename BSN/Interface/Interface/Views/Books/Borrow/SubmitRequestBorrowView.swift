@@ -164,7 +164,7 @@ struct BorrowBookHeader: View {
                     }
                 }
             }
-            .frame(height: 100)
+            .frame(height: 80)
             
             if isRequest {
                 Text(model.statusDes)

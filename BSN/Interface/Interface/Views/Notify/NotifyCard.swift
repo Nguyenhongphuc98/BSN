@@ -38,7 +38,7 @@ struct NotifyCard: View {
             return AnyView(ConfirmBorrowBookView(bbid: model.destinationID))
             
         case .borrowFail, .borrowSuccess:
-            return AnyView(BorrowResultView())
+            return AnyView(BorrowResultView(bbid: model.destinationID))
             
         case .exchange:
             return AnyView(ConfirmExchangeBookView())

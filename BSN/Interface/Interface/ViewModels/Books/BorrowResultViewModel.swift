@@ -6,12 +6,42 @@
 //
 
 import SwiftUI
+import Business
 
-class BorrowResultViewModel {
+class BorrowResultViewModel: NetworkViewModel {
     
-    var borrowBook: BBorrowBook
+    @Published var borrowBook: BBorrowBook
     
-    init() {
+    private var bbManager: BorrowBookManager
+    
+    override init() {
         borrowBook = BBorrowBook()
+        bbManager = BorrowBookManager()
+        
+        super.init()
+        observerBorrowBookInfo()
+    }
+    
+    func prepareData(bbid: String) {
+        isLoading = true
+        bbManager.getBorrowBook(bbid: bbid)
+    }
+    
+    private func observerBorrowBookInfo() {
+        bbManager
+            .getBorrowBookPublisher
+            .sink {[weak self] (bb) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async { 
+                    self.isLoading = false
+                    self.borrowBook = BBorrowBook(ebb: bb)
+                    self.objectWillChange.send()
+                }
+            }
+            .store(in: &cancellables)
     }
 }
