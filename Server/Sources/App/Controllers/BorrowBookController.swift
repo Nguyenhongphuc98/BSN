@@ -9,6 +9,19 @@ import Vapor
 import SQLKit
 import Fluent
 
+enum ExchangeProgess: String {
+    // Just create
+    case new
+    // Someone sent reuqest ex
+    case waiting
+    // Owner don't want to exchange
+    case decline
+    // Owner accept
+    case accept
+    // Someone cancel request ex
+    case cancel
+}
+
 struct BorrowBookController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
@@ -19,6 +32,7 @@ struct BorrowBookController: RouteCollection {
         authen.post(use: create)
         authen.group(":ID") { group in
             group.delete(use: delete)
+            group.put(use: update)
         }
         
         authen.get("detail", ":ID", use: getDetail)
@@ -41,7 +55,7 @@ struct BorrowBookController: RouteCollection {
                 
                 // insert notify for owner
                 let notify = Notify(
-                    typeID: UUID(uuidString: "208F948B-E3F4-4F33-98A0-0D17976180DD")!, // id of borrow action
+                    typeID: UUID(uuidString: NotifyType().borrow)!, // id of borrow action
                     actor: bb.borrowerID, // who submit
                     receiver: ub.userID, // who owner this book (userbook)
                     des: bb.id!
@@ -51,6 +65,55 @@ struct BorrowBookController: RouteCollection {
             }
         
         return bb.save(on: req.db).map { bb }
+    }
+    
+    func update(req: Request) throws -> EventLoopFuture<BorrowBook> {
+       
+        // There are 2 case need to consider
+        // 1. The owner user-book decline borrow req
+        // 2. Accept
+        BorrowBook
+            .find(req.parameters.get("ID"), on: req.db)
+            .unwrap(or: Abort(.notFound))
+            .flatMap { bb in
+                
+                let newbb = try! req.content.decode(BorrowBook.GetFull.self)
+                var notifyTypeID = NotifyType().borrowSuccess
+                
+                bb.state = newbb.state!
+                if newbb.state == ExchangeProgess.decline.rawValue {
+                    bb.message = newbb.message! // reason decline
+                    notifyTypeID = NotifyType().borrowFail
+                }
+                
+                // Find owner of this userbook
+                _ = UserBook.query(on: req.db)
+                    .filter(\.$id == bb.userBookID)
+                    .field(\.$userID)
+                    .first()
+                    .unwrap(or: Abort(.notFound))
+                    .map { (ub) in
+                        
+                        // Create notify to borrower
+                        let notify = Notify(
+                            typeID: UUID(uuidString: notifyTypeID)!,
+                            actor: ub.userID, // who update
+                            receiver: bb.borrowerID,
+                            des: bb.id!
+                        )
+                        _ = notify.save(on: req.db)
+                        
+                        if newbb.state == ExchangeProgess.accept.rawValue {
+                            // Update status of that borowbook to borowed
+                            ub.state = BookState.borrowed.rawValue
+                            _ = ub.save(on: req.db)
+                            
+                            // Create default message for them
+                        }
+                    }
+                
+                return bb.update(on: req.db).map { bb }
+            }
     }
 
     func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {

@@ -35,6 +35,14 @@ class BorrowBookRequest: ResourceRequest<EBorrowBook> {
         }
     }
     
+    func updateBorrowBook(borrowBook: EBorrowBook, publisher: PassthroughSubject<EBorrowBook, Never>) {
+        self.setPath(resourcePath: borrowBook.id!)
+        
+        self.update(borrowBook) { (result) in
+            self.processChangeBorrowBookResult(result: result, method: "update", publisher: publisher)
+        }
+    }
+    
 //    func deleteReview(reviewID: String) {
 //        self.setPath(resourcePath: reviewID)
 //        self.delete()

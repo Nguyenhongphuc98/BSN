@@ -6,8 +6,15 @@
 //
 
 import Vapor
-//import SwifQL
 import SQLKit
+
+enum BookState: String, CaseIterable, Equatable {
+    case borrowed
+    case available //to be borrowed
+    case reading
+    case exchanged
+    case unknown
+}
 
 struct UserBookController: RouteCollection {
     

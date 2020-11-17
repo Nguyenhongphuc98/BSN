@@ -36,7 +36,7 @@ public struct EBorrowBook: Codable {
         self.id = id
         self.userBookID = userBookID
         self.borrowerID = borrowerID
-        self.borrowDate = isoformatter.string(from: borrowDate!)
+        self.borrowDate =  borrowDate != nil ? isoformatter.string(from: borrowDate!) : nil
         self.borrowDays = borrowDays
         self.adress = adress
         self.message = message

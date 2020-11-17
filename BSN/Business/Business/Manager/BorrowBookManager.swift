@@ -33,6 +33,10 @@ public class BorrowBookManager {
         networkRequest.saveBorrowBook(borrowBook: borrowBook, publisher: changePublisher)
     }
     
+    public func updateBorrowBook(borrowBook: EBorrowBook) {
+        networkRequest.updateBorrowBook(borrowBook: borrowBook, publisher: changePublisher)
+    }
+    
     public func getBorrowBook(bbid: String) {
         networkRequest.fetchBorowBook(bbid: bbid, publisher: getBorrowBookPublisher)
     }

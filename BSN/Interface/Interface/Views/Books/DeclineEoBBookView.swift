@@ -10,17 +10,22 @@ import SwiftUI
 // View showing when decline request borrow or exchange book
 struct DeclineEoBBookView: View {
     
-    @StateObject var viewModel: DeclineBorrowBookViewModel = DeclineBorrowBookViewModel()
+    @StateObject var viewModel: DeclineEoBBookViewModel = DeclineEoBBookViewModel()
     
     @Environment(\.presentationMode) var presentationMode
     
     var isBorrow: Bool = true
+    
+    var targetID: String // if of borrow book / exchange book
+    
+    var didSubmit: (() -> Void)?
     
     var body: some View {
         ZStack(alignment: .top) {
             VStack(spacing: 20) {
                 Text("Từ chối \(isBorrow ? "mượn" : "đổi") sách")
                     .robotoBold(size: 18)
+                    .padding()
                 
                 Text("Hãy để lại lý do bạn từ chối để bạn đọc hiểu chuyện gì đang xảy ra nhé")
                     .roboto(size: 15)
@@ -35,10 +40,9 @@ struct DeclineEoBBookView: View {
                 Spacer()
                 
                 Button(action: {
-                    viewModel.processDecline { (success) in
-                        print("did process: \(viewModel.declineMessage) - \(success)")
-                        presentationMode.wrappedValue.dismiss()
-                    }
+                    viewModel.processDecline(isborrow: isBorrow, targetID: targetID)
+                    didSubmit?()
+                    dismiss()
                 }, label: {
                     Text("Hoàn tất")
                 })
@@ -50,7 +54,7 @@ struct DeclineEoBBookView: View {
             
             HStack {
                 Button(action: {
-                    presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 }, label: {
                     Text("Huỷ")
                         .padding()
@@ -61,10 +65,14 @@ struct DeclineEoBBookView: View {
         }
         .background(Color(.secondarySystemBackground))
     }
+    
+    private func dismiss() {
+        presentationMode.wrappedValue.dismiss()
+    }
 }
 
 struct DeclineBorrowBook_Previews: PreviewProvider {
     static var previews: some View {
-        DeclineEoBBookView()
+        DeclineEoBBookView(targetID: "")
     }
 }

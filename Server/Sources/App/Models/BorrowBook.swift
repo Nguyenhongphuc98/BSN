@@ -30,6 +30,8 @@ final class BorrowBook: Model {
     @Field(key: "adress")
     var adress: String
     
+    // In case state is new/accept, it hold message borrower to owner
+    // other case (decline), it hold reason decline
     @Field(key: "message")
     var message: String
     

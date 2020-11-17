@@ -12,7 +12,7 @@ struct ConfirmBorrowBookView: View {
     
     var bbid: String
     
-    var viewModel: ConfirmBorrowBookViewModel = ConfirmBorrowBookViewModel()
+    @StateObject var viewModel: ConfirmBorrowBookViewModel = ConfirmBorrowBookViewModel()
     
     var formater: String = "EEEE, MMM d, yyyy"
     
@@ -45,7 +45,6 @@ struct ConfirmBorrowBookView: View {
             if shouldShowAction(proges: viewModel.borrowBook.transactionInfo.progess) {
                 HStack(spacing: 30) {
                     Button(action: {
-
                         showDeclineView.toggle()
                     }, label: {
                         Text("   Từ Chối   ")
@@ -62,8 +61,11 @@ struct ConfirmBorrowBookView: View {
                     .buttonStyle(BaseButtonStyle(size: .large))
                 }
                 
-                Spacer()
+            } else {
+                Text("Bạn đã \(viewModel.borrowBook.transactionInfo.progess.des()) yêu cầu này")
+                    .robotoLight(size: 15)
             }
+            Spacer()
         }
         .padding()
         
@@ -72,26 +74,32 @@ struct ConfirmBorrowBookView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
         .sheet(isPresented: $showDeclineView, content: {
-            DeclineEoBBookView()
+            DeclineEoBBookView(isBorrow: true, targetID: bbid) {
+                dismiss()
+            }
         })
         .onAppear(perform: viewAppeared)
     }
     
     var backButton: some View {
         Button {
-            presentationMode.wrappedValue.dismiss()
+            dismiss()
         } label: {
             Image(systemName: "chevron.backward")
                 .foregroundColor(.gray)
         }
     }
     
-    func shouldShowAction(proges: ExchangeProgess) -> Bool {
+    private func shouldShowAction(proges: ExchangeProgess) -> Bool {
         !(proges == .decline) || (proges == .accept)
     }
     
-    func viewAppeared() {
+    private func viewAppeared() {
         viewModel.prepareData(bbid: bbid)
+    }
+    
+    private func dismiss() {
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

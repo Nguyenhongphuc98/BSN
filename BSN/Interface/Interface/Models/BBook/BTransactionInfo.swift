@@ -18,6 +18,21 @@ enum ExchangeProgess: String {
     case accept
     // Someone cancel request ex
     case cancel
+    
+    func des() -> String {
+        switch self {
+        case .new:
+            return "tạo mới"
+        case .waiting:
+            return "đang chờ"
+        case .decline:
+            return "từ chối"
+        case .accept:
+            return "chấp nhận"
+        case .cancel:
+            return "huỷ bỏ"
+        }
+    }
 }
 
 struct BTransactionInfo {
