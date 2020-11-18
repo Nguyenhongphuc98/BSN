@@ -27,6 +27,8 @@ class DeclineEoBBookViewModel: ObservableObject {
             // Message (as reason) and state
             let ebb = EBorrowBook(id: targetID, message: declineMessage, state: ExchangeProgess.decline.rawValue)
             borrowBookManager.updateBorrowBook(borrowBook: ebb)
+        } else {
+            // Exchange
         }
     }
 }

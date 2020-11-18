@@ -50,4 +50,30 @@ class BExchangeBookFull: BExchangeBook {
             secondCover: secondCover
         )
     }
+    
+    // init for accept/decline - view result
+    init(id: String, state: String, firstTitle: String, firstAuthor: String, firstCover: String? = "book_cover", firstOwner: String, firstStatusDes: String, secondOwner: String, secondStatusDes: String, sencondTitle: String, secondAuthor: String, secondCover: String?, adress: String, message: String) {
+        
+        transactionInfo = BTransactionInfo(
+            exchangeDate: nil,
+            numDay: nil,
+            adress: adress,
+            message: message,
+            progess: ExchangeProgess(rawValue: state)!
+        )
+        
+        super.init(
+            id: id,
+            firstTitle: firstTitle,
+            firstAuthor: firstAuthor,
+            firstCover: firstCover,
+            firstOwner: firstOwner,
+            firstStatusDes: firstStatusDes,
+            secondOwner: secondOwner,
+            secondStatusDes: secondStatusDes,
+            secondTitle: sencondTitle,
+            secondAuthor: secondAuthor,
+            secondCover: secondCover
+        )
+    }
 }

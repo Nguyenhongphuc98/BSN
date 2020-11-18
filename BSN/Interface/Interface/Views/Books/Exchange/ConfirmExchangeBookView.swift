@@ -11,13 +11,15 @@ import SwiftUI
 // And when receive notify exchange result
 struct ConfirmExchangeBookView: View {
     
-    @StateObject var viewModel: ExchangeBookViewModel = ExchangeBookViewModel()
+    @StateObject var viewModel: ConfirmExchangebookViewModel = ConfirmExchangebookViewModel()
     
     @Environment(\.presentationMode) var presentationMode
     
     @State private var showDeclineView: Bool = false
     
     var resultView: Bool = false
+    
+    var ebid: String
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -30,14 +32,14 @@ struct ConfirmExchangeBookView: View {
                         .multilineTextAlignment(.center)
                 }
                 
-                BorrowBookHeader(model: viewModel.exchangeBook.needChangeBook)
+                BorrowBookHeader(model: viewModel.exchangeBook.needChangeBook, isRequest: false)
                 
                 Image(systemName: "repeat")
                     .foregroundColor(._primary)
                     .padding(.horizontal)
                     .font(.system(size: 28))
                 
-                ExchangeBookSecondHeader(model: viewModel.exchangeBook.wantChangeBook!)
+                ExchangeBookSecondHeader(model: viewModel.exchangeBook.wantChangeBook!, isRequest: false)
                     .padding(.bottom)
                 
                 TextWithIconInfo(icon: "clock", title: "Địa chỉ giao dịch", content: viewModel.exchangeBook.transactionInfo.adress)
@@ -47,8 +49,11 @@ struct ConfirmExchangeBookView: View {
                 Spacer(minLength: 30)
                 
                 if !resultView {
-                    if viewModel.exchangeBook.transactionInfo.progess == .new {
+                    if viewModel.exchangeBook.transactionInfo.progess == .waiting {
                         confirmAction
+                    } else {
+                        Text("Yêu cầu đã được \(viewModel.exchangeBook.transactionInfo.progess.des())")
+                            .robotoLight(size: 15)
                     }
                 } else {
                     resultAction
@@ -57,7 +62,6 @@ struct ConfirmExchangeBookView: View {
                 Spacer()
             }
             .padding()
-            //.background(Color(.secondarySystemBackground))
             .navigationBarTitle(navTitle, displayMode: .inline)
             .navigationBarHidden(false)
             .navigationBarBackButtonHidden(true)
@@ -66,6 +70,8 @@ struct ConfirmExchangeBookView: View {
                 DeclineEoBBookView(isBorrow: false, targetID: viewModel.exchangeBook.id!)
             })
         }
+        .embededLoadingFull(isLoading: $viewModel.isLoading)
+        .onAppear(perform: viewAppeared)
     }
     
     var backButton: some View {
@@ -102,7 +108,7 @@ struct ConfirmExchangeBookView: View {
     var confirmAction: some View {
         HStack(spacing: 30) {
             Button(action: {
-                dismiss()
+                self.showDeclineView = true
             }, label: {
                 Text("Từ chối")
             })
@@ -144,6 +150,10 @@ struct ConfirmExchangeBookView: View {
         }
     }
     
+    func viewAppeared() {
+        viewModel.prepareData(ebID: ebid)
+    }
+    
     func dismiss() {
         presentationMode.wrappedValue.dismiss()
     }
@@ -151,6 +161,6 @@ struct ConfirmExchangeBookView: View {
 
 struct ConfirmExchangeBookView_Previews: PreviewProvider {
     static var previews: some View {
-        ConfirmExchangeBookView()
+        ConfirmExchangeBookView(ebid: "")
     }
 }

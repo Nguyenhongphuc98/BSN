@@ -63,4 +63,26 @@ class BExchangeBook: ObservableObject, AppendUniqueAble {
         
         self.distance = 0
     }
+    
+    // init for accept/decline or view result
+    init(id: String, firstTitle: String, firstAuthor: String, firstCover: String?, firstOwner: String, firstStatusDes: String, secondOwner: String, secondStatusDes: String, secondTitle: String, secondAuthor: String, secondCover: String?) {
+
+        self.id = id
+        needChangeBook = BUserBook(
+            ownerName: firstOwner,
+            title: firstTitle,
+            author: firstOwner,
+            cover: firstCover,
+            des: firstStatusDes
+        )
+        wantChangeBook = BUserBook(
+            ownerName: secondOwner,
+            title: secondTitle,
+            author: secondAuthor,
+            cover: secondCover,
+            des: secondStatusDes
+        )
+        
+        self.distance = 0
+    }
 }

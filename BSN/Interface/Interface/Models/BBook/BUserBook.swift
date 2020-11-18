@@ -28,7 +28,7 @@ class BUserBook: BBook {
         super.init()
     }
     
-    init(ubid: String, uid: String, status: String, title: String, author: String, state: String, cover: String? = nil) {
+    init(ubid: String, uid: String, status: String = "new", title: String, author: String, state: String = "available", cover: String? = nil) {
         self.status = .new
         self.state = .available
         self.statusDes = ""
@@ -50,7 +50,7 @@ class BUserBook: BBook {
         self.ownerName = ownerName
         self.status = BookStatus(rawValue: status ?? "new")
         self.state = BookState(rawValue: state ?? "available")
-        self.statusDes = des ?? ""
+        self.statusDes = des ?? "Không có mô tả tình trạng"
         
         super.init()
         
@@ -58,5 +58,9 @@ class BUserBook: BBook {
         self.title = title
         self.author = author
         self.cover = cover
+        
+        if self.statusDes == "" {
+            self.statusDes = "Không có mô tả tình trạng"
+        }
     }
 }

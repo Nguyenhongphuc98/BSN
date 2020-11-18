@@ -27,7 +27,7 @@ struct DeclineEoBBookView: View {
                     .robotoBold(size: 18)
                     .padding()
                 
-                Text("Hãy để lại lý do bạn từ chối để bạn đọc hiểu chuyện gì đang xảy ra nhé")
+                Text("Hãy để lại lý do bạn từ chối\n để bạn đọc hiểu chuyện gì đang xảy ra nhé")
                     .roboto(size: 15)
                     .multilineTextAlignment(.center)
                     .padding(.top)

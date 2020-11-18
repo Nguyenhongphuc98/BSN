@@ -142,6 +142,7 @@ struct BorrowBookHeader: View {
                     .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))
                 
                 VStack(alignment: .leading, spacing: 4) {
+                    HStack { Spacer() }
                     Spacer()
                     
                     Text(model.title)
@@ -149,10 +150,9 @@ struct BorrowBookHeader: View {
                     
                     Text(model.author)
                         .robotoLight(size: 14)
-                    
-                    HStack {
+                                       
+                    if isRequest {
                         BookStatusText(status: model.status!)
-                        Spacer()
                     }
                     
                     HStack {
@@ -168,11 +168,9 @@ struct BorrowBookHeader: View {
             }
             .frame(height: 80)
             
-            if isRequest {
-                Text(model.statusDes)
-                    .roboto(size: 13)
-                    .padding(.vertical)
-            }
+            Text(model.statusDes)
+                .roboto(size: 13)
+                .padding(.vertical)
         }
     }
     

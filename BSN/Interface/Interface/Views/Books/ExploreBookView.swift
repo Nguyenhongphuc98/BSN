@@ -113,7 +113,8 @@ public struct ExploreBookView: View, PopToable {
     }
     
     private func viewAppeared() {
-        print("search appeard")
+        print("explore appeard")
+        viewModel.prepareData()
     }
 }
 

@@ -11,7 +11,7 @@ import Business
 // Manager in submit exchange book view (detail - available or not)
 class ExchangeBookViewModel: NetworkViewModel {
     
-    var exchangeBook: BExchangeBookFull
+    @Published var exchangeBook: BExchangeBookFull
     
     @Published var canExchange: Bool
     
@@ -37,7 +37,7 @@ class ExchangeBookViewModel: NetworkViewModel {
     func prepareData(ebID: String) {
         isLoading = true
         exchangeBook.id = ebID
-        ebManager.getExchangeBook(ebid: ebID)
+        ebManager.getComputeExchangeBook(ebid: ebID)
     }
     
     func requestExchangeBook() {

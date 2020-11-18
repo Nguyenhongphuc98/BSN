@@ -8,7 +8,9 @@
 import SwiftUI
 import Business
 
-class ExploreBookViewModel: SearchBookViewModel {
+public class ExploreBookViewModel: SearchBookViewModel {
+    
+    public static var shared: ExploreBookViewModel = ExploreBookViewModel()
     
     @Published var suggestBooks: [BSusggestBook]
     
@@ -18,7 +20,7 @@ class ExploreBookViewModel: SearchBookViewModel {
     
     private var bookManager: BookManager
     
-    override init() {
+    public override init() {
         suggestBooks = []
         exchangeBooks = []
         ebManager = ExchangeBookManager()
@@ -30,7 +32,7 @@ class ExploreBookViewModel: SearchBookViewModel {
         prepareData()
     }
     
-    private func prepareData() {
+    public func prepareData() {
         print("did prepare data explore book VM")
         // load favorite book
         // load page 0 exchange book

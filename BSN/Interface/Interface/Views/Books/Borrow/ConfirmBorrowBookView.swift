@@ -61,7 +61,7 @@ struct ConfirmBorrowBookView: View {
                 }
                 
             } else {
-                Text("Bạn đã \(viewModel.borrowBook.transactionInfo.progess.des()) yêu cầu này")
+                Text("Yêu cầu đã được \(viewModel.borrowBook.transactionInfo.progess.des())")
                     .robotoLight(size: 15)
             }
             Spacer()

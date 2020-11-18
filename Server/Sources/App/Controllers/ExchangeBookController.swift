@@ -24,7 +24,8 @@ struct ExchangeBookController: RouteCollection {
         }
         
         authen.get("newest", use: getNewest)
-        authen.get("detail", ":id", use: getDetail)
+        authen.get("compute", ":id", use: getDetailInWatingState)
+        authen.get("detail", ":id", use: getDetailAfterReqSubmited)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[ExchangeBook]> {
@@ -117,7 +118,9 @@ struct ExchangeBookController: RouteCollection {
             .all(decoding: GetExchangeBook.self)
     }
     
-    func getDetail(req: Request) throws -> EventLoopFuture<GetExchangeBook> {
+    // This func shoud just get to make request to owner (who create exchange in wating state)
+    // Get info after send req will be implement in other func
+    func getDetailInWatingState(req: Request) throws -> EventLoopFuture<GetExchangeBook> {
         
         // Authen
         let account = try req.auth.require(Account.self)
@@ -140,14 +143,14 @@ struct ExchangeBookController: RouteCollection {
                         let ub1 = db.raw(ub1Query)
                             .first(decoding: GetUserBook.self)
                         
-                        var sqlStr = "SELECT b.title, b.cover, b.author, ub.status, ub.id,ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and b.id = '\(eb.exchangeBookID!.uuidString)' and ub.user_id = '\(u.id!.uuidString)'"
+                        let sqlStr = "SELECT b.title, b.cover, b.author, ub.status, ub.id,ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and b.id = '\(eb.exchangeBookID!.uuidString)' and ub.user_id = '\(u.id!.uuidString)'"
                         
                         // state != new
-                        if eb.secondUserBookID != nil {
-                            // it mean get info to accept or decline
-                            // rather than submit final step exchange for current transaction
-                            sqlStr = "SELECT b.title, b.cover, b.author, ub.id, ub.status, ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.id = '\(eb.secondUserBookID!.uuidString)'"
-                        }
+//                        if eb.secondUserBookID != nil {
+//                            // it mean get info to accept or decline
+//                            // rather than submit final step exchange for current transaction
+//                            sqlStr = "SELECT b.title, b.cover, b.author, ub.id, ub.status, ub.status_des as \"statusDes\", u.displayname as \"ownerName\" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.id = '\(eb.secondUserBookID!.uuidString)'"
+//                        }
                         
                         let ub2Query = SQLQueryString(sqlStr)
                         
@@ -173,7 +176,7 @@ struct ExchangeBookController: RouteCollection {
                                         secondAuthor: b?.author,
                                         firstOwnerName: u1!.ownerName,
                                         firstStatus: u1!.status,
-                                        firstStatusDes: u1!.statusDes,
+                                        firstStatusDes: eb.firstStatusDes, // it should get statusdes at the time creare ex rather than at current
                                         secondStatus: b?.status,
                                         secondStatusDes: b?.statusDes,
                                         secondCover: b?.cover,
@@ -203,9 +206,33 @@ struct ExchangeBookController: RouteCollection {
                         }
                     }
             }
+    }
+    
+    func getDetailAfterReqSubmited(req: Request) throws -> EventLoopFuture<GetExchangeBook> {
         
+        // Authen
+        let account = try req.auth.require(Account.self)
         
+        // Determine current user
+        // Then get appropriate info
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .first()
+            .unwrap(or: Abort(.notFound))
+            .flatMap { (u)  in
+                
+                return ExchangeBook.find(req.parameters.get("id"), on: req.db)
+                    .unwrap(or: Abort(.notFound))
+                    .flatMap { eb in
+                    
+                        let db = req.db as! SQLDatabase
+                        let sqlQuery = SQLQueryString("SELECT eb.id, eb.first_user_book_id as \"firstubid\", eb.second_user_book_id as \"secondubid\", eb.adress, eb.message, eb.first_status_des as \"firstStatusDes\", eb.second_status_des as \"secondStatusDes\", eb.state, u1.displayname as \"firstOwnerName\", b1.title as \"firstTitle\", b1.author as \"firstAuthor\", b1.cover as \"firstCover\", u2.displayname as \"secondOwnerName\", b2.title as \"secondTitle\", b2.author as \"secondAuthor\", b2.cover as \"secondCover\" FROM exchange_book as eb, user_book as ub1, public.user as u1, book as b1, user_book as ub2, public.user as u2, book as b2 WHERE eb.first_user_book_id = ub1.id and ub1.user_id = u1.id and ub1.book_id = b1.id and eb.second_user_book_id = ub2.id and ub2.user_id = u2.id and ub2.book_id = b2.id and eb.id = '\(raw: eb.id!.uuidString)'")
+                        
+                        return db.raw(sqlQuery)
+                            .first(decoding: GetExchangeBook.self)
+                            .unwrap(or: Abort(.notFound))
+                            .map { $0 }
+                    }
+            }
     }
 }
-
-//SELECT b.title, b.cover, b.author, ub.status, ub.status_des, u.displayname as "ownerName" FROM user_book as ub, book as b, public.user as u WHERE ub.user_id = u.id and ub.book_id = b.id and ub.id = '246D461F-B648-48CA-B9AC-6219C82DFA2A'

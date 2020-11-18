@@ -9,7 +9,7 @@ import SwiftUI
 import Business
 import Combine
 
-class SearchBookViewModel: NetworkViewModel {
+public class SearchBookViewModel: NetworkViewModel {
     
     //@Published var searchText: String
     var searchText: String

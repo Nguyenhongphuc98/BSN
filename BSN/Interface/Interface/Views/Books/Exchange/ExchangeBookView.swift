@@ -24,6 +24,7 @@ struct ExchangeBookView: View {
         ScrollView(showsIndicators: false, content: {
             VStack {
                 BorrowBookHeader(model: viewModel.exchangeBook.needChangeBook)
+                    .padding(.vertical)
                 
                 Image(systemName: "repeat")
                     .foregroundColor(._primary)
@@ -125,7 +126,7 @@ struct ExchangeBookSecondHeader: View {
     
     var model: BUserBook
     
-    //var isCanChange: Bool = true
+    var isRequest: Bool = true
     
     var body: some View {
         VStack {
@@ -142,7 +143,12 @@ struct ExchangeBookSecondHeader: View {
                         .robotoLight(size: 14)
                     
                     if model.id != nil {
-                        BookStatusText(status: model.status!)
+                        if isRequest {
+                            BookStatusText(status: model.status!)
+                        } else {
+                            Text("Chủ sở hữu :")
+                                .robotoLight(size: 14)
+                        }
                     } else {
                         Text("Bạn không có cuốn sách này")
                             .robotoBold(size: 14)

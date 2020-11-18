@@ -118,6 +118,8 @@ struct GetExchangeBook: Content {
     
     var firstStatusDes: String?
     
+    var secondOwnerName: String?
+    
     var secondStatus: String?
     
     var secondStatusDes: String?
@@ -129,6 +131,10 @@ struct GetExchangeBook: Content {
     var firstubid: String?
     
     var secondubid: String?
+    
+    var adress: String?
+    
+    var message: String?
     
     init(id: String? = nil, firstubid: String? = nil, secondubid: String? = nil, firstTitle: String, firstAuthor: String, firstCover: String? = nil, location: String? = nil, secondTitle: String? = nil, secondAuthor: String? = nil, firstOwnerName: String? = nil, firstStatus: String? = nil, firstStatusDes: String? = nil, secondStatus: String? = nil, secondStatusDes: String? = nil, secondCover: String? = nil, state: String? = nil) {
         

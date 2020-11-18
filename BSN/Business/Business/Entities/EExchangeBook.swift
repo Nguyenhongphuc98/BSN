@@ -15,6 +15,7 @@ public class EExchangeBook: Codable {
     
     public var secondUserBookID: String?
     
+    // transaction adress
     public var adress: String?
     
     public var message: String?
@@ -32,6 +33,7 @@ public class EExchangeBook: Codable {
     
     public var firstCover: String?
     
+    // Location of exchanger
     public var location: String?
     
     public var secondTitle: String?
@@ -42,6 +44,8 @@ public class EExchangeBook: Codable {
     public var firstOwnerName: String?
     
     public var firstStatus: String?
+    
+    public var secondOwnerName: String?
     
     public var secondStatus: String?
     

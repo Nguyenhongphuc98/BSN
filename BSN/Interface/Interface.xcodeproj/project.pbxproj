@@ -81,6 +81,7 @@
 		841CED9E255D67AE007CCACC /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CED9D255D67AD007CCACC /* SettingView.swift */; };
 		841CEDA1255D7356007CCACC /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CEDA0255D7356007CCACC /* SettingViewModel.swift */; };
 		841CEDB0255EB331007CCACC /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CEDAF255EB331007CCACC /* Chat.swift */; };
+		842A7C842564CFD50007E343 /* ConfirmExchangebookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842A7C832564CFD50007E343 /* ConfirmExchangebookViewModel.swift */; };
 		842C446E2547CBE4003C570D /* BBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C446D2547CBE4003C570D /* BBook.swift */; };
 		842C447425480C5C003C570D /* BSusggestBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C447325480C5C003C570D /* BSusggestBook.swift */; };
 		842C447925480F0C003C570D /* SuggestBookCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C447825480F0C003C570D /* SuggestBookCard.swift */; };
@@ -271,6 +272,7 @@
 		841CED9D255D67AD007CCACC /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		841CEDA0255D7356007CCACC /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		841CEDAF255EB331007CCACC /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		842A7C832564CFD50007E343 /* ConfirmExchangebookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmExchangebookViewModel.swift; sourceTree = "<group>"; };
 		842C446D2547CBE4003C570D /* BBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBook.swift; sourceTree = "<group>"; };
 		842C447325480C5C003C570D /* BSusggestBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BSusggestBook.swift; sourceTree = "<group>"; };
 		842C447825480F0C003C570D /* SuggestBookCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestBookCard.swift; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 				8401C98D252F16FC00A722CE /* DeclineEoBBookViewModel.swift */,
 				8401C9A52530034500A722CE /* ExchangeBookViewModel.swift */,
 				8401C9D525306AE500A722CE /* ExchangeListViewModel.swift */,
+				842A7C832564CFD50007E343 /* ConfirmExchangebookViewModel.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -1088,6 +1091,7 @@
 				842C44B2254844DA003C570D /* BUserBookCard.swift in Sources */,
 				843E5240252722D200B16995 /* DismissKeyboardOnDrag.swift in Sources */,
 				8401C986252F0C4E00A722CE /* BorrowResultViewModel.swift in Sources */,
+				842A7C842564CFD50007E343 /* ConfirmExchangebookViewModel.swift in Sources */,
 				84A61CC4254C53C000B50FE8 /* EmbededLoadingView.swift in Sources */,
 				8401CA1725329C5700A722CE /* SearchAddBookView.swift in Sources */,
 				84411A29252337C900AE31D8 /* ViewExtension.swift in Sources */,
