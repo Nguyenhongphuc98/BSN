@@ -146,8 +146,15 @@ struct ExchangeBookSecondHeader: View {
                         if isRequest {
                             BookStatusText(status: model.status!)
                         } else {
-                            Text("Chủ sở hữu :")
-                                .robotoLight(size: 14)
+                            HStack {
+                                Text("Chủ sở hữu:")
+                                    .robotoLight(size: 14)
+                                    .layoutPriority(1)
+                                
+                                Text(model.ownerName ?? "unknown")
+                                    .robotoBold(size: 13)
+                                    .foregroundColor(._primary)
+                            }
                         }
                     } else {
                         Text("Bạn không có cuốn sách này")

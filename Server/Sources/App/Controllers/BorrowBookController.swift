@@ -110,7 +110,7 @@ struct BorrowBookController: RouteCollection {
                             // Create default message (chat) for them
                             let message = Message.GetFull(
                                 senderID: ub.userID.uuidString,
-                                content: "Chấp nhận yêu cầu '\(bb.message)'",
+                                content: "Chấp nhận yêu cầu mượn sách: '\(bb.message)'",
                                 receiverID: bb.borrowerID.uuidString,
                                 typeName: "text"
                             )

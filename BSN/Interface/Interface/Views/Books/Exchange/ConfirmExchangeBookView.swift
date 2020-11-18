@@ -112,14 +112,17 @@ struct ConfirmExchangeBookView: View {
             Button(action: {
                 self.showDeclineView = true
             }, label: {
-                Text("Từ chối")
+                Text("   Từ chối   ")
             })
             .buttonStyle(BaseButtonStyle(size: .large,type: .secondary))
             
             Button(action: {
-                dismiss()
+                viewModel.didAccept()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    dismiss()
+                }
             }, label: {
-                Text("Đồng ý")
+                Text("   Đồng ý   ")
             })
             .buttonStyle(BaseButtonStyle(size: .large))
         }

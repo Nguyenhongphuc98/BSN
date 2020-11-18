@@ -29,6 +29,14 @@ class ConfirmExchangebookViewModel: NetworkViewModel {
         ebManager.getDetailExchangeBook(ebid: ebID)
     }
     
+    func didAccept() {
+        let eeb = EExchangeBook(
+            id: exchangeBook.id,
+            state: ExchangeProgess.accept.rawValue
+        )
+        ebManager.updateExchangeBook(eb: eeb)
+    }
+    
     private func observerEBInfo() {
         /// Get exchange book info (full)
         ebManager

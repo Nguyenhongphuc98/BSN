@@ -56,7 +56,12 @@ struct ExchangeBookController: RouteCollection {
                 // Check it update from what state and to what state
                 // Then process with each case
                 
+                // case 1: submit req
+                // case 2: decline
+                // case 3: accept
+                
                 // change .new to .waiting, it mean submit req exchange
+                // case 1
                 if newEB.state == ExchangeProgess.waiting.rawValue {
                     // Setup new value for update
                     if let secondUbid = newEB.secondUserBookID { eb.secondUserBookID = secondUbid }
@@ -66,13 +71,15 @@ struct ExchangeBookController: RouteCollection {
                     notifyTypeID = NotifyType().exchange
                 } else {
                     
-                    // Decline req
+                    // case 2: Decline req
                     if newEB.state == ExchangeProgess.decline.rawValue {
                         // Setup new value for update
                         if let message = newEB.message { eb.message = message }
                         notifyTypeID = NotifyType().exchangeFail
                     } else {
                         
+                        // case 3: Accept
+                        notifyTypeID = NotifyType().exchangeSuccess
                     }
                 }
                 
@@ -83,14 +90,14 @@ struct ExchangeBookController: RouteCollection {
                 // Find owner of first user book
                 let firstUser = UserBook.query(on: req.db)
                     .filter(\.$id == eb.firstUserBookID!)
-                    .field(\.$userID)
+                    //.field(\.$userID)
                     .first()
                     .unwrap(or: Abort(.notFound))
                   
                 // Find owner of second user book
                 let secondUser = UserBook.query(on: req.db)
                     .filter(\.$id == eb.secondUserBookID!)
-                    .field(\.$userID)
+                    //.field(\.$userID)
                     .first()
                     .unwrap(or: Abort(.notFound))
                 
@@ -106,6 +113,46 @@ struct ExchangeBookController: RouteCollection {
                     )
                     
                     _ = notify.save(on: req.db)
+                    
+                    // case 3: accept
+                    if newEB.state == ExchangeProgess.accept.rawValue {
+                        // If accept, we should update status userbook for 2 owner
+                        ub1.state = BookState.exchanged.rawValue
+                        _ = ub1.save(on: req.db)
+                        
+                        ub2.state = BookState.exchanged.rawValue
+                        _ = ub2.save(on: req.db)
+                        
+                        // create new userbook
+                        // U1 hold book same u2
+                        let userBook1 = UserBook(
+                            uid: ub1.userID,
+                            bid: ub2.bookID,
+                            status: ub2.status,
+                            state: BookState.reading.rawValue,
+                            statusDes: ub2.statusDes
+                        )
+                        _ = userBook1.save(on: req.db)
+                        
+                        // U2 hold book same u1
+                        let userBook2 = UserBook(
+                            uid: ub2.userID,
+                            bid: ub1.bookID,
+                            status: ub1.status,
+                            state: BookState.reading.rawValue,
+                            statusDes: ub1.statusDes
+                        )
+                        _ = userBook2.save(on: req.db)
+                        
+                        // Create default message (chat) for them
+                        let message = Message.GetFull(
+                            senderID: ub1.userID.uuidString,
+                            content: "Chấp nhận yêu cầu đổi sách: '\(eb.message ?? "")'",
+                            receiverID: ub2.userID.uuidString,
+                            typeName: "text"
+                        )
+                        _ = try! MessageController().save(req: req, message: message)
+                    }
                 }
                 
                 return eb.update(on: req.db).map { eb }
