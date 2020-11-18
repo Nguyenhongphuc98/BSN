@@ -51,13 +51,33 @@ struct ExchangeBookController: RouteCollection {
             .flatMap { eb in
                 // Decode
                 let newEB = try! req.content.decode(ExchangeBook.self)
+                var notifyTypeID = ""
                 
-                // Setup new value for update
-                if let secondUbid = newEB.secondUserBookID { eb.secondUserBookID = secondUbid }
-                if let address = newEB.adress { eb.adress = address }
-                if let message = newEB.message { eb.message = message }
+                // Check it update from what state and to what state
+                // Then process with each case
+                
+                // change .new to .waiting, it mean submit req exchange
+                if newEB.state == ExchangeProgess.waiting.rawValue {
+                    // Setup new value for update
+                    if let secondUbid = newEB.secondUserBookID { eb.secondUserBookID = secondUbid }
+                    if let address = newEB.adress { eb.adress = address }
+                    if let message = newEB.message { eb.message = message }
+                    if let statusDes = newEB.secondStatusDes { eb.secondStatusDes = statusDes }
+                    notifyTypeID = NotifyType().exchange
+                } else {
+                    
+                    // Decline req
+                    if newEB.state == ExchangeProgess.decline.rawValue {
+                        // Setup new value for update
+                        if let message = newEB.message { eb.message = message }
+                        notifyTypeID = NotifyType().exchangeFail
+                    } else {
+                        
+                    }
+                }
+                
+                // State allways update to make progess
                 if let progess = newEB.state { eb.state = progess }
-                if let statusDes = newEB.secondStatusDes { eb.secondStatusDes = statusDes }
                 
                 // Setup to notify
                 // Find owner of first user book
@@ -75,11 +95,13 @@ struct ExchangeBookController: RouteCollection {
                     .unwrap(or: Abort(.notFound))
                 
                 _ = firstUser.and(secondUser).map { (ub1, ub2)  in
-                    // insert notify for owner
+                    // insert notify
+                    // if req -> notify to owner
+                    // if accept/decline notify to exchanger
                     let notify = Notify(
-                        typeID: UUID(uuidString: "B5C0EA0E-EAF6-47DC-A15B-12869159F875")!, // id of exchange action
-                        actor: ub2.userID, // who submit
-                        receiver: ub1.userID, // who owner this book (userbook)
+                        typeID: UUID(uuidString: notifyTypeID)!,
+                        actor: newEB.state == ExchangeProgess.waiting.rawValue ? ub2.userID : ub1.userID,
+                        receiver: newEB.state == ExchangeProgess.waiting.rawValue ? ub1.userID : ub2.userID,
                         des: eb.id!
                     )
                     

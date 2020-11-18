@@ -14,7 +14,7 @@ public class ExchangeBookManager {
     private let resourceRequest: ExchangeBookRequest
     
     // Publisher for save new exchange book action
-    public let savePublisher: PassthroughSubject<EExchangeBook, Never>
+    public let changePublisher: PassthroughSubject<EExchangeBook, Never>
     
     // Publisher for fetch exchange books by page
     public let getExchangeBooksPublisher: PassthroughSubject<[EExchangeBook], Never>
@@ -26,17 +26,17 @@ public class ExchangeBookManager {
         // Init resource URL
         resourceRequest = ExchangeBookRequest(componentPath: "exchangeBooks/")
         
-        savePublisher = PassthroughSubject<EExchangeBook, Never>()
+        changePublisher = PassthroughSubject<EExchangeBook, Never>()
         getExchangeBooksPublisher = PassthroughSubject<[EExchangeBook], Never>()
         getExchangeBookPublisher = PassthroughSubject<EExchangeBook, Never>()
     }
     
     public func saveExchangeBook(eb: EExchangeBook) {
-        resourceRequest.saveExchangeBook(eb: eb, publisher: savePublisher)
+        resourceRequest.saveExchangeBook(eb: eb, publisher: changePublisher)
     }
     
     public func updateExchangeBook(eb: EExchangeBook) {
-        resourceRequest.updateExchangeBook(eb: eb, publisher: savePublisher)
+        resourceRequest.updateExchangeBook(eb: eb, publisher: changePublisher)
     }
     
     public func getExchangeBooks(page: Int) {

@@ -62,7 +62,7 @@ public class EExchangeBook: Codable {
         self.state = "new"
     }
     
-    public init(id: String? = nil, firstUserBookID: String, exchangeBookID: String? = nil,
+    public init(id: String? = nil, firstUserBookID: String? = nil, exchangeBookID: String? = nil,
                 secondUserBookID: String? = nil, adress: String? = nil, message: String? = nil,
                 firstStatusDes: String? = nil, secondStatusDes: String? = nil, state: String,
                 firstTitle: String? = nil, firstAuthor: String? = nil, firstCover: String? = nil, location: String? = nil, secondTitle: String? = nil, secondAuthor: String? = nil, firstOwnerName: String? = nil, secondStatus: String? = nil, firstubid: String? = nil, secondubid: String? = nil) {

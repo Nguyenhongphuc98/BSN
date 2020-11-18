@@ -67,7 +67,9 @@ struct ConfirmExchangeBookView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: backButton)
             .sheet(isPresented: $showDeclineView, content: {
-                DeclineEoBBookView(isBorrow: false, targetID: viewModel.exchangeBook.id!)
+                DeclineEoBBookView(isBorrow: false, targetID: viewModel.exchangeBook.id!) {
+                    dismiss()
+                }
             })
         }
         .embededLoadingFull(isLoading: $viewModel.isLoading)
@@ -143,7 +145,7 @@ struct ConfirmExchangeBookView: View {
                 Button(action: {
                     dismiss()
                 }, label: {
-                    Text("Về trang chủ")
+                    Text("    Quay lại    ")
                 })
                 .buttonStyle(BaseButtonStyle(size: .large))
             }

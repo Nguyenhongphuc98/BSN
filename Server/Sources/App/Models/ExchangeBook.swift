@@ -70,6 +70,7 @@ final class ExchangeBook: Model, Content {
     @OptionalField(key: "adress")
     var adress: String?
     
+    // message when req exchange, reason decline when update state to decline
     @OptionalField(key: "message")
     var message: String?
     

@@ -14,9 +14,12 @@ class DeclineEoBBookViewModel: ObservableObject {
     
     private var borrowBookManager: BorrowBookManager
     
+    private var exchangeBookManager: ExchangeBookManager
+    
     init() {
         declineMessage = ""
         borrowBookManager = BorrowBookManager()
+        exchangeBookManager = ExchangeBookManager()
     }
     
     // We assume it will update success
@@ -25,10 +28,20 @@ class DeclineEoBBookViewModel: ObservableObject {
         if isborrow {
             // Just care id to find info
             // Message (as reason) and state
-            let ebb = EBorrowBook(id: targetID, message: declineMessage, state: ExchangeProgess.decline.rawValue)
+            let ebb = EBorrowBook(
+                id: targetID,
+                message: declineMessage,
+                state: ExchangeProgess.decline.rawValue
+            )
             borrowBookManager.updateBorrowBook(borrowBook: ebb)
         } else {
             // Exchange
+            let eeb = EExchangeBook(
+                id: targetID,
+                message: declineMessage,
+                state: ExchangeProgess.decline.rawValue
+            )
+            exchangeBookManager.updateExchangeBook(eb: eeb)
         }
     }
 }

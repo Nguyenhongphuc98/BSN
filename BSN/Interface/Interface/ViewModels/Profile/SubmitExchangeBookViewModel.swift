@@ -36,7 +36,7 @@ class SubmitExchangeBookViewModel: NetworkViewModel {
     private func setupReceiveSaveEBInfo() {
         /// Get save user_book
         exchangeBookManager
-            .savePublisher
+            .changePublisher
             .sink {[weak self] (eb) in
                 
                 guard let self = self else {

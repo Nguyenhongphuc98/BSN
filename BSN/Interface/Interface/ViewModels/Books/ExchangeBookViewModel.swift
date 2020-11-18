@@ -101,7 +101,7 @@ class ExchangeBookViewModel: NetworkViewModel {
     
     private func observerSaveresult() {
         ebManager
-            .savePublisher
+            .changePublisher
             .sink {[weak self] (eb) in
                 
                 guard let self = self else {
