@@ -43,7 +43,7 @@ public class ProfileViewModel: ObservableObject {
     }
     
     /// Fetching data from Server to fill page if it passed bookID from preView
-    func prepareData(uid: String?) {
+    public func prepareData(uid: String?) {
         self.uid = uid ?? AppManager.shared.currentUser.id
         userBookManager.getUserBooks(uid: self.uid)
     }

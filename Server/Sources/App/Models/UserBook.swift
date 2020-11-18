@@ -34,6 +34,15 @@ final class UserBook: Model {
     var createdAt: Date?
     
     init() { }
+    
+    init(id: String? = nil, uid: UUID, bid: UUID, status: String, state: String, statusDes: String) {
+        self.id = UUID(uuidString: id ?? "")
+        self.userID = uid
+        self.bookID = bid
+        self.status = status
+        self.state = state
+        self.statusDes = statusDes
+    }
 }
 
 extension UserBook: Content { }

@@ -23,7 +23,7 @@ struct ConfirmBorrowBookView: View {
     var body: some View {
         VStack(alignment: .center) {
             BorrowBookHeader(model: viewModel.borrowBook.userbook, isRequest: false)
-                .padding(.horizontal, 5)
+                .padding(10)
             
             Text("\"\(viewModel.borrowBook.transactionInfo.message)\"")
                 .roboto(size: 13)
@@ -52,9 +52,8 @@ struct ConfirmBorrowBookView: View {
                     .buttonStyle(BaseButtonStyle(size: .large, type: .secondary))
                     
                     Button(action: {
-                        viewModel.didDecline { (success) in
-                            AppManager.shared.selectedIndex = 2
-                        }
+                        viewModel.didAccept()
+                        dismiss()
                     }, label: {
                         Text("   Đồng ý   ")
                     })
@@ -68,7 +67,7 @@ struct ConfirmBorrowBookView: View {
             Spacer()
         }
         .padding()
-        
+        .embededLoadingFull(isLoading: $viewModel.isLoading)
         .navigationBarTitle("Xem yêu cầu mượn sách", displayMode: .inline)
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
@@ -91,7 +90,7 @@ struct ConfirmBorrowBookView: View {
     }
     
     private func shouldShowAction(proges: ExchangeProgess) -> Bool {
-        !(proges == .decline) || (proges == .accept)
+        !(proges == .decline || proges == .accept)
     }
     
     private func viewAppeared() {

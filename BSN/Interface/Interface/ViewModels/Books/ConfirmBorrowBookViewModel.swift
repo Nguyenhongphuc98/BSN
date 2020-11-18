@@ -27,12 +27,9 @@ class ConfirmBorrowBookViewModel: NetworkViewModel {
         bbManager.getBorrowBook(bbid: bbid)
     }
     
-    func didAccept(complete: @escaping (Bool) -> Void) {
-        complete(true)
-    }
-    
-    func didDecline(complete: @escaping (Bool) -> Void) {
-        complete(true)
+    func didAccept() {
+        let ebb = EBorrowBook(id: borrowBook.id, state: ExchangeProgess.accept.rawValue)
+        bbManager.updateBorrowBook(borrowBook: ebb)
     }
     
     private func observerBorrowBookInfo() {

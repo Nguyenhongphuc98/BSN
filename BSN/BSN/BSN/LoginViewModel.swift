@@ -104,8 +104,11 @@ class LoginViewModel: NetworkViewModel {
                         self.appManager.appState = .inapp
                         self.logined = true
                         print("did login with user: \(u.displayname)")
+                        
+                        // Reload data for new user
                         ChatViewModel.shared.prepareData()
                         NotifyViewModel.shared.prepareData()
+                        ProfileViewModel.shared.prepareData(uid: self.appManager.currenUID)
                     }
                 }
             }

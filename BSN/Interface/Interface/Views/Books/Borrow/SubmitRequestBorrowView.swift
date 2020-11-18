@@ -41,6 +41,7 @@ struct SubmitRequestBorrowView: View {
                         }
                     }
                 }
+                .frame(height: 180)
                 
                 InputWithTitle(content: $viewModel.address, placeHolder: "Địa chỉ thuận tiện nhất cho giao dịch", title: "Địa chỉ giao dịch")
                     .onReceive(viewModel.$address) { (adress) in
@@ -51,6 +52,7 @@ struct SubmitRequestBorrowView: View {
                 
                 Button(action: {
                     viewModel.saveBorrowBook()
+                    //navState.popTo(viewName: .bookDetail)
                 }, label: {
                     Text("    Hoàn tất    ")
                 })
