@@ -23,6 +23,14 @@ public class User: ObservableObject, Identifiable {
     
     @Published public var about: String
     
+    public var locationText: String {
+        if let lo = location {
+            return String(lo.split(separator: "-")[2])
+        } else {
+            return "Chưa cập nhật địa điểm"
+        }
+    }
+    
     public init() {
         id = kUndefine
         username = UUID().uuidString

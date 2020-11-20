@@ -9,7 +9,7 @@ import Foundation
 import Business
 import Combine
 
-public class ProfileViewModel: ObservableObject {
+public class ProfileViewModel: NetworkViewModel {
     
     public static let shared: ProfileViewModel = ProfileViewModel()
     
@@ -17,35 +17,37 @@ public class ProfileViewModel: ObservableObject {
     
     @Published var books: [BUserBook]
     
-    @Published var isLoading: Bool
-    
-    private var uid: String
-    
-    public var profile: Profile
+    @Published public var user: User
     
     private var userBookManager: UserBookManager
     
-    // Handle reslut process resource
-    var resourceInfo: ResourceInfo
+    private var userManager: UserManager
     
-    var cancellables = Set<AnyCancellable>()
-    
-    public init() {
-        profile = Profile()
+    public override init() {
+        user = User()
         posts = fakeNews
         books = []
-        uid = "undefine"
         userBookManager = UserBookManager.shared
-        resourceInfo = .success
-        isLoading = true
+        userManager = UserManager()
         
+        super.init()
         setupReceiveUserBookInfo()
+        observerUserInfo()
     }
     
     /// Fetching data from Server to fill page if it passed bookID from preView
     public func prepareData(uid: String?) {
-        self.uid = uid ?? AppManager.shared.currentUser.id
-        userBookManager.getUserBooks(uid: self.uid)
+        isLoading = true
+        
+        if uid == nil || uid == AppManager.shared.currentUser.id {
+            // Show info of current user
+            self.user = AppManager.shared.currentUser
+        } else {
+            // fetch info of other user
+            userManager.getUser(uid: uid!)
+        }
+        
+        userBookManager.getUserBooks(uid: uid ?? self.user.id)
     }
     
     /// UserBook get from server  will received at this block
@@ -79,6 +81,37 @@ public class ProfileViewModel: ObservableObject {
                             self.books.append(userBook)
                         }
                         self.objectWillChange.send()
+                    }
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func observerUserInfo() {
+        userManager
+            .getUserPublisher
+            .sink {[weak self] (u) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    
+                    if u.id == "undefine" {
+                        self.resourceInfo = .notfound
+                        self.showAlert.toggle()
+                    } else {
+                        self.user = User(
+                            id: u.id!,
+                            username: "unknow",
+                            displayname: u.displayname,
+                            avatar: u.avatar,
+                            cover: u.cover,
+                            location: u.location,
+                            about: u.about
+                        )
                     }
                 }
             }

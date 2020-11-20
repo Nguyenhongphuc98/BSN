@@ -28,4 +28,8 @@ public class UserManager {
     public func getUser(aid: String) {
         networkRequest.getUser(aid: aid, publisher: getUserPublisher)
     }
+    
+    public func getUser(uid: String) {
+        networkRequest.getUser(uid: uid, publisher: getUserPublisher)
+    }
 }

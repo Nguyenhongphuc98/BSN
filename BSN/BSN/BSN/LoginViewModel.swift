@@ -100,7 +100,6 @@ class LoginViewModel: NetworkViewModel {
                             about: u.about
                         )
                         
-                        self.isLoading = false
                         self.appManager.appState = .inapp
                         self.logined = true
                         print("did login with user: \(u.displayname)")

@@ -25,4 +25,22 @@ class UserRequest: ResourceRequest<EUser> {
             }
         }
     }
+    
+    func getUser(uid: String, publisher: PassthroughSubject<EUser, Never>) {
+        self.setPath(resourcePath: "\(uid)")
+        
+        self.get(isAll: false) { result in
+            
+            switch result {
+            case .failure(let reason):
+                print(reason)
+                var u = EUser()
+                u.displayname = reason
+                publisher.send(u)
+                
+            case .success(let users):
+                publisher.send(users[0])
+            }
+        }
+    }
 }

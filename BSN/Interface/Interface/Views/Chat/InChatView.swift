@@ -24,7 +24,12 @@ struct InChatView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             if !viewModel.isLoading {
-                NavigationLink(destination: ProfileView(), tag: 1, selection: $goProfile) {
+                NavigationLink(
+                    destination: ProfileView(uid: chat.partnerID)
+                        .environmentObject(NavigationState()),
+                    tag: 1,
+                    selection: $goProfile
+                ) {
                     EmptyView()
                 }
                 .frame(width: 0, height: 0)

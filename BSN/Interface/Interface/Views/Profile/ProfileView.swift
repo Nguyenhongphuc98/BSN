@@ -41,26 +41,28 @@ public struct ProfileView: View, PopToable {
                             
                             // Avatar
                             VStack() {
-                                CircleImageOptions(image: viewModel.profile.user.avatar, diameter: 80)
+                                CircleImageOptions(image: viewModel.user.avatar, diameter: 80)
                                     .padding(.top, 115)
                                     .padding(.leading)
                                 
                                 Spacer()
                             }
                             
-                            HStack {
-                                Spacer()
-                                NavigationLink(
-                                    destination: SettingView(),
-                                    label: {
-                                        Image(systemName: "gearshape.fill")
-                                            .font(.system(size: 20))
-                                            .padding(10)
-                                            .background(Color.init(hex: 0xEFEFEF))
-                                            .cornerRadius(25)
-                                            .shadow(radius: 3)
-                                    })
-                                    .padding()
+                            if userID == nil {
+                                HStack {
+                                    Spacer()
+                                    NavigationLink(
+                                        destination: SettingView(),
+                                        label: {
+                                            Image(systemName: "gearshape.fill")
+                                                .font(.system(size: 20))
+                                                .padding(10)
+                                                .background(Color.init(hex: 0xEFEFEF))
+                                                .cornerRadius(25)
+                                                .shadow(radius: 3)
+                                        })
+                                        .padding()
+                                }
                             }
                         }
                         
@@ -74,32 +76,30 @@ public struct ProfileView: View, PopToable {
                 Loading()
             }
         }
-        .edgesIgnoringSafeArea(.all)
         .onAppear(perform: viewAppeared)
     }
     
     var userInfo: some View {
         VStack {
             // Cover
-            Image(viewModel.profile.cover, bundle: interfaceBundle)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(height: 180)
+            BSNImage(urlString: viewModel.user.cover, tempImage: "cover")
+                .frame(width: UIScreen.screenWidth ,height: 180)
                 .clipped()
             
             // Name and description
             HStack {
                 VStack(alignment: .leading) {
-                    Text(viewModel.profile.user.displayname)
+                    Text(viewModel.user.displayname)
                         .pattaya(size: 18)
                     
                     HStack {
                         Image(systemName: "mappin.and.ellipse")
                         
-                        Text(viewModel.profile.location)
+                        Text(viewModel.user.locationText)
                             .robotoLight(size: 13)
                             
                     }
+                    .padding()
                     
                     Rectangle()
                         .fill(Color.gray)
@@ -111,7 +111,7 @@ public struct ProfileView: View, PopToable {
                 Spacer()
             }
             
-            Text(viewModel.profile.description)
+            Text(viewModel.user.about)
                 .robotoLightItalic(size: 13)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)

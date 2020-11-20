@@ -14,7 +14,7 @@ struct UserController: RouteCollection {
         let users = routes.grouped("api" ,"v1", "users")
         users.get(use: index)
         users.post(use: create)
-        users.group(":userID") { group in
+        users.group(":ID") { group in
             group.delete(use: delete)
             group.get(use: get)
         }
@@ -27,7 +27,7 @@ struct UserController: RouteCollection {
     }
 
     func get(req: Request) throws -> EventLoopFuture<User> {
-        return User.find(req.parameters.get("userID"), on: req.db)
+        return User.find(req.parameters.get("ID"), on: req.db)
             .unwrap(or: Abort(.notFound))
             .map { $0 }
     }
@@ -38,7 +38,7 @@ struct UserController: RouteCollection {
     }
 
     func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {
-        return Account.find(req.parameters.get("userID"), on: req.db)
+        return Account.find(req.parameters.get("ID"), on: req.db)
             .unwrap(or: Abort(.notFound))
             .flatMap { $0.delete(on: req.db) }
             .transform(to: .ok)
@@ -50,7 +50,7 @@ struct UserController: RouteCollection {
         }
         
         
-        // Get first 5 book match term
+        // Get first user match aid
         return User.query(on: req.db)
             .filter(\.$accountID == aid)
             .first()
