@@ -76,8 +76,8 @@ class ExchangeBookViewModel: NetworkViewModel {
                         withAnimation {
                             self.exchangeBook = BExchangeBookFull(
                                 id: eb.id!,
-                                firstubid: eb.firstubid,
-                                secondubid: eb.secondubid,
+                                firstubid: eb.firstUserBookID,
+                                secondubid: eb.secondUserBookID,
                                 firstTitle: eb.firstTitle!,
                                 firstAuthor: eb.firstAuthor!,
                                 firstCover: eb.firstCover,

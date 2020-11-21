@@ -17,13 +17,14 @@ struct ExchangeBookController: RouteCollection {
         authen.get(use: index)
         authen.post(use: create)
         
-        authen.group(":ID") { group in
+        authen.group(":id") { group in
             group.delete(use: delete)
             group.get(use: get)
             group.put(use: update)
         }
         
         authen.get("newest", use: getNewest)
+        authen.get("availables", ":id", use: getAvailableExs)
         authen.get("compute", ":id", use: getDetailInWatingState)
         authen.get("detail", ":id", use: getDetailAfterReqSubmited)
     }
@@ -34,7 +35,7 @@ struct ExchangeBookController: RouteCollection {
     
     func get(req: Request) throws -> EventLoopFuture<ExchangeBook> {
         return ExchangeBook
-            .find(req.parameters.get("ID"), on: req.db)
+            .find(req.parameters.get("id"), on: req.db)
             .unwrap(or: Abort(.notFound))
             .map { $0 }
     }
@@ -46,7 +47,7 @@ struct ExchangeBookController: RouteCollection {
 
     func update(req: Request) throws -> EventLoopFuture<ExchangeBook> {
         ExchangeBook
-            .find(req.parameters.get("ID"), on: req.db)
+            .find(req.parameters.get("id"), on: req.db)
             .unwrap(or: Abort(.notFound))
             .flatMap { eb in
                 // Decode
@@ -160,7 +161,7 @@ struct ExchangeBookController: RouteCollection {
     }
     
     func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {
-        return ExchangeBook.find(req.parameters.get("ID"), on: req.db)
+        return ExchangeBook.find(req.parameters.get("id"), on: req.db)
             .unwrap(or: Abort(.notFound))
             .flatMap { $0.delete(on: req.db) }
             .transform(to: .ok)
@@ -181,6 +182,23 @@ struct ExchangeBookController: RouteCollection {
         let offset = page * per
         
         let sqlQuery = SQLQueryString("SELECT ex.id, bu.title as \"firstTitle\", bu.author as \"firstAuthor\", bu.cover as \"firstCover\", u.location, b.title as \"secondTitle\", b.author as \"secondAuthor\" FROM exchange_book as ex, user_book as ub, public.user as u, book as bu, book as b where ex.first_user_book_id = ub.id and ub.user_id = u.id and ex.exchange_book_id = b.id and ub.book_id = bu.id and ex.state = 'new' order by ex.created_at desc limit \(raw: per.description) offset \(raw: offset.description)")
+        
+        let db = req.db as! SQLDatabase
+        return db.raw(sqlQuery)
+            .all(decoding: GetExchangeBook.self)
+    }
+    
+    // Get all available transaction created for special book id (in ub1)
+    func getAvailableExs(req: Request) throws -> EventLoopFuture<[GetExchangeBook]> {
+        
+        guard let bid: String = req.parameters.get("id") else {
+            throw Abort(.badRequest)
+        }
+        
+        // b1 - book in userbook need change ub
+        // b2 - book want to change
+        // u - user owner userbook1
+        let sqlQuery = SQLQueryString("SELECT ex.id, u.id as \"firstUserID\", u.displayname as \"firstOwnerName\", u.location, u.avatar as \"firstAvatar\", b2.title as \"secondTitle\", b2.id as \"secondBookID\", ub.status as \"firstStatus\", ex.exchange_book_id as \"exchangeBookID\" FROM exchange_book as ex, public.user as u, book as b1, book as b2, user_book as ub WHERE ex.first_user_book_id = ub.id and ub.book_id = b1.id and ex.exchange_book_id = b2.id and ub.user_id = u.id and ex.state = '\(raw: ExchangeProgess.new.rawValue)' and b1.id = '\(raw: bid)'")
         
         let db = req.db as! SQLDatabase
         return db.raw(sqlQuery)
@@ -295,7 +313,7 @@ struct ExchangeBookController: RouteCollection {
                     .flatMap { eb in
                     
                         let db = req.db as! SQLDatabase
-                        let sqlQuery = SQLQueryString("SELECT eb.id, eb.first_user_book_id as \"firstubid\", eb.second_user_book_id as \"secondubid\", eb.adress, eb.message, eb.first_status_des as \"firstStatusDes\", eb.second_status_des as \"secondStatusDes\", eb.state, u1.displayname as \"firstOwnerName\", b1.title as \"firstTitle\", b1.author as \"firstAuthor\", b1.cover as \"firstCover\", u2.displayname as \"secondOwnerName\", b2.title as \"secondTitle\", b2.author as \"secondAuthor\", b2.cover as \"secondCover\" FROM exchange_book as eb, user_book as ub1, public.user as u1, book as b1, user_book as ub2, public.user as u2, book as b2 WHERE eb.first_user_book_id = ub1.id and ub1.user_id = u1.id and ub1.book_id = b1.id and eb.second_user_book_id = ub2.id and ub2.user_id = u2.id and ub2.book_id = b2.id and eb.id = '\(raw: eb.id!.uuidString)'")
+                        let sqlQuery = SQLQueryString("SELECT eb.id, eb.first_user_book_id as \"firstUserBookID\", eb.second_user_book_id as \"secondUserBookID\", eb.adress, eb.message, eb.first_status_des as \"firstStatusDes\", eb.second_status_des as \"secondStatusDes\", eb.state, u1.displayname as \"firstOwnerName\", b1.title as \"firstTitle\", b1.author as \"firstAuthor\", b1.cover as \"firstCover\", u2.displayname as \"secondOwnerName\", b2.title as \"secondTitle\", b2.author as \"secondAuthor\", b2.cover as \"secondCover\" FROM exchange_book as eb, user_book as ub1, public.user as u1, book as b1, user_book as ub2, public.user as u2, book as b2 WHERE eb.first_user_book_id = ub1.id and ub1.user_id = u1.id and ub1.book_id = b1.id and eb.second_user_book_id = ub2.id and ub2.user_id = u2.id and ub2.book_id = b2.id and eb.id = '\(raw: eb.id!.uuidString)'")
                         
                         return db.raw(sqlQuery)
                             .first(decoding: GetExchangeBook.self)

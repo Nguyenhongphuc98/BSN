@@ -99,25 +99,36 @@ struct GetExchangeBook: Content {
     
     var id: String?
     
-    /// Apear in newest exchange book
+    var exchangeBookID: String?
+    
+    var firstUserBookID: String?
+    
     var firstTitle: String?
     
     var firstAuthor: String?
     
     var firstCover: String?
     
+    var firstOwnerName: String?
+    
+    var firstUserID: String?
+    
+    // avatar of owner first user-book
+    var firstAvatar: String?
+    
+    var firstStatus: String?
+    
+    var firstStatusDes: String?
+    
+    var secondUserBookID: String?
+    
+    var firstBookID: String?
+    
     var location: String?
     
     var secondTitle: String?
     
     var secondAuthor: String?
-    
-    /// Should fill when view detail
-    var firstOwnerName: String?
-    
-    var firstStatus: String?
-    
-    var firstStatusDes: String?
     
     var secondOwnerName: String?
     
@@ -126,12 +137,13 @@ struct GetExchangeBook: Content {
     var secondStatusDes: String?
     
     var secondCover: String?
+    var secondBookID: String?
     
     var state: String?
     
-    var firstubid: String?
+    //var firstubid: String?
     
-    var secondubid: String?
+    //var secondubid: String?
     
     var adress: String?
     
@@ -140,8 +152,10 @@ struct GetExchangeBook: Content {
     init(id: String? = nil, firstubid: String? = nil, secondubid: String? = nil, firstTitle: String, firstAuthor: String, firstCover: String? = nil, location: String? = nil, secondTitle: String? = nil, secondAuthor: String? = nil, firstOwnerName: String? = nil, firstStatus: String? = nil, firstStatusDes: String? = nil, secondStatus: String? = nil, secondStatusDes: String? = nil, secondCover: String? = nil, state: String? = nil) {
         
         self.id = id
-        self.firstubid = firstubid
-        self.secondubid = secondubid
+        //self.firstubid = firstubid
+        //self.secondubid = secondubid
+        self.firstUserBookID = firstubid
+        self.secondUserBookID = secondubid
         self.firstTitle = firstTitle
         self.firstAuthor = firstAuthor
         self.firstCover = firstCover

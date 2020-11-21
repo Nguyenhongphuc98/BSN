@@ -18,6 +18,7 @@ class BAvailableTransaction: ObservableObject, AppendUniqueAble, Equatable {
     
     var createrName: String
     
+    // book to borrow or book want to change ID
     var bookID: String
     
     var status: BookStatus
@@ -46,10 +47,21 @@ class BAvailableTransaction: ObservableObject, AppendUniqueAble, Equatable {
         self.distance = caculateDistance(rawLocation: userBook.location!)
         self.userBookID = userBook.id
     }
+    
+    init(eb: EExchangeBook) {
+        self.id = eb.id
+        self.createrPhoto = eb.firstAvatar!
+        self.createrName = eb.firstOwnerName!
+        self.createrID = eb.firstUserID!
+        self.status = BookStatus(rawValue: eb.firstStatus!)!
+        self.distance = caculateDistance(rawLocation: eb.location!)
+        self.bookID = eb.secondBookID!
+    }
 }
 
 class BAvailableExchange: BAvailableTransaction {
     
+    // id of book want to change
     var exchangeBookID: String
     
     var exchangeBookName: String
@@ -58,5 +70,12 @@ class BAvailableExchange: BAvailableTransaction {
         exchangeBookID = UUID().uuidString
         exchangeBookName = "Muốn giỏi phải học"
         super.init()
+    }
+    
+    override init(eb: EExchangeBook) {
+        exchangeBookID = eb.exchangeBookID!
+        exchangeBookName = eb.secondTitle!
+        
+        super.init(eb: eb)
     }
 }

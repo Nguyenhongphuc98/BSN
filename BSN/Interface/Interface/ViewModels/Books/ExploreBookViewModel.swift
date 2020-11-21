@@ -41,7 +41,7 @@ public class ExploreBookViewModel: SearchBookViewModel {
     }
     
     func loadExchangeBooks(page: Int) {
-        ebManager.getExchangeBooks(page: page)
+        ebManager.getNewestExchangeBooks(page: page)
     }
     
     func loadTopBooks(page: Int) {
@@ -49,7 +49,6 @@ public class ExploreBookViewModel: SearchBookViewModel {
     }
     
     private func setupReceiveEBs() {
-        /// Get save user_book
         ebManager
             .getExchangeBooksPublisher
             .sink {[weak self] (ebs) in

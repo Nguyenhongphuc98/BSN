@@ -39,8 +39,12 @@ public class ExchangeBookManager {
         resourceRequest.updateExchangeBook(eb: eb, publisher: changePublisher)
     }
     
-    public func getExchangeBooks(page: Int) {
-        resourceRequest.fetchExchangeBooks(page: page, per: BusinessConfigure.exchangebookPerPage, publisher: getExchangeBooksPublisher)
+    public func getNewestExchangeBooks(page: Int) {
+        resourceRequest.fetchNewsestExchangeBooks(page: page, per: BusinessConfigure.exchangebookPerPage, publisher: getExchangeBooksPublisher)
+    }
+    
+    public func getAvailableExchangeBooks(bid: String) {
+        resourceRequest.fetchAvailableExchangeBooks(bid: bid, publisher: getExchangeBooksPublisher)
     }
     
     public func getComputeExchangeBook(ebid: String) {

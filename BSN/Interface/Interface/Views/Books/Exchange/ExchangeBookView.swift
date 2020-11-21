@@ -16,9 +16,11 @@ struct ExchangeBookView: View {
     
     @EnvironmentObject private var navState: NavigationState
     
-    @EnvironmentObject var exploreVM: ExploreBookViewModel
+    var exploreVM: ExploreBookViewModel?
     
     var ebID: String
+    
+    var didsuccess: (() -> Void)?
     
     var body: some View {
         ScrollView(showsIndicators: false, content: {
@@ -88,7 +90,8 @@ struct ExchangeBookView: View {
                 title: Text("Kết quả"),
                 message: Text(viewModel.resourceInfo.des()),
                 dismissButton: .default(Text("OK")) {
-                    exploreVM.removeEB(ebid: viewModel.exchangeBook.id!)
+                    exploreVM?.removeEB(ebid: viewModel.exchangeBook.id!)
+                    didsuccess?()
                     dismiss()
                 })
         } else {

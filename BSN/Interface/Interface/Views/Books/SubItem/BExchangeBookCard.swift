@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Show in suggest exchange
 struct BExchangeBookCard: View {
     
     var model: BExchangeBook
@@ -18,7 +19,7 @@ struct BExchangeBookCard: View {
     var body: some View {
         ZStack {
             NavigationLink(
-                destination: ExchangeBookView(ebID: model.id!).environmentObject(viewModel),
+                destination: ExchangeBookView(exploreVM: viewModel, ebID: model.id!),
                 isActive: $nav,
                 label: {
                     EmptyView()

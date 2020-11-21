@@ -22,6 +22,8 @@ public class EExchangeBook: Codable {
     
     public var firstStatusDes: String?
     
+    public var secondBookID: String?
+    
     public var secondStatusDes: String?
     
     public var state: String?
@@ -43,17 +45,24 @@ public class EExchangeBook: Codable {
     // Should fill when view detail
     public var firstOwnerName: String?
     
+    public var firstUserID: String?
+    
+    // avatar of owner first user-book
+    public var firstAvatar: String?
+    
     public var firstStatus: String?
     
     public var secondOwnerName: String?
+    
+    public var firstBookID: String?
     
     public var secondStatus: String?
     
     public var secondCover: String?
     
-    public var firstubid: String?
-    
-    public var secondubid: String?
+//    public var firstubid: String?
+//
+//    public var secondubid: String?
     
     public init() {
         self.id = "undefine"
@@ -65,7 +74,7 @@ public class EExchangeBook: Codable {
     public init(id: String? = nil, firstUserBookID: String? = nil, exchangeBookID: String? = nil,
                 secondUserBookID: String? = nil, adress: String? = nil, message: String? = nil,
                 firstStatusDes: String? = nil, secondStatusDes: String? = nil, state: String,
-                firstTitle: String? = nil, firstAuthor: String? = nil, firstCover: String? = nil, location: String? = nil, secondTitle: String? = nil, secondAuthor: String? = nil, firstOwnerName: String? = nil, secondStatus: String? = nil, firstubid: String? = nil, secondubid: String? = nil) {
+                firstTitle: String? = nil, firstAuthor: String? = nil, firstCover: String? = nil, location: String? = nil, secondTitle: String? = nil, secondAuthor: String? = nil, firstOwnerName: String? = nil, secondStatus: String? = nil) {
         
         self.id = id
         self.firstUserBookID = firstUserBookID
@@ -86,7 +95,7 @@ public class EExchangeBook: Codable {
         self.firstOwnerName = firstOwnerName
         self.secondStatus = secondStatus
         
-        self.firstubid = firstubid
-        self.secondubid = secondubid
+//        self.firstubid = firstubid
+//        self.secondubid = secondubid
     }
 }

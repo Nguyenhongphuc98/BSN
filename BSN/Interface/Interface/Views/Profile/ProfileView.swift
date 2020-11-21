@@ -89,6 +89,7 @@ public struct ProfileView: View, PopToable {
             // Name and description
             HStack {
                 VStack(alignment: .leading) {
+                    
                     Text(viewModel.user.displayname)
                         .pattaya(size: 18)
                     

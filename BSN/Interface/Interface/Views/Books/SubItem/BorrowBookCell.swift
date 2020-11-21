@@ -33,6 +33,7 @@ struct BorrowBookCell: View, PopToable {
             VStack(alignment: .leading, spacing: 5) {
                 Text(model.createrName)
                     .roboto(size: 18)
+                    .lineLimit(1)
                 
                 HStack {
                     VStack(alignment: .leading, spacing: 5) {

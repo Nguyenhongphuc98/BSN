@@ -9,7 +9,7 @@ import Combine
 
 class ExchangeBookRequest: ResourceRequest<EExchangeBook> {
     
-    func fetchExchangeBooks(page: Int, per: Int, publisher: PassthroughSubject<[EExchangeBook], Never>) {
+    func fetchNewsestExchangeBooks(page: Int, per: Int, publisher: PassthroughSubject<[EExchangeBook], Never>) {
         self.setPath(resourcePath: "newest", params: ["page":String(page), "per":String(per)])
 
         self.get { result in
@@ -17,6 +17,22 @@ class ExchangeBookRequest: ResourceRequest<EExchangeBook> {
             switch result {
             case .failure:
                 let message = "There was an error fetch newest exchange book - page: \(page)"
+                print(message)
+            case .success(let ebs):
+                publisher.send(ebs)
+            }
+        }
+    }
+    
+    // Fetch all available exchange book have user book 1 (need change) bid
+    func fetchAvailableExchangeBooks(bid: String, publisher: PassthroughSubject<[EExchangeBook], Never>) {
+        self.setPath(resourcePath: "availables/\(bid)")
+
+        self.get { result in
+
+            switch result {
+            case .failure:
+                let message = "There was an error fetch availables exchange book"
                 print(message)
             case .success(let ebs):
                 publisher.send(ebs)

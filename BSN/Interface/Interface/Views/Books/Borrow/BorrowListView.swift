@@ -21,6 +21,12 @@ struct BorrowListView: View, PopToable {
     
     var body: some View {
         VStack {
+            if viewModel.models.isEmpty {
+                Text("Sách này không có sẵn để mượn")
+                    .robotoLightItalic(size: 13)
+                    .padding()
+            }
+            
             Separator(color: .white, height: 3)
             List {
                 ForEach(viewModel.models) { item in
@@ -28,15 +34,8 @@ struct BorrowListView: View, PopToable {
                         .environmentObject(navState)
                 }
             }
-            if viewModel.models.isEmpty {
-                Text("Sách này không có sẵn để mượn")
-                    .font(.system(.title3))
-                    .italic()
-                    
-                Spacer(minLength: 300)
-            }
         }
-        .embededLoading(isLoading: $viewModel.isLoading)
+        .embededLoadingFull(isLoading: $viewModel.isLoading)
         .navigationBarTitle("Danh sách cho mượn", displayMode: .inline)
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)

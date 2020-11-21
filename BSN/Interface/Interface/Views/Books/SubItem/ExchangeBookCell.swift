@@ -14,10 +14,14 @@ struct ExchangeBookCell: View {
     
     @State private var nav: Bool = false
     
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         HStack {
             NavigationLink(
-                destination: SubmitExchangeBookView(),
+                destination: ExchangeBookView(ebID: model.id!) {
+                    presentationMode.wrappedValue.dismiss()
+                },
                 isActive: $nav,
                 label: {
                     EmptyView()
@@ -32,10 +36,12 @@ struct ExchangeBookCell: View {
                     
                     Text(model.exchangeBookName)
                         .roboto(size: 18)
+                        .lineLimit(1)
                 }
                 
                 Text(model.createrName)
                     .roboto(size: 18)
+                    .lineLimit(1)
                 
                 HStack {
                     VStack(alignment: .leading, spacing: 5) {

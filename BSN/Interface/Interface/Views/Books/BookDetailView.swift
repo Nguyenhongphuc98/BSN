@@ -37,7 +37,7 @@ struct BookDetailView: View, PopToable {
                 })
             
             NavigationLink(
-                destination: ExchangeListView().environmentObject(navState),
+                destination: ExchangeListView(bid: bookID).environmentObject(navState),
                 isActive: $showExchangeBook,
                 label: {
                     EmptyView()
