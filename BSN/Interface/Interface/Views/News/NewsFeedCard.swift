@@ -18,7 +18,7 @@ struct NewsFeedCard: View {
     var isDetail: Bool = false
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             NavigationLink(destination: PostDetailView(postID: "HEHE"), tag: 1, selection: $action) {
                 EmptyView()
             }
@@ -47,23 +47,28 @@ struct NewsFeedCard: View {
                 
                 Spacer()
                 
-                // More button
-                StickyImageButton(normal: "ellipsis",
-                                  active: "ellipsis.rectangle.fill",
-                                  color: .black) { (isMore) in
-                    print("did request more: \(isMore)")
+                if model.owner.id == AppManager.shared.currenUID {
+                    // More button
+                    StickyImageButton(normal: "ellipsis",
+                                      active: "ellipsis.rectangle.fill",
+                                      color: .black) { (isMore) in
+                        print("did request more: \(isMore)")
+                    }
+                    .padding(.bottom)
                 }
-                .padding(.bottom)
             }
             
             // Quote
-            if model.quote != nil {
-                Text("\"\(model.quote!)\"")
-                    .font(.custom("Roboto-MediumItalic", size: 12))
-                    .multilineTextAlignment(.center)
-                    .padding(3)
+            HStack {
+                Spacer()
+                if model.quote != nil {
+                    Text("\"\(model.quote!)\"")
+                        .font(.custom("Roboto-MediumItalic", size: 12))
+                        .multilineTextAlignment(.center)
+                        .padding(3)
+                }
+                Spacer()
             }
-            
             // Content
             Text(model.content)
                 .font(.custom("Roboto-Light", size: 13))
@@ -72,9 +77,7 @@ struct NewsFeedCard: View {
             
             // Photo
             if model.photo != nil {
-                Image(model.photo!, bundle: interfaceBundle)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+                BSNImage(urlString: model.photo, tempImage: "unavailable")
                     .frame(maxHeight: 200)
                     .clipped()
                     .padding(2)

@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import Business
 
-class NewsFeed: ObservableObject, Identifiable {
+class NewsFeed: ObservableObject, AppendUniqueAble {
     
     var id: String
     
@@ -47,11 +48,19 @@ class NewsFeed: ObservableObject, Identifiable {
         numBeakHeart = 12
         numComment = 5
     }
-}
 
-extension NewsFeed: Equatable {
-    
-    static func == (lhs: NewsFeed, rhs: NewsFeed) -> Bool {
-        return lhs.id == rhs.id
+    init(post: EPost) {
+        id = post.id!
+        owner = User(id: post.authorID, photo: post.authorPhoto, name: post.authorName!)
+        postTime = Date.getDate(dateStr: post.createdAt)
+        category = Category(id: post.categoryID, name: post.categoryName!)
+        
+        content = post.content
+        quote = post.quote
+        photo = post.photo
+        
+        numHeart = post.numHeart!
+        numBeakHeart = post.numBreakHeart!
+        numComment = post.numComment!
     }
 }

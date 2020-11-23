@@ -24,4 +24,20 @@ class PostRequest: ResourceRequest<EPost> {
             }
         }
     }
+    
+    // page start from 0 (manual implement start from 0)
+    func fetchNewsestPosts(page: Int, per: Int, publisher: PassthroughSubject<[EPost], Never>) {
+        self.setPath(resourcePath: "newest", params: ["page":String(page), "per":String(per)])
+
+        self.get { result in
+
+            switch result {
+            case .failure:
+                let message = "There was an error fetch newest posts - page: \(page)"
+                print(message)
+            case .success(let posts):
+                publisher.send(posts)
+            }
+        }
+    }
 }

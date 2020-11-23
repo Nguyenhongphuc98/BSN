@@ -46,3 +46,23 @@ final class Post: Model {
 }
 
 extension Post: Content { }
+
+
+extension Post {
+    struct GetFull: Content {
+        public var id: String?
+        public var categoryID: String
+        public var authorID: String
+        public var quote:  String?
+        public var content: String
+        public var photo: String?
+        public var numHeart: Int?
+        public var numBreakHeart: Int?
+        public var numComment: Int?
+        public var createdAt: String?
+        
+        public var authorPhoto: String?
+        public var authorName: String
+        public var categoryName: String
+    }
+}

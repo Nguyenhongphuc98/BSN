@@ -18,6 +18,10 @@ public struct EPost: Codable {
     public var numComment: Int?
     public var createdAt: String?
     
+    public var authorPhoto: String?
+    public var authorName: String?
+    public var categoryName: String?
+    
     init() {
         
         self.id = "undefine"

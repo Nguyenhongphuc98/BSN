@@ -44,7 +44,7 @@ public struct NewsFeedView: View {
             .onAppear(perform: self.viewDidAppear)
     
             // Loading view
-            if viewModel.isLoadingNews {
+            if viewModel.isLoading {
                 Loading()
             }
         }

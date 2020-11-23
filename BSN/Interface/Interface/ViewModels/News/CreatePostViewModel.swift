@@ -28,7 +28,7 @@ class CreatePostViewModel: NetworkViewModel {
         observerSavePost()
     }
     
-    func post(content: String, quote: String?) {
+    func post(content: String, quote: String) {
         guard !content.isEmpty else {
             resourceInfo = .invalid_empty
             showAlert = true
@@ -45,7 +45,7 @@ class CreatePostViewModel: NetworkViewModel {
         let p = EPost(
             categoryID: category.id,
             authorID: AppManager.shared.currenUID,
-            quote: quote,
+            quote: quote.isEmpty ? nil : quote,
             content: content
         )
         postManager.savePost(post: p)
