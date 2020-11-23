@@ -36,7 +36,7 @@ struct NewsFeedCard: View {
                     CountTimeText(date: model.postTime)
                 }
                 
-                Text(model.category.rawValue)
+                Text(model.category.name)
                     .font(.custom("Roboto-Bold", size: 9))
                     .foregroundColor(.white)
                     .padding(.horizontal)

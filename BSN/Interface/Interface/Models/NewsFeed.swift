@@ -7,11 +7,6 @@
 
 import Foundation
 
-enum PostCategory: String {
-    case skill
-    case politic
-}
-
 class NewsFeed: ObservableObject, Identifiable {
     
     var id: String
@@ -20,7 +15,7 @@ class NewsFeed: ObservableObject, Identifiable {
     
     var postTime: Date
     
-    var category: PostCategory
+    var category: Category
     
     var quote: String?
     
@@ -38,7 +33,7 @@ class NewsFeed: ObservableObject, Identifiable {
         id = UUID().uuidString
         owner = User()
         postTime = fakedates.randomElement()!
-        category = .skill
+        category = Category(id: UUID().uuidString, name: "Category")
         content = "Một cuốn sách với mình khá hay. Mình đã phải ngạc nhiên trước kho kiến thức khổng lồ và chi tiết có trong sách. Đặc biệt là kiến thức về sự phát triển của Ai Cập mấy nghìn năm về trước. Mặc dù là sách về tôn giáo, tâm linh nhưng tác giả đã dùng từ ngữ rất dễ hiểu. Làm mình rất hứng thú mỗi khi đọc. Rất cảm ơn tác giả đã viết ra cuốn sách hay và ý nghĩa như vậy. Một câu mình rất thích là \"Nhân quả đừng đợi thấy mới tin\""
         
         let r = Int.random(in: 1...2)

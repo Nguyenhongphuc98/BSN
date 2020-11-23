@@ -35,14 +35,14 @@ struct CreatePostView: View {
                             Image(systemName: "books.vertical")
                                 .frame(width: 21, height: 21)
                             
-                            Text(viewModel.category == fakeCategories[0] ? "Chọn chủ đề" : viewModel.category)
+                            Text(viewModel.category.name)
                                 .robotoMedium(size: 11)
                         }
-                        .foregroundColor(viewModel.category == fakeCategories[0] ? .black : .blue)
+                        .foregroundColor(viewModel.category.id == kUndefine ? .black : .blue)
                     }
                     .buttonStyle(StrokeBorderStyle())
                     .sheet(isPresented: $showCategory) {
-                        BookCategoryView { (category) in
+                        CategoryView { (category) in
                             self.viewModel.category = category
                             print("Did tap: \(category)")
                         }

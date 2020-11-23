@@ -29,6 +29,9 @@
 		844EACBF25515E8000CACEEB /* EBookReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EACBE25515E8000CACEEB /* EBookReview.swift */; };
 		844EACC325515ED700CACEEB /* BookReviewRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EACC225515ED700CACEEB /* BookReviewRequest.swift */; };
 		844EACC725515FE400CACEEB /* BookReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EACC625515FE400CACEEB /* BookReviewManager.swift */; };
+		845666BD256BB044000DA583 /* ECategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845666BC256BB044000DA583 /* ECategory.swift */; };
+		845666C1256BB09B000DA583 /* CategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845666C0256BB09B000DA583 /* CategoryRequest.swift */; };
+		845666C5256BB248000DA583 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845666C4256BB248000DA583 /* CategoryManager.swift */; };
 		845A537B255ED7F60038F0A1 /* MessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A537A255ED7F60038F0A1 /* MessageManager.swift */; };
 		845A537F255FB6C00038F0A1 /* EChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A537E255FB6C00038F0A1 /* EChat.swift */; };
 		845A5383255FB7790038F0A1 /* ChatRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A5382255FB7790038F0A1 /* ChatRequest.swift */; };
@@ -90,6 +93,9 @@
 		844EACBE25515E8000CACEEB /* EBookReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EBookReview.swift; sourceTree = "<group>"; };
 		844EACC225515ED700CACEEB /* BookReviewRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReviewRequest.swift; sourceTree = "<group>"; };
 		844EACC625515FE400CACEEB /* BookReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReviewManager.swift; sourceTree = "<group>"; };
+		845666BC256BB044000DA583 /* ECategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECategory.swift; sourceTree = "<group>"; };
+		845666C0256BB09B000DA583 /* CategoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRequest.swift; sourceTree = "<group>"; };
+		845666C4256BB248000DA583 /* CategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryManager.swift; sourceTree = "<group>"; };
 		845A537A255ED7F60038F0A1 /* MessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManager.swift; sourceTree = "<group>"; };
 		845A537E255FB6C00038F0A1 /* EChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EChat.swift; sourceTree = "<group>"; };
 		845A5382255FB7790038F0A1 /* ChatRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRequest.swift; sourceTree = "<group>"; };
@@ -173,6 +179,7 @@
 				841CEDA3255E82D1007CCACC /* EUserfollow.swift */,
 				841CEDB4255ED45C007CCACC /* EMessage.swift */,
 				845A537E255FB6C00038F0A1 /* EChat.swift */,
+				845666BC256BB044000DA583 /* ECategory.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -235,6 +242,7 @@
 				841CEDAB255E852B007CCACC /* UserFollowManager.swift */,
 				845A537A255ED7F60038F0A1 /* MessageManager.swift */,
 				845A5386255FB8F70038F0A1 /* ChatManager.swift */,
+				845666C4256BB248000DA583 /* CategoryManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -256,6 +264,7 @@
 				841CEDA7255E83CA007CCACC /* UserFollowRequest.swift */,
 				841CEDB8255ED68C007CCACC /* MessageRequest.swift */,
 				845A5382255FB7790038F0A1 /* ChatRequest.swift */,
+				845666C0256BB09B000DA583 /* CategoryRequest.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -408,7 +417,9 @@
 				844EACBF25515E8000CACEEB /* EBookReview.swift in Sources */,
 				841CED77255BE5F2007CCACC /* AccountRequest.swift in Sources */,
 				841CED97255D36C8007CCACC /* NotifyManager.swift in Sources */,
+				845666C1256BB09B000DA583 /* CategoryRequest.swift in Sources */,
 				841CEDAC255E852B007CCACC /* UserFollowManager.swift in Sources */,
+				845666C5256BB248000DA583 /* CategoryManager.swift in Sources */,
 				841CED8F255D3555007CCACC /* ENotify.swift in Sources */,
 				845A5383255FB7790038F0A1 /* ChatRequest.swift in Sources */,
 				84A0CC34254ACDA10074CBAC /* UserBookManager.swift in Sources */,
@@ -434,6 +445,7 @@
 				845A537B255ED7F60038F0A1 /* MessageManager.swift in Sources */,
 				845A537F255FB6C00038F0A1 /* EChat.swift in Sources */,
 				841C3E4C25593DF5000393AA /* BorrowBookManager.swift in Sources */,
+				845666BD256BB044000DA583 /* ECategory.swift in Sources */,
 				846C40B3255013A30045BCD4 /* BusinessConfigure.swift in Sources */,
 				841CED85255C1D37007CCACC /* UserRequest.swift in Sources */,
 				841CEDB9255ED68C007CCACC /* MessageRequest.swift in Sources */,

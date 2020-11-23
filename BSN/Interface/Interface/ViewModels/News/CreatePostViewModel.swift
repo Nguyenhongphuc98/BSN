@@ -17,14 +17,14 @@ class CreatePostViewModel: ObservableObject {
     
     @Published var isPosting: Bool
     
-    @Published var category: String
+    @Published var category: Category
     
     init() {
         quote = ""
         content = ""
         photo = Data()
         isPosting = false
-        category = fakeCategories[0]
+        category = Category(id: kUndefine, name: "Chọn chủ đề")
         print("did init Create Post ViewModel")
     }
     
