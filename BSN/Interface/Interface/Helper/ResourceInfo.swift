@@ -13,6 +13,8 @@ public enum ResourceInfo: String {
     case success
     case getfailure
     case savefailure
+    case invalid_empty
+    case invalid_category
     
     public func des() -> String {
         switch self {
@@ -26,6 +28,10 @@ public enum ResourceInfo: String {
             return "Lấy dữ liệu thất bại"
         case .savefailure:
             return "Lưu dữ liệu thất bại"
+        case .invalid_empty:
+            return "Nội dung không được để trống"
+        case .invalid_category:
+            return "Vui lòng chọn danh mục"
         }
     }
 }

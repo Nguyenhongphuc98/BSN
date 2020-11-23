@@ -11,13 +11,17 @@ struct CreatePostView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @ObservedObject var viewModel: CreatePostViewModel = CreatePostViewModel()
+    @StateObject var viewModel: CreatePostViewModel = CreatePostViewModel()
     
     @State var showCategory: Bool = false
     
     @State var showQuote: Bool = false
     
     @State var showPhotoPicker: Bool = false
+    
+    @State var content: String = ""
+    
+    @State var quote: String = ""
     
     var body: some View {
         ZStack {
@@ -44,6 +48,7 @@ struct CreatePostView: View {
                     .sheet(isPresented: $showCategory) {
                         CategoryView { (category) in
                             self.viewModel.category = category
+                            self.viewModel.objectWillChange.send()
                             print("Did tap: \(category)")
                         }
                     }
@@ -52,7 +57,7 @@ struct CreatePostView: View {
                         print("did tap")
                         if showQuote == true {
                             // Changing to false (hiden)
-                            viewModel.quote = ""
+                            quote = ""
                         }
                         withAnimation {
                             self.showQuote.toggle()
@@ -91,11 +96,9 @@ struct CreatePostView: View {
                 
                 Spacer()
             }
-            
-            if viewModel.isPosting {
-                Loading()
-            }
         }
+        .embededLoading(isLoading: $viewModel.isLoading)
+        .alert(isPresented: $viewModel.showAlert, content: alert)
     }
     
     var header: some View {
@@ -111,10 +114,10 @@ struct CreatePostView: View {
                 Spacer()
                 
                 Button {
-                    viewModel.post { (result) in
-                        print("did post")
-                        self.presentationMode.wrappedValue.dismiss()
+                    viewModel.didSaveSuccess = {
+                        dismiss()
                     }
+                    viewModel.post(content: content, quote: quote)
                 } label: {
                     Text("Đăng")
                 }
@@ -131,10 +134,10 @@ struct CreatePostView: View {
     var editor: some View {
         VStack {
             if showQuote {
-                QuoteEditor(message: $viewModel.quote)
+                QuoteEditor(message: $quote)
             }
             
-            EditorWithPlaceHolder(text: $viewModel.content, placeHolder: "Chia sẻ cảm xúc của bạn ngay nào", forceground: .black, font: "Roboto-Regular")
+            EditorWithPlaceHolder(text: $content, placeHolder: "Chia sẻ cảm xúc của bạn ngay nào", forceground: .black, font: "Roboto-Regular")
                 .padding()
             
             if !viewModel.photo.isEmpty {
@@ -157,6 +160,32 @@ struct CreatePostView: View {
                 }
             }
         }
+    }
+    
+    func alert() -> Alert {
+        if viewModel.resourceInfo == .invalid_category || viewModel.resourceInfo == .invalid_empty {
+            return Alert(
+                title: Text("Dữ liệu không hợp lệ"),
+                message: Text(viewModel.resourceInfo.des())
+            )
+        } else {
+            
+            // Failure to save post to server
+            // Don't show alert when success
+            return Alert(
+                title: Text("Kết quả"),
+                message: Text(viewModel.resourceInfo.des()),
+                primaryButton: .default(Text("Thử lại")) {
+                    viewModel.post(content: content, quote: quote)
+                },
+                secondaryButton: .cancel(Text("Huỷ bỏ")) {
+                    dismiss()
+                })
+        }
+    }
+    
+    private func dismiss() {
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

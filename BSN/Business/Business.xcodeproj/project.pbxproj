@@ -32,6 +32,9 @@
 		845666BD256BB044000DA583 /* ECategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845666BC256BB044000DA583 /* ECategory.swift */; };
 		845666C1256BB09B000DA583 /* CategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845666C0256BB09B000DA583 /* CategoryRequest.swift */; };
 		845666C5256BB248000DA583 /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845666C4256BB248000DA583 /* CategoryManager.swift */; };
+		845666CB256BB96D000DA583 /* EPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845666CA256BB96D000DA583 /* EPost.swift */; };
+		845666CF256BBA52000DA583 /* PostRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845666CE256BBA52000DA583 /* PostRequest.swift */; };
+		845666D3256BBB97000DA583 /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845666D2256BBB97000DA583 /* PostManager.swift */; };
 		845A537B255ED7F60038F0A1 /* MessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A537A255ED7F60038F0A1 /* MessageManager.swift */; };
 		845A537F255FB6C00038F0A1 /* EChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A537E255FB6C00038F0A1 /* EChat.swift */; };
 		845A5383255FB7790038F0A1 /* ChatRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A5382255FB7790038F0A1 /* ChatRequest.swift */; };
@@ -96,6 +99,9 @@
 		845666BC256BB044000DA583 /* ECategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECategory.swift; sourceTree = "<group>"; };
 		845666C0256BB09B000DA583 /* CategoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRequest.swift; sourceTree = "<group>"; };
 		845666C4256BB248000DA583 /* CategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryManager.swift; sourceTree = "<group>"; };
+		845666CA256BB96D000DA583 /* EPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EPost.swift; sourceTree = "<group>"; };
+		845666CE256BBA52000DA583 /* PostRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRequest.swift; sourceTree = "<group>"; };
+		845666D2256BBB97000DA583 /* PostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
 		845A537A255ED7F60038F0A1 /* MessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManager.swift; sourceTree = "<group>"; };
 		845A537E255FB6C00038F0A1 /* EChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EChat.swift; sourceTree = "<group>"; };
 		845A5382255FB7790038F0A1 /* ChatRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRequest.swift; sourceTree = "<group>"; };
@@ -180,6 +186,7 @@
 				841CEDB4255ED45C007CCACC /* EMessage.swift */,
 				845A537E255FB6C00038F0A1 /* EChat.swift */,
 				845666BC256BB044000DA583 /* ECategory.swift */,
+				845666CA256BB96D000DA583 /* EPost.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -243,6 +250,7 @@
 				845A537A255ED7F60038F0A1 /* MessageManager.swift */,
 				845A5386255FB8F70038F0A1 /* ChatManager.swift */,
 				845666C4256BB248000DA583 /* CategoryManager.swift */,
+				845666D2256BBB97000DA583 /* PostManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -265,6 +273,7 @@
 				841CEDB8255ED68C007CCACC /* MessageRequest.swift */,
 				845A5382255FB7790038F0A1 /* ChatRequest.swift */,
 				845666C0256BB09B000DA583 /* CategoryRequest.swift */,
+				845666CE256BBA52000DA583 /* PostRequest.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -425,6 +434,7 @@
 				84A0CC34254ACDA10074CBAC /* UserBookManager.swift in Sources */,
 				848E105D253EE770003C89C8 /* ESearchBook.swift in Sources */,
 				841CEDA4255E82D2007CCACC /* EUserfollow.swift in Sources */,
+				845666CB256BB96D000DA583 /* EPost.swift in Sources */,
 				841CED73255BE4F9007CCACC /* EAccount.swift in Sources */,
 				842C444F2547C240003C570D /* GoogleApiRequest.swift in Sources */,
 				841CEDA8255E83CA007CCACC /* UserFollowRequest.swift in Sources */,
@@ -433,6 +443,7 @@
 				841CED93255D35D1007CCACC /* NotifyRequest.swift in Sources */,
 				846EFE6125465DD600F01805 /* EUserBook.swift in Sources */,
 				846EFE6525465E4900F01805 /* EBook.swift in Sources */,
+				845666D3256BBB97000DA583 /* PostManager.swift in Sources */,
 				841CED81255C1C4C007CCACC /* EUser.swift in Sources */,
 				84A0CC38254AFDD80074CBAC /* UserBookRequest.swift in Sources */,
 				848E1058253EE65C003C89C8 /* BookManager.swift in Sources */,
@@ -440,6 +451,7 @@
 				84A61CD4254D10F700B50FE8 /* ENote.swift in Sources */,
 				841C3E4825593BA1000393AA /* BorrowBookRequest.swift in Sources */,
 				84A61CBC254C4CCD00B50FE8 /* ExchangeBookManager.swift in Sources */,
+				845666CF256BBA52000DA583 /* PostRequest.swift in Sources */,
 				844EACC325515ED700CACEEB /* BookReviewRequest.swift in Sources */,
 				848E1061253EEEEC003C89C8 /* BookRequest.swift in Sources */,
 				845A537B255ED7F60038F0A1 /* MessageManager.swift in Sources */,

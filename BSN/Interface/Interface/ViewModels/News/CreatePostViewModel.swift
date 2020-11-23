@@ -6,33 +6,73 @@
 //
 
 import SwiftUI
+import Business
 
-class CreatePostViewModel: ObservableObject {
-    
-    @Published var quote: String
-    
-    @Published var content: String
+class CreatePostViewModel: NetworkViewModel {
     
     @Published var photo: Data
     
-    @Published var isPosting: Bool
-    
     @Published var category: Category
     
-    init() {
-        quote = ""
-        content = ""
+    private var postManager: PostManager
+    
+    var didSaveSuccess: (() -> Void)?
+    
+    override init() {
         photo = Data()
-        isPosting = false
         category = Category(id: kUndefine, name: "Chọn chủ đề")
+        postManager = PostManager()
         print("did init Create Post ViewModel")
+        
+        super.init()
+        observerSavePost()
     }
     
-    func post(completeHandle: @escaping (Bool) -> Void) {
-        isPosting = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            completeHandle(true)
-            self.isPosting = false
+    func post(content: String, quote: String?) {
+        guard !content.isEmpty else {
+            resourceInfo = .invalid_empty
+            showAlert = true
+            return
         }
+        
+        guard category.id != kUndefine else {
+            resourceInfo = .invalid_category
+            showAlert = true
+            return
+        }
+        
+        isLoading = true
+        let p = EPost(
+            categoryID: category.id,
+            authorID: AppManager.shared.currenUID,
+            quote: quote,
+            content: content
+        )
+        postManager.savePost(post: p)
+    }
+}
+
+// MARK: - Observer
+extension CreatePostViewModel {
+    private func observerSavePost() {
+        postManager
+            .postPublisher
+            .sink {[weak self] (p) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    if p.id == kUndefine {
+                        self.resourceInfo =  .savefailure
+                        self.showAlert = true
+                    } else {
+                        self.didSaveSuccess?()
+                    }
+                }
+            }
+            .store(in: &cancellables)
     }
 }

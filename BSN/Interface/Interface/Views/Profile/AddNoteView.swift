@@ -45,7 +45,7 @@ struct AddNoteView: View {
             .padding()
             
             HStack {
-                Button(action: { dissmiss() }, label: {
+                Button(action: { dismiss() }, label: {
                     Text("Huỷ").padding()
                 })
                 
@@ -66,7 +66,7 @@ struct AddNoteView: View {
                 title: Text("Kết quả"),
                 message: Text(viewModel.resourceInfo.des()),
                 dismissButton: .default(Text("OK")) {
-                    dissmiss()
+                    dismiss()
                 })
         } else {
             
@@ -77,12 +77,12 @@ struct AddNoteView: View {
                     viewModel.processNote(note: passthroughtNote)
                 },
                 secondaryButton: .cancel(Text("Huỷ bỏ")) {
-                    dissmiss()
+                    dismiss()
                 })
         }
     }
     
-    private func dissmiss() {
+    private func dismiss() {
         passthroughtNote.reset()
         presentationMode.wrappedValue.dismiss()
     }
