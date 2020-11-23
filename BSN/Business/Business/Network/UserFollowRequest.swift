@@ -25,4 +25,23 @@ class UserFollowRequest: ResourceRequest<EUserfollow> {
             }
         }
     }
+    
+    // check current user follow guest (profile showing)
+    func getUserFollow(currentUid: String, guestUid: String, publisher: PassthroughSubject<EUserfollow, Never>) {
+        self.setPath(resourcePath: "\(currentUid)/\(guestUid)")
+        
+        self.get(isAll: false) { result in
+            
+            switch result {
+            case .failure(let reason):
+                print(reason)
+                var n = EUserfollow()
+                n.userName = reason
+                publisher.send(n)
+                
+            case .success(let followings):
+                publisher.send(followings[0])
+            }
+        }
+    }
 }

@@ -6,6 +6,7 @@
 //
 import Vapor
 import SQLKit
+import Fluent
 
 struct UserFollowController: RouteCollection {
     
@@ -18,10 +19,29 @@ struct UserFollowController: RouteCollection {
         }
         
         userFollows.get("following", use: searchFollowing)
+        userFollows.get(":uid1",":uid2", use: getBy2User)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[UserFollow]> {
         return UserFollow.query(on: req.db).all()
+    }
+    
+    // check uid1 follow uid2?
+    func getBy2User(req: Request) throws -> EventLoopFuture<UserFollow> {
+        
+        guard let uid1Str: String = req.parameters.get("uid1"),
+              let uid2Str: String = req.parameters.get("uid2"),
+              let uid1 = UUID(uuidString: uid1Str),
+              let uid2 = UUID(uuidString: uid2Str) else {
+            
+            throw Abort(.badRequest)
+        }
+        
+        return UserFollow.query(on: req.db)
+            .filter(\.$userID == uid2)
+            .filter(\.$followerID == uid1)
+            .first()
+            .unwrap(or: Abort(.notFound))
     }
 
     func create(req: Request) throws -> EventLoopFuture<UserFollow> {

@@ -19,20 +19,27 @@ public class ProfileViewModel: NetworkViewModel {
     
     @Published public var user: User
     
+    @Published public var followed: Bool
+    
     private var userBookManager: UserBookManager
     
     private var userManager: UserManager
+    
+    private var followManager: UserFollowManager
     
     public override init() {
         user = User()
         posts = fakeNews
         books = []
+        followed = false
         userBookManager = UserBookManager.shared
         userManager = UserManager()
+        followManager = UserFollowManager()
         
         super.init()
         setupReceiveUserBookInfo()
         observerUserInfo()
+        observerUserFollow()
     }
     
     /// Fetching data from Server to fill page if it passed bookID from preView
@@ -43,8 +50,11 @@ public class ProfileViewModel: NetworkViewModel {
             // Show info of current user
             self.user = AppManager.shared.currentUser
         } else {
+            print("did load guest profile ...")
             // fetch info of other user
             userManager.getUser(uid: uid!)
+            // Check followed?
+            followManager.getUserFollow(followerId: AppManager.shared.currentUser.id, userID: uid!)
         }
         
         userBookManager.getUserBooks(uid: uid ?? self.user.id)
@@ -112,6 +122,27 @@ public class ProfileViewModel: NetworkViewModel {
                             location: u.location,
                             about: u.about
                         )
+                    }
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func observerUserFollow() {
+        followManager
+            .getFollowingPublisher
+            .sink {[weak self] (uf) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+
+                    if uf.id == "undefine" || uf.id == nil {
+                        self.followed = false
+                    } else {
+                        self.followed = true
                     }
                 }
             }

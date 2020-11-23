@@ -89,9 +89,17 @@ public struct ProfileView: View, PopToable {
             // Name and description
             HStack {
                 VStack(alignment: .leading) {
-                    
-                    Text(viewModel.user.displayname)
-                        .pattaya(size: 18)
+                    HStack {
+                        Text(viewModel.user.displayname)
+                            .pattaya(size: 18)
+                        Spacer()
+                        if userID != nil {
+                            // not profile current user
+                            Image(systemName: "heart.circle")
+                                .font(.system(size: 22))
+                                .foregroundColor(foregroundFollowBtn)
+                        }
+                    }
                     
                     HStack {
                         Image(systemName: "mappin.and.ellipse")
@@ -164,6 +172,10 @@ public struct ProfileView: View, PopToable {
                 viewModel.prepareData(uid: userID)
             }
         }
+    }
+    
+    var foregroundFollowBtn: Color {
+        viewModel.followed ? .blue : .gray
     }
     
     func dinamicContent(proxy: ScrollViewProxy) -> some View {

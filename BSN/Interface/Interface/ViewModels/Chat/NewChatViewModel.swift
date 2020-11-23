@@ -64,7 +64,7 @@ class NewChatViewModel: NetworkViewModel {
     
     func setupReceiveSearchUser() {
         userFollowManager
-            .getFollowingPublisher
+            .getFollowingsPublisher
             .sink {[weak self] (sb) in
                 
                 guard let self = self else {
