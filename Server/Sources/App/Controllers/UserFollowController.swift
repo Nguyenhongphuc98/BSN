@@ -14,12 +14,13 @@ struct UserFollowController: RouteCollection {
         let userFollows = routes.grouped("api", "v1", "userFollows")
         userFollows.get(use: index)
         userFollows.post(use: create)
-        userFollows.group(":ID") { user in
-            user.delete(use: delete)
-        }
+//        userFollows.group(":ID") { user in
+//            user.delete(use: delete)
+//        }
         
         userFollows.get("following", use: searchFollowing)
         userFollows.get(":uid1",":uid2", use: getBy2User)
+        userFollows.delete(":uid1",":uid2", use: deleteBaseOnUser)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[UserFollow]> {
@@ -49,8 +50,26 @@ struct UserFollowController: RouteCollection {
         return uf.save(on: req.db).map { uf }
     }
 
-    func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {
-        return UserFollow.find(req.parameters.get("ID"), on: req.db)
+//    func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {
+//        return UserFollow.find(req.parameters.get("ID"), on: req.db)
+//            .unwrap(or: Abort(.notFound))
+//            .flatMap { $0.delete(on: req.db) }
+//            .transform(to: .ok)
+//    }
+    
+    func deleteBaseOnUser(req: Request) throws -> EventLoopFuture<HTTPStatus> {
+        guard let uid1Str: String = req.parameters.get("uid1"),
+              let uid2Str: String = req.parameters.get("uid2"),
+              let uid1 = UUID(uuidString: uid1Str),
+              let uid2 = UUID(uuidString: uid2Str) else {
+            
+            throw Abort(.badRequest)
+        }
+        
+        return UserFollow.query(on: req.db)
+            .filter(\.$userID == uid2)
+            .filter(\.$followerID == uid1)
+            .first()
             .unwrap(or: Abort(.notFound))
             .flatMap { $0.delete(on: req.db) }
             .transform(to: .ok)

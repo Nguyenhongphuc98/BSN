@@ -37,7 +37,7 @@ public class ProfileViewModel: NetworkViewModel {
         followManager = UserFollowManager()
         
         super.init()
-        setupReceiveUserBookInfo()
+        observerUserBookInfo()
         observerUserInfo()
         observerUserFollow()
     }
@@ -60,8 +60,25 @@ public class ProfileViewModel: NetworkViewModel {
         userBookManager.getUserBooks(uid: uid ?? self.user.id)
     }
     
+    func processFollow() {
+        if followed == true {
+            // make unfollow request
+            followManager.unfollow(followerId: AppManager.shared.currenUID, targetId: user.id)
+        } else {
+            // make follow
+            let follow = EUserfollow(uid: user.id, followerId: AppManager.shared.currenUID)
+            followManager.makeFollow(follow: follow)
+        }
+        
+        followed = !followed
+        self.objectWillChange.send()
+    }
+}
+
+// MARK: - Observer data
+extension ProfileViewModel {
     /// UserBook get from server  will received at this block
-    private func setupReceiveUserBookInfo() {
+    private func observerUserBookInfo() {
         /// Get user-book by uid to load on UI
         userBookManager
             .getUserBooksPublisher

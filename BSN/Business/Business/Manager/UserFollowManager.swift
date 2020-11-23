@@ -28,6 +28,14 @@ public class UserFollowManager {
     }
     
     public func getUserFollow(followerId: String, userID: String) {
-        networkRequest.getUserFollow(currentUid: followerId, guestUid: userID, publisher: getFollowingPublisher)
+        networkRequest.getUserFollow(followerId: followerId, tartgetId: userID, publisher: getFollowingPublisher)
+    }
+    
+    public func makeFollow(follow: EUserfollow) {
+        networkRequest.saveUserFollow(uf: follow)
+    }
+    
+    public func unfollow(followerId: String, targetId: String) {
+        networkRequest.deleteUserFollow(followerId: followerId, targetId: targetId)
     }
 }

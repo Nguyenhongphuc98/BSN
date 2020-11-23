@@ -94,10 +94,14 @@ public struct ProfileView: View, PopToable {
                             .pattaya(size: 18)
                         Spacer()
                         if userID != nil {
-                            // not profile current user
-                            Image(systemName: "heart.circle")
-                                .font(.system(size: 22))
-                                .foregroundColor(foregroundFollowBtn)
+                            // Viewing profile other user
+                            Button {
+                                viewModel.processFollow()
+                            } label: {
+                                Image(systemName: "heart.circle")
+                                    .font(.system(size: 22))
+                                    .foregroundColor(foregroundFollowBtn)
+                            }
                         }
                     }
                     
