@@ -30,10 +30,28 @@ public struct NewsFeedView: View {
             List {
                 ForEach(viewModel.newsData) { news in
                     VStack {
-                        NewsFeedCard(model: news)
-                        .onAppear(perform: {
-                            self.viewModel.loadMoreIfNeeded(item: news)
-                        })
+                        ZStack(alignment: .topTrailing) {
+                            
+                            NewsFeedCard(model: news)
+                            .onAppear(perform: {
+                                self.viewModel.loadMoreIfNeeded(item: news)
+                            })
+                            
+                            if news.owner.id == AppManager.shared.currenUID {
+                                // More button
+                                Menu {
+                                    Button {
+                                        viewModel.deletePost(pid: news.id)
+                                    } label: {
+                                        Text("Xoá bài viết")
+                                    }
+                                }
+                                label: {
+                                    // More button
+                                    Image(systemName: "ellipsis").padding()
+                                }
+                            }
+                        }
 
                         Separator()
                     }

@@ -40,4 +40,9 @@ class PostRequest: ResourceRequest<EPost> {
             }
         }
     }
+    
+    func deletePost(postID: String) {
+        self.setPath(resourcePath: postID)
+        self.delete()
+    }
 }

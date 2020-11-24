@@ -100,6 +100,7 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
     func delete() {
         var urlRequest = URLRequest(url: resourceURL)
         urlRequest.httpMethod = "DELETE"
+        urlRequest.addValue(AccountRequest.authorization, forHTTPHeaderField: "Authorization")
         let dataTask = URLSession.shared.dataTask(with: urlRequest)
         dataTask.resume()
     }

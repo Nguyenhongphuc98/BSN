@@ -46,16 +46,6 @@ struct NewsFeedCard: View {
                     .padding(.bottom)
                 
                 Spacer()
-                
-                if model.owner.id == AppManager.shared.currenUID {
-                    // More button
-                    StickyImageButton(normal: "ellipsis",
-                                      active: "ellipsis.rectangle.fill",
-                                      color: .black) { (isMore) in
-                        print("did request more: \(isMore)")
-                    }
-                    .padding(.bottom)
-                }
             }
             
             // Quote

@@ -33,10 +33,30 @@ struct PostController: RouteCollection {
     }
 
     func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {
-        return Post.find(req.parameters.get("postID"), on: req.db)
+        
+        guard let pidStr = req.parameters.get("postID"), let pid = UUID(uuidString: pidStr) else {
+            throw Abort(.badRequest)
+        }
+        
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        // Determine current user
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .first()
             .unwrap(or: Abort(.notFound))
-            .flatMap { $0.delete(on: req.db) }
-            .transform(to: .ok)
+            .flatMap { (user)  in
+                
+                return Post
+                    .query(on: req.db)
+                    .filter(\.$id == pid)
+                    .filter(\.$authorID == user.id!)
+                    .first()
+                    .unwrap(or: Abort(.notFound))
+                    .flatMap { $0.delete(on: req.db) }
+                    .transform(to: .ok)
+            }
     }
     
     func getNewest(req: Request) throws -> EventLoopFuture<[Post.GetFull]> {

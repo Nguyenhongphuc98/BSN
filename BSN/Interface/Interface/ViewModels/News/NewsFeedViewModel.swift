@@ -29,6 +29,18 @@ class NewsFeedViewModel: NetworkViewModel {
         postManager.getNewestPosts(page: 0)
     }
     
+    func deletePost(pid: String) {
+        guard let index = newsData.firstIndex(where: { $0.id == pid }) else {
+            return
+        }
+        
+        withAnimation {
+            _ = newsData.remove(at: index)
+            objectWillChange.send()
+        }
+        postManager.deletePost(postID: pid)
+    }
+    
     func loadMoreIfNeeded(item: NewsFeed) {
         let thresholdIndex = newsData.index(newsData.endIndex, offsetBy: -2)
         if newsData.firstIndex(where: { $0.id == item.id }) == thresholdIndex {
