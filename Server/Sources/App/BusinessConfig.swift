@@ -19,6 +19,8 @@ public class BusinessConfig {
     
     public static let newestPostLimit: Int = 15
     
+    public static let newestCommentLimit: Int = 10
+    
     public static let topBookLimit: Int = 8
 }
 

@@ -7,18 +7,21 @@
 
 import Vapor
 import Fluent
+import SQLKit
 
 struct CommentController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
         let comments = routes.grouped("api", "v1", "comments")
-        comments.get(use: index)
-        comments.post(use: create)
-        comments.group(":commentID") { group in
+        let authen = comments.grouped(Account.authenticator())
+        authen.get(use: index)
+        authen.post(use: create)
+        authen.group(":commentID") { group in
             group.delete(use: delete)
         }
         
-        //comments.get("search", use: search)
+        authen.get("newest", use: getNewest)
+        authen.get("subs", use: getSubcomments)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[Comment]> {
@@ -45,7 +48,7 @@ struct CommentController: RouteCollection {
                     .first()
                     .unwrap(or: Abort(.badRequest))
                     .map { (p) in
-                        p.numComment = p.numComment + 1
+                        p.numComment = p.numComment! + 1
                         _ = p.update(on: req.db)
                     }
                 
@@ -60,7 +63,38 @@ struct CommentController: RouteCollection {
             .transform(to: .ok)
     }
     
-//    func search(req: Request) throws -> EventLoopFuture<[Comment]> {
-//        return Comment.query(on: req.db).all()
-//    }
+    func getNewest(req: Request) throws -> EventLoopFuture<[Comment.GetFull]> {
+        guard let pid: String = req.query["pid"], let page: Int = req.query["page"] else {
+            throw Abort(.badRequest)
+        }
+        
+        var per = BusinessConfig.newestCommentLimit
+        if let p: Int = req.query["per"] {
+            per = p
+        }
+        
+        let offset = page * per
+        
+        // get full info to display card
+        // filter comment at level 0 (post_id same parent_id)
+        let sqlQuery = SQLQueryString("SELECT c.id, c.user_id as \"userID\", c.post_id as \"postID\", c.parent_id as \"parentID\", c.content, c.created_at as \"createdAt\", u.displayname as \"userName\", u.avatar as \"userPhoto\" FROM comment as c, public.user as u WHERE c.user_id = u.id and c.post_id = c.parent_id and c.post_id = '\(raw: pid)' order by c.created_at desc limit \(raw: per.description) offset \(raw: offset.description)")
+        
+        let db = req.db as! SQLDatabase
+        return db.raw(sqlQuery)
+            .all(decoding: Comment.GetFull.self)
+    }
+    
+    func getSubcomments(req: Request) throws -> EventLoopFuture<[Comment.GetFull]> {
+        guard let cmtid: String = req.query["cmtid"] else {
+            throw Abort(.badRequest)
+        }
+        
+        // get full info to display card
+        // filter comment at level 0 (post_id same parent_id)
+        let sqlQuery = SQLQueryString("SELECT c.id, c.user_id as \"userID\", c.post_id as \"postID\", c.parent_id as \"parentID\", c.content, c.created_at as \"createdAt\", u.displayname as \"userName\", u.avatar as \"userPhoto\" FROM comment as c, public.user as u WHERE c.user_id = u.id and c.parent_id = '\(raw: cmtid)'")
+        
+        let db = req.db as! SQLDatabase
+        return db.raw(sqlQuery)
+            .all(decoding: Comment.GetFull.self)
+    }
 }

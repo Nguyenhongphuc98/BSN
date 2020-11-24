@@ -27,4 +27,12 @@ public class CommentManager {
     public func saveComment(comment: EComment) {
         networkRequest.saveComment(comment: comment, publisher: commentPublisher)
     }
+    
+    public func getNewestComments(pid: String, page: Int) {
+        networkRequest.fetchNewsestComments(pid: pid, page: page, per: BusinessConfigure.newestCommentsPerPage, publisher: commentsPublisher)
+    }
+    
+    public func getSubComments(parentId: String) {
+        networkRequest.fetchSubComments(parentId: parentId, publisher: commentsPublisher)
+    }
 }

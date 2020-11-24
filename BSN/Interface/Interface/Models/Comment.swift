@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Comment: ObservableObject, Identifiable {
+class Comment: ObservableObject, AppendUniqueAble {
     
     var id: String
     
@@ -22,7 +22,7 @@ class Comment: ObservableObject, Identifiable {
     
     var level: Int
     
-    @Published var subcomments: [Comment]?
+    @Published var subcomments: [Comment]
     
     init(firstLevel: Bool = true) {
         self.id = UUID().uuidString
@@ -31,16 +31,17 @@ class Comment: ObservableObject, Identifiable {
         self.commentDate = fakedates.randomElement()!
         self.content = fakeComments.randomElement()!
         self.level = firstLevel ? 0 : 1
-        subcomments = firstLevel ? [Comment(firstLevel: false), Comment(firstLevel: false)] : nil
+        subcomments = firstLevel ? [Comment(firstLevel: false), Comment(firstLevel: false)] : []
     }
     
-    init(parent: String, owner: User, content: String, level: Int) {
-        self.id = UUID().uuidString
+    init(id: String, parent: String, owner: User, content: String, level: Int) {
+        self.id = id
         self.parent = parent
         self.owner = owner
         self.commentDate = Date()
         self.content = content
         self.level = level
+        self.subcomments = []
     }
     
     init(dummy: Bool) {
@@ -49,7 +50,8 @@ class Comment: ObservableObject, Identifiable {
         self.owner = User()
         self.commentDate = fakedates.randomElement()!
         self.content = ""
-        level = 0
+        self.level = 0
+        self.subcomments = []
     }
     
     func isDummy() -> Bool {

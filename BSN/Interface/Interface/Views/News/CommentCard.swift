@@ -30,7 +30,7 @@ struct CommentCard: View {
                 VStack {
                     // Allow expan comment if first level
                     // If it have subcomments
-                    if model.level == 0 && model.subcomments != nil {
+                    if model.level == 0 && !model.subcomments.isEmpty {
                         Text(model.content)
                             +
                             Text(showSubcomments ? "  Ẩn trả lời" : "  Xem trả lời").foregroundColor(._primary).bold()
@@ -51,7 +51,7 @@ struct CommentCard: View {
                 
                 replyButton
                 
-                if showSubcomments && model.subcomments != nil {
+                if showSubcomments {
                     subcomments
                 }
             }
@@ -111,7 +111,7 @@ struct CommentCard: View {
     
     var subcomments: some View {
         VStack {
-            ForEach(model.subcomments!) { subc in
+            ForEach(model.subcomments) { subc in
                 CommentCard(model: subc) { _, n in
                     didRequestReply?(model, n)
                 }.id(UUID())

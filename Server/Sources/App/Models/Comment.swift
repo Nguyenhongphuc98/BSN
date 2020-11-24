@@ -43,5 +43,8 @@ extension Comment {
         var parentID: String
         var content: String
         var createdAt: String
+        
+        var userPhoto: String?
+        var userName: String
     }
 }

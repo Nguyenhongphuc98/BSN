@@ -32,9 +32,8 @@ class PostRequest: ResourceRequest<EPost> {
         self.get { result in
 
             switch result {
-            case .failure:
-                let message = "There was an error fetch newest posts - page: \(page)"
-                print(message)
+            case .failure(let message):
+                print("At fetch newest posts \(message)")
             case .success(let posts):
                 publisher.send(posts)
             }

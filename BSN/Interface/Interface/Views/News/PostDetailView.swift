@@ -64,8 +64,8 @@ struct PostDetailView: View {
                 Separator()
                 
                 // List comments
-                if viewModel.comments != nil {
-                    ForEach(viewModel.comments!) { comment in
+                //if viewModel.comments != nil {
+                    ForEach(viewModel.comments) { comment in
                         CommentCard(model: comment) { (comment, name) in
                             viewModel.replingComment = comment
                             viewModel.replingName = name
@@ -73,7 +73,7 @@ struct PostDetailView: View {
                         }
                     }
                     .environmentObject(viewModel)
-                }
+               // }
                 
                 Spacer()
             }

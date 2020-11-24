@@ -14,6 +14,9 @@ public struct EComment: Codable {
     public var content: String
     public var createdAt: String?
     
+    public var userPhoto: String?
+    public var userName: String?
+    
     init() {
         
         self.id = "undefine"
