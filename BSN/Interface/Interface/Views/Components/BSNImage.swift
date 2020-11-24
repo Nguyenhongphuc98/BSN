@@ -29,6 +29,10 @@ struct BSNImage: View {
     func refetchImage() {
         loader.setup(urlString: urlString, temp: tempImage)
     }
+    
+    func getUIImage() -> UIImage {
+        loader.uiImage
+    }
 }
 
 //struct BSNImage_Previews: PreviewProvider {

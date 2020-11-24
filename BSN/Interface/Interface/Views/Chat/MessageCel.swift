@@ -52,7 +52,7 @@ struct MessageCel: View {
         }
         .padding(.init(top: 8, leading: 12, bottom: 8, trailing: 12))
         .fullScreenCover(isPresented: $presentViewFull) {
-            ZoomableScrollImage(data: message.photo!, didRequestOutScreen: {
+            ZoomableScrollImage(url: message.content!, didRequestOutScreen: {
                 dismiss()
             })
         }

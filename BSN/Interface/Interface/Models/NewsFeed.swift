@@ -22,6 +22,7 @@ class NewsFeed: ObservableObject, AppendUniqueAble {
     
     @Published var content: String
     
+    // url to photo
     var photo: String?
     
     var numHeart: Int
