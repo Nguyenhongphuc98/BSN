@@ -64,4 +64,19 @@ class NewsFeed: ObservableObject, AppendUniqueAble {
         numBeakHeart = post.numBreakHeart!
         numComment = post.numComment!
     }
+    
+    func clone(from news: NewsFeed) {
+        id = news.id
+        owner = news.owner
+        postTime = news.postTime
+        category = news.category
+        
+        content = news.content
+        quote = news.quote
+        photo = news.photo
+        
+        numHeart = news.numHeart
+        numBeakHeart = news.numBeakHeart
+        numComment = news.numComment
+    }
 }

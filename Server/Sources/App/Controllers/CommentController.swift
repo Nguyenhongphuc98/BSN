@@ -6,6 +6,7 @@
 //
 
 import Vapor
+import Fluent
 
 struct CommentController: RouteCollection {
     
@@ -26,7 +27,30 @@ struct CommentController: RouteCollection {
 
     func create(req: Request) throws -> EventLoopFuture<Comment> {
         let cmt = try req.content.decode(Comment.self)
-        return cmt.save(on: req.db).map { cmt }
+        
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        // Determine current user
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .filter(\.$id == cmt.userID)
+            .first()
+            .unwrap(or: Abort(.forbidden))
+            .flatMap { (user)  in
+                
+                // updaet number of comment of parent post
+                _ = Post.query(on: req.db)
+                    .filter(\.$id == cmt.postID)
+                    .first()
+                    .unwrap(or: Abort(.badRequest))
+                    .map { (p) in
+                        p.numComment = p.numComment + 1
+                        _ = p.update(on: req.db)
+                    }
+                
+                return cmt.save(on: req.db).map { cmt }
+            }
     }
 
     func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {

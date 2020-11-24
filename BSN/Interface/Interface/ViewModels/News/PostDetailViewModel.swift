@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import Business
 
-class PostDetailViewModel: ObservableObject {
+class PostDetailViewModel: NetworkViewModel {
     
     var postID: String
     
-    @Published var isLoading: Bool
+    @Published var isLoadingComment: Bool
     
     @Published var post: NewsFeed?
     
@@ -23,49 +24,39 @@ class PostDetailViewModel: ObservableObject {
     // the name of user be commented
     @Published var replingName: String
     
-    private var neededFetchPost: Bool
+    private var commentManager: CommentManager
     
-    init(post: NewsFeed) {
-        self.isLoading = false
-        self.post = post
-        self.postID = post.id
-        self.replingName = ""
-        self.neededFetchPost = true
-    }
-    
-    init(postID: String) {
-        self.isLoading = true
-        self.postID = postID
-        self.replingName = ""
-        self.neededFetchPost = true
-    }
-    
-    init() {
-        self.isLoading = true
+    override init() {
+        self.isLoadingComment = false
         self.postID = ""
         self.replingName = ""
-        self.neededFetchPost = true
-        print("Did iit post detail viewModel")
+        commentManager = CommentManager()
+        print("Did init post detail viewModel")
+        super.init()
+        self.isLoading = true
+        observerSaveComment()
     }
     
-    func fetchPost(by id: String, complete: @escaping (Bool) -> Void) {
-        if neededFetchPost {
-            self.neededFetchPost = false
-            self.isLoading = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                if Int.random(in: 0..<4) != 1 {
-                    self.post = NewsFeed()
-                    self.comments = [Comment(), Comment()]
-                }
-                complete(false)
-                withAnimation {
-                    self.isLoading = false
-                }
-            })
+    // Fetching post data and first comment page
+    func prepareData(postID: String?, post: NewsFeed) {
+        
+        if post.id == kUndefine {
+            isLoading = true
+            self.postID = postID!
+            // start loading post data
+        } else {
+            self.post = post
+            self.postID = post.id
+            self.objectWillChange.send()
+            self.isLoading = false
+        }
+        
+        if comments == nil {
+            // fetching comment - page 0
         }
     }
     
-    func didComment(message: String, complete: @escaping (Bool) -> Void) {
+    func didComment(message: String) {
         
         let newLevel = replingComment.isDummy() ? 0 : 1
         let parent = replingComment.isDummy() ? postID : replingComment.id
@@ -76,9 +67,9 @@ class PostDetailViewModel: ObservableObject {
             content: finalMessage,
             level: newLevel
         )
-        
+
         // Comment on post
-        if  newLevel == 0 {
+        if newLevel == 0 {
             
             withAnimation {
                 if comments == nil {
@@ -88,9 +79,6 @@ class PostDetailViewModel: ObservableObject {
                     self.comments?.insert(newComment, at: 0)
                 }
             }
-            
-            // To-Do
-            // Call Busseness push cmt to server
         } else {
             
             // On comment
@@ -102,16 +90,16 @@ class PostDetailViewModel: ObservableObject {
                     replingComment.subcomments?.append(newComment)
                 }
             }
-            
-            // To-Do
-            // Call Busseness push cmt to server
         }
         
-        complete(true)
+        let eComment = EComment(
+            userID: AppManager.shared.currenUID,
+            postID: postID,
+            parentID: parent,
+            content: finalMessage
+        )
         
-//        for cmt in comments! {
-//            print("item: - \(cmt.owner.displayname) - \(cmt.content)")
-//        }
+        commentManager.saveComment(comment: eComment)
     }
     
     func didDeleteComment(comment: Comment, complete: @escaping (Bool) -> Void) {
@@ -129,5 +117,29 @@ class PostDetailViewModel: ObservableObject {
         // Call business to update data
         
         complete(true)
+    }
+}
+
+// MARK: - Observer
+extension PostDetailViewModel {
+    private func observerSaveComment() {
+        commentManager
+            .commentPublisher
+            .sink {[weak self] (c) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    if c.id == kUndefine {
+                        self.resourceInfo =  .savefailure
+                        self.showAlert = true
+                    }
+                    // Don't action when save success
+                }
+            }
+            .store(in: &cancellables)
     }
 }

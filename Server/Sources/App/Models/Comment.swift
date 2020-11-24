@@ -34,3 +34,14 @@ final class Comment: Model {
 }
 
 extension Comment: Content { }
+
+extension Comment {
+    struct GetFull: Content {
+        var id: String
+        var userID: String
+        var postID: String
+        var parentID: String
+        var content: String
+        var createdAt: String
+    }
+}

@@ -19,7 +19,7 @@ struct NewsFeedCard: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            NavigationLink(destination: PostDetailView(postID: "HEHE"), tag: 1, selection: $action) {
+            NavigationLink(destination: PostDetailView(post: model), tag: 1, selection: $action) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)

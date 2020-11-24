@@ -15,43 +15,31 @@ struct PostDetailView: View {
     
     @State private var postID: String = ""
     
+    @State private var post: NewsFeed = NewsFeed()
+    
     init(post: NewsFeed) {
-        //print("Post detail apeared")
-        //viewModel = PostDetailViewModel(post: post)
+        self.post.clone(from: post)
     }
     
     init(postID: String) {
-        //print("Post detail apeared")
-        //viewModel = PostDetailViewModel(postID: postID)
-        
-//        viewModel.fetchPost(by: postID) { (result) in
-//            print("did fetch post")
-//        }
         self.postID = postID
     }
     
     var body: some View {
         VStack {
-            if viewModel.isLoading {
-                Loading()
+            
+            if viewModel.post != nil {
+                postContent
             } else {
-                if viewModel.post != nil {
-                    postContent
-                } else {
-                    ExceptionView(sign: "exclamationmark.circle", message: "Bài viết đã bị gỡ bỏ!")
-                }
+                ExceptionView(sign: "exclamationmark.circle", message: "Bài viết đã bị gỡ bỏ!")
             }
         }
+        .embededLoadingFull(isLoading: $viewModel.isLoading)
         .navigationBarTitle("Bình luận", displayMode: .inline)
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
-        .onAppear {
-            print("Post detail apeared")
-            viewModel.fetchPost(by: postID) { (result) in
-                print("did fetch post")
-            }
-        }
+        .onAppear(perform: viewAppeared)
     }
     
     var backButton: some View {
@@ -81,6 +69,7 @@ struct PostDetailView: View {
                         CommentCard(model: comment) { (comment, name) in
                             viewModel.replingComment = comment
                             viewModel.replingName = name
+                            viewModel.objectWillChange.send()
                         }
                     }
                     .environmentObject(viewModel)
@@ -106,6 +95,7 @@ struct PostDetailView: View {
                     Button(action: {
                         // force to replace and emit signal to know we clear reply cmt
                         viewModel.replingComment = Comment(dummy: true)
+                        viewModel.objectWillChange.send()
                     }, label: {
                         Image(systemName: "xmark")
                     })
@@ -117,13 +107,15 @@ struct PostDetailView: View {
             }
             
             CoreMessageEditor(placeHolder: "Nhập bình luận") { (message) in
-                viewModel.didComment(message: message) { (success) in
-                    print("Did comment: \(message) - \(success)")
-                }
+                viewModel.didComment(message: message)
             }
         }
         .padding(.horizontal)
         .padding(.vertical, 8)
+    }
+    
+    func viewAppeared() {
+        viewModel.prepareData(postID: postID == "" ? nil : postID, post: post)
     }
 }
 
