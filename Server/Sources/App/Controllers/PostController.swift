@@ -16,11 +16,12 @@ struct PostController: RouteCollection {
         let authen = posts.grouped(Account.authenticator())
         authen.get(use: index)
         authen.post(use: create)
-        authen.group(":postID") { gr in
+        authen.group(":id") { gr in
             gr.delete(use: delete)
         }
         
         authen.get("newest", use: getNewest)
+        authen.get("detail", ":id", use: getPostByID)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[Post]> {
@@ -34,7 +35,7 @@ struct PostController: RouteCollection {
 
     func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {
         
-        guard let pidStr = req.parameters.get("postID"), let pid = UUID(uuidString: pidStr) else {
+        guard let pidStr = req.parameters.get("id"), let pid = UUID(uuidString: pidStr) else {
             throw Abort(.badRequest)
         }
         
@@ -56,6 +57,46 @@ struct PostController: RouteCollection {
                     .unwrap(or: Abort(.notFound))
                     .flatMap { $0.delete(on: req.db) }
                     .transform(to: .ok)
+            }
+    }
+    
+    func getPostByID(req: Request) throws -> EventLoopFuture<Post.GetFull> {
+        
+        guard let pid = req.parameters.get("id") else {
+            throw Abort(.badRequest)
+        }
+        
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        // Determine current user
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .first()
+            .unwrap(or: Abort(.notFound))
+            .flatMap { (user)  in
+                
+                let postQuery = SQLQueryString("SELECT p.id, p.category_id as \"categoryID\", p.author_id as \"authorID\", p.quote, p.content, p.photo, p.num_heart as \"numHeart\", p.num_break_heart as \"numBreakHeart\", p.num_comment as \"numComment\", p.created_at as \"createdAt\", u.displayname as \"authorName\", u.avatar as \"authorPhoto\", c.name as \"categoryName\" FROM post as p, public.user as u, category as c WHERE p.category_id = c.id and p.author_id = u.id and p.id = '\(raw: pid)'")
+                
+                let reactQuery = SQLQueryString("SELECT r.id, r.is_heart as \"isHeart\", r.user_id as \"userID\", r.post_id as \"postID\" FROM reaction as r WHERE r.user_id = '\(raw: user.id!.uuidString)' and r.post_id = '\(raw: pid)'")
+                
+                let db = req.db as! SQLDatabase
+                
+                let post = db.raw(postQuery)
+                    .first(decoding: Post.GetFull.self)
+                    .unwrap(or: Abort(.notFound))
+                
+                let react = db.raw(reactQuery)
+                    .first(decoding: Reaction.Get.self)
+                // for some reason, canot access field of origin class 'Reaction'
+                
+                return post.and(react).map { (p, r) -> (Post.GetFull) in
+                    if r != nil {
+                        
+                        return Post.GetFull(id: p.id, categoryID: p.categoryID, authorID: p.authorID, quote: p.quote, content: p.content, photo: p.photo, numHeart: p.numHeart, numBreakHeart: p.numBreakHeart, numComment: p.numComment, createdAt: p.createdAt, authorPhoto: p.authorPhoto, authorName: p.authorName, categoryName: p.categoryName, isHeart: r?.isHeart)
+                    }
+                    return p
+                }
             }
     }
     

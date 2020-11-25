@@ -25,6 +25,23 @@ class PostRequest: ResourceRequest<EPost> {
         }
     }
     
+    func fetchPost(pid: String, publisher: PassthroughSubject<EPost, Never>) {
+        self.setPath(resourcePath: "detail/\(pid)")
+
+        self.get(isAll: false) { result in
+
+            switch result {
+            case .failure(let message):
+                print("At fetch post \(message)")
+                let post = EPost()
+                publisher.send(post)
+                
+            case .success(let posts):
+                publisher.send(posts[0])
+            }
+        }
+    }
+    
     // page start from 0 (manual implement start from 0)
     func fetchNewsestPosts(page: Int, per: Int, publisher: PassthroughSubject<[EPost], Never>) {
         self.setPath(resourcePath: "newest", params: ["page":String(page), "per":String(per)])

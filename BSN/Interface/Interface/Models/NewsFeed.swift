@@ -11,28 +11,24 @@ import Business
 class NewsFeed: ObservableObject, AppendUniqueAble {
     
     var id: String
-    
     var owner: User
-    
     var postTime: Date
-    
     var category: Category
-    
     var quote: String?
+    var photo: String? // url to photo
+    var numHeart: Int
+    var numBeakHeart: Int
+    var numComment: Int
     
     @Published var content: String
     
-    // url to photo
-    var photo: String?
-    
-    var numHeart: Int
-    
-    var numBeakHeart: Int
-    
-    var numComment: Int
+    // Action bar
+    @Published var activeHeart: Bool = false
+    @Published var activeBHeart: Bool = false
+    @Published var activeComment: Bool = false
     
     init() {
-        id = UUID().uuidString
+        id = kUndefine
         owner = User()
         postTime = fakedates.randomElement()!
         category = Category(id: UUID().uuidString, name: "Category")
@@ -63,6 +59,11 @@ class NewsFeed: ObservableObject, AppendUniqueAble {
         numHeart = post.numHeart!
         numBeakHeart = post.numBreakHeart!
         numComment = post.numComment!
+        
+        if let react = post.isHeart {
+            activeHeart = react
+            activeBHeart = !react
+        }
     }
     
     func clone(from news: NewsFeed) {
@@ -78,5 +79,9 @@ class NewsFeed: ObservableObject, AppendUniqueAble {
         numHeart = news.numHeart
         numBeakHeart = news.numBeakHeart
         numComment = news.numComment
+        
+        activeHeart = news.activeHeart
+        activeComment = news.activeComment
+        activeBHeart = news.activeBHeart
     }
 }

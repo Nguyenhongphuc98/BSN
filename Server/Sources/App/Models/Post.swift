@@ -64,5 +64,6 @@ extension Post {
         public var authorPhoto: String?
         public var authorName: String
         public var categoryName: String
+        public var isHeart: Bool?
     }
 }

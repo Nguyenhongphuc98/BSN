@@ -36,11 +36,11 @@ struct StickyButton<Content: View>: View {
 
 struct StickyImageButton: View {
     
-    @State private var isActive: Bool = false
+    @Binding var isActive: Bool
     
-    var normal: String
+    var normalIcon: String
     
-    var active: String
+    var activeIcon: String
     
     var color: Color = .primary
     
@@ -52,12 +52,12 @@ struct StickyImageButton: View {
          active: String,
          color: Color = .primary,
          size: CGSize = CGSize(width: 22, height: 22),
-         isActive: Bool = false,
+         isActive: Binding<Bool>,
          didChange: ((Bool) -> Void)? = nil) {
         
-        self.normal = normal
-        self.active = active
-        self.isActive = isActive
+        self.normalIcon = normal
+        self.activeIcon = active
+        self._isActive = isActive
         self.color = color
         self.size = size
         self.didChangeState = didChange
@@ -68,7 +68,7 @@ struct StickyImageButton: View {
             isActive.toggle()
             self.didChangeState?(isActive)
         }, label: {
-            Image(systemName: isActive ? active : normal)
+            Image(systemName: isActive ? activeIcon : normalIcon)
                 .foregroundColor(color)
         })
         .buttonStyle(PlainButtonStyle())

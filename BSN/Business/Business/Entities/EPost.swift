@@ -22,6 +22,8 @@ public struct EPost: Codable {
     public var authorName: String?
     public var categoryName: String?
     
+    public var isHeart: Bool?
+    
     init() {
         
         self.id = "undefine"

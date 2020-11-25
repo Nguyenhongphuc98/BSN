@@ -31,3 +31,13 @@ final class Reaction: Model {
 }
 
 extension Reaction: Content { }
+
+extension Reaction {
+    struct Get: Content {
+        var id: String
+        var userID: String
+        var postID: String
+        var isHeart: Bool
+        var createdAt: Date?
+    }
+}

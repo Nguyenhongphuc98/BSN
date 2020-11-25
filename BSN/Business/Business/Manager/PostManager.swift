@@ -29,6 +29,10 @@ public class PostManager {
         networkRequest.savePost(post: post, publisher: postPublisher)
     }
     
+    public func getPost(pid: String) {
+        networkRequest.fetchPost(pid: pid, publisher: postPublisher)
+    }
+    
     public func getNewestPosts(page: Int) {
         networkRequest.fetchNewsestPosts(page: page, per: BusinessConfigure.newestPostsPerPage, publisher: postsPublisher)
     }

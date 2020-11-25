@@ -91,7 +91,8 @@ struct NewsFeedCard: View {
             // Heart
             StickyImageButton(normal: "heart",
                               active: "heart.fill",
-                              color: .init(hex: 0xea299a)) { (isHeart) in
+                              color: .init(hex: 0xea299a),
+                              isActive: $model.activeHeart) { (isHeart) in
                 print("did request heart: \(isHeart)")
             }
             
@@ -101,7 +102,8 @@ struct NewsFeedCard: View {
             // Break heart
             StickyImageButton(normal: "bolt.heart",
                               active: "bolt.heart.fill",
-                              color: .init(hex: 0x34495e)) { (isHeartBreak) in
+                              color: .init(hex: 0x34495e),
+                              isActive: $model.activeBHeart) { (isHeartBreak) in
                 print("did request heart: \(isHeartBreak)")
             }
             
@@ -111,7 +113,8 @@ struct NewsFeedCard: View {
             // Comment
             StickyImageButton(normal: "bubble.left",
                               active: "bubble.left.fill",
-                              color: .black) { (isComment) in
+                              color: .black,
+                              isActive: $model.activeComment) { (isComment) in
                 print("did request comment: \(isComment)")
                 action = 1
             }

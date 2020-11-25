@@ -22,7 +22,7 @@ struct PostDetailView: View {
     }
     
     init(postID: String) {
-        self.postID = postID
+        self._postID = State(initialValue: postID)
     }
     
     var body: some View {
@@ -133,7 +133,7 @@ struct PostDetailView: View {
     }
     
     func viewAppeared() {
-        viewModel.prepareData(postID: postID == "" ? nil : postID, post: post)
+        viewModel.prepareData(postID: postID, post: post)
     }
 }
 

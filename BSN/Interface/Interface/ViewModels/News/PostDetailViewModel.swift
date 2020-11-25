@@ -30,6 +30,8 @@ class PostDetailViewModel: NetworkViewModel {
     
     private var commentManager: CommentManager
     
+    private var postManager: PostManager
+    
     var canLoadMore: Bool {
         post?.numComment != numCmtFetched
     }
@@ -39,23 +41,28 @@ class PostDetailViewModel: NetworkViewModel {
         self.postID = ""
         self.replingName = ""
         commentManager = CommentManager()
+        postManager = PostManager()
         comments = []
         numCmtFetched = 0
         currentPage = 0
         print("Did init post detail viewModel")
+        
         super.init()
-        self.isLoading = true
+
         observerSaveComment()
         observerFetchComments()
+        observerFetchPost()
     }
     
     // Fetching post data and first comment page
     func prepareData(postID: String?, post: NewsFeed) {
         
         if post.id == kUndefine {
-            isLoading = true
             self.postID = postID!
+            isLoading = true
             // start loading post data
+            postManager.getPost(pid: self.postID)
+            
         } else {
             self.post = post
             self.postID = post.id
@@ -184,6 +191,26 @@ extension PostDetailViewModel {
                     cmts.forEach { self.addComment(ec: $0) }
                     self.isLoadingComment = false
                     self.objectWillChange.send()
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func observerFetchPost() {
+        postManager
+            .postPublisher
+            .sink {[weak self] (p) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    if p.id != kUndefine {
+                        self.post = NewsFeed(post: p)
+                        self.objectWillChange.send()
+                    }
                 }
             }
             .store(in: &cancellables)
