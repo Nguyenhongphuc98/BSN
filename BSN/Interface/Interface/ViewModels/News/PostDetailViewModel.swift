@@ -94,7 +94,7 @@ class PostDetailViewModel: NetworkViewModel {
         commentManager.saveComment(comment: eComment)
     }
     
-    func didDeleteComment(comment: Comment, complete: @escaping (Bool) -> Void) {
+    func didDeleteComment(comment: Comment) {
         // first level
         let id = comment.level == 0 ? comment.id : comment.parent
         let foundCommentIndex = comments.firstIndex(where: { $0.id == id })
@@ -105,10 +105,8 @@ class PostDetailViewModel: NetworkViewModel {
             comments[foundCommentIndex!].subcomments.remove(at: foundSubIndex!)
         }
         
-        // To- Do
-        // Call business to update data
-        
-        complete(true)
+        self.objectWillChange.send()
+        commentManager.deleteComment(commentID: comment.id)
     }
     
     // Add comment on UI

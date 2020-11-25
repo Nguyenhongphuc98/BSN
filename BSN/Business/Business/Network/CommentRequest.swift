@@ -53,4 +53,9 @@ class CommentRequest: ResourceRequest<EComment> {
             }
         }
     }
+    
+    func deleteComment(commentID: String) {
+        self.setPath(resourcePath: commentID)
+        self.delete()
+    }
 }

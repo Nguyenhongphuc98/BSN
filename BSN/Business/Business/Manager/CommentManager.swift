@@ -35,4 +35,8 @@ public class CommentManager {
     public func getSubComments(parentId: String) {
         networkRequest.fetchSubComments(parentId: parentId, publisher: commentsPublisher)
     }
+    
+    public func deleteComment(commentID: String) {
+        networkRequest.deleteComment(commentID: commentID)
+    }
 }

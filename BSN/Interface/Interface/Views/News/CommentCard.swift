@@ -86,9 +86,7 @@ struct CommentCard: View {
             if model.owner.isCurrentUser() {
                 Menu {
                     Button {
-                        pdViewModel.didDeleteComment(comment: model) { (success) in
-                            print("did delete cmt: \(success)")
-                        }
+                        pdViewModel.didDeleteComment(comment: model)
                     } label: {
                         Text("Xoá bình luận")
                     }
