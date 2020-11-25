@@ -44,7 +44,7 @@ struct PostController: RouteCollection {
         
         // Determine current user
         return User.query(on: req.db)
-            .filter(\.$accountID == account.id!)
+            .filter(\.$accountID == account.id!) // find user of this account
             .first()
             .unwrap(or: Abort(.notFound))
             .flatMap { (user)  in
@@ -52,10 +52,23 @@ struct PostController: RouteCollection {
                 return Post
                     .query(on: req.db)
                     .filter(\.$id == pid)
-                    .filter(\.$authorID == user.id!)
+                    .filter(\.$authorID == user.id!) // make sure this user have permission delete this post
                     .first()
-                    .unwrap(or: Abort(.notFound))
-                    .flatMap { $0.delete(on: req.db) }
+                    .unwrap(or: Abort(.forbidden))
+                    .flatMap({ (p) in
+                        
+                        // First, delete all comments of this post
+                        return Comment.query(on: req.db)
+                            .filter(\.$postID == p.id!)
+                            .all()
+                            .flatMapEach(on: req.eventLoop) { (c)  in
+                                return c.delete(on: req.db)
+                            }
+                            .map { _ in
+                                p.delete(on: req.db)
+                            }
+                            
+                    })
                     .transform(to: .ok)
             }
     }
