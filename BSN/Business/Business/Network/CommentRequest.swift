@@ -41,7 +41,7 @@ class CommentRequest: ResourceRequest<EComment> {
     }
     
     func fetchSubComments(parentId: String, publisher: PassthroughSubject<[EComment], Never>) {
-        self.setPath(resourcePath: "subs", params: ["cmtid":String(parentId)])
+        self.setPath(resourcePath: "subs", params: ["parentId":String(parentId)])
 
         self.get { result in
 

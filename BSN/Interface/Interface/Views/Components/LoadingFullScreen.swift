@@ -9,8 +9,6 @@ import SwiftUI
 
 struct LoadingFullScreen: View {
     
-    @State private var animate: Bool = false
-    
     var body: some View {
         ZStack {
             HStack {
@@ -21,15 +19,27 @@ struct LoadingFullScreen: View {
             }
             .background(Color.white)
             
-            Circle()
-                .trim(from: 0, to: 0.8)
-                .stroke(AngularGradient(gradient: .init(colors: [._primary, .white]), center: .center), style: StrokeStyle(lineWidth: 3, lineCap: .round))
-                .frame(width: 40, height: 40)
-                .rotationEffect(.init(radians: animate ? 360 : 0))
-                .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
-                .onAppear(perform: self.viewAppead)
-                .onDisappear(perform: self.viewDisAppead)
+            CircleLoading(frame: CGSize(width: 40, height: 40))
         }
+    }
+}
+
+struct CircleLoading: View {
+    
+    @State private var animate: Bool = false
+    
+    var frame: CGSize
+    
+    var body: some View {
+        
+        Circle()
+            .trim(from: 0, to: 0.8)
+            .stroke(AngularGradient(gradient: .init(colors: [._primary, .white]), center: .center), style: StrokeStyle(lineWidth: 3, lineCap: .round))
+            .frame(width: frame.width, height: frame.height)
+            .rotationEffect(.init(radians: animate ? 360 : 0))
+            .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
+            .onAppear(perform: self.viewAppead)
+            .onDisappear(perform: self.viewDisAppead)
     }
     
     func viewAppead() {
@@ -37,12 +47,6 @@ struct LoadingFullScreen: View {
     }
     
     func viewDisAppead() {
-        animate = false        
-    }
-}
-
-struct LoadingFullScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        LoadingFullScreen()
+        animate = false
     }
 }

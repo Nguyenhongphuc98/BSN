@@ -67,7 +67,7 @@ public class User: ObservableObject, Identifiable {
     }
     
     func isCurrentUser() -> Bool {
-        return self.username == AppManager.shared.currentUser.username
+        return self.id == AppManager.shared.currenUID
     }
     
     func isDummt() -> Bool {

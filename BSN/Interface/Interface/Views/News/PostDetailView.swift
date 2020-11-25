@@ -27,7 +27,6 @@ struct PostDetailView: View {
     
     var body: some View {
         VStack {
-            
             if viewModel.post != nil {
                 postContent
             } else {
@@ -62,6 +61,25 @@ struct PostDetailView: View {
                 NewsFeedCard(model: viewModel.post!, isDetail: true)
                 
                 Separator()
+                
+                HStack {
+                    if viewModel.isLoadingComment {
+                        CircleLoading(frame: CGSize(width: 15, height: 15))
+                    } else {
+                        if viewModel.canLoadMore {
+                            Button {
+                                viewModel.loadMore()
+                            } label: {
+                                Text("Tải thêm bình luận")
+                                    .font(.system(size: 13))
+                                    .foregroundColor(.black)
+                                    .bold()
+                            }
+                        }
+                    }
+                    Spacer()
+                }
+                .padding(.leading, 25)
                 
                 // List comments
                 //if viewModel.comments != nil {

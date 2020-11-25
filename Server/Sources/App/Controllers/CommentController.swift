@@ -85,7 +85,7 @@ struct CommentController: RouteCollection {
     }
     
     func getSubcomments(req: Request) throws -> EventLoopFuture<[Comment.GetFull]> {
-        guard let cmtid: String = req.query["cmtid"] else {
+        guard let cmtid: String = req.query["parentId"] else {
             throw Abort(.badRequest)
         }
         

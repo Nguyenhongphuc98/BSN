@@ -24,7 +24,15 @@ class PostDetailViewModel: NetworkViewModel {
     // the name of user be commented
     @Published var replingName: String
     
+    var numCmtFetched: Int
+    
+    var currentPage: Int
+    
     private var commentManager: CommentManager
+    
+    var canLoadMore: Bool {
+        post?.numComment != numCmtFetched
+    }
     
     override init() {
         self.isLoadingComment = false
@@ -32,6 +40,8 @@ class PostDetailViewModel: NetworkViewModel {
         self.replingName = ""
         commentManager = CommentManager()
         comments = []
+        numCmtFetched = 0
+        currentPage = 0
         print("Did init post detail viewModel")
         super.init()
         self.isLoading = true
@@ -55,6 +65,7 @@ class PostDetailViewModel: NetworkViewModel {
         
         if comments.isEmpty {
             // fetching comment - page 0
+            isLoadingComment = true
             commentManager.getNewestComments(pid: self.postID, page: 0)
         }
     }
@@ -72,6 +83,7 @@ class PostDetailViewModel: NetworkViewModel {
             content: finalMessage
         )
         
+        isLoadingComment = true
         commentManager.saveComment(comment: eComment)
     }
     
@@ -93,7 +105,10 @@ class PostDetailViewModel: NetworkViewModel {
     }
     
     // Add comment on UI
-    private func addComment(ec: EComment) {
+    // Comments fetching from server
+    // Or comment just save success by current user
+    private func addComment(ec: EComment, ownerSave: Bool = false) {
+        numCmtFetched += 1
         let cmt = Comment(
             id: ec.id!,
             parent: ec.parentID,
@@ -103,14 +118,29 @@ class PostDetailViewModel: NetworkViewModel {
         )
         
         if cmt.level == 0 {
-            self.comments.insertUnique(item: cmt)
+            if ownerSave {
+                self.comments.appendUnique(item: cmt)
+            } else {
+                self.comments.insertUnique(item: cmt)
+            }
             
             // try to load subcomments
             self.commentManager.getSubComments(parentId: cmt.id)
         } else {
             let parentIndex = self.comments.firstIndex { $0.id == cmt.parent }!
-            self.comments[parentIndex].subcomments.append(cmt)
+            
+            if ownerSave {
+                self.comments[parentIndex].subcomments.appendUnique(item: cmt)
+            } else {
+                self.comments[parentIndex].subcomments.insertUnique(item: cmt)
+            }
         }
+    }
+    
+    func loadMore() {
+        isLoadingComment = true
+        currentPage += 1
+        commentManager.getNewestComments(pid: self.postID, page: currentPage)
     }
 }
 
@@ -126,13 +156,14 @@ extension PostDetailViewModel {
                 }
                 
                 DispatchQueue.main.async {
-                    self.isLoading = false
+                    self.isLoadingComment = false
                     if ec.id == kUndefine {
                         self.resourceInfo =  .savefailure
                         self.showAlert = true
                     } else {
                         
-                        self.addComment(ec: ec)
+                        self.addComment(ec: ec, ownerSave: true)
+                        self.post?.numComment += 1
                         self.objectWillChange.send()
                     }
                 }
@@ -150,8 +181,8 @@ extension PostDetailViewModel {
                 }
                 
                 DispatchQueue.main.async {
-                    self.isLoading = false
                     cmts.forEach { self.addComment(ec: $0) }
+                    self.isLoadingComment = false
                     self.objectWillChange.send()
                 }
             }

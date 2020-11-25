@@ -12,5 +12,5 @@ public class BusinessConfigure {
     public static var topBooksPerPage: Int = 8
     public static var newestChatsPerPage: Int = 8
     public static var newestPostsPerPage: Int = 15
-    public static var newestCommentsPerPage: Int = 10
+    public static var newestCommentsPerPage: Int = 4
 }

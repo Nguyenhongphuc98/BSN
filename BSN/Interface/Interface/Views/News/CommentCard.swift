@@ -33,7 +33,7 @@ struct CommentCard: View {
                     if model.level == 0 && !model.subcomments.isEmpty {
                         Text(model.content)
                             +
-                            Text(showSubcomments ? "  Ẩn trả lời" : "  Xem trả lời").foregroundColor(._primary).bold()
+                            Text(showSubcomments ? "  Ẩn trả lời" : "  Xem trả lời").foregroundColor(.black).bold()
                     } else {
                         Text(model.content)
                             //.fixedSize(horizontal: true, vertical: false)
