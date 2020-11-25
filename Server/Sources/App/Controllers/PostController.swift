@@ -132,6 +132,15 @@ struct PostController: RouteCollection {
                 let db = req.db as! SQLDatabase
                 return db.raw(sqlQuery)
                     .all(decoding: Post.GetFull.self)
+                    .flatMapEach(on: req.eventLoop) { (p)  in
+                        let reactQuery = SQLQueryString("SELECT r.id, r.is_heart as \"isHeart\", r.user_id as \"userID\", r.post_id as \"postID\" FROM reaction as r WHERE r.user_id = '\(raw: user.id!.uuidString)' and r.post_id = '\(raw: p.id!)'")
+                                        
+                        return db.raw(reactQuery)
+                            .first(decoding: Reaction.Get.self)
+                            .map { (r) in
+                                return Post.GetFull(id: p.id, categoryID: p.categoryID, authorID: p.authorID, quote: p.quote, content: p.content, photo: p.photo, numHeart: p.numHeart, numBreakHeart: p.numBreakHeart, numComment: p.numComment, createdAt: p.createdAt, authorPhoto: p.authorPhoto, authorName: p.authorName, categoryName: p.categoryName, isHeart: r?.isHeart)
+                            }
+                    }
             }
     }
 }
