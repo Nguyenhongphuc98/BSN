@@ -36,7 +36,7 @@ enum NotifyAction: String, CaseIterable {
         switch self {
         case .heart: des = "thả tim bài viết của bạn"
         case .breakHeart: des = "thả trái tim tãn vỡ bài viết của bạn"
-        case .comment: des = "bình luận bài viết của bạn"
+        case .comment: des = "bình luận bài viết bạn đang theo dõi"
         case .follow: des = "theo dõi bạn"
         case .borrow: des = "gửi cho bạn yêu cầu mượn sách"
         case .borrowFail: des = "từ chối yêu cầu mượn sách của bạn"

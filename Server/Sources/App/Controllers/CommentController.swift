@@ -29,7 +29,7 @@ struct CommentController: RouteCollection {
     }
 
     func create(req: Request) throws -> EventLoopFuture<Comment> {
-        let cmt = try req.content.decode(Comment.self)
+        let newComment = try req.content.decode(Comment.self)
         
         // Authen
         let account = try req.auth.require(Account.self)
@@ -37,22 +37,60 @@ struct CommentController: RouteCollection {
         // Determine current user
         return User.query(on: req.db)
             .filter(\.$accountID == account.id!)
-            .filter(\.$id == cmt.userID)
+            .filter(\.$id == newComment.userID)
             .first()
             .unwrap(or: Abort(.forbidden))
             .flatMap { (user)  in
                 
-                // updaet number of comment of parent post
+                // Update number of comment of parent post
                 _ = Post.query(on: req.db)
-                    .filter(\.$id == cmt.postID)
+                    .filter(\.$id == newComment.postID)
                     .first()
                     .unwrap(or: Abort(.badRequest))
                     .map { (p) in
+                        
+                        // Update post info ==============================
                         p.numComment = p.numComment! + 1
                         _ = p.update(on: req.db)
+                        
+                        // Notify to post owner==============================
+                        let notify = Notify(
+                            typeID: UUID(uuidString: NotifyType().comment)!,
+                            actor: newComment.userID,
+                            receiver: p.authorID,
+                            des: newComment.postID
+                        )
+                        _ = notify.save(on: req.db)
+                        
+                        // Notify to all user at same level==============================
+                        
+                        // Notify to other user comment this post
+                        _ = Comment.query(on: req.db)
+                            .group(.or, { (or) in
+                                or
+                                    .filter(\.$parentID == newComment.parentID) // save level
+                                    .filter(\.$id == newComment.parentID) // find owner of comment him reply
+                            })
+                            .field(\.$userID)
+                            .unique()
+                            .all()
+                            .mapEach({ (c)  in
+                                if c.userID != newComment.userID && c.userID != p.authorID {
+                                    // Notify to user comment save vl, but not himself
+                                    // And not send duplicate to post owner
+                                    let notify = Notify(
+                                        typeID: UUID(uuidString: NotifyType().comment)!,
+                                        actor: newComment.userID,
+                                        receiver: c.userID,
+                                        des: newComment.postID
+                                    )
+                                    
+                                    _ = notify.save(on: req.db)
+                                }
+                            })
                     }
                 
-                return cmt.save(on: req.db).map { cmt }
+                return newComment.save(on: req.db).map { newComment }
             }
     }
 

@@ -109,6 +109,7 @@ class LoginViewModel: NetworkViewModel {
                         NotifyViewModel.shared.prepareData()
                         ProfileViewModel.shared.prepareData(uid: self.appManager.currenUID)
                         ExploreBookViewModel.shared.prepareData()
+                        NewsFeedViewModel.shared.prepareData()
                     }
                 }
             }

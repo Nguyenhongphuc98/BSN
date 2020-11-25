@@ -8,11 +8,13 @@
 import SwiftUI
 import Business
 
-class NewsFeedViewModel: NetworkViewModel {
+public class NewsFeedViewModel: NetworkViewModel {
     
     @Published var newsData: [NewsFeed]
     
     private var postManager: PostManager
+    
+    public static var shared: NewsFeedViewModel = NewsFeedViewModel()
     
     override init() {
         newsData = []
@@ -23,9 +25,10 @@ class NewsFeedViewModel: NetworkViewModel {
         prepareData()
     }
     
-    func prepareData() {
+    public func prepareData() {
         // load newest posts at page 0
         isLoading = true
+        newsData = []
         postManager.getNewestPosts(page: 0)
     }
     

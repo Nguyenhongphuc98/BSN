@@ -11,7 +11,7 @@ public struct NewsFeedView: View {
     
     @EnvironmentObject var root: AppManager
     
-    @StateObject var viewModel: NewsFeedViewModel = NewsFeedViewModel()
+    @StateObject var viewModel: NewsFeedViewModel = NewsFeedViewModel.shared
     
     @State private var presentCPV: Bool = false
   
