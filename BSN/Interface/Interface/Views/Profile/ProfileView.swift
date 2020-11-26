@@ -139,12 +139,13 @@ public struct ProfileView: View, PopToable {
         List {
             ForEach(viewModel.posts) { p in
                 VStack {
-                    NewsFeedCard(model: p)
+                    NewsFeedCard(model: p).id(UUID())
                     Separator()
                 }
             }
             .listRowInsets(.zero)
         }
+        .padding(.bottom, 100)
     }
     
     var books: some View {

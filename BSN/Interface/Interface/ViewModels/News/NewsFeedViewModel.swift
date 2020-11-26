@@ -59,6 +59,23 @@ public class NewsFeedViewModel: NetworkViewModel {
             }
         }
     }
+    
+    func addNewPostToTop(news: NewsFeed) {
+        DispatchQueue.main.async {
+            self.newsData.insertUnique(item: news)
+            self.objectWillChange.send()
+        }
+    }
+    
+    // when profile action on post, newfeed shoud change too
+    func postDidChange(post: NewsFeed) {
+        let index = self.newsData.firstIndex(of: post)
+        if index == nil {
+            return
+        }
+        self.newsData[index!].clone(from: post)
+        self.newsData[index!].objectWillChange.send()
+    }
 }
 
 // MARK: - Observer
@@ -73,7 +90,7 @@ extension NewsFeedViewModel {
                 }
                 
                 DispatchQueue.main.async {
-                    self.isLoading = false
+                    self.isLoading = false            
                     posts.forEach { p in
                         let newfeed = NewsFeed(post: p)
                         self.newsData.appendUnique(item: newfeed)

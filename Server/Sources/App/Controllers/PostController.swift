@@ -21,6 +21,7 @@ struct PostController: RouteCollection {
         }
         
         authen.get("newest", use: getNewest)
+        authen.get("personalNewest", use: getNewestOfUser)
         authen.get("detail", ":id", use: getPostByID)
     }
 
@@ -141,6 +142,51 @@ struct PostController: RouteCollection {
             .flatMap { (user)  in
                 
                 let sqlQuery = SQLQueryString("SELECT p.id, p.category_id as \"categoryID\", p.author_id as \"authorID\", p.quote, p.content, p.photo, p.num_heart as \"numHeart\", p.num_break_heart as \"numBreakHeart\", p.num_comment as \"numComment\", p.created_at as \"createdAt\", u.displayname as \"authorName\", u.avatar as \"authorPhoto\", c.name as \"categoryName\" FROM post as p, public.user as u, category as c WHERE p.category_id = c.id and p.author_id = u.id and ((p.category_id in (SELECT category_id FROM user_category where user_id = '\(raw: user.id!.uuidString)')) or (p.author_id in (SELECT user_id FROM user_follow where follower_id ='\(raw: user.id!.uuidString)')) or (p.author_id = '\(raw: user.id!.uuidString)')) order by p.created_at desc limit \(raw: per.description) offset \(raw: offset.description)")
+                
+                let db = req.db as! SQLDatabase
+                return db.raw(sqlQuery)
+                    .all(decoding: Post.GetFull.self)
+                    .flatMapEach(on: req.eventLoop) { (p)  in
+                        let reactQuery = SQLQueryString("SELECT r.id, r.is_heart as \"isHeart\", r.user_id as \"userID\", r.post_id as \"postID\" FROM reaction as r WHERE r.user_id = '\(raw: user.id!.uuidString)' and r.post_id = '\(raw: p.id!)'")
+                                        
+                        return db.raw(reactQuery)
+                            .first(decoding: Reaction.Get.self)
+                            .map { (r) in
+                                return Post.GetFull(id: p.id, categoryID: p.categoryID, authorID: p.authorID, quote: p.quote, content: p.content, photo: p.photo, numHeart: p.numHeart, numBreakHeart: p.numBreakHeart, numComment: p.numComment, createdAt: p.createdAt, authorPhoto: p.authorPhoto, authorName: p.authorName, categoryName: p.categoryName, isHeart: r?.isHeart)
+                            }
+                    }
+            }
+    }
+    
+    func getNewestOfUser(req: Request) throws -> EventLoopFuture<[Post.GetFull]> {
+        
+        guard let page: Int = req.query["page"],
+              let uid: String = req.query["uid"] else {
+            
+            throw Abort(.badRequest)
+        }
+        
+        var per = BusinessConfig.newestPostLimit
+        if let p: Int = req.query["per"] {
+            per = p
+        }
+        
+        let offset = page * per
+        
+        // Get post by page, sort by create time
+        // This post created by special user
+        
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        // Determine current user
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .first()
+            .unwrap(or: Abort(.notFound))
+            .flatMap { (user)  in
+                
+                let sqlQuery = SQLQueryString("SELECT p.id, p.category_id as \"categoryID\", p.author_id as \"authorID\", p.quote, p.content, p.photo, p.num_heart as \"numHeart\", p.num_break_heart as \"numBreakHeart\", p.num_comment as \"numComment\", p.created_at as \"createdAt\", u.displayname as \"authorName\", u.avatar as \"authorPhoto\", c.name as \"categoryName\" FROM post as p, public.user as u, category as c WHERE p.category_id = c.id and p.author_id = u.id and p.author_id = '\(raw: uid)' order by p.created_at desc limit \(raw: per.description) offset \(raw: offset.description)")
                 
                 let db = req.db as! SQLDatabase
                 return db.raw(sqlQuery)

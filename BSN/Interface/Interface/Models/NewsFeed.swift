@@ -137,5 +137,6 @@ extension NewsFeed {
         }
         
         self.objectWillChange.send()
+        NewsFeedViewModel.shared.postDidChange(post: self)
     }
 }

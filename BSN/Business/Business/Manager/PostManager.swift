@@ -37,6 +37,15 @@ public class PostManager {
         networkRequest.fetchNewsestPosts(page: page, per: BusinessConfigure.newestPostsPerPage, publisher: postsPublisher)
     }
     
+    public func getPersonalNewestPosts(page: Int, uid: String) {
+        networkRequest.fetchPersonalNewsestPosts(
+            page: page,
+            per: BusinessConfigure.newestPostsPerPage,
+            uid: uid,
+            publisher: postsPublisher
+        )
+    }
+    
     public func deletePost(postID: String) {
         networkRequest.deletePost(postID: postID)
     }

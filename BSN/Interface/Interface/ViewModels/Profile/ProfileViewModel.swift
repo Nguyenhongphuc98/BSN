@@ -27,19 +27,23 @@ public class ProfileViewModel: NetworkViewModel {
     
     private var followManager: UserFollowManager
     
+    private var postManager: PostManager
+    
     public override init() {
         user = User()
-        posts = fakeNews
+        posts = []
         books = []
         followed = false
         userBookManager = UserBookManager.shared
         userManager = UserManager()
         followManager = UserFollowManager()
+        postManager = PostManager()
         
         super.init()
         observerUserBookInfo()
         observerUserInfo()
         observerUserFollow()
+        observerNewestPosts()
     }
     
     /// Fetching data from Server to fill page if it passed bookID from preView
@@ -57,7 +61,10 @@ public class ProfileViewModel: NetworkViewModel {
             followManager.getUserFollow(followerId: AppManager.shared.currentUser.id, userID: uid!)
         }
         
+        self.books = []
+        self.posts = []
         userBookManager.getUserBooks(uid: uid ?? self.user.id)
+        postManager.getPersonalNewestPosts(page: 0, uid: uid ?? self.user.id)
     }
     
     func processFollow() {
@@ -93,7 +100,6 @@ extension ProfileViewModel {
                     
                     if !ubs.isEmpty {
                         
-                        self.books = []
                         ubs.forEach { (ub) in
                             
                             let userBook = BUserBook(
@@ -161,6 +167,28 @@ extension ProfileViewModel {
                     } else {
                         self.followed = true
                     }
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func observerNewestPosts() {
+        postManager
+            .postsPublisher
+            .sink {[weak self] (posts) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    
+                    posts.forEach { p in
+                        let newfeed = NewsFeed(post: p)
+                        self.posts.appendUnique(item: newfeed)
+                    }
+                    self.objectWillChange.send()
                 }
             }
             .store(in: &cancellables)

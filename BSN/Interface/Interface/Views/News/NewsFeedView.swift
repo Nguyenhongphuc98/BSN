@@ -28,7 +28,7 @@ public struct NewsFeedView: View {
             
             // News feed
             List {
-                ForEach(viewModel.newsData) { news in
+                ForEach(viewModel.newsData, id: \.self) { news in
                     VStack {
                         ZStack(alignment: .topTrailing) {
                             
@@ -89,7 +89,7 @@ public struct NewsFeedView: View {
     }
     
     func viewDidAppear() {
-        print("news-appeard")
+        print("news-appeard")        
     }
 }
 

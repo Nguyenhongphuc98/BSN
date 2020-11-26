@@ -57,6 +57,21 @@ class PostRequest: ResourceRequest<EPost> {
         }
     }
     
+    // page start from 0 (manual implement start from 0)
+    func fetchPersonalNewsestPosts(page: Int, per: Int, uid: String, publisher: PassthroughSubject<[EPost], Never>) {
+        self.setPath(resourcePath: "personalNewest", params: ["page":String(page), "per":String(per), "uid":uid])
+
+        self.get { result in
+
+            switch result {
+            case .failure(let message):
+                print("At fetch personal newest posts \(message)")
+            case .success(let posts):
+                publisher.send(posts)
+            }
+        }
+    }
+    
     func deletePost(postID: String) {
         self.setPath(resourcePath: postID)
         self.delete()
