@@ -23,9 +23,9 @@ class NewsFeed: ObservableObject, AppendUniqueAble {
     var category: Category
     var quote: String?
     var photo: String? // url to photo
-    var numHeart: Int
-    var numBeakHeart: Int
-    var numComment: Int
+    @Published var numHeart: Int
+    @Published var numBeakHeart: Int
+    @Published var numComment: Int
     
     @Published var content: String
     

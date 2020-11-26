@@ -95,10 +95,63 @@ struct CommentController: RouteCollection {
     }
 
     func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {
-        return Comment.find(req.parameters.get("commentID"), on: req.db)
-            .unwrap(or: Abort(.notFound))
-            .flatMap { $0.delete(on: req.db) }
-            .transform(to: .ok)
+        
+        guard let cmtIDStr: String = req.parameters.get("commentID"), let cmtID = UUID(uuidString: cmtIDStr) else {
+            throw Abort(.badRequest)
+        }
+        
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        // Determine current user
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .first()
+            .unwrap(or: Abort(.forbidden))
+            .flatMap { (user)  in
+                
+                return Comment.query(on: req.db)
+                    .filter(\.$id == cmtID)
+                    .filter(\.$userID == user.id!) // make sure just owner can delete resource
+                    .first()
+                    .unwrap(or: Abort(.forbidden))
+                    .flatMap { comment in
+                        
+                        
+                        _ = Comment.query(on: req.db)
+                            .filter(\.$parentID == comment.id!)
+                            .count()
+                            .map({ (count)  in // num of subs comment
+                                
+                                // Update number of comment of parent post
+                                _ = Post.query(on: req.db)
+                                .filter(\.$id == comment.postID)
+                                .first()
+                                .unwrap(or: Abort(.badRequest))
+                                .map { (p) in
+
+                                    // Update post info ==============================
+                                    p.numComment = p.numComment! - (count + 1) // number of subs cmt and it self
+                                    _ = p.update(on: req.db)
+
+                                }
+                            })
+                        
+                        // Delete all sub comments of this comment
+                        _ = Comment.query(on: req.db)
+                            .filter(\.$parentID == comment.id!)
+                            .all()
+                            .flatMapEach(on: req.eventLoop) { (c)  in
+                                return c.delete(on: req.db)
+                            }
+                        
+                        return comment.delete(on: req.db).transform(to: .ok)
+                    }
+            }
+//        return Comment.find(req.parameters.get("commentID"), on: req.db)
+//            .unwrap(or: Abort(.notFound))
+//            .flatMap { $0.delete(on: req.db) }
+//            .transform(to: .ok)
     }
     
     func getNewest(req: Request) throws -> EventLoopFuture<[Comment.GetFull]> {

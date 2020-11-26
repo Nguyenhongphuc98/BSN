@@ -98,6 +98,8 @@ class PostDetailViewModel: NetworkViewModel {
         // first level
         let id = comment.level == 0 ? comment.id : comment.parent
         let foundCommentIndex = comments.firstIndex(where: { $0.id == id })
+        let totalCmtWillDelete = 1 + comment.subcomments.count
+        
         if comment.level == 0 {
             comments.remove(at: foundCommentIndex!)
         } else {
@@ -105,6 +107,10 @@ class PostDetailViewModel: NetworkViewModel {
             comments[foundCommentIndex!].subcomments.remove(at: foundSubIndex!)
         }
         
+        // num comment and num fetch comment shoud update
+        self.post?.numComment -= totalCmtWillDelete
+        self.numCmtFetched -= totalCmtWillDelete
+                
         self.objectWillChange.send()
         commentManager.deleteComment(commentID: comment.id)
     }
@@ -168,7 +174,7 @@ extension PostDetailViewModel {
                     } else {
                         
                         self.addComment(ec: ec, ownerSave: true)
-                        self.post?.numComment += 1
+                        self.post?.numComment += 1                       
                         self.objectWillChange.send()
                     }
                 }
