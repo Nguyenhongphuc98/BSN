@@ -39,6 +39,9 @@
 		845A537F255FB6C00038F0A1 /* EChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A537E255FB6C00038F0A1 /* EChat.swift */; };
 		845A5383255FB7790038F0A1 /* ChatRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A5382255FB7790038F0A1 /* ChatRequest.swift */; };
 		845A5387255FB8F70038F0A1 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845A5386255FB8F70038F0A1 /* ChatManager.swift */; };
+		84664179256E9B4100F1C030 /* EReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84664178256E9B4100F1C030 /* EReaction.swift */; };
+		8466417D256E9C0D00F1C030 /* ReactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466417C256E9C0D00F1C030 /* ReactionRequest.swift */; };
+		84664181256E9CCF00F1C030 /* ReactionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84664180256E9CCF00F1C030 /* ReactionManager.swift */; };
 		846C40B3255013A30045BCD4 /* BusinessConfigure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846C40B2255013A30045BCD4 /* BusinessConfigure.swift */; };
 		846EFE6125465DD600F01805 /* EUserBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EFE6025465DD600F01805 /* EUserBook.swift */; };
 		846EFE6525465E4900F01805 /* EBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EFE6425465E4900F01805 /* EBook.swift */; };
@@ -109,6 +112,9 @@
 		845A537E255FB6C00038F0A1 /* EChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EChat.swift; sourceTree = "<group>"; };
 		845A5382255FB7790038F0A1 /* ChatRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRequest.swift; sourceTree = "<group>"; };
 		845A5386255FB8F70038F0A1 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
+		84664178256E9B4100F1C030 /* EReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EReaction.swift; sourceTree = "<group>"; };
+		8466417C256E9C0D00F1C030 /* ReactionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionRequest.swift; sourceTree = "<group>"; };
+		84664180256E9CCF00F1C030 /* ReactionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionManager.swift; sourceTree = "<group>"; };
 		846C40B2255013A30045BCD4 /* BusinessConfigure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessConfigure.swift; sourceTree = "<group>"; };
 		846EFE6025465DD600F01805 /* EUserBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EUserBook.swift; sourceTree = "<group>"; };
 		846EFE6425465E4900F01805 /* EBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EBook.swift; sourceTree = "<group>"; };
@@ -194,6 +200,7 @@
 				845666BC256BB044000DA583 /* ECategory.swift */,
 				845666CA256BB96D000DA583 /* EPost.swift */,
 				8496F574256D074E00A18658 /* EComment.swift */,
+				84664178256E9B4100F1C030 /* EReaction.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -259,6 +266,7 @@
 				845666C4256BB248000DA583 /* CategoryManager.swift */,
 				845666D2256BBB97000DA583 /* PostManager.swift */,
 				8496F57C256D0A2400A18658 /* CommentManager.swift */,
+				84664180256E9CCF00F1C030 /* ReactionManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -283,6 +291,7 @@
 				845666C0256BB09B000DA583 /* CategoryRequest.swift */,
 				845666CE256BBA52000DA583 /* PostRequest.swift */,
 				8496F578256D098700A18658 /* CommentRequest.swift */,
+				8466417C256E9C0D00F1C030 /* ReactionRequest.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -452,6 +461,7 @@
 				8496F575256D074E00A18658 /* EComment.swift in Sources */,
 				841CED93255D35D1007CCACC /* NotifyRequest.swift in Sources */,
 				846EFE6125465DD600F01805 /* EUserBook.swift in Sources */,
+				84664181256E9CCF00F1C030 /* ReactionManager.swift in Sources */,
 				846EFE6525465E4900F01805 /* EBook.swift in Sources */,
 				845666D3256BBB97000DA583 /* PostManager.swift in Sources */,
 				841CED81255C1C4C007CCACC /* EUser.swift in Sources */,
@@ -469,6 +479,8 @@
 				845A537F255FB6C00038F0A1 /* EChat.swift in Sources */,
 				841C3E4C25593DF5000393AA /* BorrowBookManager.swift in Sources */,
 				845666BD256BB044000DA583 /* ECategory.swift in Sources */,
+				84664179256E9B4100F1C030 /* EReaction.swift in Sources */,
+				8466417D256E9C0D00F1C030 /* ReactionRequest.swift in Sources */,
 				846C40B3255013A30045BCD4 /* BusinessConfigure.swift in Sources */,
 				841CED85255C1D37007CCACC /* UserRequest.swift in Sources */,
 				841CEDB9255ED68C007CCACC /* MessageRequest.swift in Sources */,

@@ -18,7 +18,7 @@ public class NewsFeedViewModel: NetworkViewModel {
     
     override init() {
         newsData = []
-        postManager = PostManager()
+        postManager = PostManager()        
         
         super.init()
         observerNewestPosts()

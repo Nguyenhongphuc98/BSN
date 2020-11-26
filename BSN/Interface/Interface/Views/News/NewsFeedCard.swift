@@ -93,7 +93,9 @@ struct NewsFeedCard: View {
                               active: "heart.fill",
                               color: .init(hex: 0xea299a),
                               isActive: $model.activeHeart) { (isHeart) in
+                
                 print("did request heart: \(isHeart)")
+                model.processReact(action: isHeart ? .heart : .unHeart)
             }
             
             Text(model.numHeart.description)
@@ -104,7 +106,9 @@ struct NewsFeedCard: View {
                               active: "bolt.heart.fill",
                               color: .init(hex: 0x34495e),
                               isActive: $model.activeBHeart) { (isHeartBreak) in
+                
                 print("did request heart: \(isHeartBreak)")
+                model.processReact(action: isHeartBreak ? .bHeart : .unBHeart)
             }
             
             Text(model.numBeakHeart.description)
