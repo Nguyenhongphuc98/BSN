@@ -18,8 +18,14 @@ struct NotifyCard: View {
     private var icon: String {
         
         switch model.action {
-        case .comment, .breakHeart, .heart:
+        case .comment:
             return "text.bubble"
+            
+        case .heart:
+            return "heart.fill"
+            
+        case .breakHeart:
+            return "bolt.heart.fill"
             
         case .borrow, .exchange, .borrowFail, .borrowSuccess, .exchangeFail, .exchangeSuccess:
             return "text.book.closed"

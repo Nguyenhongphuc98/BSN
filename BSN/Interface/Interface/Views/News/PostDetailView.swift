@@ -17,8 +17,11 @@ struct PostDetailView: View {
     
     @State private var post: NewsFeed = NewsFeed()
     
-    init(post: NewsFeed) {
+    var didReact: ((NewsFeed) -> Void)?
+    
+    init(post: NewsFeed, didReact: ((NewsFeed) -> Void)? = nil) {
         self.post.clone(from: post)
+        self.didReact = didReact
     }
     
     init(postID: String) {
@@ -43,6 +46,9 @@ struct PostDetailView: View {
     
     var backButton: some View {
         Button {
+            if let p = viewModel.post {
+                didReact?(p)
+            }            
             presentationMode.wrappedValue.dismiss()
         } label: {
             Image(systemName: "chevron.backward")

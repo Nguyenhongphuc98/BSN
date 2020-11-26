@@ -78,6 +78,7 @@ extension NewsFeedViewModel {
                         let newfeed = NewsFeed(post: p)
                         self.newsData.appendUnique(item: newfeed)
                     }
+                    self.objectWillChange.send()
                 }
             }
             .store(in: &cancellables)

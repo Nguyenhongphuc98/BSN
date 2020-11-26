@@ -19,7 +19,12 @@ struct NewsFeedCard: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            NavigationLink(destination: PostDetailView(post: model), tag: 1, selection: $action) {
+            NavigationLink(
+                destination: PostDetailView(post: model, didReact: { (post) in
+                    model.clone(from: post)
+                    model.objectWillChange.send()
+                }),
+                tag: 1, selection: $action) {
                 EmptyView()
             }
             .frame(width: 0, height: 0)
