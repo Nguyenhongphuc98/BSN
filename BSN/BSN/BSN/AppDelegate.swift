@@ -16,12 +16,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
     
     func initializeS3() {
-        let poolId = "us-east-2:46a7fb7b-1876-45de-9a90-dd022a06e4df"
+        let poolId = "us-east-2:0adc1b98-8105-40d4-b27a-3d3d2681be7e"
         let credentialsProvider = AWSCognitoCredentialsProvider(
-            regionType: .APSoutheast1,
+            regionType: .USEast2, // region of pool
             identityPoolId: poolId
         )
-        let configuration = AWSServiceConfiguration(region: .APSoutheast1, credentialsProvider: credentialsProvider)
+        let configuration = AWSServiceConfiguration(
+            region: .APSoutheast1, // region of buck
+            credentialsProvider: credentialsProvider
+        )
         AWSServiceManager.default().defaultServiceConfiguration = configuration
         
         print("Did init S3!")

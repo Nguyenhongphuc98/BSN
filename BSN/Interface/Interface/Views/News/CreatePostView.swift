@@ -30,69 +30,14 @@ struct CreatePostView: View {
                 
                 editor
                 
-                HStack {
-                    Button {
-                        self.showCategory.toggle()
-                        print("did tap")
-                    } label: {
-                        HStack {
-                            Image(systemName: "books.vertical")
-                                .frame(width: 21, height: 21)
-                            
-                            Text(viewModel.category.name)
-                                .robotoMedium(size: 11)
-                        }
-                        .foregroundColor(viewModel.category.id == kUndefine ? .black : .blue)
-                    }
-                    .buttonStyle(StrokeBorderStyle())
-                    .sheet(isPresented: $showCategory) {
-                        CategoryView { (category) in
-                            self.viewModel.category = category
-                            self.viewModel.objectWillChange.send()
-                            print("Did tap: \(category)")
-                        }
-                    }
-                    
-                    Button {
-                        print("did tap")
-                        if showQuote == true {
-                            // Changing to false (hiden)
-                            quote = ""
-                        }
-                        withAnimation {
-                            self.showQuote.toggle()
-                        }
-                    } label: {
-                        HStack {
-                            Image(systemName: "quote.bubble")
-                                .frame(width: 21, height: 21)
-                            
-                            Text("Thêm trích dẫn")
-                                .robotoMedium(size: 11)
-                        }
-                        .foregroundColor(showQuote ? .blue : .black)
-                    }
-                    .buttonStyle(StrokeBorderStyle())
-                    
-                    Button {
-                        print("did tap")
-                        showPhotoPicker.toggle()
-                    } label: {
-                        HStack {
-                            Image(systemName: "photo")
-                                .frame(width: 21, height: 21)
-                            
-                            Text("Thêm ảnh")
-                                .robotoMedium(size: 11)
-                        }
-                    }
-                    .buttonStyle(StrokeBorderStyle())
-                    .sheet(isPresented: $showPhotoPicker) {
-                        ImagePicker(picker: $showPhotoPicker) { data in
-                            //viewModel.photo = data
-                        }
-                    }
+                // Progess bar (uploading)
+                if viewModel.isUploading {
+                    ProgressView("Đang xử lý ảnh", value: viewModel.uploadProgess, total: 1)
+                        .progressViewStyle(LinearProgressViewStyle())
+                        .padding()
                 }
+                
+                footer
                 
                 Spacer()
             }
@@ -101,7 +46,7 @@ struct CreatePostView: View {
         .alert(isPresented: $viewModel.showAlert, content: alert)
     }
     
-    var header: some View {
+    private var header: some View {
         ZStack {
             HStack {
                 Button {
@@ -110,6 +55,7 @@ struct CreatePostView: View {
                     Image(systemName: "xmark")
                         .foregroundColor(.init(hex: 0x666666))
                 }
+                .disabled(viewModel.isUploading)
                 
                 Spacer()
                 
@@ -121,6 +67,7 @@ struct CreatePostView: View {
                 } label: {
                     Text("Đăng")
                 }
+                .disabled(viewModel.isUploading)
             }
             .padding()
             .background(Rectangle().fill(Color.init(hex: 0xFAFAFA)))
@@ -131,7 +78,7 @@ struct CreatePostView: View {
         }
     }
     
-    var editor: some View {
+    private var editor: some View {
         VStack {
             if showQuote {
                 QuoteEditor(message: $quote)
@@ -140,21 +87,20 @@ struct CreatePostView: View {
             EditorWithPlaceHolder(text: $content, placeHolder: "Chia sẻ cảm xúc của bạn ngay nào", forceground: .black, font: "Roboto-Regular")
                 .padding()
             
-            if !viewModel.photo.isEmpty {
+            if !viewModel.photoUrl.isEmpty {
                 ZStack(alignment: .topTrailing) {
-                    Image(uiImage: UIImage(data: viewModel.photo)!)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    BSNImage(urlString: viewModel.photoUrl, tempImage: "unavailable")
                         .frame(width: 170, height: 120)
                         .cornerRadius(5)
                     
                     Button(action: {
-                        self.viewModel.photo = Data()
+                        self.viewModel.photoUrl = ""
+                        self.viewModel.objectWillChange.send()
                     }) {
                         Image(systemName: "xmark")
                             .foregroundColor(.white)
                             .padding(10)
-                            .background(Color("blue"))
+                            .background(Color.blue)
                             .clipShape(Circle())
                     }
                 }
@@ -162,10 +108,81 @@ struct CreatePostView: View {
         }
     }
     
-    func alert() -> Alert {
-        if viewModel.resourceInfo == .invalid_category || viewModel.resourceInfo == .invalid_empty {
+    private var footer: some View {
+        HStack {
+            Button {
+                self.showCategory.toggle()
+                print("did tap")
+            } label: {
+                HStack {
+                    Image(systemName: "books.vertical")
+                        .frame(width: 21, height: 21)
+                    
+                    Text(viewModel.category.name)
+                        .robotoMedium(size: 11)
+                }
+                .foregroundColor(viewModel.category.id == kUndefine ? .black : .blue)
+            }
+            .buttonStyle(StrokeBorderStyle())
+            .sheet(isPresented: $showCategory) {
+                CategoryView { (category) in
+                    self.viewModel.category = category
+                    self.viewModel.objectWillChange.send()
+                    print("Did tap: \(category)")
+                }
+            }
+            
+            Button {
+                print("did tap")
+                if showQuote == true {
+                    // Changing to false (hiden)
+                    quote = ""
+                }
+                withAnimation {
+                    self.showQuote.toggle()
+                }
+            } label: {
+                HStack {
+                    Image(systemName: "quote.bubble")
+                        .frame(width: 21, height: 21)
+                    
+                    Text("Thêm trích dẫn")
+                        .robotoMedium(size: 11)
+                }
+                .foregroundColor(showQuote ? .blue : .black)
+            }
+            .buttonStyle(StrokeBorderStyle())
+            
+            Button {
+                print("did tap")
+                showPhotoPicker.toggle()
+            } label: {
+                HStack {
+                    Image(systemName: "photo")
+                        .frame(width: 21, height: 21)
+                    
+                    Text("Thêm ảnh")
+                        .robotoMedium(size: 11)
+                }
+            }
+            .buttonStyle(StrokeBorderStyle())
+            .disabled(!viewModel.photoUrl.isEmpty)
+            .sheet(isPresented: $showPhotoPicker) {
+                ImagePicker(picker: $showPhotoPicker) { img in
+                    //viewModel.photo = data
+                    viewModel.upload(image: img)
+                }
+            }
+        }
+    }
+    
+    private func alert() -> Alert {
+        if viewModel.resourceInfo == .invalid_category
+            || viewModel.resourceInfo == .invalid_empty
+            || viewModel.resourceInfo == .image_upload_fail {
+            
             return Alert(
-                title: Text("Dữ liệu không hợp lệ"),
+                title: Text("Lỗi dữ liệu"),
                 message: Text(viewModel.resourceInfo.des())
             )
         } else {
@@ -176,7 +193,9 @@ struct CreatePostView: View {
                 title: Text("Kết quả"),
                 message: Text(viewModel.resourceInfo.des()),
                 primaryButton: .default(Text("Thử lại")) {
-                    viewModel.post(content: content, quote: quote)
+                    if viewModel.resourceInfo == .savefailure {
+                        viewModel.post(content: content, quote: quote)
+                    }
                 },
                 secondaryButton: .cancel(Text("Huỷ bỏ")) {
                     dismiss()

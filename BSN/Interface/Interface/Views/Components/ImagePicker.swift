@@ -57,7 +57,7 @@ struct ImagePicker : UIViewControllerRepresentable {
             if item.canLoadObject(ofClass: UIImage.self){
                 
                 item.loadObject(ofClass: UIImage.self) { (image, err) in
-                    if err != nil{return}
+                    if err != nil { return }
                     
                     let imageData = image as! UIImage
                     

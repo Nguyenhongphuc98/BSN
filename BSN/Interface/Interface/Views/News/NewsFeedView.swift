@@ -63,7 +63,7 @@ public struct NewsFeedView: View {
     
             // Loading view
             if viewModel.isLoading {
-                Loading()
+                CircleLoading(frame: CGSize(width: 20, height: 20))
             }
         }
     }

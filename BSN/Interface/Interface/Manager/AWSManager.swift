@@ -68,10 +68,12 @@ class AWSManager {
                     let url = AWSS3.default().configuration.endpoint.url                    
                     let publicURL = url?.appendingPathComponent(self.bucketName).appendingPathComponent(fileName)
                     print("Uploaded to:\(String(describing: publicURL))")
+                    
                     if let completionBlock = completion {
                         completionBlock(publicURL?.absoluteString, nil)
                     }
                 } else {
+                    
                     if let completionBlock = completion {
                         completionBlock(nil, error)
                     }

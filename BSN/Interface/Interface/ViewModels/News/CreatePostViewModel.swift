@@ -10,17 +10,22 @@ import Business
 
 class CreatePostViewModel: NetworkViewModel {
     
-    @Published var photo: Data
-    
+    @Published var photoUrl: String
     @Published var category: Category
+    
+    // Upload image to S3
+    @Published var uploadProgess: Float
+    @Published var isUploading: Bool
     
     private var postManager: PostManager
     
     var didSaveSuccess: (() -> Void)?
     
     override init() {
-        photo = Data()
+        photoUrl = ""
         category = Category(id: kUndefine, name: "Chọn chủ đề")
+        uploadProgess = 0
+        isUploading = false
         postManager = PostManager()
         print("did init Create Post ViewModel")
         
@@ -46,7 +51,8 @@ class CreatePostViewModel: NetworkViewModel {
             categoryID: category.id,
             authorID: AppManager.shared.currenUID,
             quote: quote.isEmpty ? nil : quote,
-            content: content
+            content: content,
+            photo: photoUrl.isEmpty ? nil : photoUrl
         )
         postManager.savePost(post: p)
     }
@@ -65,6 +71,7 @@ extension CreatePostViewModel {
                 
                 DispatchQueue.main.async {
                     self.isLoading = false
+                    self.photoUrl = ""
                     if p.id == kUndefine {
                         self.resourceInfo =  .savefailure
                         self.showAlert = true
@@ -74,5 +81,34 @@ extension CreatePostViewModel {
                 }
             }
             .store(in: &cancellables)
+    }
+}
+
+// MARK: - AWS Utils
+extension CreatePostViewModel {
+    func upload(image: UIImage) {
+        print("start uploading image ...")
+        isUploading = true
+        objectWillChange.send()
+        AWSManager.shared.uploadImage(image: image, progress: {[weak self] ( uploadProgress) in
+            
+            guard let strongSelf = self else { return }
+            strongSelf.uploadProgess = Float(uploadProgress)
+            print("uploading: \(uploadProgress)")
+            
+        }) {[weak self] (uploadedFileUrl, error) in
+            
+            guard let strongSelf = self else { return }
+            if let finalPath = uploadedFileUrl as? String {
+                strongSelf.photoUrl = finalPath
+            } else {
+                //strongSelf.photoUrl = ""
+                strongSelf.resourceInfo = .image_upload_fail
+                strongSelf.showAlert = true
+                print("\(String(describing: error?.localizedDescription))")
+            }
+            strongSelf.isUploading = false
+            strongSelf.objectWillChange.send()
+        }
     }
 }
