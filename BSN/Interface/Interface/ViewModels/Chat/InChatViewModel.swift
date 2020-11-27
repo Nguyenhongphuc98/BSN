@@ -11,17 +11,14 @@ import Business
 class InChatViewModel: NetworkViewModel {
     
     @Published var messages: [Message]
-    
     @Published var chat: Chat
+    @Published var info: String // If don't have any mess, we show this message
     
-    // Photo to send if select from gallery
-    @Published var photo: Data
-    
-    // If don't have any mess, we show this message
-    @Published var info: String
+    // Upload image to S3
+    @Published var uploadProgess: Float
+    @Published var isUploading: Bool
     
     private var messageManager: MessageManager
-    
     private var chatManager: ChatManager
     
     // Did send new message
@@ -31,8 +28,11 @@ class InChatViewModel: NetworkViewModel {
     override init() {
         messages = []
         chat = Chat()
-        photo = Data()
         info = ""
+        
+        uploadProgess = 0
+        isUploading = false
+        
         messageManager = MessageManager()
         chatManager = ChatManager()
         
@@ -43,7 +43,7 @@ class InChatViewModel: NetworkViewModel {
     }
     
     func fetchData(chat: Chat) {
-        //self.isLoading = true
+        self.isLoading = true
         self.chat = chat
         
         if chat.id != kUndefine && chat.id != nil {
@@ -62,7 +62,19 @@ class InChatViewModel: NetworkViewModel {
         messageManager.getMessages(page: page, chatID: chat.id!)
     }
     
-    
+    // if message type is photo. no need using content
+    func didChat(type:MessageType, content: String = "") {
+        
+        let newMessage = Message(
+            sender: AppManager.shared.currenUID,
+            receiver: chat.partnerID,
+            content: content,
+            type: type
+        )
+        
+        pushToUI(mess: newMessage)
+        pushToServer(mess: newMessage)
+    }
     
     func pushToUI(mess: Message) {
         // update on UI and force scroll to bottom most
@@ -84,8 +96,6 @@ class InChatViewModel: NetworkViewModel {
         
         messageManager.saveMess(message: newMessage)
     }
-    
-    
 }
 
 // MARK: - Observer method
@@ -170,42 +180,29 @@ extension InChatViewModel {
     }
 }
 
-// MARK: - Chat Method
+// MARK: - AWS Utils
 extension InChatViewModel {
-    // if message type is photo. no need using content
-    func didChat(type:MessageType, content: String = "") {
-        
-        switch type {
-        case .text, .sticker:
-            didChat(content: content, type: type)
-        case .photo:
-            didChat(photo: self.photo)
+    func upload(image: UIImage) {
+        isUploading = true
+        AWSManager.shared.uploadImage(image: image, progress: {[weak self] ( uploadProgress) in
+            
+            guard let strongSelf = self else { return }
+            strongSelf.uploadProgess = Float(uploadProgress)
+            
+        }) {[weak self] (uploadedFileUrl, error) in
+            
+            guard let strongSelf = self else { return }
+            if let finalPath = uploadedFileUrl as? String {
+                //strongSelf.photoUrl = finalPath
+                // request make send message
+                strongSelf.didChat(type: .photo, content: finalPath)
+            } else {
+                //strongSelf.photoUrl = ""
+                strongSelf.resourceInfo = .image_upload_fail
+                strongSelf.showAlert = true
+                print("\(String(describing: error?.localizedDescription))")
+            }
+            strongSelf.isUploading = false
         }
-    }
-    
-    func didChat(content: String, type: MessageType) {
-        let newMessage = Message(
-            sender: AppManager.shared.currenUID,
-            receiver: chat.partnerID,
-            content: content,
-            type: type
-        )
-
-        pushToUI(mess: newMessage)
-
-        pushToServer(mess: newMessage)
-    }
-    
-    func didChat(photo: Data) {
-        let newMessage = Message(
-            sender: AppManager.shared.currenUID,
-            receiver: chat.partnerID,
-            photo: photo,
-            type: .photo
-        )
-        
-        pushToUI(mess: newMessage)
-        
-        pushToServer(mess: newMessage)
     }
 }

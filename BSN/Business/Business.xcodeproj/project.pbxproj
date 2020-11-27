@@ -25,7 +25,6 @@
 		841CEDB5255ED45C007CCACC /* EMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CEDB4255ED45C007CCACC /* EMessage.swift */; };
 		841CEDB9255ED68C007CCACC /* MessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CEDB8255ED68C007CCACC /* MessageRequest.swift */; };
 		842C444F2547C240003C570D /* GoogleApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C444E2547C240003C570D /* GoogleApiRequest.swift */; };
-		842C44832548181A003C570D /* libSwiftyJSON.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 842C44822548181A003C570D /* libSwiftyJSON.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		844EACBF25515E8000CACEEB /* EBookReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EACBE25515E8000CACEEB /* EBookReview.swift */; };
 		844EACC325515ED700CACEEB /* BookReviewRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EACC225515ED700CACEEB /* BookReviewRequest.swift */; };
 		844EACC725515FE400CACEEB /* BookReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EACC625515FE400CACEEB /* BookReviewManager.swift */; };
@@ -64,7 +63,7 @@
 		84C8CB61253EDA89004D5CD0 /* BusinessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8CB60253EDA89004D5CD0 /* BusinessTests.swift */; };
 		84C8CB63253EDA89004D5CD0 /* Business.h in Headers */ = {isa = PBXBuildFile; fileRef = 84C8CB55253EDA89004D5CD0 /* Business.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84C8CB74253EDB1A004D5CD0 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8CB73253EDB1A004D5CD0 /* Utils.swift */; };
-		BEABB7BC9FA1D90635D5A0D9 /* libPods-Business.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17832911D7ABBBFC08EBE348 /* libPods-Business.a */; };
+		BA36154E84BEE94327355435 /* libPods-Business.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E773DCD44499B765094B554 /* libPods-Business.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,9 +76,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		84BA7B78256FEA4100A87CB5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		17832911D7ABBBFC08EBE348 /* libPods-Business.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Business.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		33B5D422159A3197CBD77847 /* Pods-Business.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Business.debug.xcconfig"; path = "Target Support Files/Pods-Business/Pods-Business.debug.xcconfig"; sourceTree = "<group>"; };
+		356DE83CA45F4EC943879D91 /* Pods-Business.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Business.debug.xcconfig"; path = "Target Support Files/Pods-Business/Pods-Business.debug.xcconfig"; sourceTree = "<group>"; };
+		3FA31CA2D5D3351A8F8D9631 /* Pods-Business.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Business.release.xcconfig"; path = "Target Support Files/Pods-Business/Pods-Business.release.xcconfig"; sourceTree = "<group>"; };
 		841C3E4325593B0F000393AA /* EBorrowBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EBorrowBook.swift; sourceTree = "<group>"; };
 		841C3E4725593BA1000393AA /* BorrowBookRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorrowBookRequest.swift; sourceTree = "<group>"; };
 		841C3E4B25593DF5000393AA /* BorrowBookManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorrowBookManager.swift; sourceTree = "<group>"; };
@@ -98,7 +110,6 @@
 		841CEDB4255ED45C007CCACC /* EMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMessage.swift; sourceTree = "<group>"; };
 		841CEDB8255ED68C007CCACC /* MessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRequest.swift; sourceTree = "<group>"; };
 		842C444E2547C240003C570D /* GoogleApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleApiRequest.swift; sourceTree = "<group>"; };
-		842C44822548181A003C570D /* libSwiftyJSON.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libSwiftyJSON.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		844EACBE25515E8000CACEEB /* EBookReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EBookReview.swift; sourceTree = "<group>"; };
 		844EACC225515ED700CACEEB /* BookReviewRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReviewRequest.swift; sourceTree = "<group>"; };
 		844EACC625515FE400CACEEB /* BookReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReviewManager.swift; sourceTree = "<group>"; };
@@ -140,7 +151,7 @@
 		84C8CB60253EDA89004D5CD0 /* BusinessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessTests.swift; sourceTree = "<group>"; };
 		84C8CB62253EDA89004D5CD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84C8CB73253EDB1A004D5CD0 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		9461F291964A5A2AF55C4255 /* Pods-Business.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Business.release.xcconfig"; path = "Target Support Files/Pods-Business/Pods-Business.release.xcconfig"; sourceTree = "<group>"; };
+		9E773DCD44499B765094B554 /* libPods-Business.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Business.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,8 +159,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEABB7BC9FA1D90635D5A0D9 /* libPods-Business.a in Frameworks */,
-				842C44832548181A003C570D /* libSwiftyJSON.a in Frameworks */,
+				BA36154E84BEE94327355435 /* libPods-Business.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,11 +174,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		57D2F656A8CA7D882506D65B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				356DE83CA45F4EC943879D91 /* Pods-Business.debug.xcconfig */,
+				3FA31CA2D5D3351A8F8D9631 /* Pods-Business.release.xcconfig */,
+			);
+			name = Pods;
+			path = ../Pods;
+			sourceTree = "<group>";
+		};
 		598A39713D0D4F1136F28D1B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				842C44822548181A003C570D /* libSwiftyJSON.a */,
-				17832911D7ABBBFC08EBE348 /* libPods-Business.a */,
+				9E773DCD44499B765094B554 /* libPods-Business.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -212,7 +231,7 @@
 				84C8CB5F253EDA89004D5CD0 /* BusinessTests */,
 				84C8CB53253EDA89004D5CD0 /* Products */,
 				598A39713D0D4F1136F28D1B /* Frameworks */,
-				D97F9108AA32AF7255E17957 /* Pods */,
+				57D2F656A8CA7D882506D65B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -296,16 +315,6 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		D97F9108AA32AF7255E17957 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				33B5D422159A3197CBD77847 /* Pods-Business.debug.xcconfig */,
-				9461F291964A5A2AF55C4255 /* Pods-Business.release.xcconfig */,
-			);
-			name = Pods;
-			path = ../Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -324,11 +333,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84C8CB66253EDA89004D5CD0 /* Build configuration list for PBXNativeTarget "Business" */;
 			buildPhases = (
-				17F45CF46A4AF434F4E7AE0B /* [CP] Check Pods Manifest.lock */,
+				7984839AB55552312AFCE475 /* [CP] Check Pods Manifest.lock */,
 				84C8CB4D253EDA89004D5CD0 /* Headers */,
 				84C8CB4E253EDA89004D5CD0 /* Sources */,
 				84C8CB4F253EDA89004D5CD0 /* Frameworks */,
 				84C8CB50253EDA89004D5CD0 /* Resources */,
+				84BA7B78256FEA4100A87CB5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -412,7 +422,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		17F45CF46A4AF434F4E7AE0B /* [CP] Check Pods Manifest.lock */ = {
+		7984839AB55552312AFCE475 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -640,7 +650,7 @@
 		};
 		84C8CB67253EDA89004D5CD0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 33B5D422159A3197CBD77847 /* Pods-Business.debug.xcconfig */;
+			baseConfigurationReference = 356DE83CA45F4EC943879D91 /* Pods-Business.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -669,7 +679,7 @@
 		};
 		84C8CB68253EDA89004D5CD0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9461F291964A5A2AF55C4255 /* Pods-Business.release.xcconfig */;
+			baseConfigurationReference = 3FA31CA2D5D3351A8F8D9631 /* Pods-Business.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;

@@ -46,8 +46,6 @@ class Message: ObservableObject, AppendUniqueAble {
     // ex text, photoUrl, sticker name
     var content: String?
     
-    var photo: Data?
-    
     init() {
         id = kUndefine
         senderID = kUndefine
@@ -71,12 +69,6 @@ class Message: ObservableObject, AppendUniqueAble {
     convenience init(sender: String, receiver: String, content: String, type: MessageType) {
         self.init(sender: sender, receiver: receiver, type: type)
         self.content = content
-    }
-    
-    // Init message send photo content
-    convenience init(sender: String, receiver: String, photo: Data, type: MessageType) {
-        self.init(sender: sender, receiver: receiver, type: type)
-        self.photo = photo
     }
     
     // Init message as last message of a chat

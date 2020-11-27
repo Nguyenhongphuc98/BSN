@@ -36,9 +36,7 @@ struct MessageCel: View {
                     .frame(width: 100)
             } else {
                 //Image type = photo
-                Image(uiImage: UIImage(data: message.photo!)!)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                BSNImage(urlString: message.content, tempImage: "unavailable")
                     .frame(width: 200)
                     .cornerRadius(5)
                     .onTapGesture {

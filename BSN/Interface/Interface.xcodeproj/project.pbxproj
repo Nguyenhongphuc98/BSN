@@ -165,13 +165,14 @@
 		84B964F42525C6E600F37571 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B964F32525C6E600F37571 /* Notify.swift */; };
 		84B964F82525CBBD00F37571 /* NotifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B964F72525CBBD00F37571 /* NotifyViewModel.swift */; };
 		84B964FC2526063F00F37571 /* CoreMessageEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B964FB2526063F00F37571 /* CoreMessageEditor.swift */; };
+		84BA7A7B256FAFE200A87CB5 /* AWSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BA7A7A256FAFE200A87CB5 /* AWSManager.swift */; };
 		84E5F33F2550F3C600ADF450 /* ColectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5F33E2550F3C600ADF450 /* ColectionExtension.swift */; };
 		84FA99002518616E00CB92CB /* Interface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FA98F62518616E00CB92CB /* Interface.framework */; };
 		84FA99052518616E00CB92CB /* InterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA99042518616E00CB92CB /* InterfaceTests.swift */; };
 		84FA99072518616E00CB92CB /* Interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 84FA98F92518616E00CB92CB /* Interface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84FA99182518619900CB92CB /* Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA99172518619900CB92CB /* Launch.swift */; };
 		84FB37112525622000B8581F /* ExceptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB37102525622000B8581F /* ExceptionView.swift */; };
-		D2601200B71A1BC2C1C1EFCC /* libPods-Interface.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DDC4E3EFAB1847054A72BA7 /* libPods-Interface.a */; };
+		FDDB7C26539DD0D04E2B2396 /* Pods_Interface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE52A15C970DF16267311B7 /* Pods_Interface.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,8 +200,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		18E7E9AE5269D396DFB418D6 /* Pods-Interface.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Interface.release.xcconfig"; path = "Target Support Files/Pods-Interface/Pods-Interface.release.xcconfig"; sourceTree = "<group>"; };
-		3DDC4E3EFAB1847054A72BA7 /* libPods-Interface.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Interface.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CE52A15C970DF16267311B7 /* Pods_Interface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Interface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D26DFB75A87DD94C41B22EF /* Pods-Interface.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Interface.release.xcconfig"; path = "Target Support Files/Pods-Interface/Pods-Interface.release.xcconfig"; sourceTree = "<group>"; };
 		8401C86D252758BD00A722CE /* InChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InChatView.swift; sourceTree = "<group>"; };
 		8401C8712527590D00A722CE /* MessageCel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCel.swift; sourceTree = "<group>"; };
 		8401C87525275EBD00A722CE /* InChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InChatViewModel.swift; sourceTree = "<group>"; };
@@ -358,6 +359,7 @@
 		84B964F32525C6E600F37571 /* Notify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 		84B964F72525CBBD00F37571 /* NotifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyViewModel.swift; sourceTree = "<group>"; };
 		84B964FB2526063F00F37571 /* CoreMessageEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMessageEditor.swift; sourceTree = "<group>"; };
+		84BA7A7A256FAFE200A87CB5 /* AWSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSManager.swift; sourceTree = "<group>"; };
 		84E5F33E2550F3C600ADF450 /* ColectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColectionExtension.swift; sourceTree = "<group>"; };
 		84FA98F62518616E00CB92CB /* Interface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Interface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FA98F92518616E00CB92CB /* Interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Interface.h; sourceTree = "<group>"; };
@@ -367,7 +369,7 @@
 		84FA99062518616E00CB92CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84FA99172518619900CB92CB /* Launch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launch.swift; sourceTree = "<group>"; };
 		84FB37102525622000B8581F /* ExceptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExceptionView.swift; sourceTree = "<group>"; };
-		876EF4423AE0DE40123BE04B /* Pods-Interface.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Interface.debug.xcconfig"; path = "Target Support Files/Pods-Interface/Pods-Interface.debug.xcconfig"; sourceTree = "<group>"; };
+		EA54C87E97781575A3A46068 /* Pods-Interface.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Interface.debug.xcconfig"; path = "Target Support Files/Pods-Interface/Pods-Interface.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -376,7 +378,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8414A36D2541760B00FD8ED2 /* Business.framework in Frameworks */,
-				D2601200B71A1BC2C1C1EFCC /* libPods-Interface.a in Frameworks */,
+				FDDB7C26539DD0D04E2B2396 /* Pods_Interface.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,16 +393,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0A4C638FBED193482013603D /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				876EF4423AE0DE40123BE04B /* Pods-Interface.debug.xcconfig */,
-				18E7E9AE5269D396DFB418D6 /* Pods-Interface.release.xcconfig */,
-			);
-			name = Pods;
-			path = ../Pods;
-			sourceTree = "<group>";
-		};
 		8401C8A5252AB39800A722CE /* Books */ = {
 			isa = PBXGroup;
 			children = (
@@ -637,6 +629,7 @@
 			children = (
 				847BBAC52521EEB900E0500D /* AppManager.swift */,
 				84A61CA4254C0A3E00B50FE8 /* NavigationState.swift */,
+				84BA7A7A256FAFE200A87CB5 /* AWSManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -772,7 +765,7 @@
 			isa = PBXGroup;
 			children = (
 				845BA21F2540358800CC9140 /* Business.framework */,
-				3DDC4E3EFAB1847054A72BA7 /* libPods-Interface.a */,
+				4CE52A15C970DF16267311B7 /* Pods_Interface.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -785,7 +778,7 @@
 				84FA99032518616E00CB92CB /* InterfaceTests */,
 				84FA98F72518616E00CB92CB /* Products */,
 				84C8CB77253EDBEE004D5CD0 /* Frameworks */,
-				0A4C638FBED193482013603D /* Pods */,
+				D9E4C16F74205E4053E2DC7D /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -823,6 +816,16 @@
 			path = InterfaceTests;
 			sourceTree = "<group>";
 		};
+		D9E4C16F74205E4053E2DC7D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EA54C87E97781575A3A46068 /* Pods-Interface.debug.xcconfig */,
+				4D26DFB75A87DD94C41B22EF /* Pods-Interface.release.xcconfig */,
+			);
+			name = Pods;
+			path = ../Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -841,7 +844,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84FA990A2518616E00CB92CB /* Build configuration list for PBXNativeTarget "Interface" */;
 			buildPhases = (
-				EBD3EB2863F550234D39A297 /* [CP] Check Pods Manifest.lock */,
+				FED1EA2174207A542A5F527A /* [CP] Check Pods Manifest.lock */,
 				84FA98F12518616E00CB92CB /* Headers */,
 				84FA98F22518616E00CB92CB /* Sources */,
 				84FA98F32518616E00CB92CB /* Frameworks */,
@@ -944,7 +947,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		EBD3EB2863F550234D39A297 /* [CP] Check Pods Manifest.lock */ = {
+		FED1EA2174207A542A5F527A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1036,6 +1039,7 @@
 				84411A252523331D00AE31D8 /* BoundTracking.swift in Sources */,
 				8401C9BC2530659800A722CE /* ExchangeBookCell.swift in Sources */,
 				8401C947252C6E7700A722CE /* BookStatusText.swift in Sources */,
+				84BA7A7B256FAFE200A87CB5 /* AWSManager.swift in Sources */,
 				844119FD2522E80500AE31D8 /* EdgeInsetsExtension.swift in Sources */,
 				8401CA072531B0C300A722CE /* BookStateText.swift in Sources */,
 				8401C8802528243A00A722CE /* NewChatView.swift in Sources */,
@@ -1264,7 +1268,7 @@
 		};
 		84FA990B2518616E00CB92CB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 876EF4423AE0DE40123BE04B /* Pods-Interface.debug.xcconfig */;
+			baseConfigurationReference = EA54C87E97781575A3A46068 /* Pods-Interface.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1293,7 +1297,7 @@
 		};
 		84FA990C2518616E00CB92CB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 18E7E9AE5269D396DFB418D6 /* Pods-Interface.release.xcconfig */;
+			baseConfigurationReference = 4D26DFB75A87DD94C41B22EF /* Pods-Interface.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;

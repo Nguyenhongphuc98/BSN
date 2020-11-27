@@ -13,7 +13,8 @@ struct ImagePicker : UIViewControllerRepresentable {
     @Binding var picker : Bool
     //@Binding var img_Data : Data
     
-    var didSelect: ((Data) -> Void)?
+    //var didSelect: ((Data) -> Void)?
+    var didSelect: ((UIImage) -> Void)?
     
     func makeCoordinator() -> Coordinator {
         return ImagePicker.Coordinator(parent: self)
@@ -61,10 +62,12 @@ struct ImagePicker : UIViewControllerRepresentable {
                     let imageData = image as! UIImage
                     
                     DispatchQueue.main.async {
-                        //self.parent.img_Data = imageData.jpegData(compressionQuality: 0.5)!
-                        let data = imageData.jpegData(compressionQuality: 0.5)!
+                        //let data = imageData.jpegData(compressionQuality: 0.5)!
+                        //self.parent.picker.toggle()
+                        //self.parent.didSelect?(data)
+                        
                         self.parent.picker.toggle()
-                        self.parent.didSelect?(data)
+                        self.parent.didSelect?(imageData)
                     }
                 }
             }

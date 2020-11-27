@@ -16,7 +16,7 @@ struct LoadingFullScreen: View {
                 VStack {
                     Spacer()
                 }
-            }
+            }            
             .background(Color.white)
             
             CircleLoading(frame: CGSize(width: 40, height: 40))

@@ -17,7 +17,7 @@ struct RichMessageEditor: View {
     
     var didChat: ((MessageType, String) -> Void)?
     
-    var didPickPhoto: ((Data) -> Void)?
+    var didPickPhoto: ((UIImage) -> Void)?
     
     var didExpand: ((Bool, EditorExpandType) -> Void)?
     
@@ -71,8 +71,8 @@ struct RichMessageEditor: View {
         .animation(.easeIn)
         .onAppear(perform: viewAppeared)
         .sheet(isPresented: $showImagePicker) {
-            ImagePicker(picker: $showImagePicker) { data in
-                didPickPhoto?(data)
+            ImagePicker(picker: $showImagePicker) { img in
+                didPickPhoto?(img)
             }
         }
     }

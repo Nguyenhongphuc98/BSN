@@ -23,66 +23,66 @@ struct InChatView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            if !viewModel.isLoading {
-                NavigationLink(
-                    destination: ProfileView(uid: chat.partnerID)
-                        .environmentObject(NavigationState()),
-                    tag: 1,
-                    selection: $goProfile
-                ) {
-                    EmptyView()
-                }
-                .frame(width: 0, height: 0)
-                .opacity(0)
+            NavigationLink(
+                destination: ProfileView(uid: chat.partnerID)
+                    .environmentObject(NavigationState()),
+                tag: 1,
+                selection: $goProfile
+            ) {
+                EmptyView()
+            }
+            .frame(width: 0, height: 0)
+            .opacity(0)
+            
+            // Messages
+            VStack {
+                Separator(color: .white, height: 2)
                 
-                VStack {
-                    Separator(color: .white, height: 2)
-                    
-                    ScrollView {
-                        ScrollViewReader { value in
-                            LazyVStack {
-                                ForEach(viewModel.messages) { message in
-                                    MessageCel(message: message)
-                                        .id(message.id)
-                                        .environmentObject(viewModel.chat)
-                                }
+                ScrollView {
+                    ScrollViewReader { value in
+                        LazyVStack {
+                            ForEach(viewModel.messages) { message in
+                                MessageCel(message: message)
+                                    .id(message.id)
+                                    .environmentObject(viewModel.chat)
                             }
-                            .onAppear {
-                                
-                                value.scrollTo(viewModel.messages.last?.id ?? "")
-                                viewModel.updateUIIfNeedes = {
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.15, execute: {
-                                        withAnimation {
-                                            value.scrollTo(viewModel.messages.last?.id ?? "")
-                                            print("did force update UI")
-                                        }
-                                    })
-                                }
+                        }
+                        .onAppear {
+                            
+                            value.scrollTo(viewModel.messages.last?.id ?? "")
+                            viewModel.updateUIIfNeedes = {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15, execute: {
+                                    withAnimation {
+                                        value.scrollTo(viewModel.messages.last?.id ?? "")
+                                        print("did force update UI")
+                                    }
+                                })
                             }
                         }
                     }
-                    .resignKeyboardOnDragGesture()
-                    
-                    Spacer()
                 }
-                .padding(.bottom, chatBottom)
+                .resignKeyboardOnDragGesture()
+                
+                Spacer()
             }
+            .padding(.bottom, chatBottom)            
+            .embededLoadingFull(isLoading: $viewModel.isLoading)
             
+            // Editor
             VStack(spacing: 0) {
                 Spacer()
                 
-                if viewModel.isLoading {
-                    Loading()
-                    Spacer()
-                }
+//                if viewModel.isLoading {
+//                    Loading()
+//                    Spacer()
+//                }
 
                 //editorBox
                 RichMessageEditor(didChat: { (type, message) in
                     viewModel.didChat(type: type, content: message)
-                }, didPickPhoto: { (data) in
-                    
-                    viewModel.photo = data
-                    viewModel.didChat(type: .photo)
+                }, didPickPhoto: { (img) in
+                    //viewModel.didChat(type: .photo)
+                    viewModel.upload(image: img)
                 }, didExpand: { expand, type in
                     
                     // Keyboard height (253) +  editText height (45) = 298
@@ -95,6 +95,13 @@ struct InChatView: View {
                     
                     viewModel.updateUIIfNeedes?()
                 })
+            }
+            
+            // Progess bar (uploading)
+            if viewModel.isUploading {
+                ProgressView("Đang xử lý ảnh", value: viewModel.uploadProgess, total: 1)
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .padding(.bottom, 300)
             }
         }
         .alert(isPresented: $viewModel.showAlert, content: alert)

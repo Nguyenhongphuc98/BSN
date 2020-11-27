@@ -1,3 +1,4 @@
+#use_frameworks!
 platform :ios, '14.0'
 workspace 'BSN'
 
@@ -11,14 +12,20 @@ target 'Business' do
 end
 
 target 'Interface' do
+  use_frameworks!
   project 'Interface/Interface.xcodeproj'
   pod 'AlamofireImage', '~> 4.1'
+  pod 'AWSS3'
+  
   pod 'SwiftyJSON', '~> 4.0'
 end
 
 target 'BSN' do
+  use_frameworks!
   project 'BSN/BSN.xcodeproj'
+  pod 'AWSS3'
+  
   pod 'AlamofireImage', '~> 4.1'
   pod 'SwiftyJSON', '~> 4.0'
-  pod 'FBSDKLoginKit'
+  #pod 'FBSDKLoginKit'
 end

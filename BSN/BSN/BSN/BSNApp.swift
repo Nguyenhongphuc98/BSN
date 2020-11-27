@@ -13,6 +13,8 @@ struct BSNApp: App {
     
     @Environment(\.scenePhase) private var phase
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     @ObservedObject var appManager: AppManager = AppManager.shared
     
     var profileNavState: NavigationState = NavigationState()
@@ -92,7 +94,6 @@ struct BSNApp: App {
     func configureAppearance() {
         
         UITextView.appearance().backgroundColor = .clear
-        
         UITableView.appearance().backgroundColor = .clear
         
         //let backImage = UIImage(named: "lauchlogo")

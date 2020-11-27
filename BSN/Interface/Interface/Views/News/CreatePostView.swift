@@ -89,7 +89,7 @@ struct CreatePostView: View {
                     .buttonStyle(StrokeBorderStyle())
                     .sheet(isPresented: $showPhotoPicker) {
                         ImagePicker(picker: $showPhotoPicker) { data in
-                            viewModel.photo = data
+                            //viewModel.photo = data
                         }
                     }
                 }
