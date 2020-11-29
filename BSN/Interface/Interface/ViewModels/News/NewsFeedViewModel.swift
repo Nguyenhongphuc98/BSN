@@ -12,13 +12,21 @@ public class NewsFeedViewModel: NetworkViewModel {
     
     @Published var newsData: [NewsFeed]
     
+    // Load more message
+    @Published var isLoadmore: Bool
+    @Published var allNewsFetched: Bool
+    @Published var currentPage: Int
+    
     private var postManager: PostManager
     
     public static var shared: NewsFeedViewModel = NewsFeedViewModel()
     
     override init() {
         newsData = []
-        postManager = PostManager()        
+        isLoadmore = false
+        allNewsFetched = false
+        currentPage = 0
+        postManager = PostManager()
         
         super.init()
         observerNewestPosts()
@@ -45,18 +53,15 @@ public class NewsFeedViewModel: NetworkViewModel {
     }
     
     func loadMoreIfNeeded(item: NewsFeed) {
-        let thresholdIndex = newsData.index(newsData.endIndex, offsetBy: -2)
+        guard !allNewsFetched else {
+            print("All news fetched. break fetching func...")
+            return
+        }
+        let thresholdIndex = newsData.count - 1
         if newsData.firstIndex(where: { $0.id == item.id }) == thresholdIndex {
-            print("reached \(item.id)")
-            self.isLoading = true
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                for _ in 1...7 {
-                    self.newsData.append(NewsFeed())
-                }
-                self.isLoading = false
-                print("total news: \(self.newsData.count)")
-            }
+            currentPage += 1
+            isLoadmore = true
+            postManager.getNewestPosts(page: currentPage)
         }
     }
     
@@ -90,10 +95,17 @@ extension NewsFeedViewModel {
                 }
                 
                 DispatchQueue.main.async {
-                    self.isLoading = false            
+                    self.isLoading = false
+                    self.isLoadmore = false
+                    
                     posts.forEach { p in
                         let newfeed = NewsFeed(post: p)
                         self.newsData.appendUnique(item: newfeed)
+                    }
+                    
+                    // num of news < config shoud be last page
+                    if posts.count < BusinessConfigure.newestPostsPerPage {
+                        self.allNewsFetched = true
                     }
                     self.objectWillChange.send()
                 }

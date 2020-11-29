@@ -20,7 +20,6 @@ public struct NewsFeedView: View {
     }
     
     public var body: some View {
-        
         VStack {
             editor
             
@@ -58,11 +57,11 @@ public struct NewsFeedView: View {
                 }
                 .listRowInsets(.zero)
             }
-            .listStyle(PlainListStyle())
+            .listStyle(PlainListStyle())            
             .onAppear(perform: self.viewDidAppear)
+            .embededLoadingFull(isLoading: $viewModel.isLoading)
     
-            // Loading view
-            if viewModel.isLoading {
+            if viewModel.isLoadmore {
                 CircleLoading(frame: CGSize(width: 20, height: 20))
             }
         }

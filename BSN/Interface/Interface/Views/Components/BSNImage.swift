@@ -23,13 +23,9 @@ struct BSNImage: View {
 //            .onReload {
 //                print("BSN iamge reload")
 //                refetchImage()
-//            }
-            //.onAppear(perform: viewAppeared)
+//            }            
             .onAppear {
                 refetchImage()
-            }
-            .onDisappear {
-                print("BSN dis apeard =======")
             }
     }
     

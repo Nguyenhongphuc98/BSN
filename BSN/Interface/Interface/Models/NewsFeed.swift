@@ -23,6 +23,7 @@ class NewsFeed: ObservableObject, AppendUniqueAble {
     var category: Category
     var quote: String?
     var photo: String? // url to photo
+    
     @Published var numHeart: Int
     @Published var numBeakHeart: Int
     @Published var numComment: Int
@@ -37,8 +38,8 @@ class NewsFeed: ObservableObject, AppendUniqueAble {
     // reaction manager
     private var reactManager: ReactionManager = ReactionManager.shared
     
-    init() {
-        id = kUndefine
+    init(id: String? = nil) {
+        self.id = id ?? kUndefine
         owner = User()
         postTime = fakedates.randomElement()!
         category = Category(id: UUID().uuidString, name: "Category")
