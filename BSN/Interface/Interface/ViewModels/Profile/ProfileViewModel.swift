@@ -111,7 +111,7 @@ extension ProfileViewModel {
                                 state: ub.state,
                                 cover: ub.cover
                             )
-                            self.books.append(userBook)
+                            self.books.appendUnique(item: userBook)
                         }
                         self.objectWillChange.send()
                     }

@@ -20,7 +20,7 @@ struct MessageCel: View {
         HStack(alignment: .top, spacing: 8) {
             if message.isSendByMe() {
                 Spacer(minLength: 50)
-               
+
             } else {
                 CircleImage(image: chat.partnerPhoto, diameter: 35)
             }

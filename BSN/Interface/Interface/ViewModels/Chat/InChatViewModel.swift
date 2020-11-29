@@ -11,12 +11,19 @@ import Business
 class InChatViewModel: NetworkViewModel {
     
     @Published var messages: [Message]
-    @Published var chat: Chat
-    @Published var info: String // If don't have any mess, we show this message
+    @Published var chat: Chat    
     
     // Upload image to S3
     @Published var uploadProgess: Float
     @Published var isUploading: Bool
+    
+    // Load more message
+    @Published var isLoadmore: Bool
+    @Published var allMessageFetched: Bool
+    @Published var currentPage: Int
+    
+    // Did load more at least one time
+    private var didLoadMore: Bool
     
     private var messageManager: MessageManager
     private var chatManager: ChatManager
@@ -28,10 +35,14 @@ class InChatViewModel: NetworkViewModel {
     override init() {
         messages = []
         chat = Chat()
-        info = ""
         
         uploadProgess = 0
         isUploading = false
+        
+        isLoadmore = true
+        allMessageFetched = false
+        currentPage = 0
+        didLoadMore = false
         
         messageManager = MessageManager()
         chatManager = ChatManager()
@@ -60,6 +71,19 @@ class InChatViewModel: NetworkViewModel {
     
     func fetchMessages(page: Int) {
         messageManager.getMessages(page: page, chatID: chat.id!)
+    }
+    
+    func loadMoreMessages() {
+        guard !isLoadmore && !allMessageFetched else {
+            return
+        }
+        
+        didLoadMore = true
+        isLoadmore = true
+        currentPage += 1
+        print("Start load more message: page-\(currentPage)")
+        self.objectWillChange.send()
+        fetchMessages(page: currentPage)
     }
     
     // if message type is photo. no need using content
@@ -119,7 +143,6 @@ extension InChatViewModel {
                         
                         self.resourceInfo = .success
                     }
-                    
                 }
             }
             .store(in: &cancellables)
@@ -135,22 +158,33 @@ extension InChatViewModel {
                 }
                 
                 DispatchQueue.main.async {
-                    self.isLoading = false
                     
-                    if messages.isEmpty {
-                        self.info = "Soạn và gửi tin đầu tiên của bạn"
-                    } else {
+                    if !messages.isEmpty {
                         if messages[0].id == kUndefine {
                             self.resourceInfo = .getfailure
                             self.showAlert = true
                         } else {
                             messages.forEach { (m) in
                                 let model = Message(sender: m.senderID ,content: m.content, type: m.typeName!, createAt: m.createAt!)
-                                self.messages.insertUnique(item: model)
+                                self.messages.insertUnique(item: model)                                
                             }
+                            
+                            // Num item < per page should become last page
+                            if messages.count < BusinessConfigure.newestMessagesPerPage {
+                                self.allMessageFetched = true
+                                print("***last page****")
+                            }
+                            
+                            // Should scroll to bottom in first time fetch messages
+                            if !self.didLoadMore {
+                                self.updateUIIfNeedes?()
+                            }
+                            //self.objectWillChange.send()
                         }
                     }
                     
+                    self.isLoading = false
+                    self.isLoadmore = false
                 }
             }
             .store(in: &cancellables)

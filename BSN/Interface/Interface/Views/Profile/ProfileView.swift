@@ -67,7 +67,6 @@ public struct ProfileView: View, PopToable {
                         }
                         
                         dinamicContent(proxy: value)
-                            .frame(height: UIScreen.screenHeight)
                     }
                 }
             }
@@ -145,13 +144,13 @@ public struct ProfileView: View, PopToable {
             }
             .listRowInsets(.zero)
         }
-        .padding(.bottom, 100)
+        .padding(.bottom)
     }
     
     var books: some View {
         ZStack(alignment: .trailing) {
             BBookGrid(models: viewModel.books, style: .mybook)
-                .padding(.bottom, 100)
+                .padding(.bottom)
             
             NavigationLink(
                 destination: SearchAddBookView()
@@ -199,6 +198,7 @@ public struct ProfileView: View, PopToable {
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         }
+        .frame(height: UIScreen.screenHeight - 100)
     }
     
     private func viewAppeared() {

@@ -33,6 +33,9 @@ public class ImageLoader: ObservableObject {
             self.urlString = urlString
             download(urlString: urlString)
         }
+//        else {
+//            print(">>>found duplicate url req")
+//        }
     }
 
     private func download(urlString: String?) {
@@ -50,10 +53,15 @@ public class ImageLoader: ObservableObject {
             imageCache: ImageLoader.imageCache
         )
         
+//        print("*** start download: \(url)")
+//        if ImageLoader.imageCache.image(for: urlRequest, withIdentifier: nil) != nil {
+//            print("Found image from cache :))))))))))))")
+//        }
         imageDownloader.download(urlRequest, completion:  { response in
             if case .success(let image) = response.result {
                 self.uiImage = image
             } else {
+                //print("load image failure: \(response.result)")
                 self.uiImage = UIImage(named: self.instate, in: interfaceBundle, with: nil)!
             }
         })

@@ -23,24 +23,17 @@ struct InChatView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            NavigationLink(
-                destination: ProfileView(uid: chat.partnerID)
-                    .environmentObject(NavigationState()),
-                tag: 1,
-                selection: $goProfile
-            ) {
-                EmptyView()
-            }
-            .frame(width: 0, height: 0)
-            .opacity(0)
+            navProfile
             
             // Messages
             VStack {
-                Separator(color: .white, height: 2)
-                
+                           
                 ScrollView {
                     ScrollViewReader { value in
-                        LazyVStack {
+                
+                        VStack {
+                            loadMore
+                            
                             ForEach(viewModel.messages) { message in
                                 MessageCel(message: message)
                                     .id(message.id)
@@ -48,15 +41,14 @@ struct InChatView: View {
                             }
                         }
                         .onAppear {
-                            
-                            value.scrollTo(viewModel.messages.last?.id ?? "")
                             viewModel.updateUIIfNeedes = {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15, execute: {
+
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                                     withAnimation {
-                                        value.scrollTo(viewModel.messages.last?.id ?? "")
-                                        print("did force update UI")
+                                        value.scrollTo(viewModel.messages.last?.id ?? "", anchor: .bottom)
+                                        print("*** scroll to-")
                                     }
-                                })
+                                }
                             }
                         }
                     }
@@ -68,34 +60,7 @@ struct InChatView: View {
             .padding(.bottom, chatBottom)            
             .embededLoadingFull(isLoading: $viewModel.isLoading)
             
-            // Editor
-            VStack(spacing: 0) {
-                Spacer()
-                
-//                if viewModel.isLoading {
-//                    Loading()
-//                    Spacer()
-//                }
-
-                //editorBox
-                RichMessageEditor(didChat: { (type, message) in
-                    viewModel.didChat(type: type, content: message)
-                }, didPickPhoto: { (img) in
-                    //viewModel.didChat(type: .photo)
-                    viewModel.upload(image: img)
-                }, didExpand: { expand, type in
-                    
-                    // Keyboard height (253) +  editText height (45) = 298
-                    // Just need adapt sticker showing
-                    if type == .sticker {
-                        chatBottom = expand ? 298 : 45
-                    } else {
-                        chatBottom = 45
-                    }
-                    
-                    viewModel.updateUIIfNeedes?()
-                })
-            }
+            editor
             
             // Progess bar (uploading)
             if viewModel.isUploading {
@@ -109,6 +74,62 @@ struct InChatView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton, trailing: profileButton)
         .onAppear(perform: viewAppeard)
+    }
+    
+    private var navProfile: some View {
+        NavigationLink(
+            destination: ProfileView(uid: chat.partnerID)
+                .environmentObject(NavigationState()),
+            tag: 1,
+            selection: $goProfile
+        ) {
+            EmptyView()
+        }
+        .frame(width: 0, height: 0)
+        .opacity(0)
+    }
+    
+    private var loadMore: some View {
+        Group {
+            if viewModel.isLoadmore {
+                CircleLoading(frame: CGSize(width: 20, height: 20))
+            }
+            
+            if !viewModel.allMessageFetched && !viewModel.isLoadmore {
+                Button {
+                    viewModel.loadMoreMessages()
+                } label: {
+                    Text("Tải thêm")
+                        .frame(maxWidth: .infinity)
+                        .background(Color(.secondarySystemBackground))
+                        .foregroundColor(.black)
+                }
+            }
+        }
+    }
+    
+    private var editor: some View {
+        VStack(spacing: 0) {
+            Spacer()
+
+            //editorBox
+            RichMessageEditor(didChat: { (type, message) in
+                viewModel.didChat(type: type, content: message)
+            }, didPickPhoto: { (img) in
+                viewModel.upload(image: img)
+            }, didExpand: { expand, type in
+                
+                // Keyboard height (253) +  editText height (45) = 298
+                // Just need adapt sticker showing
+                if type == .sticker {
+                    chatBottom = expand ? 298 : 45
+                } else {
+                    chatBottom = 45
+                }
+                
+                viewModel.updateUIIfNeedes?()
+            })
+        }
     }
     
     var backButton: some View {

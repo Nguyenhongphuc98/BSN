@@ -28,7 +28,7 @@ public class MessageManager {
         networkRequest.saveMessage(message: message, publisher: saveMessPublisher)
     }
     
-    public func getMessages(page: Int, per: Int = BusinessConfigure.newestChatsPerPage, chatID: String) {
+    public func getMessages(page: Int, per: Int = BusinessConfigure.newestMessagesPerPage, chatID: String) {
         networkRequest.fetchMessages(page: page, per: per, chatID: chatID, publisher: getMessagesPublisher)
     }
 }

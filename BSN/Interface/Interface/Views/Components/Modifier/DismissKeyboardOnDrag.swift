@@ -10,7 +10,7 @@ import SwiftUI
 struct DismissKeyboardOnDrag: ViewModifier {
     
     var gesture = DragGesture().onChanged{ value in
-        print("trans: \(value.translation.height)")
+        //print("trans: \(value.translation.height)")
         if abs(value.translation.height) > 10 {
             UIApplication.shared.endEditing(true)
         }

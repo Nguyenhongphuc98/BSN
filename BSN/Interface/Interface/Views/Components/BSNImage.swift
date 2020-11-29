@@ -20,10 +20,17 @@ struct BSNImage: View {
         Image(uiImage: loader.uiImage)
             .resizable()
             .aspectRatio(contentMode: .fill)
-            .onReload {
+//            .onReload {
+//                print("BSN iamge reload")
+//                refetchImage()
+//            }
+            //.onAppear(perform: viewAppeared)
+            .onAppear {
                 refetchImage()
             }
-            //.onAppear(perform: viewAppeared)
+            .onDisappear {
+                print("BSN dis apeard =======")
+            }
     }
     
     func refetchImage() {

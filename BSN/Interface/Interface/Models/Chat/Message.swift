@@ -46,8 +46,8 @@ class Message: ObservableObject, AppendUniqueAble {
     // ex text, photoUrl, sticker name
     var content: String?
     
-    init() {
-        id = kUndefine
+    init(id: String? = nil) {
+        self.id = id ?? kUndefine
         senderID = kUndefine
         receiverID = kUndefine
         createDate = Date()

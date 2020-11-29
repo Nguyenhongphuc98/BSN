@@ -11,7 +11,7 @@ struct LoadingFullScreen: View {
     
     var body: some View {
         ZStack {
-            HStack {
+            HStack() {
                 Spacer()
                 VStack {
                     Spacer()
@@ -20,6 +20,7 @@ struct LoadingFullScreen: View {
             .background(Color.white)
             
             CircleLoading(frame: CGSize(width: 40, height: 40))
+                .position(x: UIScreen.screenWidth / 2 - 20, y: UIScreen.screenHeight / 2 - 20)
         }
     }
 }
