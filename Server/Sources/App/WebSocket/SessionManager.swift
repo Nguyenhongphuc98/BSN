@@ -8,6 +8,11 @@
 import Vapor
 import Fluent
 
+// Available Key format
+// For session
+// ChatID:WS                   ==> publish message for users in this chat
+// chats+ReceiverID:WS         ==> publish chats when new message send to this receiver
+
 enum WebSocketSendOption {
   case id(String), socket(WebSocket)
 }

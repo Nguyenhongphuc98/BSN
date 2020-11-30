@@ -32,44 +32,6 @@ struct MessageController: RouteCollection {
         let message = try req.content.decode(Message.GetFull.self)
         
         return try save(req: req, message: message)
-//        let saveMess = message.toMessage()
-//
-//        if message.chatID != nil {
-//            // If detect chat which message be long to
-//            // Just save it
-//            return saveMess.save(on: req.db).map { saveMess }
-//        } else {
-//
-//            // try to find chat hold this message
-//            // Chat need find will have two id sender and receiver same
-//            return Chat.query(on: req.db)
-//                .group(.or, { (or) in
-//                    or.group(.and) { (and) in
-//                        and
-//                            .filter(\.$firstUserID == UUID(uuidString: message.senderID)!)
-//                            .filter(\.$secondUserID == UUID(uuidString: message.receiverID!)!)
-//                    }
-//                    .group(.and) { (and) in
-//                        and
-//                            .filter(\.$firstUserID == UUID(uuidString: message.receiverID!)!)
-//                            .filter(\.$secondUserID == UUID(uuidString: message.senderID)!)
-//                    }
-//                })
-//                .first()
-//                .flatMap { (c)  in
-//                    if let chat = c {
-//                        saveMess.chatID = chat.id
-//                        return saveMess.save(on: req.db).map { saveMess }
-//                    } else {
-//
-//                        let chat = Chat(firstUid: message.senderID, secondUid: message.receiverID!)
-//                        return chat.save(on: req.db).flatMap { _ in
-//                            saveMess.chatID = chat.id
-//                            return saveMess.save(on: req.db).map { saveMess }
-//                        }
-//                    }
-//                }
-//        }
     }
 
     func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {
@@ -127,7 +89,7 @@ extension MessageController {
             // If detect chat which message be long to
             // Just save it
             return saveMess.save(on: req.db).map {
-                broadcastMessage(mess: saveMess, typeName: message.typeName!)
+                broadcastMessage(req: req, mess: saveMess, typeName: message.typeName!)
                 return saveMess
             }
         } else {
@@ -151,12 +113,14 @@ extension MessageController {
                 .flatMap { (c)  in
                     if let chat = c {
                         saveMess.chatID = chat.id
+                        broadcastMessage(req: req, mess: saveMess, typeName: message.typeName!)
                         return saveMess.save(on: req.db).map { saveMess }
                     } else {
                         
                         let chat = Chat(firstUid: message.senderID, secondUid: message.receiverID!)
                         return chat.save(on: req.db).flatMap { _ in
                             saveMess.chatID = chat.id
+                            broadcastMessage(req: req, mess: saveMess, typeName: message.typeName!)
                             return saveMess.save(on: req.db).map { saveMess }
                         }
                     }
@@ -165,10 +129,11 @@ extension MessageController {
     }
 }
 
+// MARK: - WebSocket
 extension MessageController {
     
-    func broadcastMessage(mess: Message, typeName: String) {
-        // Broadcast message for in-chat (observer by chat id)
+    // Broadcast message for all user in-chat (observer by chat id)
+    func broadcastMessage(req: Request, mess: Message, typeName: String) {
         let responMessage = Message.GetFull(
             id: mess.id!.uuidString,
             chatID: mess.chatID!.uuidString,
@@ -178,7 +143,27 @@ extension MessageController {
             typeName: typeName,
             createAt: mess.createdAt?.description
         )
-        // Send to inchat
+        // Send to inchat (messages)
         SessionManager.shared.send(message: responMessage, to: .id(mess.chatID!.uuidString))
+        // Send to Chats
+        broadcastChat(req: req, chatID: mess.chatID!.uuidString)
+    }
+    
+    // Broadcast chat for users in this chat
+    // Chat may be new or created before but just update because hold new message
+    func broadcastChat(req: Request, chatID: String) {
+                
+        let sqlQuery = SQLQueryString("SELECT c.id, c.first_user as \"firstUserID\", c.second_user as \"secondUserID\", u1.displayname as \"firstUserName\", u1.avatar as \"firstUserPhoto\", u2.displayname as \"secondUserName\", u2.avatar as \"secondUserPhoto\", m.content as \"messageContent\", m.created_at as \"messageCreateAt\", mt.name  as \"messageTypeName\" from chat as c, public.user as u1, public.user as u2, message as m, message_type as mt where c.first_user = u1.id and c.second_user = u2.id and m.chat_id = c.id and m.type_id = mt.id and m.id in (select m2.id from message as m2 order by created_at desc limit 1) and c.id = '\(raw: chatID)'");
+        
+        let db = req.db as! SQLDatabase
+        _ = db.raw(sqlQuery)
+            .first(decoding: Chat.GetFull.self)
+            .map { (chat) in
+                // Send to inchat
+                if let c = chat {
+                    SessionManager.shared.send(message: c, to: .id("chats\(c.firstUserID)"))
+                    SessionManager.shared.send(message: c, to: .id("chats\(c.secondUserID)"))
+                }
+            }
     }
 }

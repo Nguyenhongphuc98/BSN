@@ -119,6 +119,7 @@ struct ChatController: RouteCollection {
                 }
     }
     
+    // Search chated by patner displayname
     func searchChats(req: Request) throws -> EventLoopFuture<[Chat.GetFull]> {
         
         guard let name: String = req.query["name"] else {

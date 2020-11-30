@@ -28,6 +28,7 @@ struct WebSocketConnect: RouteCollection {
         guard let receiverID: String = req.parameters.get("receiverID") else {
             return
         }
-        self.sessionManager.connect(to: "chats" + receiverID, listener: socket)
+        let key = "chats" + receiverID
+        self.sessionManager.connect(to: key, listener: socket)
     }
 }
