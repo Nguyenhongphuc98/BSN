@@ -42,12 +42,13 @@ public class ChatViewModel: NetworkViewModel {
         observerRecentlyChats()
         observerSearchChats()
         prepareData()
+        observerReceiveNewChat()
     }
     
     public func prepareData() {
         print("did call prepare data for chat view")
         isLoading = true
-        chatManager.getChats(page: 0) // Load recently chats
+        chatManager.getChats(page: 0, currentUid: AppManager.shared.currenUID) // Load recently chats
     }
     
     func searchChat() {
@@ -80,11 +81,6 @@ public class ChatViewModel: NetworkViewModel {
             }
         }
     }
-    
-//    private func filterInternalChat(key: String, complete: @escaping ([Chat]) -> Void) {
-//        let result = chats.filter { $0.partnerName.contains(key) }
-//        complete(result)
-//    }
 }
 
 // MARK: - Observer data
@@ -153,6 +149,40 @@ extension ChatViewModel {
                     if self.processText != self.searchText {
                         self.searchChat()
                     }
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    // Chat maybe new or last message updated
+    private func observerReceiveNewChat() {
+        chatManager
+            .receiveChatPublisher
+            .sink {[weak self] (c) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    let mess = Message(content: c.messageContent!, type: c.messageTypeName!, createAt: c.messageCreateAt!)
+                    let model = Chat(id: c.id,
+                         partnerID: c.getPartnerID(of: AppManager.shared.currenUID),
+                         partnerName: c.getPartnerName(of: AppManager.shared.currenUID),
+                         partnerPhoto: c.getPartnerPhoto(of: AppManager.shared.currenUID),
+                         lastMessage: mess
+                    )
+                    
+                    let index = self.chats.firstIndex { $0.id == model.id }
+                    if let i = index {
+                        // This chat aleady in list, just update content, time, and move to top
+                        // In short, remove and insert new
+                        self.chats.remove(at: i)
+                    }
+                    
+                    // Anyway, new chat should be in top
+                    self.chats.insert(model, at: 0)                    
+                    self.objectWillChange.send()
                 }
             }
             .store(in: &cancellables)

@@ -60,7 +60,7 @@ public struct ChatView: View {
                     List {
                         ForEach(viewModel.chats) { c in
                             ChatCell(chat: c)
-                                .id("\(c.id!)\(c.partnerID)")
+                                .id(UUID())
                         }
                     }
                     .listStyle(PlainListStyle())

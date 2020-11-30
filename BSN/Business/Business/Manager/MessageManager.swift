@@ -38,6 +38,7 @@ public class MessageManager {
     
     public func getMessages(page: Int, per: Int = BusinessConfigure.newestMessagesPerPage, chatID: String) {
         if page == 0 {
+            // Setup receive data for first time fetch data
             webSocket.connect(url: wsInChatApi + chatID)
             webSocket.didReceiveData = { message in
                 print("Business did receive new message: \(message.content)")

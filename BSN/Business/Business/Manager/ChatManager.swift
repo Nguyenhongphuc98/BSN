@@ -12,10 +12,12 @@ public class ChatManager {
     
     // Publisher for fetch chats of current user in session
     public let getRecentlyChatsPublisher: PassthroughSubject<[EChat], Never>
-    
     public let getSearchChatsPublisher: PassthroughSubject<[EChat], Never>
-    
     public let getChatPublisher: PassthroughSubject<EChat, Never>
+    
+    // Observer new Chat or chat updated by server insert new message
+    public let receiveChatPublisher: PassthroughSubject<EChat, Never>
+    private let webSocket: SocketFollow<EChat>
     
     public init() {
         // Init resource URL
@@ -24,9 +26,22 @@ public class ChatManager {
         getRecentlyChatsPublisher = PassthroughSubject<[EChat], Never>()
         getSearchChatsPublisher = PassthroughSubject<[EChat], Never>()
         getChatPublisher = PassthroughSubject<EChat, Never>()
+        
+        // WebSocket
+        receiveChatPublisher = PassthroughSubject<EChat, Never>()
+        webSocket = SocketFollow()
     }
     
-    public func getChats(page: Int, per: Int = BusinessConfigure.newestChatsPerPage) {
+    // This result should show in chat view (list recently chat)
+    public func getChats(page: Int, per: Int = BusinessConfigure.newestChatsPerPage, currentUid: String) {
+        if page == 0 {
+            // Setup receive data for first time fetch data
+            webSocket.connect(url: wsChatsApi + currentUid)
+            webSocket.didReceiveData = { chat in
+                print("Business did receive new chat with message: \(chat.messageContent)")
+                self.receiveChatPublisher.send(chat)
+            }
+        }
         networkRequest.getNewestChats(page: page, per: per, publisher: getRecentlyChatsPublisher)
     }
     
