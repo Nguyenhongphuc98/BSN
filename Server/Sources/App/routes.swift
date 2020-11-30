@@ -54,5 +54,5 @@ func routes(_ app: Application) throws {
     try app.register(collection: ExchangeBookController())
     
     //WebSocket
-    try app.register(collection: ChatWebSocket())
+    try app.register(collection: WebSocketConnect())
 }

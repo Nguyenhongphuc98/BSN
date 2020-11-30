@@ -39,6 +39,19 @@ final class Message: Model {
         self.typeID = UUID(uuidString: typeID)!
         self.content = content
     }
+    
+    func getTypeName() -> String {
+        switch self.typeID.uuidString {
+        case "7F360E9F-FF0F-4F48-9209-1BD4C8783DF3":
+            return GetFull.MessageType.sticker.rawValue
+        case "5D2161DB-308F-42B9-8C81-140E64FB966C":
+            return GetFull.MessageType.photo.rawValue
+        case "1D15266A-1BD4-412A-BAB9-BEF93ED58413":
+            return GetFull.MessageType.text.rawValue
+        default:
+            return GetFull.MessageType.text.rawValue
+        }
+    }
 }
 
 extension Message: Content { }

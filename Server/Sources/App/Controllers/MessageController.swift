@@ -127,8 +127,7 @@ extension MessageController {
             // If detect chat which message be long to
             // Just save it
             return saveMess.save(on: req.db).map {
-                // Broadcast message for in-chat (observer by chat id)
-                SessionManager.shared.send(message: saveMess, to: .id(saveMess.chatID!.uuidString))
+                broadcastMessage(mess: saveMess, typeName: message.typeName!)
                 return saveMess
             }
         } else {
@@ -163,5 +162,23 @@ extension MessageController {
                     }
                 }
         }
+    }
+}
+
+extension MessageController {
+    
+    func broadcastMessage(mess: Message, typeName: String) {
+        // Broadcast message for in-chat (observer by chat id)
+        let responMessage = Message.GetFull(
+            id: mess.id!.uuidString,
+            chatID: mess.chatID!.uuidString,
+            senderID: mess.senderID.uuidString,
+            typeID: mess.typeID.uuidString,
+            content: mess.content,
+            typeName: typeName,
+            createAt: mess.createdAt?.description
+        )
+        // Send to inchat
+        SessionManager.shared.send(message: responMessage, to: .id(mess.chatID!.uuidString))
     }
 }

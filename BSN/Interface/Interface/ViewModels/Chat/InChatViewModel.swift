@@ -51,11 +51,13 @@ class InChatViewModel: NetworkViewModel {
         observerSaveMessage()
         observerGetMessages()
         observerGetChat()
+        observerReceiveNewMessage()
     }
     
     func fetchData(chat: Chat) {
         self.isLoading = true
         self.chat = chat
+        self.messages = [] // clear old messages
         
         if chat.id != kUndefine && chat.id != nil {
             // fetch message of this chat
@@ -208,6 +210,29 @@ extension InChatViewModel {
                         self.chat.id = chat.id
                         self.fetchMessages(page: 0)
                     }
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    // Patner send new message to this user
+    private func observerReceiveNewMessage() {
+        messageManager
+            .receiveMessPublisher
+            .sink {[weak self] (m) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    // No needed to update message send by current user
+                    // Because it was update on UI before
+                    if m.senderID == AppManager.shared.currenUID { return }
+                    let model = Message(sender: m.senderID ,content: m.content, type: m.typeName!, createAt: m.createAt!)
+                    self.messages.appendUnique(item: model) // append to newest message
+                    self.objectWillChange.send()
+                    self.updateUIIfNeedes?()
                 }
             }
             .store(in: &cancellables)
