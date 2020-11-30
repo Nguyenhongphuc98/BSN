@@ -126,7 +126,11 @@ extension MessageController {
         if message.chatID != nil {
             // If detect chat which message be long to
             // Just save it
-            return saveMess.save(on: req.db).map { saveMess }
+            return saveMess.save(on: req.db).map {
+                // Broadcast message for in-chat (observer by chat id)
+                SessionManager.shared.send(message: saveMess, to: .id(saveMess.chatID!.uuidString))
+                return saveMess
+            }
         } else {
             
             // try to find chat hold this message

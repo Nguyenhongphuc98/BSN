@@ -20,15 +20,6 @@
         }
       },
       {
-        "package": "Bridges",
-        "repositoryURL": "https://github.com/SwifQL/Bridges.git",
-        "state": {
-          "branch": null,
-          "revision": "4f46ffc59d8e93e3c9fb16f112b2a782e8b8e1aa",
-          "version": "1.0.0-rc.4.8.1"
-        }
-      },
-      {
         "package": "console-kit",
         "repositoryURL": "https://github.com/vapor/console-kit.git",
         "state": {
@@ -83,15 +74,6 @@
         }
       },
       {
-        "package": "PostgresBridge",
-        "repositoryURL": "https://github.com/SwifQL/PostgresBridge.git",
-        "state": {
-          "branch": null,
-          "revision": "6ad3ea22641fefa050241d314a9e8e390e0dbf73",
-          "version": "1.0.0-rc.4.4.3"
-        }
-      },
-      {
         "package": "routing-kit",
         "repositoryURL": "https://github.com/vapor/routing-kit.git",
         "state": {
@@ -107,15 +89,6 @@
           "branch": null,
           "revision": "ea9928b7f4a801b175a00b982034d9c54ecb6167",
           "version": "3.7.0"
-        }
-      },
-      {
-        "package": "SwifQL",
-        "repositoryURL": "https://github.com/SwifQL/SwifQL.git",
-        "state": {
-          "branch": null,
-          "revision": "f9fb5c65fb400ea2bdfbc5797906171c0f12689e",
-          "version": "2.0.0-beta.3.11.5"
         }
       },
       {
@@ -206,15 +179,6 @@
           "branch": null,
           "revision": "29f5370b119593083674a4f7e6795ac2f4d884ef",
           "version": "4.32.0"
-        }
-      },
-      {
-        "package": "VaporBridges",
-        "repositoryURL": "https://github.com/SwifQL/VaporBridges.git",
-        "state": {
-          "branch": null,
-          "revision": "0990e85caa2fb7eb3ae9d88412a22db6b51d4ae2",
-          "version": "1.0.0-rc.1.3.0"
         }
       },
       {
