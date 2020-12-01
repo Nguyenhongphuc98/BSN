@@ -21,6 +21,12 @@ final class Chat: Model {
     @Field(key: "second_user")
     var secondUserID: User.IDValue
     
+    @Field(key: "first_user_seen")
+    var firstUserSeen: Bool?
+    
+    @Field(key: "second_user_seen")
+    var secondUserSeen: Bool?
+    
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
     
@@ -40,6 +46,8 @@ extension Chat {
         var id: String?
         var firstUserID: String
         var secondUserID: String
+        var firstUserSeen: Bool
+        var secondUserSeen: Bool
         
         // User info
         var firstUserName: String?

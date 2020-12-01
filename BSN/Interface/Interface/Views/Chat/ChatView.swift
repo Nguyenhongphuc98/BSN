@@ -23,15 +23,7 @@ public struct ChatView: View {
     
     public var body: some View {
         VStack {
-            NavigationLink(
-                destination: InChatView()
-                    .environmentObject(Chat(partner: viewModel.selectedUserNewChat)),
-                tag: 1,
-                selection: $action) {
-                EmptyView()
-            }
-            .frame(width: 0, height: 0)
-            .opacity(0)
+            navToInChat
             
             SearchBar(isfocus: $viewModel.isfocus, searchText: $viewModel.searchText)
                 .onReceive(viewModel.$searchText, perform: { _ in
@@ -93,6 +85,18 @@ public struct ChatView: View {
                 }
             }
         }
+    }
+    
+    private var navToInChat: some View {
+        NavigationLink(
+            destination: InChatView()
+                .environmentObject(Chat(partner: viewModel.selectedUserNewChat)),
+            tag: 1,
+            selection: $action) {
+            EmptyView()
+        }
+        .frame(width: 0, height: 0)
+        .opacity(0)
     }
     
     private func viewAppeared() {

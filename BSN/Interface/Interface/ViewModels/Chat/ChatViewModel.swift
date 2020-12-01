@@ -106,7 +106,8 @@ extension ChatViewModel {
                              partnerID: c.getPartnerID(of: AppManager.shared.currenUID),
                              partnerName: c.getPartnerName(of: AppManager.shared.currenUID),
                              partnerPhoto: c.getPartnerPhoto(of: AppManager.shared.currenUID),
-                             lastMessage: mess
+                             lastMessage: mess,
+                             seen: c.isSeen(of: AppManager.shared.currenUID)
                         )
                         
                         self.chats.appendUnique(item: model)
@@ -137,7 +138,8 @@ extension ChatViewModel {
                              partnerID: c.getPartnerID(of: AppManager.shared.currenUID),
                              partnerName: c.getPartnerName(of: AppManager.shared.currenUID),
                              partnerPhoto: c.getPartnerPhoto(of: AppManager.shared.currenUID),
-                             lastMessage: mess
+                             lastMessage: mess,
+                             seen: c.isSeen(of: AppManager.shared.currenUID)
                         )
                         
                         self.searchChats.append(model)
@@ -170,7 +172,8 @@ extension ChatViewModel {
                          partnerID: c.getPartnerID(of: AppManager.shared.currenUID),
                          partnerName: c.getPartnerName(of: AppManager.shared.currenUID),
                          partnerPhoto: c.getPartnerPhoto(of: AppManager.shared.currenUID),
-                         lastMessage: mess
+                         lastMessage: mess,
+                         seen: c.isSeen(of: AppManager.shared.currenUID)
                     )
                     
                     let index = self.chats.firstIndex { $0.id == model.id }

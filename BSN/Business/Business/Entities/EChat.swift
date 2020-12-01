@@ -10,6 +10,8 @@ public struct EChat: Codable {
     public var id: String?
     public var firstUserID: String
     public var secondUserID: String
+    public var firstUserSeen: Bool?
+    public var secondUserSeen: Bool?
     
     // User info
     public var firstUserName: String?
@@ -38,5 +40,9 @@ public struct EChat: Codable {
     
     public func getPartnerPhoto(of uid: String) -> String? {
         (self.firstUserID == uid) ? self.secondUserPhoto : self.firstUserPhoto
+    }
+    
+    public func isSeen(of uid: String) -> Bool {
+        (self.firstUserID == uid) ? self.firstUserSeen! : self.secondUserSeen!
     }
 }

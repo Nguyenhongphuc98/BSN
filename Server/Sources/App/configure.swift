@@ -60,7 +60,7 @@ public func configure(_ app: Application) throws {
     app.migrations.add(CreateExchangeBook())
     
     // Edit table
-    app.migrations.add(AddNumReviewBook())
+    app.migrations.add(AddNumReviewBook())    
 
     // register routes
     try routes(app)

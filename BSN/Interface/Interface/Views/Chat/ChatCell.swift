@@ -43,7 +43,7 @@ struct ChatCell: View {
                         Text(messageContent(message: chat.lastMessage!))
                             .robotoBold(size: 14)
                             .lineLimit(1)
-                            .foregroundColor(.init(hex: 0x6D6D6D))
+                            .foregroundColor(messageColor)
                     }
                     
                     Spacer()
@@ -55,7 +55,11 @@ struct ChatCell: View {
         .padding(.vertical, 5)
     }
     
-    func messageContent(message: Message) -> String {
+    private var messageColor: Color {
+        chat.seen ? .init(hex: 0x6D6D6D) : .black
+    }
+    
+    private func messageContent(message: Message) -> String {
         switch message.type {
         case .text:
             return message.content!
