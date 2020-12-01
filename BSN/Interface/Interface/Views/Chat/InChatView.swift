@@ -134,9 +134,14 @@ struct InChatView: View {
     
     var backButton: some View {
         Button {
+            // When receive new message, it update to not seen
+            // But actualy we just leave in this chat
+            // So, it should be mark seen
+            viewModel.markSeen()
             presentationMode.wrappedValue.dismiss()
         } label: {
             Image(systemName: "chevron.backward")
+                .frame(width: 22, height: 22)
                 .foregroundColor(.gray)
         }
     }

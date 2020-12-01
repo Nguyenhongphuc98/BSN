@@ -88,10 +88,11 @@ extension MessageController {
         if message.chatID != nil {
             // If detect chat which message be long to
             // Just save it
-            return saveMess.save(on: req.db).map {
-                broadcastMessage(req: req, mess: saveMess, typeName: message.typeName!)
-                return saveMess
-            }
+//            return saveMess.save(on: req.db).map {
+//                broadcastMessage(req: req, mess: saveMess, typeName: message.typeName!)
+//                return saveMess
+//            }
+            return perfomSingleSaveMessage(req: req, saveMess: saveMess, typeName: message.typeName!)
         } else {
             
             // try to find chat hold this message
@@ -113,19 +114,57 @@ extension MessageController {
                 .flatMap { (c)  in
                     if let chat = c {
                         saveMess.chatID = chat.id
-                        broadcastMessage(req: req, mess: saveMess, typeName: message.typeName!)
-                        return saveMess.save(on: req.db).map { saveMess }
+                        //broadcastMessage(req: req, mess: saveMess, typeName: message.typeName!)
+                        //return saveMess.save(on: req.db).map { saveMess }
+                        return perfomSingleSaveMessage(req: req, saveMess: saveMess, typeName: message.typeName!)
                     } else {
                         
                         let chat = Chat(firstUid: message.senderID, secondUid: message.receiverID!)
                         return chat.save(on: req.db).flatMap { _ in
                             saveMess.chatID = chat.id
-                            broadcastMessage(req: req, mess: saveMess, typeName: message.typeName!)
-                            return saveMess.save(on: req.db).map { saveMess }
+                            //broadcastMessage(req: req, mess: saveMess, typeName: message.typeName!)
+                            //return saveMess.save(on: req.db).map { saveMess }
+                            return perfomSingleSaveMessage(req: req, saveMess: saveMess, typeName: message.typeName!)
                         }
                     }
                 }
         }
+    }
+    
+    func perfomSingleSaveMessage(req: Request, saveMess: Message, typeName: String) -> EventLoopFuture<Message> {
+        return saveMess.save(on: req.db).flatMap {
+            updateChat(req: req, mess: saveMess)
+                .map { _ in
+                    // Send to inChat
+                    broadcastMessage(req: req, mess: saveMess, typeName: typeName)
+                    // Send to Chats
+                    ChatController.broadcastChat(req: req, chatID: saveMess.chatID!.uuidString)
+                    return saveMess
+                }
+        }
+    }
+}
+
+// MARK: - Chat
+extension MessageController {
+    
+    // When new message sent, chat should update seen status to false
+    func updateChat(req: Request, mess: Message) -> EventLoopFuture<Chat> {
+        Chat
+            .query(on: req.db)
+            .filter(\.$id == mess.chatID!)
+            .first()
+            .flatMap { currentChat in
+                
+                // Only seen field can update
+                if currentChat!.firstUserID == mess.senderID {
+                    currentChat!.secondUserSeen = false
+                } else if currentChat!.secondUserID == mess.senderID {
+                    currentChat!.firstUserSeen = false
+                }
+
+                return currentChat!.update(on: req.db).map { currentChat! }
+            }
     }
 }
 
@@ -145,25 +184,23 @@ extension MessageController {
         )
         // Send to inchat (messages)
         SessionManager.shared.send(message: responMessage, to: .id(mess.chatID!.uuidString))
-        // Send to Chats
-        broadcastChat(req: req, chatID: mess.chatID!.uuidString)
     }
     
     // Broadcast chat for users in this chat
     // Chat may be new or created before but just update because hold new message
-    func broadcastChat(req: Request, chatID: String) {
-                
-        let sqlQuery = SQLQueryString("SELECT c.id, c.first_user as \"firstUserID\", c.second_user as \"secondUserID\", c.first_user_seen as \"firstUserSeen\", c.second_user_seen as \"secondUserSeen\", u1.displayname as \"firstUserName\", u1.avatar as \"firstUserPhoto\", u2.displayname as \"secondUserName\", u2.avatar as \"secondUserPhoto\", m.content as \"messageContent\", m.created_at as \"messageCreateAt\", mt.name  as \"messageTypeName\" from chat as c, public.user as u1, public.user as u2, message as m, message_type as mt where c.first_user = u1.id and c.second_user = u2.id and m.chat_id = c.id and m.type_id = mt.id and m.id in (select m2.id from message as m2 order by created_at desc limit 1) and c.id = '\(raw: chatID)'");
-        
-        let db = req.db as! SQLDatabase
-        _ = db.raw(sqlQuery)
-            .first(decoding: Chat.GetFull.self)
-            .map { (chat) in
-                // Send to inchat
-                if let c = chat {
-                    SessionManager.shared.send(message: c, to: .id("chats\(c.firstUserID)"))
-                    SessionManager.shared.send(message: c, to: .id("chats\(c.secondUserID)"))
-                }
-            }
-    }
+//    func broadcastChat(req: Request, chatID: String) {
+//
+//        let sqlQuery = SQLQueryString("SELECT c.id, c.first_user as \"firstUserID\", c.second_user as \"secondUserID\", c.first_user_seen as \"firstUserSeen\", c.second_user_seen as \"secondUserSeen\", u1.displayname as \"firstUserName\", u1.avatar as \"firstUserPhoto\", u2.displayname as \"secondUserName\", u2.avatar as \"secondUserPhoto\", m.content as \"messageContent\", m.created_at as \"messageCreateAt\", mt.name  as \"messageTypeName\" from chat as c, public.user as u1, public.user as u2, message as m, message_type as mt where c.first_user = u1.id and c.second_user = u2.id and m.chat_id = c.id and m.type_id = mt.id and m.id in (select m2.id from message as m2 order by created_at desc limit 1) and c.id = '\(raw: chatID)'");
+//
+//        let db = req.db as! SQLDatabase
+//        _ = db.raw(sqlQuery)
+//            .first(decoding: Chat.GetFull.self)
+//            .map { (chat) in
+//                // Send to inchat
+//                if let c = chat {
+//                    SessionManager.shared.send(message: c, to: .id("chats\(c.firstUserID)"))
+//                    SessionManager.shared.send(message: c, to: .id("chats\(c.secondUserID)"))
+//                }
+//            }
+//    }
 }

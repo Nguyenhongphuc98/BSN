@@ -28,6 +28,8 @@ class InChatViewModel: NetworkViewModel {
     private var messageManager: MessageManager
     private var chatManager: ChatManager
     
+    private var updatechatManager: ChatManager = .sharedUpdate
+    
     // Did send new message
     // It's content should be force UI scroll to bottom
     var updateUIIfNeedes: (() -> Void)?
@@ -121,6 +123,12 @@ class InChatViewModel: NetworkViewModel {
         )
         
         messageManager.saveMess(message: newMessage)
+    }
+    
+    func markSeen() {
+        chat.seen = true
+        let updatechat = EChat(id: chat.id!, seen: chat.seen)
+        updatechatManager.updateChat(chat: updatechat)
     }
 }
 
