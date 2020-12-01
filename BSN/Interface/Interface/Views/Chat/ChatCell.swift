@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Business
 
 // The item that display as cell in ChatTab
 struct ChatCell: View {
@@ -16,21 +17,14 @@ struct ChatCell: View {
     
     @EnvironmentObject var appManager: AppManager
     
+    var chatManager: ChatManager = .sharedUpdate
+    
     var body: some View {
         ZStack {
-            NavigationLink(
-                destination: InChatView()
-                    .environmentObject(chat)
-                    .environmentObject(appManager),
-                isActive: $showInchat
-            ) {
-                EmptyView()
-            }
-            .frame(width: 0, height: 0)
-            .opacity(0)
+            navToInChat
             
             Button {
-                showInchat = true
+                handleDidClick()
             } label: {
                 
                 HStack {
@@ -55,6 +49,19 @@ struct ChatCell: View {
         .padding(.vertical, 5)
     }
     
+    private var navToInChat: some View {
+        NavigationLink(
+            destination: InChatView()
+                .environmentObject(chat)
+                .environmentObject(appManager),
+            isActive: $showInchat
+        ) {
+            EmptyView()
+        }
+        .frame(width: 0, height: 0)
+        .opacity(0)
+    }
+    
     private var messageColor: Color {
         chat.seen ? .init(hex: 0x6D6D6D) : .black
     }
@@ -68,6 +75,13 @@ struct ChatCell: View {
         case .photo:
             return "[Photo]"
         }
+    }
+    
+    private func handleDidClick() {
+        showInchat = true
+        chat.seen = true
+        let updatechat = EChat(id: chat.id!, seen: chat.seen)
+        chatManager.updateChat(chat: updatechat)
     }
 }
 

@@ -61,4 +61,18 @@ class ChatRequest: ResourceRequest<EChat> {
             }
         }
     }
+    
+    func updateChat(chat: EChat) {
+        self.setPath(resourcePath: chat.id!)
+        
+        self.update(chat) { result in
+            switch result {
+            case .failure:
+                print("There was an error when update chat")
+                
+            case .success:
+                print("Updated chat: \(chat.id!)")
+            }
+        }
+    }
 }

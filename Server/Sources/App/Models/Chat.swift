@@ -60,4 +60,9 @@ extension Chat {
         var messageCreateAt: String?
         var messageTypeName: String?
     }
+    
+    struct Update: Content {
+        var id: String
+        var seen: Bool
+    }
 }

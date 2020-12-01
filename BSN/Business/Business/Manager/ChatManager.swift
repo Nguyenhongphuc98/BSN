@@ -8,6 +8,10 @@ import Combine
 
 public class ChatManager {
     
+    // Just use for update feature
+    // Because it don't need care result, so should reuse it
+    public static var sharedUpdate: ChatManager = .init()
+    
     private let networkRequest: ChatRequest
     
     // Publisher for fetch chats of current user in session
@@ -38,7 +42,7 @@ public class ChatManager {
             // Setup receive data for first time fetch data
             webSocket.connect(url: wsChatsApi + currentUid)
             webSocket.didReceiveData = { chat in
-                print("Business did receive new chat with message: \(chat.messageContent)")
+                print("Business did receive new chat with message: \(chat.messageContent!)")
                 self.receiveChatPublisher.send(chat)
             }
         }
@@ -51,5 +55,9 @@ public class ChatManager {
     
     public func getChat(uid1: String, uid2: String) {
         networkRequest.getChat(uid1: uid1, uid2: uid2, publisher: getChatPublisher)
+    }
+    
+    public func updateChat(chat: EChat) {
+        networkRequest.updateChat(chat: chat)
     }
 }

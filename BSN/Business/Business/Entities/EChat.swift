@@ -8,10 +8,10 @@
 public struct EChat: Codable {
     
     public var id: String?
-    public var firstUserID: String
-    public var secondUserID: String
-    public var firstUserSeen: Bool?
-    public var secondUserSeen: Bool?
+    public var firstUserID: String?  // Don't use in case update seen
+    public var secondUserID: String? // Don't use in case update seen
+    public var firstUserSeen: Bool?  // Use when fetch data
+    public var secondUserSeen: Bool? // Use when fetch data
     
     // User info
     public var firstUserName: String?
@@ -23,6 +23,8 @@ public struct EChat: Codable {
     public var messageContent: String?
     public var messageCreateAt: String?
     public var messageTypeName: String?
+    
+    private var seen: Bool? // Use for update read status of current user
         
     public init() {
         self.id = "undefine"
@@ -30,8 +32,13 @@ public struct EChat: Codable {
         self.secondUserID = "undefine"
     }
     
+    public init(id: String, seen: Bool) {
+        self.id = id
+        self.seen = seen
+    }
+    
     public func getPartnerID(of uid: String) -> String {
-        (self.firstUserID == uid) ? self.secondUserID : self.firstUserID
+        (self.firstUserID == uid) ? self.secondUserID! : self.firstUserID!
     }
     
     public func getPartnerName(of uid: String) -> String {
