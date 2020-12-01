@@ -140,9 +140,7 @@ struct InChatView: View {
             viewModel.markSeen()
             presentationMode.wrappedValue.dismiss()
         } label: {
-            Image(systemName: "chevron.backward")
-                .frame(width: 22, height: 22)
-                .foregroundColor(.gray)
+            BackWardButton()
         }
     }
     

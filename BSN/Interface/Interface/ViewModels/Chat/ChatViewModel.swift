@@ -160,6 +160,7 @@ extension ChatViewModel {
             .store(in: &cancellables)
     }
     
+    // WebSocket send Chat to receiver of chat
     // Chat maybe new or last message updated
     private func observerReceiveNewChat() {
         chatManager

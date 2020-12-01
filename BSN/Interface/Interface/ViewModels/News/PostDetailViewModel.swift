@@ -52,6 +52,7 @@ class PostDetailViewModel: NetworkViewModel {
         observerSaveComment()
         observerFetchComments()
         observerFetchPost()
+        receiveNewComment()
     }
     
     // Fetching post data and first comment page
@@ -118,21 +119,22 @@ class PostDetailViewModel: NetworkViewModel {
     // Add comment on UI
     // Comments fetching from server
     // Or comment just save success by current user
-    private func addComment(ec: EComment, ownerSave: Bool = false) {
+    // Newest comment will show at bottom, so when receive next page cmts, we add to top (first of array)
+    private func addComment(ec: EComment, ownerSave: Bool = false, addToTop: Bool) {
         numCmtFetched += 1
         let cmt = Comment(
             id: ec.id!,
             parent: ec.parentID,
-            owner: User(id: ec.userID, photo: ec.userPhoto == nil ? AppManager.shared.currentUser.avatar : ec.userPhoto, name: ec.userName ?? AppManager.shared.currentUser.displayname), // nil mean curent just comment
+            owner: User(id: ec.userID, photo: ownerSave ? AppManager.shared.currentUser.avatar : ec.userPhoto, name: ownerSave ? AppManager.shared.currentUser.displayname : ec.userName!), // nil mean curent just comment
             content: ec.content,
             level: ec.parentID == ec.postID ? 0 : 1
         )
         
         if cmt.level == 0 {
-            if ownerSave {
-                self.comments.appendUnique(item: cmt)
-            } else {
+            if addToTop {
                 self.comments.insertUnique(item: cmt)
+            } else {
+                self.comments.appendUnique(item: cmt)
             }
             
             // try to load subcomments
@@ -140,11 +142,12 @@ class PostDetailViewModel: NetworkViewModel {
         } else {
             let parentIndex = self.comments.firstIndex { $0.id == cmt.parent }!
             
-            if ownerSave {
+            // In subcomment level, because we get all subcmt, so just one case, insert on top
+//            if addToTop {
                 self.comments[parentIndex].subcomments.appendUnique(item: cmt)
-            } else {
-                self.comments[parentIndex].subcomments.insertUnique(item: cmt)
-            }
+//            } else {
+                //self.comments[parentIndex].subcomments.insertUnique(item: cmt)
+            //}
         }
     }
     
@@ -173,7 +176,8 @@ extension PostDetailViewModel {
                         self.showAlert = true
                     } else {
                         
-                        self.addComment(ec: ec, ownerSave: true)
+                        // save comment will newest, and don't add to top
+                        self.addComment(ec: ec, ownerSave: true, addToTop: false)
                         self.post?.numComment += 1                       
                         self.objectWillChange.send()
                     }
@@ -192,7 +196,8 @@ extension PostDetailViewModel {
                 }
                 
                 DispatchQueue.main.async {
-                    cmts.forEach { self.addComment(ec: $0) }
+                    // Fetch comments should add to top, older on top
+                    cmts.forEach { self.addComment(ec: $0, addToTop: true) }
                     self.isLoadingComment = false
                     self.objectWillChange.send()
                 }
@@ -200,6 +205,7 @@ extension PostDetailViewModel {
             .store(in: &cancellables)
     }
     
+    // If nav from notify, we have to fetch post
     private func observerFetchPost() {
         postManager
             .postPublisher
@@ -215,6 +221,32 @@ extension PostDetailViewModel {
                         self.post = NewsFeed(post: p)
                         self.objectWillChange.send()
                     }
+                }
+            }
+            .store(in: &cancellables)
+    }
+
+    // MARK: - WebSocket
+    // WebSocket send new comment to this post
+    private func receiveNewComment() {
+        commentManager
+            .receiveCommentPublisher
+            .sink {[weak self] (cmt) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    // If this comment send by current user
+                    // It should updated by receive save message
+                    // So, just ignore
+                    if cmt.userID == AppManager.shared.currenUID { return }
+                    // New comment will add to bottom
+                    self.addComment(ec: cmt, addToTop: false)
+                    // num comment shoud update
+                    self.post?.numComment += 1
+                    self.objectWillChange.send()
                 }
             }
             .store(in: &cancellables)

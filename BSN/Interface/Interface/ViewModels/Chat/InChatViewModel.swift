@@ -223,7 +223,7 @@ extension InChatViewModel {
             .store(in: &cancellables)
     }
     
-    // Patner send new message to this user
+    // WebSocket send new message to user in Chat
     private func observerReceiveNewMessage() {
         messageManager
             .receiveMessPublisher

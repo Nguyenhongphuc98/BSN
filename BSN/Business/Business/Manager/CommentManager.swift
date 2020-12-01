@@ -12,9 +12,12 @@ public class CommentManager {
     
     // save and delete
     public let commentPublisher: PassthroughSubject<EComment, Never>
-    
     // get posts
     public let commentsPublisher: PassthroughSubject<[EComment], Never>
+    
+    // Observer new message come
+    public let receiveCommentPublisher: PassthroughSubject<EComment, Never>
+    private let webSocket: SocketFollow<EComment>
     
     public init() {
         // Init resource URL
@@ -22,6 +25,10 @@ public class CommentManager {
         
         commentPublisher = PassthroughSubject<EComment, Never>()
         commentsPublisher = PassthroughSubject<[EComment], Never>()
+        
+        // WebSocket
+        receiveCommentPublisher = PassthroughSubject<EComment, Never>()
+        webSocket = SocketFollow()
     }
     
     public func saveComment(comment: EComment) {
@@ -29,6 +36,14 @@ public class CommentManager {
     }
     
     public func getNewestComments(pid: String, page: Int) {
+        if page == 0 {
+            // Setup receive data for first time fetch data
+            webSocket.connect(url: wsCommentsOfPostApi + pid)
+            webSocket.didReceiveData = { message in
+                print("Business did receive new comment: \(message.content)")
+                self.receiveCommentPublisher.send(message)
+            }
+        }
         networkRequest.fetchNewsestComments(pid: pid, page: page, per: BusinessConfigure.newestCommentsPerPage, publisher: commentsPublisher)
     }
     

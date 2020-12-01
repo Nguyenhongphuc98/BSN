@@ -52,8 +52,7 @@ struct SearchAddBookView: View {
         Button {
             presentationMode.wrappedValue.dismiss()
         } label: {
-            Image(systemName: "chevron.backward")
-                .foregroundColor(.gray)
+            BackWardButton()
         }
     }
     

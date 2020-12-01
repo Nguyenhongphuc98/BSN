@@ -7,8 +7,10 @@
 
 import Foundation
 
-let wsInChatApi = "ws://192.168.0.102:8080/inchat/listen/" // + ChatID
-let wsChatsApi = "ws://192.168.0.102:8080/chats/listen/"   // + ReceiverID
+let hostIp = "192.168.0.102:8080"
+let wsInChatApi = "ws://\(hostIp)/inchat/listen/" // + ChatID
+let wsChatsApi = "ws://\(hostIp)/chats/listen/"   // + ReceiverID
+let wsCommentsOfPostApi = "ws://\(hostIp)/commentsOfPost/listen/"   // + PostID
 
 class SocketFollow<ResourceType> where ResourceType: Codable {
     

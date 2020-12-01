@@ -42,55 +42,61 @@ struct CommentController: RouteCollection {
             .unwrap(or: Abort(.forbidden))
             .flatMap { (user)  in
                 
-                // Update number of comment of parent post
-                _ = Post.query(on: req.db)
-                    .filter(\.$id == newComment.postID)
-                    .first()
-                    .unwrap(or: Abort(.badRequest))
-                    .map { (p) in
-                        
-                        // Update post info ==============================
-                        p.numComment = p.numComment! + 1
-                        _ = p.update(on: req.db)
-                        
-                        // Notify to post owner==============================
-                        let notify = Notify(
-                            typeID: UUID(uuidString: NotifyType().comment)!,
-                            actor: newComment.userID,
-                            receiver: p.authorID,
-                            des: newComment.postID
-                        )
-                        _ = notify.save(on: req.db)
-                        
-                        // Notify to all user at same level==============================
-                        
-                        // Notify to other user comment this post
-                        _ = Comment.query(on: req.db)
-                            .group(.or, { (or) in
-                                or
-                                    .filter(\.$parentID == newComment.parentID) // save level
-                                    .filter(\.$id == newComment.parentID) // find owner of comment him reply
-                            })
-                            .field(\.$userID)
-                            .unique()
-                            .all()
-                            .mapEach({ (c)  in
-                                if c.userID != newComment.userID && c.userID != p.authorID {
-                                    // Notify to user comment save vl, but not himself
-                                    // And not send duplicate to post owner
-                                    let notify = Notify(
-                                        typeID: UUID(uuidString: NotifyType().comment)!,
-                                        actor: newComment.userID,
-                                        receiver: c.userID,
-                                        des: newComment.postID
-                                    )
-                                    
-                                    _ = notify.save(on: req.db)
-                                }
-                            })
-                    }
-                
-                return newComment.save(on: req.db).map { newComment }
+                // Comment should save success then we update all relate info
+                return newComment.save(on: req.db).map {
+                    
+                    // Update number of comment of parent post
+                    _ = Post.query(on: req.db)
+                        .filter(\.$id == newComment.postID)
+                        .first()
+                        .unwrap(or: Abort(.badRequest))
+                        .map { (p) in
+                            
+                            // Update post info ==============================
+                            p.numComment = p.numComment! + 1
+                            _ = p.update(on: req.db)
+                            
+                            // Notify to post owner==============================
+                            let notify = Notify(
+                                typeID: UUID(uuidString: NotifyType().comment)!,
+                                actor: newComment.userID,
+                                receiver: p.authorID,
+                                des: newComment.postID
+                            )
+                            _ = notify.save(on: req.db)
+                            
+                            // Notify to all user at same level==============================
+                            
+                            // Notify to other user comment this post
+                            _ = Comment.query(on: req.db)
+                                .group(.or, { (or) in
+                                    or
+                                        .filter(\.$parentID == newComment.parentID) // save level
+                                        .filter(\.$id == newComment.parentID) // find owner of comment him reply
+                                })
+                                .field(\.$userID)
+                                .unique()
+                                .all()
+                                .mapEach({ (c)  in
+                                    if c.userID != newComment.userID && c.userID != p.authorID {
+                                        // Notify to user comment save vl, but not himself
+                                        // And not send duplicate to post owner
+                                        let notify = Notify(
+                                            typeID: UUID(uuidString: NotifyType().comment)!,
+                                            actor: newComment.userID,
+                                            receiver: c.userID,
+                                            des: newComment.postID
+                                        )
+                                        
+                                        _ = notify.save(on: req.db)
+                                    }
+                                })
+                        }
+                    
+                    // Broadcast comment to all user reading the post hold new comment
+                    broadcastCommentForPost(req: req, commentID: newComment.id!.uuidString)
+                    return newComment
+                }
             }
     }
 
@@ -187,5 +193,25 @@ struct CommentController: RouteCollection {
         let db = req.db as! SQLDatabase
         return db.raw(sqlQuery)
             .all(decoding: Comment.GetFull.self)
+    }
+}
+
+// WebSocket
+extension CommentController {
+    // Any user reading the post hold new comment
+    // Will receive this new comment
+    func broadcastCommentForPost(req: Request, commentID: String) {
+                
+        // get full info to display card
+        let sqlQuery = SQLQueryString("SELECT c.id, c.user_id as \"userID\", c.post_id as \"postID\", c.parent_id as \"parentID\", c.content, c.created_at as \"createdAt\", u.displayname as \"userName\", u.avatar as \"userPhoto\" FROM comment as c, public.user as u WHERE c.user_id = u.id and c.id = '\(raw: commentID)'")
+        
+        let db = req.db as! SQLDatabase
+        _ = db.raw(sqlQuery)
+            .first(decoding: Comment.GetFull.self)
+            .map { comment in
+                if let cmt = comment {
+                    SessionManager.shared.send(message: cmt, to: .id("commentsOfPost" + cmt.postID))
+                }
+            }
     }
 }

@@ -51,8 +51,7 @@ struct PostDetailView: View {
             }            
             presentationMode.wrappedValue.dismiss()
         } label: {
-            Image(systemName: "chevron.backward")
-                .foregroundColor(.gray)
+            BackWardButton()
         }
     }
     

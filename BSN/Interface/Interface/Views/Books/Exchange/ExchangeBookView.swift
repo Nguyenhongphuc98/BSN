@@ -79,8 +79,7 @@ struct ExchangeBookView: View {
         Button {
             dismiss()
         } label: {
-            Image(systemName: "chevron.backward")
-                .foregroundColor(.gray)
+            BackWardButton()
         }
     }
     
