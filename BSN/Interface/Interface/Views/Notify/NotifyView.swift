@@ -39,11 +39,12 @@ public struct NotifyView: View {
                 .listRowBackground(Color.white)
             }
             
-            if viewModel.isLoading {
-                Loading()
+            if viewModel.isLoadmore {
+                CircleLoading(frame: CGSize(width: 20, height: 20))
             }
         }
         .padding(.top)
+        .embededLoadingFull(isLoading: $viewModel.isLoading)
         .onAppear(perform: viewAppeared)
     }
     

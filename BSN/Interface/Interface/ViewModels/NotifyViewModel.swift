@@ -11,6 +11,7 @@ import Business
 public class NotifyViewModel: NetworkViewModel {
     
     public static var shared: NotifyViewModel = NotifyViewModel()
+    private var notifyManager: NotifyManager
     
     @Published var notifies: [Notify] {
         didSet {
@@ -20,12 +21,18 @@ public class NotifyViewModel: NetworkViewModel {
     
     @Published var message: String
     
-    private var notifyManager: NotifyManager
+    // Load more notifies
+    @Published var isLoadmore: Bool
+    @Published var allNotifiesFetched: Bool
+    @Published var currentPage: Int
     
     override init() {
         message = "Tạm thời chưa có thông báo"
         notifies = []
         notifyManager = NotifyManager()
+        isLoadmore = false
+        allNotifiesFetched = false
+        currentPage = 0
         
         super.init()
         observerNotifies()
@@ -35,25 +42,20 @@ public class NotifyViewModel: NetworkViewModel {
     public func prepareData() {
         print("did prepare data explore book VM")
         isLoading = true
+        notifies = []
         notifyManager.getNotifies(page: 0)
     }
     
     func loadMoreIfNeeded(item: Notify) {
-        //get last index of fetched notifies
-        let thresholdIndex = notifies.index(notifies.endIndex, offsetBy: -2)
-        
-        // if item reached is same threshold, we shoud load more
+        guard !allNotifiesFetched else {
+            print("All notifies fetched. break fetching func...")
+            return
+        }
+        let thresholdIndex = notifies.count - 1
         if notifies.firstIndex(where: { $0.id == item.id }) == thresholdIndex {
-            print("reached \(item.id)")
-            self.isLoading = true
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-//                for _ in 1...7 {
-//                    self.notifies.append(Notify())
-//                }
-                self.isLoading = false
-                //print("total notifies: \(self.notifies.count)")
-            }
+            currentPage += 1
+            isLoadmore = true
+            notifyManager.getNotifies(page: currentPage)
         }
     }
     
@@ -66,7 +68,7 @@ public class NotifyViewModel: NetworkViewModel {
         notifyManager.updateNotify(notify: ENotify(id: notify.id, seen: true))
     }
     
-    // receive data for first time
+    // receive data for by page
     private func observerNotifies() {
         notifyManager
             .getNotifiesPublisher
@@ -78,7 +80,7 @@ public class NotifyViewModel: NetworkViewModel {
                 
                 DispatchQueue.main.async {
                     self.isLoading = false
-                    self.notifies = []
+                    self.isLoadmore = false
                     
                     if !notifies.isEmpty {
                         if notifies[0].id == kUndefine {
@@ -89,6 +91,11 @@ public class NotifyViewModel: NetworkViewModel {
                                 self.notifies.appendUnique(item: notify)
                             }
                         }
+                    }
+                    
+                    // num of news < config shoud be last page
+                    if notifies.count < BusinessConfigure.notifiesPerPage {
+                        self.allNotifiesFetched = true
                     }
                 }
             }
