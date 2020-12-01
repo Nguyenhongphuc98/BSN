@@ -14,6 +14,8 @@ public struct ItemContent: View {
     
     let type: TabItemType
     
+    private var appManager: AppManager = .shared
+    
     public init(selectedIndex: Binding<Int>, type: TabItemType) {
         self._selectedIndex = selectedIndex
         self.type = type
@@ -27,49 +29,45 @@ public struct ItemContent: View {
                 type.image
             }
         }
-        
     }
 }
 
 // MARK: - Export image base on style
-public extension ItemContent {
+public enum TabItemType: Int {
     
-    enum TabItemType: Int {
-        
-        case news
-        case search
-        case chat
-        case notify
-        case profile
-        
-        var image: Image {
-            switch self {
-            case .news:
-                return Image(systemName: "note")
-            case .search:
-                return Image(systemName: "books.vertical")
-            case .chat:
-                return Image(systemName: "bubble.left")
-            case .notify:
-                return Image(systemName: "bell.badge")
-            case .profile:
-                return Image(systemName: "person")
-            }
+    case news
+    case search
+    case chat
+    case notify
+    case profile
+    
+    var image: Image {
+        switch self {
+        case .news:
+            return Image(systemName: "note")
+        case .search:
+            return Image(systemName: "books.vertical")
+        case .chat:
+            return Image(systemName: "bubble.left")
+        case .notify:
+            return Image(systemName: "bell")
+        case .profile:
+            return Image(systemName: "person")
         }
-        
-        var selectedImage: Image {
-            switch self {
-            case .news:
-                return Image(systemName: "note.text")
-            case .search:
-                return Image(systemName: "books.vertical.fill")
-            case .chat:
-                return Image(systemName: "bubble.left.fill")
-            case .notify:
-                return Image(systemName: "bell.badge.fill")
-            case .profile:
-                return Image(systemName: "person.fill")
-            }
+    }
+    
+    var selectedImage: Image {
+        switch self {
+        case .news:
+            return Image(systemName: "note.text")
+        case .search:
+            return Image(systemName: "books.vertical.fill")
+        case .chat:
+            return Image(systemName: "bubble.left.fill")
+        case .notify:
+            return Image(systemName: "bell.fill")
+        case .profile:
+            return Image(systemName: "person.fill")
         }
     }
 }

@@ -12,7 +12,11 @@ public class ChatViewModel: NetworkViewModel {
     
     public static var shared: ChatViewModel = ChatViewModel()
     
-    @Published public var chats: [Chat]
+    @Published public var chats: [Chat] {
+        didSet {
+            app.updateTabbar(chats: chats)
+        }
+    }
     
     @Published var searchText: String
     

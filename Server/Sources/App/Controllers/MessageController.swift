@@ -185,22 +185,4 @@ extension MessageController {
         // Send to inchat (messages)
         SessionManager.shared.send(message: responMessage, to: .id(mess.chatID!.uuidString))
     }
-    
-    // Broadcast chat for users in this chat
-    // Chat may be new or created before but just update because hold new message
-//    func broadcastChat(req: Request, chatID: String) {
-//
-//        let sqlQuery = SQLQueryString("SELECT c.id, c.first_user as \"firstUserID\", c.second_user as \"secondUserID\", c.first_user_seen as \"firstUserSeen\", c.second_user_seen as \"secondUserSeen\", u1.displayname as \"firstUserName\", u1.avatar as \"firstUserPhoto\", u2.displayname as \"secondUserName\", u2.avatar as \"secondUserPhoto\", m.content as \"messageContent\", m.created_at as \"messageCreateAt\", mt.name  as \"messageTypeName\" from chat as c, public.user as u1, public.user as u2, message as m, message_type as mt where c.first_user = u1.id and c.second_user = u2.id and m.chat_id = c.id and m.type_id = mt.id and m.id in (select m2.id from message as m2 order by created_at desc limit 1) and c.id = '\(raw: chatID)'");
-//
-//        let db = req.db as! SQLDatabase
-//        _ = db.raw(sqlQuery)
-//            .first(decoding: Chat.GetFull.self)
-//            .map { (chat) in
-//                // Send to inchat
-//                if let c = chat {
-//                    SessionManager.shared.send(message: c, to: .id("chats\(c.firstUserID)"))
-//                    SessionManager.shared.send(message: c, to: .id("chats\(c.secondUserID)"))
-//                }
-//            }
-//    }
 }

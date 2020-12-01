@@ -15,7 +15,7 @@ struct BSNApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    @ObservedObject var appManager: AppManager = AppManager.shared
+    @ObservedObject var appManager: AppManager = .shared
     
     var profileNavState: NavigationState = NavigationState()
     
@@ -47,50 +47,61 @@ struct BSNApp: App {
     }
     
     var inapp: some View {
-        TabView(selection: $appManager.selectedIndex) {
-            NavigationView {
-                NewsFeedView()
-                    .navigationTitle("Bài viết")
-                    .navigationBarHidden(true)
+        GeometryReader { geometry in
+            ZStack(alignment: .bottomLeading) {
+                // Main tab item
+                TabView(selection: $appManager.selectedIndex) {
+                    NavigationView {
+                        NewsFeedView()
+                            .navigationTitle("Bài viết")
+                            .navigationBarHidden(true)
+                    }
+                    .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .news) }
+                    .tag(0)
+                    
+                    NavigationView {
+                        ExploreBookView()
+                            .navigationTitle("Khám phá")
+                            .navigationBarHidden(true)
+                            .environmentObject(exploreNavState)
+                    }
+                    .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .search) }
+                    .tag(1)
+                    
+                    NavigationView {
+                        ChatView()
+                            .navigationTitle("Tin nhắn")
+                    }
+                    .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .chat) }
+                    .tag(2)
+                    
+                    NavigationView {
+                        NotifyView()
+                            .navigationTitle("Thông báo")
+                    }
+                    .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .notify) }
+                    .tag(3)
+                    
+                    NavigationView {
+                        ProfileView()
+                            .navigationBarTitle(Text("Trang cá nhân"), displayMode: .inline)
+                            .navigationBarHidden(true)
+                            .environmentObject(profileNavState)
+                    }
+                    .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .profile) }
+                    .tag(4)
+                }
+                .environmentObject(appManager)
+                
+                // Badge
+                BadgeView(type: .chat)
+                    .offset(x: (geometry.size.width / 2) + 5, y: -25)
+                
+                BadgeView(type: .notify)
+                    .offset(x: (geometry.size.width / 5) * 3.5, y: -25)
             }
-            .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .news) }
-            .tag(0)
-            
-            NavigationView {
-                ExploreBookView()
-                    .navigationTitle("Khám phá")
-                    .navigationBarHidden(true)
-                    .environmentObject(exploreNavState)
-            }
-            .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .search) }
-            .tag(1)
-            
-            NavigationView {
-                ChatView()
-                    .navigationTitle("Tin nhắn")
-            }
-            .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .chat) }
-            .tag(2)
-            
-            NavigationView {
-                NotifyView()
-                    .navigationTitle("Thông báo")
-            }
-            .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .notify) }
-            .tag(3)
-            
-            NavigationView {
-                ProfileView()
-                    .navigationBarTitle(Text("Trang cá nhân"), displayMode: .inline)
-                    .navigationBarHidden(true)
-                    .environmentObject(profileNavState)
-            }
-            .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .profile) }
-            .tag(4)
         }
-        .environmentObject(appManager)
     }
-    
     func configureAppearance() {
         
         UITextView.appearance().backgroundColor = .clear

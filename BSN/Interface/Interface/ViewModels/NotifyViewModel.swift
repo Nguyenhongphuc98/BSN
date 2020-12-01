@@ -12,7 +12,11 @@ public class NotifyViewModel: NetworkViewModel {
     
     public static var shared: NotifyViewModel = NotifyViewModel()
     
-    @Published var notifies: [Notify]
+    @Published var notifies: [Notify] {
+        didSet {
+            AppManager.shared.updateTabbar(notifies: notifies)
+        }
+    }
     
     @Published var message: String
     
@@ -54,7 +58,10 @@ public class NotifyViewModel: NetworkViewModel {
     }
     
     func notifyDidReaded(notify: Notify) {
+        // Mark as seen
         notify.seen = true
+        // Force update num unread notifies for tabbar
+        AppManager.shared.updateTabbar(notifies: self.notifies)
         // request to server
         notifyManager.updateNotify(notify: ENotify(id: notify.id, seen: true))
     }

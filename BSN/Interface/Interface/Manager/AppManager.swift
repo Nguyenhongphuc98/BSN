@@ -38,6 +38,10 @@ public class AppManager: ObservableObject {
     
     @Published public var keyboardHeight: CGFloat
     
+    @Published public var numUnReadMessage: Int
+    
+    @Published public var numUnReadNotify: Int
+    
     public var currenUID: String {
         currentUser.id
     }
@@ -48,7 +52,9 @@ public class AppManager: ObservableObject {
         self.currentUser = User()
         self.navBarTitle = "SEB"
         self.keyboardHeight = 0
-        self.appState = .loading        
+        self.appState = .loading
+        self.numUnReadMessage = 0
+        self.numUnReadNotify = 0
     
         registerKeyboardEvent()
     }
@@ -69,5 +75,19 @@ public class AppManager: ObservableObject {
                 CGFloat.zero
             }
             .subscribe(Subscribers.Assign(object: self, keyPath: \.keyboardHeight))
+    }
+}
+
+// Update tabbar icon with red point
+// mark that unread something
+extension AppManager {
+    func updateTabbar(chats: [Chat]) {
+        let unreads = chats.filter { $0.seen == false }
+        self.numUnReadMessage = unreads.count
+    }
+    
+    func updateTabbar(notifies: [Notify]) {
+        let unreads = notifies.filter { $0.seen == false }
+        self.numUnReadNotify = unreads.count        
     }
 }
