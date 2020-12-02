@@ -45,7 +45,7 @@ public class ChatViewModel: NetworkViewModel {
         super.init()
         observerRecentlyChats()
         observerSearchChats()
-        prepareData()
+        //prepareData() Did call when login success
         observerReceiveNewChat()
     }
     

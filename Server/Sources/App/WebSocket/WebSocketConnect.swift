@@ -15,6 +15,7 @@ struct WebSocketConnect: RouteCollection {
         routes.webSocket("inchat", "listen", ":chatID", onUpgrade: self.listenInchat)
         routes.webSocket("chats", "listen", ":receiverID", onUpgrade: self.listenChats)
         routes.webSocket("commentsOfPost", "listen", ":postID", onUpgrade: self.listenCommentsOnPost)
+        routes.webSocket("notifiesOfPost", "listen", ":receiverID", onUpgrade: self.listenNotifiesOfPost)
     }
 
     // MARK: - Chats
@@ -39,5 +40,12 @@ struct WebSocketConnect: RouteCollection {
             return
         }
         self.sessionManager.connect(to: "commentsOfPost" + postID, listener: socket)
+    }
+    
+    func listenNotifiesOfPost(req: Request, socket: WebSocket) {
+        guard let receiverID: String = req.parameters.get("receiverID") else {
+            return
+        }
+        self.sessionManager.connect(to: "notifiesOfPost" + receiverID, listener: socket)
     }
 }

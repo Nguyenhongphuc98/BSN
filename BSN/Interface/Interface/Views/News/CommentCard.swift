@@ -99,6 +99,7 @@ struct CommentCard: View {
                 }
             }
         }
+        .frame(height: 40)
     }
     
     var expanseW: some View {

@@ -57,13 +57,17 @@ struct CommentController: RouteCollection {
                             _ = p.update(on: req.db)
                             
                             // Notify to post owner==============================
-                            let notify = Notify(
-                                typeID: UUID(uuidString: NotifyType().comment)!,
-                                actor: newComment.userID,
-                                receiver: p.authorID,
-                                des: newComment.postID
-                            )
-                            _ = notify.save(on: req.db)
+                            // If he comment to his post, we dont' need notify to him
+                            if p.authorID != newComment.userID {
+                                let notify = Notify(
+                                    typeID: UUID(uuidString: NotifyType().comment)!,
+                                    actor: newComment.userID,
+                                    receiver: p.authorID,
+                                    des: newComment.postID
+                                )
+                                //_ = notify.save(on: req.db)
+                                NotifyController.create(req: req, notify: notify)
+                            }
                             
                             // Notify to all user at same level==============================
                             
@@ -88,7 +92,8 @@ struct CommentController: RouteCollection {
                                             des: newComment.postID
                                         )
                                         
-                                        _ = notify.save(on: req.db)
+                                        //_ = notify.save(on: req.db)
+                                        NotifyController.create(req: req, notify: notify)
                                     }
                                 })
                         }
@@ -202,7 +207,7 @@ extension CommentController {
     // Will receive this new comment
     func broadcastCommentForPost(req: Request, commentID: String) {
                 
-        // get full info to display card
+        // Get full info to display card
         let sqlQuery = SQLQueryString("SELECT c.id, c.user_id as \"userID\", c.post_id as \"postID\", c.parent_id as \"parentID\", c.content, c.created_at as \"createdAt\", u.displayname as \"userName\", u.avatar as \"userPhoto\" FROM comment as c, public.user as u WHERE c.user_id = u.id and c.id = '\(raw: commentID)'")
         
         let db = req.db as! SQLDatabase

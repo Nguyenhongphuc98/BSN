@@ -36,14 +36,15 @@ public class NotifyViewModel: NetworkViewModel {
         
         super.init()
         observerNotifies()
-        prepareData()
+        //prepareData() // Did call when login success.a
+        ReceiveNewNotifies()
     }
     
     public func prepareData() {
-        print("did prepare data explore book VM")
+        print("did prepare data notifies VM")
         isLoading = true
         notifies = []
-        notifyManager.getNotifies(page: 0)
+        notifyManager.getNotifies(page: 0, regisgerID: AppManager.shared.currenUID)
     }
     
     func loadMoreIfNeeded(item: Notify) {
@@ -55,7 +56,7 @@ public class NotifyViewModel: NetworkViewModel {
         if notifies.firstIndex(where: { $0.id == item.id }) == thresholdIndex {
             currentPage += 1
             isLoadmore = true
-            notifyManager.getNotifies(page: currentPage)
+            notifyManager.getNotifies(page: currentPage, regisgerID: AppManager.shared.currenUID)
         }
     }
     
@@ -97,6 +98,26 @@ public class NotifyViewModel: NetworkViewModel {
                     if notifies.count < BusinessConfigure.notifiesPerPage {
                         self.allNotifiesFetched = true
                     }
+                }
+            }
+            .store(in: &cancellables)
+    }
+}
+
+// MARK: - WebSocket
+extension NotifyViewModel {
+    private func ReceiveNewNotifies() {
+        notifyManager
+            .receiveNotifyPublisher
+            .sink {[weak self] (n) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    let notify = Notify(enotify: n)
+                    self.notifies.insertUnique(item: notify)
                 }
             }
             .store(in: &cancellables)

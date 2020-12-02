@@ -93,7 +93,7 @@ struct PostDetailView: View {
                             viewModel.replingComment = comment
                             viewModel.replingName = name
                             viewModel.objectWillChange.send()
-                        }
+                        }                        
                     }
                     .environmentObject(viewModel)
                // }
