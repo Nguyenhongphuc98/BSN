@@ -15,7 +15,7 @@ struct WebSocketConnect: RouteCollection {
         routes.webSocket("inchat", "listen", ":chatID", onUpgrade: self.listenInchat)
         routes.webSocket("chats", "listen", ":receiverID", onUpgrade: self.listenChats)
         routes.webSocket("commentsOfPost", "listen", ":postID", onUpgrade: self.listenCommentsOnPost)
-        routes.webSocket("notifiesOfPost", "listen", ":receiverID", onUpgrade: self.listenNotifiesOfPost)
+        routes.webSocket("notifies", "listen", ":receiverID", onUpgrade: self.listenNotifiesOfPost)
     }
 
     // MARK: - Chats
@@ -46,6 +46,6 @@ struct WebSocketConnect: RouteCollection {
         guard let receiverID: String = req.parameters.get("receiverID") else {
             return
         }
-        self.sessionManager.connect(to: "notifiesOfPost" + receiverID, listener: socket)
+        self.sessionManager.connect(to: "notifies" + receiverID, listener: socket)
     }
 }

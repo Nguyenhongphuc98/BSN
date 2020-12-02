@@ -12,7 +12,7 @@ let hostIp = "192.168.0.102:8080"
 let wsInChatApi = "ws://\(hostIp)/inchat/listen/" // + ChatID
 let wsChatsApi = "ws://\(hostIp)/chats/listen/"   // + ReceiverID
 let wsCommentsOfPostApi = "ws://\(hostIp)/commentsOfPost/listen/"   // + PostID
-let wsNotifiesOfPostApi = "ws://\(hostIp)/notifiesOfPost/listen/" // + ReceiverID
+let wsNotifiesApi = "ws://\(hostIp)/notifies/listen/" // + ReceiverID
 
 class SocketFollow<ResourceType> where ResourceType: Codable {
     

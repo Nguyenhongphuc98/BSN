@@ -13,7 +13,7 @@ import Fluent
 // ChatID:WS                   ==> publish message for users in this chat
 // chats+ReceiverID:WS         ==> publish chats when new message send to this receiver, sometime, chat create new, so                                we have to regiser by receiverID
 // commentsOfPost+PostID:WS    ==> publish comments when new comments send add to this post
-// notifiesOfPost+ReceiverID:WS    ==> publish notifies when someone cmt, react, send request, ...
+// notifies+ReceiverID:WS      ==> publish notifies when someone cmt, react, send request, ...
 
 enum WebSocketSendOption {
   case id(String), socket(WebSocket)

@@ -100,6 +100,7 @@ struct PostDetailView: View {
                 
                 Spacer()
             }
+            .resignKeyboardOnDragGesture()
             .padding(.bottom, 45)
             
             commentBox

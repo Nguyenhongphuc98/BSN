@@ -101,15 +101,6 @@ extension NotifyController {
 // MARK: - WebSocket
 extension NotifyController {
     static func broadcast(req: Request, notify: Notify) {
-        var preUrl = ""
-        let notifyType = NotifyType()
-        
-        switch notify.notifyTypeID.uuidString {
-        case notifyType.comment, notifyType.heart, notifyType.breakHeart:
-            preUrl = "notifiesOfPost"
-        default:
-            preUrl = ""
-        }
         
         // Get saved notify with full info to notify
         let sqlQuery = SQLQueryString("SELECT n.notify_type_id as \"notifyTypeID\", n.actor_id as \"actorID\", n.receiver_id as \"receiverID\", n.destination_id as \"destionationID\", n.created_at as \"createdAt\", n.id, u.displayname as \"actorName\", u.avatar as \"actorPhoto\", nt.name as \"notifyName\", n.seen from notify as n, public.user as u, notify_type as nt where n.actor_id = u.id and n.notify_type_id = nt.id and n.id = '\(raw: notify.id!.uuidString)'")
@@ -119,7 +110,7 @@ extension NotifyController {
             .first(decoding: Notify.GetFull.self)
             .map({ n in
                 if n != nil {
-                    SessionManager.shared.send(message: n, to: .id("\(preUrl)\(notify.receiverID)"))
+                    SessionManager.shared.send(message: n, to: .id("notifies\(notify.receiverID)"))
                 }
             })
     }
