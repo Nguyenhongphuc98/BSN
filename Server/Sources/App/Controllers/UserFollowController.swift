@@ -47,7 +47,20 @@ struct UserFollowController: RouteCollection {
 
     func create(req: Request) throws -> EventLoopFuture<UserFollow> {
         let uf = try req.content.decode(UserFollow.self)
-        return uf.save(on: req.db).map { uf }
+        return uf.save(on: req.db).map {
+            
+            // Notify to him know someone just follow
+            let notify = Notify(
+                typeID: UUID(uuidString: NotifyType().follow)!,
+                actor: uf.followerID,
+                receiver: uf.userID,
+                des: uf.followerID
+            )
+            //_ = notify.save(on: req.db)
+            NotifyController.create(req: req, notify: notify)
+            
+            return uf
+        }
     }
 
 //    func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {

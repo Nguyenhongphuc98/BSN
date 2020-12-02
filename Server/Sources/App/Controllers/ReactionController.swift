@@ -80,7 +80,7 @@ struct ReactionController: RouteCollection {
                                     }
                                 }
                                 
-                                // Notify to owner this reaction
+                                // Notify to owner this post
                                 // Incase react them post, we don't need to notify
                                 if p.authorID != user.id! {
                                     let notify = Notify(
@@ -89,7 +89,8 @@ struct ReactionController: RouteCollection {
                                         receiver: p.authorID,
                                         des: p.id!
                                     )
-                                    _ = notify.save(on: req.db)
+                                    //_ = notify.save(on: req.db)
+                                    NotifyController.create(req: req, notify: notify)
                                 }                                
                                 
                                 _ = p.update(on: req.db)

@@ -15,15 +15,17 @@ struct NewsFeedCard: View {
     
     @State private var presentPhoto: Bool = false
     
+    @State private var isShowProfile: Bool = false
+    
     var isDetail: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
-            navToPostDetail
+            navToPostDetailLabel
             
             // Header
             HStack {
-                CircleImage(image: model.owner.avatar, diameter: 30)
+                avatar
                 
                 VStack(alignment: .leading) {
                     Text(model.owner.displayname)
@@ -76,6 +78,27 @@ struct NewsFeedCard: View {
         .background(Color.white)
         .fullScreenCover(isPresented: $presentPhoto) {
             ViewFullPhoto(newFeed: model)
+        }
+    }
+    
+    private var avatar: some View {
+        Group {
+            NavigationLink(
+                destination: ProfileView(uid: model.owner.id)
+                    .environmentObject(NavigationState()),
+                isActive: $isShowProfile
+            ) {
+                EmptyView()
+            }
+            .frame(width: 0, height: 0)
+            .opacity(0)
+            
+            Button {
+                isShowProfile = true
+            } label: {
+                CircleImage(image: model.owner.avatar, diameter: 30)
+            }
+            .buttonStyle(BorderlessButtonStyle())
         }
     }
     
@@ -140,7 +163,7 @@ struct NewsFeedCard: View {
         .foregroundColor(.clear)
     }
     
-    private var navToPostDetail: some View {
+    private var navToPostDetailLabel: some View {
         NavigationLink(
             destination: PostDetailView(post: model, didReact: { (post) in
                 model.clone(from: post)

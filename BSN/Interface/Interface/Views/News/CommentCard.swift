@@ -13,6 +13,8 @@ struct CommentCard: View {
     
     @State private var showSubcomments: Bool = false
     
+    @State private var isShowProfile: Bool = false
+    
     @EnvironmentObject var pdViewModel: PostDetailViewModel
     
     // Reply in subcomment of 'Comment' and who be reppled is 'String'
@@ -72,7 +74,7 @@ struct CommentCard: View {
     var header: some View {
         // Header
         HStack {
-            CircleImage(image: model.owner.avatar, diameter: 30)
+            avatar
             
             VStack(alignment: .leading) {
                 Text(model.owner.displayname)
@@ -100,6 +102,27 @@ struct CommentCard: View {
             }
         }
         .frame(height: 40)
+    }
+    
+    private var avatar: some View {
+        Group {
+            NavigationLink(
+                destination: ProfileView(uid: model.owner.id)
+                    .environmentObject(NavigationState()),
+                isActive: $isShowProfile
+            ) {
+                EmptyView()
+            }
+            .frame(width: 0, height: 0)
+            .opacity(0)
+            
+            Button {
+                isShowProfile = true
+            } label: {
+                CircleImage(image: model.owner.avatar, diameter: 30)
+            }
+            .buttonStyle(BorderlessButtonStyle())
+        }
     }
     
     var expanseW: some View {
