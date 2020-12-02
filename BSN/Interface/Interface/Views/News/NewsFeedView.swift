@@ -56,8 +56,8 @@ public struct NewsFeedView: View {
                     }
                 }
                 .listRowInsets(.zero)
-            }
-            .listStyle(PlainListStyle())            
+            }            
+            .listStyle(PlainListStyle())
             .onAppear(perform: self.viewDidAppear)
             .embededLoadingFull(isLoading: $viewModel.isLoading)
     
@@ -86,7 +86,7 @@ public struct NewsFeedView: View {
             CreatePostView()
         }
     }
-    
+   
     func viewDidAppear() {
         print("news-appeard")        
     }

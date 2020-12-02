@@ -70,7 +70,8 @@ struct StickyImageButton: View {
         }, label: {
             Image(systemName: isActive ? activeIcon : normalIcon)
                 .foregroundColor(color)
+                .padding(3)
         })
-        .buttonStyle(PlainButtonStyle())
+        .buttonStyle(BorderlessButtonStyle())
     }
 }

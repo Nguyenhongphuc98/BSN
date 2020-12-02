@@ -19,16 +19,7 @@ struct NewsFeedCard: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            NavigationLink(
-                destination: PostDetailView(post: model, didReact: { (post) in
-                    model.clone(from: post)
-                    model.objectWillChange.send()
-                }),
-                tag: 1, selection: $action) {
-                EmptyView()
-            }
-            .frame(width: 0, height: 0)
-            .opacity(0)
+            navToPostDetail
             
             // Header
             HStack {
@@ -76,9 +67,7 @@ struct NewsFeedCard: View {
                     .frame(maxHeight: 200)
                     .clipped()
                     .padding(2)
-                    .onTapGesture {
-                        self.presentPhoto.toggle()
-                    }
+                    .overlay(tapableImageArea)
             }
             
             actionComponent
@@ -125,6 +114,7 @@ struct NewsFeedCard: View {
                               color: .black,
                               isActive: $model.activeComment) { (isComment) in
                 print("did request comment: \(isComment)")
+                //didRequestToDetail?()
                 action = 1
             }
             .disabled(isDetail)
@@ -134,6 +124,33 @@ struct NewsFeedCard: View {
             
             Spacer()
         }
+    }
+    
+    private var tapableImageArea: some View {
+        VStack {
+            Rectangle()
+                .fill(Color.black.opacity(0.0001))
+                .onTapGesture {
+                    self.presentPhoto.toggle()
+                }
+
+            Rectangle()
+                .frame(height: 10)
+        }
+        .foregroundColor(.clear)
+    }
+    
+    private var navToPostDetail: some View {
+        NavigationLink(
+            destination: PostDetailView(post: model, didReact: { (post) in
+                model.clone(from: post)
+                model.objectWillChange.send()
+            }),
+            tag: 1, selection: $action) {
+            EmptyView()
+        }
+        .frame(width: 0, height: 0)
+        .opacity(0)
     }
 }
 

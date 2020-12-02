@@ -95,10 +95,10 @@ struct BSNApp: App {
                 
                 // Badge
                 BadgeView(type: .chat)
-                    .offset(x: (geometry.size.width / 2) + 5, y: -25)
+                    .offset(x: (geometry.size.width / 2) + 5, y: -28)
                 
                 BadgeView(type: .notify)
-                    .offset(x: (geometry.size.width / 5) * 3.5, y: -25)
+                    .offset(x: (geometry.size.width / 5) * 3.5, y: -28)
             }
         }
     }
