@@ -27,6 +27,6 @@ class BSusggestBook: BBook {
         self.id = id
         self.title = title
         self.author = author
-        self.cover = cover
+        self.cover = cover ?? "book_cover"
     }
 }

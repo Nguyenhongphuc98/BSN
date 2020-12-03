@@ -111,7 +111,7 @@ class SubmitAddUBViewModel: ObservableObject {
                         self.model.title = book.title
                         self.model.author = book.author
                         self.model.description = book.description!
-                        self.model.cover = book.cover
+                        self.model.cover = book.cover ?? "book_cover"
                         self.enableDoneBtn = true
                         print("did receive book info")
                     }
@@ -167,7 +167,7 @@ class SubmitAddUBViewModel: ObservableObject {
                         self.model.title = book.title
                         self.model.author = book.author
                         self.model.description = book.description!
-                        self.model.cover = book.cover
+                        self.model.cover = book.cover ?? "book_cover"
                         self.enableDoneBtn = true
                         
                         // Add new book to server if it don't exists

@@ -139,9 +139,9 @@ struct BorrowBookHeader: View {
         VStack {
             HStack(alignment: .center, spacing: 20) {
                 BSNImage(urlString: model.cover, tempImage: "book_cover")
-                    .id(UUID())
-                    .frame(width: 80, height: 100)
-                    .background(Color.white)
+                    .id(model.cover!)
+                    .frame(width: 80, height: 110)
+                    //.background(Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 4))
                     .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))
                 

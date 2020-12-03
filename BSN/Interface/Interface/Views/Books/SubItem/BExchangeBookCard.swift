@@ -31,7 +31,7 @@ struct BExchangeBookCard: View {
                 nav = true
             } label: {
                 HStack(alignment: .center) {
-                    BSNImage(urlString: model.needChangeBook.cover!, tempImage: "book_cover")
+                    BSNImage(urlString: model.needChangeBook.cover, tempImage: "book_cover")
                         .frame(width: 110, height: 130)
 
                     VStack(alignment: .leading) {

@@ -91,7 +91,7 @@ public struct ProfileView: View, PopToable {
     var userInfo: some View {
         VStack {
             // Cover
-            BSNImage(urlString: viewModel.user.cover, tempImage: "cover")                
+            BSNImage(urlString: viewModel.user.cover, tempImage: "cover")
                 .frame(width: UIScreen.screenWidth ,height: 180)
                 .clipped()
             
@@ -167,6 +167,7 @@ public struct ProfileView: View, PopToable {
     var books: some View {
         ZStack(alignment: .trailing) {
             BBookGrid(models: viewModel.books, style: .mybook)
+                .id("bbookgrid")
                 .padding(.bottom)
             
             NavigationLink(
@@ -190,7 +191,8 @@ public struct ProfileView: View, PopToable {
             if viewName == self.viewName {
                 navAddUB = false
                 // reload data when pop to root (this view)
-                viewModel.prepareData(uid: userID)
+                // If need reload, it will call force func
+                // viewModel.prepareData(uid: userID)
             }
         }
     }

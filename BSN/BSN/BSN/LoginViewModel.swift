@@ -107,7 +107,7 @@ class LoginViewModel: NetworkViewModel {
                         // Reload data for new user
                         ChatViewModel.shared.prepareData()
                         NotifyViewModel.shared.prepareData()
-                        ProfileViewModel.shared.prepareData(uid: self.appManager.currenUID)
+                        ProfileViewModel.shared.forceRefeshData()
                         ExploreBookViewModel.shared.prepareData()
                         NewsFeedViewModel.shared.prepareData()
                     }

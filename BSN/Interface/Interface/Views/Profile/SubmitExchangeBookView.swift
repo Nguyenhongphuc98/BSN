@@ -50,9 +50,10 @@ struct SubmitExchangeBookView: View {
                 .robotoBold(size: 20)
             
             HStack(spacing: 20) {
-                BSNImage(urlString: getBookCover(isMyBook: isMyBook), tempImage: "book_cover")
-                    .frame(width: 80, height: 100)
-                    .background(Color.white)
+                BSNImage(urlString: getBookCover(isMyBook: isMyBook), tempImage: "book_cover")                    
+                    .id(getBookCover(isMyBook: isMyBook))
+                    .frame(width: 80, height: 110)
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
                     .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))
                 
                 VStack(alignment: .leading, spacing: 4) {

@@ -41,7 +41,7 @@ class BUserBook: BBook {
         self.state = BookState(rawValue: state) ?? . available
         self.title = title
         self.author = author
-        self.cover = cover
+        self.cover = cover ?? "book_cover"
     }
     
     init(ubid: String? = nil, uid: String? = nil, ownerName: String? = nil, status: String? = nil, title: String, author: String, state: String? = nil, cover: String? = nil, des: String? = nil) {
@@ -57,7 +57,7 @@ class BUserBook: BBook {
         self.id = ubid
         self.title = title
         self.author = author
-        self.cover = cover
+        self.cover = cover ?? "book_cover"
         
         if self.statusDes == "" {
             self.statusDes = "Không có mô tả tình trạng"

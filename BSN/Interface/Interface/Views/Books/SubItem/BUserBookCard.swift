@@ -52,18 +52,19 @@ struct BUserBookCard: View, PopToable {
     var footer: some View {
         Group {
             if isGuest {
-                Button(action: {
-                    print("did click borrow book")
-                }, label: {
-                    Text("Mượn sách")
-                })
-                .buttonStyle(BaseButtonStyle(size: .mediumH))
+//                Button(action: {
+//                    print("did click borrow book")
+//                }, label: {
+//                    Text("Mượn sách")
+//                })
+//                .buttonStyle(BaseButtonStyle(size: .mediumH))
             } else {
-                Button(action: {
-                    print("did click exchange book")
-                    activeSearchBook.toggle()
-                    navState.viewName = .undefine
-                }, label: {
+//                Button(action: {
+//                    print("did click exchange book")
+//                    navState.viewName = .undefine
+//                    activeSearchBook.toggle()
+//                }, label: {
+                    
                     NavigationLink(
                         destination: SearchAddBookView(useForExchangeBook: true)
                             .environmentObject(navState)
@@ -72,8 +73,9 @@ struct BUserBookCard: View, PopToable {
                         label: {
                             Text(" Đổi sách  ")
                         })
-                })
+               // })
                 .buttonStyle(BaseButtonStyle(size: .mediumH))
+                
             }
         }
     }

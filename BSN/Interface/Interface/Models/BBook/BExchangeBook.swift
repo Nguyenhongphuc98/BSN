@@ -71,7 +71,7 @@ class BExchangeBook: ObservableObject, AppendUniqueAble {
         needChangeBook = BUserBook(
             ownerName: firstOwner,
             title: firstTitle,
-            author: firstOwner,
+            author: firstAuthor,
             cover: firstCover,
             des: firstStatusDes
         )

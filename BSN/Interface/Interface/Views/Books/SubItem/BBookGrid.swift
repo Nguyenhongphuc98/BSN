@@ -36,7 +36,7 @@ struct BBookGrid: View {
                         BUserBookCard(model: book as! BUserBook)
                             .environmentObject(navState)
                     } else {
-                        SuggestBookCard(model: book as! BSusggestBook)
+                        SuggestBookCard(model: book as! BSusggestBook)                           
                             .environmentObject(navState)
                     }
                 }

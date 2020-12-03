@@ -24,7 +24,7 @@ struct BBookCard<Content: View>: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            BSNImage(urlString: model.cover!, tempImage: "book_cover")
+            BSNImage(urlString: model.cover, tempImage: "book_cover")
                 .frame(width: 100, height: 140)
             
             VStack(alignment: .leading) {

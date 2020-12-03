@@ -30,9 +30,11 @@ struct ConfirmExchangeBookView: View {
                         .foregroundColor(titleforeground)
                         .font(.system(size: 22))
                         .multilineTextAlignment(.center)
+                        .padding(.bottom, 10)
                 }
                 
                 BorrowBookHeader(model: viewModel.exchangeBook.needChangeBook, isRequest: false, isShowForOwner: true)
+                    .padding(.top, 10)
                 
                 Image(systemName: "repeat")
                     .foregroundColor(._primary)
@@ -100,7 +102,7 @@ struct ConfirmExchangeBookView: View {
     
     var des: String {
         if viewModel.exchangeBook.transactionInfo.progess == .accept {
-            return "Chúng tôi đã tạo cho bạn một cuộc trò chuyện, nhấn vào “đi tới tin nhắn” để trao đổi cụ thể hơn về việc đổi sách"
+            return "Chúng tôi đã tạo cho bạn một cuộc trò chuyện, đi tới mục tin nhắn để trao đổi cụ thể hơn về việc đổi sách"
         } else {
             return "\"\(viewModel.exchangeBook.transactionInfo.message)\""
         }
@@ -136,21 +138,12 @@ struct ConfirmExchangeBookView: View {
                 .padding()
                 .fixedSize(horizontal: false, vertical: false)
             
-            if viewModel.exchangeBook.transactionInfo.progess == .accept {
-                Button(action: {
-                    dismiss()
-                }, label: {
-                    Text("Đi tới tin nhắn")
-                })
-                .buttonStyle(BaseButtonStyle(size: .large))
-            } else {
                 Button(action: {
                     dismiss()
                 }, label: {
                     Text("    Quay lại    ")
                 })
                 .buttonStyle(BaseButtonStyle(size: .large))
-            }
         }
     }
     

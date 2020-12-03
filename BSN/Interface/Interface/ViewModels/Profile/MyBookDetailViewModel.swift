@@ -77,7 +77,7 @@ class MyBookDetailViewModel: NetworkViewModel {
                         self.model.title = ub.title!
                         self.model.author = ub.author!
                         self.model.description = ub.description!
-                        self.model.cover = ub.cover
+                        self.model.cover = ub.cover  ?? "book_cover"
                         self.model.statusDes = ub.statusDes!
                         self.model.state = ub.state.map { BookState(rawValue: $0)! }
                         self.model.status = ub.status.map { BookStatus(rawValue: $0)! }

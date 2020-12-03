@@ -110,6 +110,7 @@ struct SubmitAddBookView: View {
                 title: Text("Kết quả"),
                 message: Text(viewModel.resourceInfo.des()),
                 dismissButton: .default(Text("OK")) {
+                    ProfileViewModel.shared.forceRefeshData()
                     popToRoot()
                 })
         } else {
@@ -117,8 +118,9 @@ struct SubmitAddBookView: View {
             return Alert(
                 title: Text("Kết quả"),
                 message: Text(viewModel.resourceInfo.des()),
-                primaryButton: .default(Text("Thử lại")) {
-                    viewModel.addUserBook()
+                primaryButton: .default(Text("Thử mã khác")) {
+                    //viewModel.addUserBook()
+                    // Do nothing, allow user make other search
                 },
                 secondaryButton: .cancel(Text("Huỷ bỏ")) {
                     popToRoot()

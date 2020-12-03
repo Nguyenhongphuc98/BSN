@@ -44,7 +44,7 @@ class BBookDetail: BBook {
         id = book.id
         title = book.title
         author = book.author
-        cover = book.cover
+        cover = book.cover ?? "book_cover"
         description = book.description
     }
 }

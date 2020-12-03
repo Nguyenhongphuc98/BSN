@@ -101,62 +101,66 @@ struct ExchangeBookController: RouteCollection {
                     //.field(\.$userID)
                     .first()
                     .unwrap(or: Abort(.notFound))
-                
-                _ = firstUser.and(secondUser).map { (ub1, ub2)  in
-                    // insert notify
-                    // if req -> notify to owner
-                    // if accept/decline notify to exchanger
-                    let notify = Notify(
-                        typeID: UUID(uuidString: notifyTypeID)!,
-                        actor: newEB.state == ExchangeProgess.waiting.rawValue ? ub2.userID : ub1.userID,
-                        receiver: newEB.state == ExchangeProgess.waiting.rawValue ? ub1.userID : ub2.userID,
-                        des: eb.id!
-                    )
+              
+                return eb.update(on: req.db).map {
                     
-                    _ = notify.save(on: req.db)
-                    
-                    // case 3: accept
-                    if newEB.state == ExchangeProgess.accept.rawValue {
-                        // If accept, we should update status userbook for 2 owner
-                        ub1.state = BookState.exchanged.rawValue
-                        _ = ub1.save(on: req.db)
-                        
-                        ub2.state = BookState.exchanged.rawValue
-                        _ = ub2.save(on: req.db)
-                        
-                        // create new userbook
-                        // U1 hold book same u2
-                        let userBook1 = UserBook(
-                            uid: ub1.userID,
-                            bid: ub2.bookID,
-                            status: ub2.status,
-                            state: BookState.reading.rawValue,
-                            statusDes: ub2.statusDes
+                    _ = firstUser.and(secondUser).map { (ub1, ub2)  in
+                        // insert notify
+                        // if req -> notify to owner
+                        // if accept/decline notify to exchanger
+                        let notify = Notify(
+                            typeID: UUID(uuidString: notifyTypeID)!,
+                            actor: newEB.state == ExchangeProgess.waiting.rawValue ? ub2.userID : ub1.userID,
+                            receiver: newEB.state == ExchangeProgess.waiting.rawValue ? ub1.userID : ub2.userID,
+                            des: eb.id!
                         )
-                        _ = userBook1.save(on: req.db)
                         
-                        // U2 hold book same u1
-                        let userBook2 = UserBook(
-                            uid: ub2.userID,
-                            bid: ub1.bookID,
-                            status: ub1.status,
-                            state: BookState.reading.rawValue,
-                            statusDes: ub1.statusDes
-                        )
-                        _ = userBook2.save(on: req.db)
+                        //_ = notify.save(on: req.db)
+                        NotifyController.create(req: req, notify: notify)
                         
-                        // Create default message (chat) for them
-                        let message = Message.GetFull(
-                            senderID: ub1.userID.uuidString,
-                            content: "Chấp nhận yêu cầu đổi sách: '\(eb.message ?? "")'",
-                            receiverID: ub2.userID.uuidString,
-                            typeName: "text"
-                        )
-                        _ = try! MessageController().save(req: req, message: message)
+                        // case 3: accept
+                        if newEB.state == ExchangeProgess.accept.rawValue {
+                            // If accept, we should update status userbook for 2 owner
+                            ub1.state = BookState.exchanged.rawValue
+                            _ = ub1.save(on: req.db)
+                            
+                            ub2.state = BookState.exchanged.rawValue
+                            _ = ub2.save(on: req.db)
+                            
+                            // create new userbook
+                            // U1 hold book same u2
+                            let userBook1 = UserBook(
+                                uid: ub1.userID,
+                                bid: ub2.bookID,
+                                status: ub2.status,
+                                state: BookState.reading.rawValue,
+                                statusDes: ub2.statusDes
+                            )
+                            _ = userBook1.save(on: req.db)
+                            
+                            // U2 hold book same u1
+                            let userBook2 = UserBook(
+                                uid: ub2.userID,
+                                bid: ub1.bookID,
+                                status: ub1.status,
+                                state: BookState.reading.rawValue,
+                                statusDes: ub1.statusDes
+                            )
+                            _ = userBook2.save(on: req.db)
+                            
+                            // Create default message (chat) for them
+                            let message = Message.GetFull(
+                                senderID: ub1.userID.uuidString,
+                                content: "Chấp nhận yêu cầu đổi sách: '\(eb.message ?? "")'",
+                                receiverID: ub2.userID.uuidString,
+                                typeName: "text"
+                            )
+                            _ = try! MessageController().save(req: req, message: message)
+                        }
                     }
+                    
+                    return eb
                 }
-                
-                return eb.update(on: req.db).map { eb }
             }
     }
     

@@ -36,7 +36,7 @@ public class ProfileViewModel: NetworkViewModel {
         posts = []
         books = []
         followed = false
-        isfetched = false
+        isfetched = false       
         userBookManager = UserBookManager.shared
         userManager = UserManager()
         followManager = UserFollowManager()
@@ -49,9 +49,16 @@ public class ProfileViewModel: NetworkViewModel {
         observerNewestPosts()
     }
     
+    public func forceRefeshData() {
+        // Just current user can force refesh
+        self.user = AppManager.shared.currentUser
+        reloadPostNUserbook()
+    }
+    
     /// Fetching data from Server to fill page if it passed bookID from preView
+    // This func should be call one time
     public func prepareData(uid: String?) {
-        guard isLoading == false, isfetched == false || uid == nil else {
+        guard isLoading == false, !isfetched else {
             return
         }
         isLoading = true
@@ -67,6 +74,10 @@ public class ProfileViewModel: NetworkViewModel {
             followManager.getUserFollow(followerId: AppManager.shared.currentUser.id, userID: uid!)
         }
         
+        reloadPostNUserbook(uid: uid)
+    }
+    
+    func reloadPostNUserbook(uid: String? = nil) {
         self.books = []
         self.posts = []
         userBookManager.getUserBooks(uid: uid ?? self.user.id)
@@ -103,6 +114,7 @@ extension ProfileViewModel {
                 
                 DispatchQueue.main.async {
                     self.isLoading = false
+                    self.isfetched = true
                     
                     if !ubs.isEmpty {
                         
@@ -119,7 +131,7 @@ extension ProfileViewModel {
                             )
                             self.books.appendUnique(item: userBook)
                         }
-                        self.objectWillChange.send()
+                       // self.objectWillChange.send()
                     }
                 }
             }

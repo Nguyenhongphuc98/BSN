@@ -166,9 +166,10 @@ struct ExchangeBookSecondHeader: View {
                 }
                 
                 BSNImage(urlString: model.cover, tempImage: "book_cover")
-                    .frame(width: 80, height: 100)
-                    .background(Color.white)
-                    .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))
+                    .id(model.cover!)
+                    .frame(width: 80, height: 110)
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                    .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))                    
             }
             
             if model.id != nil {

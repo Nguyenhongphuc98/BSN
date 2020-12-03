@@ -70,14 +70,14 @@ struct BSNApp: App {
                     
                     NavigationView {
                         ChatView()
-                            .navigationTitle("Tin nhắn")
+                            .navigationBarTitle("Tin nhắn", displayMode: .large)
                     }
                     .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .chat) }
                     .tag(2)
                     
                     NavigationView {
                         NotifyView()
-                            .navigationTitle("Thông báo")
+                            .navigationBarTitle("Thông báo", displayMode: .large)
                     }
                     .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .notify) }
                     .tag(3)

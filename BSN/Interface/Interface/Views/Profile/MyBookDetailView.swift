@@ -171,8 +171,10 @@ struct MyBookDetailViewHeader: View {
         VStack {
             HStack(alignment: .center) {
                 BSNImage(urlString: model.cover, tempImage: "book_cover")
-                    .frame(width: 80, height: 100)
+                    .frame(width: 80, height: 110)
                     .background(Color.white)
+                    .id(model.cover!)
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
                     .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))
                 
                 VStack(alignment: .leading, spacing: 4) {
