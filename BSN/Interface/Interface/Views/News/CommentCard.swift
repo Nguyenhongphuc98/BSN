@@ -107,7 +107,7 @@ struct CommentCard: View {
     private var avatar: some View {
         Group {
             NavigationLink(
-                destination: ProfileView(uid: model.owner.id)
+                destination: ProfileView(uid: model.owner.id, vm: ProfileViewModel())
                     .environmentObject(NavigationState()),
                 isActive: $isShowProfile
             ) {

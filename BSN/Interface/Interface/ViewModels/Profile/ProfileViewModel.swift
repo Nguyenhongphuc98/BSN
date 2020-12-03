@@ -29,11 +29,14 @@ public class ProfileViewModel: NetworkViewModel {
     
     private var postManager: PostManager
     
+    private var isfetched: Bool // all data fetched before
+    
     public override init() {
         user = User()
         posts = []
         books = []
         followed = false
+        isfetched = false
         userBookManager = UserBookManager.shared
         userManager = UserManager()
         followManager = UserFollowManager()
@@ -48,6 +51,9 @@ public class ProfileViewModel: NetworkViewModel {
     
     /// Fetching data from Server to fill page if it passed bookID from preView
     public func prepareData(uid: String?) {
+        guard isLoading == false, isfetched == false || uid == nil else {
+            return
+        }
         isLoading = true
         
         if uid == nil || uid == AppManager.shared.currentUser.id {
@@ -131,6 +137,7 @@ extension ProfileViewModel {
                 
                 DispatchQueue.main.async {
                     self.isLoading = false
+                    self.isfetched = true
                     
                     if u.id == "undefine" {
                         self.resourceInfo = .notfound

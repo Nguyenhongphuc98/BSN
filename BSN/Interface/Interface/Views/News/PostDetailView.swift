@@ -17,6 +17,9 @@ struct PostDetailView: View {
     
     @State private var post: NewsFeed = NewsFeed()
     
+    @State private var isShowProfile: Bool = false
+    @State private var selectedUserID: String = ""
+    
     var didReact: ((NewsFeed) -> Void)?
     
     init(post: NewsFeed, didReact: ((NewsFeed) -> Void)? = nil) {
@@ -62,8 +65,15 @@ struct PostDetailView: View {
     var postContent: some View {
         ZStack(alignment: .bottom) {
             ScrollView(.vertical) {
+                navToProfileLabel
+                
                 // Main post
-                NewsFeedCard(model: viewModel.post!, isDetail: true)
+                NewsFeedCard(model: viewModel.post!,
+                             isDetail: true,
+                             didRequestGoToProfile: {
+                                selectedUserID = viewModel.post!.owner.id
+                                isShowProfile = true
+                             })
                 
                 Separator()
                 
@@ -136,6 +146,18 @@ struct PostDetailView: View {
         }
         .padding(.horizontal)
         .padding(.vertical, 8)
+    }
+    
+    private var navToProfileLabel: some View {
+        NavigationLink(
+            destination: ProfileView(uid: selectedUserID, vm: ProfileViewModel())
+                .environmentObject(NavigationState()),
+            isActive: $isShowProfile
+        ) {
+            EmptyView()
+        }
+        .frame(width: 0, height: 0)
+        .opacity(0)
     }
     
     func viewAppeared() {

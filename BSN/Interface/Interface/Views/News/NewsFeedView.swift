@@ -14,6 +14,12 @@ public struct NewsFeedView: View {
     @StateObject var viewModel: NewsFeedViewModel = NewsFeedViewModel.shared
     
     @State private var presentCPV: Bool = false
+    
+    @State private var isShowPostDetail: Bool = false
+    @State private var isShowProfile: Bool = false
+    
+    @ObservedObject private var selectedNews: NewsFeed = NewsFeed()
+    @State private var selectedUserID: String = ""
   
     public init() {
         
@@ -21,6 +27,9 @@ public struct NewsFeedView: View {
     
     public var body: some View {
         VStack {
+            navToProfileLabel
+            navToPostDetailLabel
+            
             editor
             
             Separator()
@@ -31,7 +40,16 @@ public struct NewsFeedView: View {
                     VStack {
                         ZStack(alignment: .topTrailing) {
                             
-                            NewsFeedCard(model: news)
+                            NewsFeedCard(
+                                model: news,
+                                didRequestGoToDetail: {
+                                    selectedNews.clone(from: news)
+                                    isShowPostDetail = true
+                                }, didRequestGoToProfile: {
+                                    selectedUserID = news.owner.id
+                                    isShowProfile = true
+                                }
+                            )
                             .onAppear(perform: {
                                 self.viewModel.loadMoreIfNeeded(item: news)
                             })
@@ -85,6 +103,31 @@ public struct NewsFeedView: View {
         .fullScreenCover(isPresented: $presentCPV) {
             CreatePostView()
         }
+    }
+    
+    private var navToPostDetailLabel: some View {
+        NavigationLink(
+            destination: PostDetailView(post: selectedNews, didReact: { (post) in
+                viewModel.postDidChange(post: post)
+            }),
+            isActive: $isShowPostDetail
+        ) {
+            EmptyView()
+        }
+        .frame(width: 0, height: 0)
+        .opacity(0)
+    }
+    
+    private var navToProfileLabel: some View {
+        NavigationLink(
+            destination: ProfileView(uid: selectedUserID, vm: ProfileViewModel())
+                .environmentObject(NavigationState()),
+            isActive: $isShowProfile
+        ) {
+            EmptyView()
+        }
+        .frame(width: 0, height: 0)
+        .opacity(0)
     }
    
     func viewDidAppear() {

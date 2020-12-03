@@ -11,18 +11,15 @@ struct NewsFeedCard: View {
     
     @ObservedObject var model: NewsFeed
     
-    @State private var action: Int? = 0
-    
     @State private var presentPhoto: Bool = false
-    
-    @State private var isShowProfile: Bool = false
     
     var isDetail: Bool = false
     
+    var didRequestGoToDetail: (() -> Void)?
+    var didRequestGoToProfile: (() -> Void)?
+    
     var body: some View {
         VStack(alignment: .leading) {
-            navToPostDetailLabel
-            
             // Header
             HStack {
                 avatar
@@ -69,6 +66,7 @@ struct NewsFeedCard: View {
                     .frame(maxHeight: 200)
                     .clipped()
                     .padding(2)
+                    .allowsHitTesting(false)
                     .overlay(tapableImageArea)
             }
             
@@ -82,24 +80,13 @@ struct NewsFeedCard: View {
     }
     
     private var avatar: some View {
-        Group {
-            NavigationLink(
-                destination: ProfileView(uid: model.owner.id)
-                    .environmentObject(NavigationState()),
-                isActive: $isShowProfile
-            ) {
-                EmptyView()
-            }
-            .frame(width: 0, height: 0)
-            .opacity(0)
-            
-            Button {
-                isShowProfile = true
-            } label: {
-                CircleImage(image: model.owner.avatar, diameter: 30)
-            }
-            .buttonStyle(BorderlessButtonStyle())
+        Button {
+            //isShowProfile = true
+            didRequestGoToProfile?()
+        } label: {
+            CircleImage(image: model.owner.avatar, diameter: 30)
         }
+        .buttonStyle(BorderlessButtonStyle())
     }
     
     private var actionComponent: some View {
@@ -137,8 +124,8 @@ struct NewsFeedCard: View {
                               color: .black,
                               isActive: $model.activeComment) { (isComment) in
                 print("did request comment: \(isComment)")
-                //didRequestToDetail?()
-                action = 1
+                didRequestGoToDetail?()
+                //action = 1
             }
             .disabled(isDetail)
             
@@ -161,19 +148,6 @@ struct NewsFeedCard: View {
                 .frame(height: 10)
         }
         .foregroundColor(.clear)
-    }
-    
-    private var navToPostDetailLabel: some View {
-        NavigationLink(
-            destination: PostDetailView(post: model, didReact: { (post) in
-                model.clone(from: post)
-                model.objectWillChange.send()
-            }),
-            tag: 1, selection: $action) {
-            EmptyView()
-        }
-        .frame(width: 0, height: 0)
-        .opacity(0)
     }
 }
 

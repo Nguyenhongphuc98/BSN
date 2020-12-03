@@ -15,7 +15,8 @@ public struct ProfileView: View, PopToable {
     
     // =========================
     
-    @ObservedObject var viewModel: ProfileViewModel = ProfileViewModel.shared
+    //@EnvironmentObject var viewModel: ProfileViewModel
+    @StateObject var viewModel: ProfileViewModel
 
     @State private var selectedSegment: Int = 0
     
@@ -27,12 +28,19 @@ public struct ProfileView: View, PopToable {
     
     @State private var navAddUB: Bool = false
     
-    public init(uid: String? = nil) {
+    // Handle nav post detail
+    @State private var isShowPostDetail: Bool = false
+    @ObservedObject private var selectedNews: NewsFeed = NewsFeed()
+    
+    public init(uid: String? = nil, vm: ProfileViewModel) {
         self.userID = uid
+        self._viewModel = StateObject(wrappedValue: vm)
     }
     
     public var body: some View {
         ZStack {
+            navToPostDetailLabel
+            
             ScrollView {
                 ScrollViewReader { value in
                     VStack {
@@ -42,6 +50,7 @@ public struct ProfileView: View, PopToable {
                             // Avatar
                             VStack() {
                                 CircleImageOptions(image: viewModel.user.avatar, diameter: 80)
+                                    .id(viewModel.user.avatar ?? UUID().uuidString)
                                     .padding(.top, 115)
                                     .padding(.leading)
                                 
@@ -75,13 +84,14 @@ public struct ProfileView: View, PopToable {
                 Loading()
             }
         }
+        .navigationBarTitle(Text("Trang cá nhân"), displayMode: .inline)
         .onAppear(perform: viewAppeared)
     }
     
     var userInfo: some View {
         VStack {
             // Cover
-            BSNImage(urlString: viewModel.user.cover, tempImage: "cover")
+            BSNImage(urlString: viewModel.user.cover, tempImage: "cover")                
                 .frame(width: UIScreen.screenWidth ,height: 180)
                 .clipped()
             
@@ -138,7 +148,14 @@ public struct ProfileView: View, PopToable {
         List {
             ForEach(viewModel.posts) { p in
                 VStack {
-                    NewsFeedCard(model: p).id(UUID())
+                    NewsFeedCard(
+                        model: p,
+                        didRequestGoToDetail: {
+                            selectedNews.clone(from: p)
+                            isShowPostDetail = true
+                        }
+                    )
+                        .id(UUID())
                     Separator()
                 }
             }
@@ -201,15 +218,29 @@ public struct ProfileView: View, PopToable {
         .frame(height: UIScreen.screenHeight - 100)
     }
     
+    private var navToPostDetailLabel: some View {
+        NavigationLink(
+            destination: PostDetailView(post: selectedNews, didReact: { (post) in
+                
+            }),
+            isActive: $isShowPostDetail
+        ) {
+            EmptyView()
+        }
+        .frame(width: 0, height: 0)
+        .opacity(0)
+    }
+    
     private func viewAppeared() {
         viewModel.prepareData(uid: userID)
+        print("Profile Didappeared")
     }
 }
 
 #if DEBUG
 struct Profile_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
+        ProfileView(vm: ProfileViewModel())
     }
 }
 #endif

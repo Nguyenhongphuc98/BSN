@@ -78,7 +78,7 @@ struct InChatView: View {
     
     private var navProfile: some View {
         NavigationLink(
-            destination: ProfileView(uid: chat.partnerID)
+            destination: ProfileView(uid: chat.partnerID, vm: ProfileViewModel())
                 .environmentObject(NavigationState()),
             tag: 1,
             selection: $goProfile

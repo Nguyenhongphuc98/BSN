@@ -83,7 +83,7 @@ struct BSNApp: App {
                     .tag(3)
                     
                     NavigationView {
-                        ProfileView()
+                        ProfileView(vm: ProfileViewModel.shared)
                             .navigationBarTitle(Text("Trang cá nhân"), displayMode: .inline)
                             .navigationBarHidden(true)
                             .environmentObject(profileNavState)

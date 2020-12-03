@@ -53,7 +53,7 @@ struct NotifyCard: View {
             return AnyView(ConfirmExchangeBookView(resultView: true, ebid: model.destinationID))
             
         case .follow:
-            return AnyView(ProfileView())
+            return AnyView(ProfileView(uid: model.destinationID, vm: ProfileViewModel()))
         }
     }
     
