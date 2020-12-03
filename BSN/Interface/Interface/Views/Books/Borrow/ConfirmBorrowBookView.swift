@@ -22,7 +22,7 @@ struct ConfirmBorrowBookView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            BorrowBookHeader(model: viewModel.borrowBook.userbook, isRequest: false)
+            BorrowBookHeader(model: viewModel.borrowBook.userbook, isRequest: false, isShowForOwner: true)
                 .padding(10)
             
             Text("\"\(viewModel.borrowBook.transactionInfo.message)\"")

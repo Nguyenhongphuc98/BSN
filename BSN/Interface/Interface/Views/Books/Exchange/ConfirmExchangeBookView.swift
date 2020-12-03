@@ -32,7 +32,7 @@ struct ConfirmExchangeBookView: View {
                         .multilineTextAlignment(.center)
                 }
                 
-                BorrowBookHeader(model: viewModel.exchangeBook.needChangeBook, isRequest: false)
+                BorrowBookHeader(model: viewModel.exchangeBook.needChangeBook, isRequest: false, isShowForOwner: true)
                 
                 Image(systemName: "repeat")
                     .foregroundColor(._primary)

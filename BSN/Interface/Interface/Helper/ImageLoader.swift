@@ -31,7 +31,7 @@ public class ImageLoader: ObservableObject {
         if self.urlString != urlString {
             self.instate = temp
             self.urlString = urlString
-            download(urlString: urlString)
+            download(urlString: self.urlString)
         }
 //        else {
 //            print(">>>found duplicate url req")

@@ -22,7 +22,7 @@ struct SubmitRequestBorrowView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack {
-                BorrowBookHeader(model: viewModel.model.userbook)
+                BorrowBookHeader(model: viewModel.model.userbook, isShowForOwner: false)
                     .padding(.top, 20)
                 
                 Separator(color: .init(hex: 0xE2DFDF), height: 1)
@@ -132,12 +132,17 @@ struct BorrowBookHeader: View {
     // Use for reuest or confirm View
     var isRequest: Bool = true
     
+    // view show for owner of this book
+    var isShowForOwner: Bool = true
+    
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 20) {
                 BSNImage(urlString: model.cover, tempImage: "book_cover")
+                    .id(UUID())
                     .frame(width: 80, height: 100)
                     .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
                     .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -146,6 +151,8 @@ struct BorrowBookHeader: View {
                     
                     Text(model.title)
                         .roboto(size: 15)
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: false)
                     
                     Text(model.author)
                         .robotoLight(size: 14)
@@ -174,6 +181,6 @@ struct BorrowBookHeader: View {
     }
     
     var partnerRole: String {
-        isRequest ? "Chủ sở hữu" : "Người mượn"
+        isShowForOwner ? "Người mượn" : "Chủ sở hữu"
     }
 }

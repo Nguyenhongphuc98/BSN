@@ -45,26 +45,30 @@ struct BorrowBookController: RouteCollection {
     func create(req: Request) throws -> EventLoopFuture<BorrowBook> {
         let bb = try req.content.decode(BorrowBook.self)
         
-        // Find owner of this userbook
-        _ = UserBook.query(on: req.db)
-            .filter(\.$id == bb.userBookID)
-            .field(\.$userID)
-            .first()
-            .unwrap(or: Abort(.notFound))
-            .map { (ub) in
-                
-                // insert notify for owner
-                let notify = Notify(
-                    typeID: UUID(uuidString: NotifyType().borrow)!, // id of borrow action
-                    actor: bb.borrowerID, // who submit
-                    receiver: ub.userID, // who owner this book (userbook)
-                    des: bb.id!
-                )
-                
-                _ = notify.save(on: req.db)
-            }
-        
-        return bb.save(on: req.db).map { bb }
+        return bb.save(on: req.db).map {
+            
+            // Find owner of this userbook
+            _ = UserBook.query(on: req.db)
+                .filter(\.$id == bb.userBookID)
+                .field(\.$userID)
+                .first()
+                .unwrap(or: Abort(.notFound))
+                .map { (ub) in
+                    
+                    // insert notify for owner
+                    let notify = Notify(
+                        typeID: UUID(uuidString: NotifyType().borrow)!, // id of borrow action
+                        actor: bb.borrowerID, // who submit
+                        receiver: ub.userID, // who owner this book (userbook)
+                        des: bb.id!
+                    )
+                    
+                    //_ = notify.save(on: req.db)
+                    NotifyController.create(req: req, notify: notify)
+                }
+            
+            return bb
+        }
     }
     
     func update(req: Request) throws -> EventLoopFuture<BorrowBook> {
@@ -86,49 +90,53 @@ struct BorrowBookController: RouteCollection {
                     notifyTypeID = NotifyType().borrowFail
                 }
                 
-                // Find owner of this userbook
-                _ = UserBook.query(on: req.db)
-                    .filter(\.$id == bb.userBookID)
-                    .first()
-                    .unwrap(or: Abort(.notFound))
-                    .map { (ub) in
-                        
-                        // Create notify to borrower
-                        let notify = Notify(
-                            typeID: UUID(uuidString: notifyTypeID)!,
-                            actor: ub.userID, // who update
-                            receiver: bb.borrowerID,
-                            des: bb.id!
-                        )
-                        _ = notify.save(on: req.db)
-                        
-                        if newbb.state == ExchangeProgess.accept.rawValue {
-                            // Update status of that borowbook to borowed
-                            ub.state = BookState.borrowed.rawValue
-                            _ = ub.update(on: req.db)
+                return bb.update(on: req.db).map {
+                    
+                    // Find owner of this userbook
+                    _ = UserBook.query(on: req.db)
+                        .filter(\.$id == bb.userBookID)
+                        .first()
+                        .unwrap(or: Abort(.notFound))
+                        .map { (ub) in
                             
-                            // Create default message (chat) for them
-                            let message = Message.GetFull(
-                                senderID: ub.userID.uuidString,
-                                content: "Chấp nhận yêu cầu mượn sách: '\(bb.message)'",
-                                receiverID: bb.borrowerID.uuidString,
-                                typeName: "text"
+                            // Create notify to borrower
+                            let notify = Notify(
+                                typeID: UUID(uuidString: notifyTypeID)!,
+                                actor: ub.userID, // who update
+                                receiver: bb.borrowerID,
+                                des: bb.id!
                             )
-                            _ = try! MessageController().save(req: req, message: message)
+                            //_ = notify.save(on: req.db)
+                            NotifyController.create(req: req, notify: notify)
                             
-                            // Create userbook for borrower.
-                            let userBook = UserBook(
-                                uid: bb.borrowerID,
-                                bid: ub.bookID,
-                                status: ub.status,
-                                state: BookState.reading.rawValue,
-                                statusDes: ub.statusDes
-                            )
-                            _ = userBook.save(on: req.db)
+                            if newbb.state == ExchangeProgess.accept.rawValue {
+                                // Update status of that borowbook to borowed
+                                ub.state = BookState.borrowed.rawValue
+                                _ = ub.update(on: req.db)
+                                
+                                // Create default message (chat) for them
+                                let message = Message.GetFull(
+                                    senderID: ub.userID.uuidString,
+                                    content: "Chấp nhận yêu cầu mượn sách: '\(bb.message)'",
+                                    receiverID: bb.borrowerID.uuidString,
+                                    typeName: "text"
+                                )
+                                _ = try! MessageController().save(req: req, message: message)
+                                
+                                // Create userbook for borrower.
+                                let userBook = UserBook(
+                                    uid: bb.borrowerID,
+                                    bid: ub.bookID,
+                                    status: ub.status,
+                                    state: BookState.reading.rawValue,
+                                    statusDes: ub.statusDes
+                                )
+                                _ = userBook.save(on: req.db)
+                            }
                         }
-                    }
-                
-                return bb.update(on: req.db).map { bb }
+                    
+                    return bb
+                }
             }
     }
 

@@ -43,7 +43,7 @@ class ConfirmBorrowBookViewModel: NetworkViewModel {
                 
                 DispatchQueue.main.async { [weak self] in
                     self?.isLoading = false
-                    self?.borrowBook = BBorrowBook(ebb: bb)
+                    self?.borrowBook = BBorrowBook(ebb: bb, bindMess: true)
                     self?.objectWillChange.send()
                 }
             }

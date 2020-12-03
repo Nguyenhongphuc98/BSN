@@ -38,7 +38,7 @@ class BorrowResultViewModel: NetworkViewModel {
                 
                 DispatchQueue.main.async { 
                     self.isLoading = false
-                    self.borrowBook = BBorrowBook(ebb: bb)
+                    self.borrowBook = BBorrowBook(ebb: bb) // bind status dess insted
                     self.objectWillChange.send()
                 }
             }

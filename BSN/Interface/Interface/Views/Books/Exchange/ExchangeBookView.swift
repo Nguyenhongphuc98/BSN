@@ -25,7 +25,7 @@ struct ExchangeBookView: View {
     var body: some View {
         ScrollView(showsIndicators: false, content: {
             VStack {
-                BorrowBookHeader(model: viewModel.exchangeBook.needChangeBook)
+                BorrowBookHeader(model: viewModel.exchangeBook.needChangeBook, isShowForOwner: false)
                     .padding(.vertical)
                 
                 Image(systemName: "repeat")

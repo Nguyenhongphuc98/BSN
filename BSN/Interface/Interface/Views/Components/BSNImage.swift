@@ -19,11 +19,11 @@ struct BSNImage: View {
     var body: some View {
         Image(uiImage: loader.uiImage)
             .resizable()
-            .aspectRatio(contentMode: .fill)
+            .aspectRatio(contentMode: .fill)            
 //            .onReload {
 //                print("BSN iamge reload")
 //                refetchImage()
-//            }            
+//            }
             .onAppear {
                 refetchImage()
             }

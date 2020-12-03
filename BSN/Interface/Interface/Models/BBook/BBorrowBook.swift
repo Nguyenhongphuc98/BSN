@@ -51,7 +51,7 @@ class BBorrowBook: ObservableObject, Identifiable {
         )
     }
     
-    init(ebb: EBorrowBook) {
+    init(ebb: EBorrowBook, bindMess: Bool = false) {
         self.id = ebb.id
         self.userbook = BUserBook(
             ownerName: ebb.brorrowerName,
@@ -60,7 +60,8 @@ class BBorrowBook: ObservableObject, Identifiable {
             author: ebb.bookAuthor!,
             state: BookState.unknown.rawValue, // in this case we don't care this value
             cover: ebb.bookCover,
-            des: ebb.message)
+            des: bindMess ? ebb.message! : ebb.statusDes!
+        )
         
         transactionInfo = BTransactionInfo(
             exchangeDate: Date.getDate(dateStr: ebb.borrowDate),

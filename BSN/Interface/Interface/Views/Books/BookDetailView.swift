@@ -82,6 +82,8 @@ struct BookDetailView: View, PopToable {
         HStack(alignment: .center) {
             BSNImage(urlString: viewModel.model.cover, tempImage: "book_cover")
                 .frame(width: 90, height: 130)
+                .id(UUID())                
+                .clipShape(RoundedRectangle(cornerRadius: 4))
                 .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))
             
             VStack(alignment: .leading) {
