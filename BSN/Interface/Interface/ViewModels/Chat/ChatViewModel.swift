@@ -137,12 +137,20 @@ extension ChatViewModel {
                     self.searchChats = []
                     chats.forEach { (c) in
                         
-                        let mess = Message(content: c.messageContent!, type: c.messageTypeName!, createAt: c.messageCreateAt!)
+//                        let mess = Message(content: c.messageContent!, type: c.messageTypeName!, createAt: c.messageCreateAt!)
+//                        let model = Chat(id: c.id,
+//                             partnerID: c.getPartnerID(of: AppManager.shared.currenUID),
+//                             partnerName: c.getPartnerName(of: AppManager.shared.currenUID),
+//                             partnerPhoto: c.getPartnerPhoto(of: AppManager.shared.currenUID),
+//                             lastMessage: mess,
+//                             seen: c.isSeen(of: AppManager.shared.currenUID)
+//                        )
+                                               
                         let model = Chat(id: c.id,
                              partnerID: c.getPartnerID(of: AppManager.shared.currenUID),
                              partnerName: c.getPartnerName(of: AppManager.shared.currenUID),
                              partnerPhoto: c.getPartnerPhoto(of: AppManager.shared.currenUID),
-                             lastMessage: mess,
+                             lastMessage: nil,
                              seen: c.isSeen(of: AppManager.shared.currenUID)
                         )
                         
