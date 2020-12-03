@@ -97,6 +97,13 @@ public class ProfileViewModel: NetworkViewModel {
         followed = !followed
         self.objectWillChange.send()
     }
+    
+    func addNewPostToTop(news: NewsFeed) {
+        DispatchQueue.main.async {
+            self.posts.insertUnique(item: news)
+            self.objectWillChange.send()
+        }
+    }
 }
 
 // MARK: - Observer data

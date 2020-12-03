@@ -76,6 +76,15 @@ extension CreatePostViewModel {
                         self.resourceInfo =  .savefailure
                         self.showAlert = true
                     } else {
+                        let newsfeed = NewsFeed(
+                            id: p.id!,
+                            category: self.category,
+                            content: p.content,
+                            quote: p.quote,
+                            photo: p.photo
+                        )
+                        NewsFeedViewModel.shared.addNewPostToTop(news: newsfeed)
+                        ProfileViewModel.shared.addNewPostToTop(news: newsfeed)
                         self.didSaveSuccess?()
                     }
                 }

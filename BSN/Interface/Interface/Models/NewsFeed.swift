@@ -38,6 +38,7 @@ class NewsFeed: ObservableObject, AppendUniqueAble {
     // reaction manager
     private var reactManager: ReactionManager = ReactionManager.shared
     
+    // Fake data
     init(id: String? = nil) {
         self.id = id ?? kUndefine
         owner = User()
@@ -55,6 +56,22 @@ class NewsFeed: ObservableObject, AppendUniqueAble {
         numHeart = 89
         numBeakHeart = 12
         numComment = 5
+    }
+    
+    // New post, just save now by current user
+    init(id: String, category: Category, content: String, quote: String?, photo: String?) {
+        self.id = id
+        self.owner = AppManager.shared.currentUser
+        self.postTime = Date() // now
+        self.category = category
+        self.content = content
+        
+        self.quote = quote
+        self.photo = photo
+        
+        numHeart = 0
+        numBeakHeart = 0
+        numComment = 0
     }
 
     init(post: EPost) {

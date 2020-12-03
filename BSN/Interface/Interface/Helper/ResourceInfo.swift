@@ -32,7 +32,7 @@ public enum ResourceInfo: String {
         case .invalid_empty:
             return "Nội dung không được để trống"
         case .invalid_category:
-            return "Vui lòng chọn danh mục"
+            return "Vui lòng chọn chủ đề"
         case .image_upload_fail:
             return "Không thể tải ảnh lên, thử lại sau"
         }
