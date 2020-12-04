@@ -63,13 +63,7 @@ class SessionManager {
             return
         }
         listeners = listeners.filter { $0 !== listener }
-        if listeners != nil {
-            // Assign nil value cause cash app
-            // It happen when clien close in corect (ex: force quit from xcode)
-            sessions[session] = listeners
-        } else {
-            sessions.removeValue(forKey: session)
-        }        
+        sessions[session] = listeners        
     }
     
     func send<T: Codable>(message: T, to sendOption: WebSocketSendOption) {
