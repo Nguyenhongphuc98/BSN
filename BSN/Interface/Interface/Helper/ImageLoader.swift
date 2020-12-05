@@ -28,6 +28,11 @@ public class ImageLoader: ObservableObject {
     }
     
     public func setup(urlString: String?, temp: String) {
+        guard urlString != nil else {
+            self.uiImage = UIImage(named: temp, in: interfaceBundle, with: nil)!
+            return
+        }
+        
         if self.urlString != urlString {
             self.instate = temp
             self.urlString = urlString

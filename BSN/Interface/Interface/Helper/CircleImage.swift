@@ -14,7 +14,7 @@ public struct CircleImage: View {
     var diameter: CGFloat = 50
     
     public var body: some View {
-        BSNImage(urlString: image, tempImage: "avatar")
+        BSNImage(urlString: image, tempImage: "anonymous")
             .frame(width: diameter, height: diameter)
             .clipShape(Circle())
     }

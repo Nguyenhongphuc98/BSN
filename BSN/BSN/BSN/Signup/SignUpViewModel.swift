@@ -68,7 +68,7 @@ class SignUpViewModel: NetworkViewModel {
                     
                     if ac.id == "undefine" {
                         // check exist account or something wrong
-                        self.message = "Dữ liệu không hợp lệ"
+                        self.message = "Tài khoản đã tồn tại!"
                     } else {
                         
                         self.resourceInfo = .signup_success

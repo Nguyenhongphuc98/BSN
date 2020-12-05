@@ -43,6 +43,7 @@ struct AccountController: RouteCollection {
                 let user = User(
                     username: create.username,
                     displayname: create.name,
+                    cover: "https://farm4.staticflickr.com/3692/10621312106_02476d5c63_o.jpg", // default cover
                     accountID: account.id!)
                 
                 return user.save(on: req.db)

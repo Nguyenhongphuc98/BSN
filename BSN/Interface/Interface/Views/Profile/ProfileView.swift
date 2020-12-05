@@ -9,23 +9,18 @@ import SwiftUI
 
 public struct ProfileView: View, PopToable {
     
+    // User will display on profile
+    // If value is nil, get current userinfo
+    var userID: String?
     var viewName: ViewName = .profileRoot
     
     @EnvironmentObject var navState: NavigationState
-    
-    // =========================
+    @EnvironmentObject var root: AppManager
     
     //@EnvironmentObject var viewModel: ProfileViewModel
     @StateObject var viewModel: ProfileViewModel
 
     @State private var selectedSegment: Int = 0
-    
-    @EnvironmentObject var root: AppManager
-    
-    /// User will display on profile
-    // If value is nil, get current userinfo
-    var userID: String?
-    
     @State private var navAddUB: Bool = false
     
     // Handle nav post detail
