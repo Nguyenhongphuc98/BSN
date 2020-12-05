@@ -13,18 +13,22 @@ public class AccountManager {
     // Publisher for save new note and update note action
     public let changePublisher: PassthroughSubject<EAccount, Never>
     
-    // Publisher for fetch notes by ubid
-    public let getAccountPublisher: PassthroughSubject<EAccount, Never>
+    // Publisher for fetch or save account
+    public let accountPublisher: PassthroughSubject<EAccount, Never>
     
     public init() {
         // Init resource URL
         networkRequest = AccountRequest(componentPath: "accounts/")
         
         changePublisher = PassthroughSubject<EAccount, Never>()
-        getAccountPublisher = PassthroughSubject<EAccount, Never>()
+        accountPublisher = PassthroughSubject<EAccount, Never>()
     }
     
     public func login(account: EAccount) {
-        networkRequest.login(account: account, publisher: getAccountPublisher)
+        networkRequest.login(account: account, publisher: accountPublisher)
+    }
+    
+    public func signup(account: EAccount) {
+        networkRequest.signup(account: account, publisher: accountPublisher)
     }
 }

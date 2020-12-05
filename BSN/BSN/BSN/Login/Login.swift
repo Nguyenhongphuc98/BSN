@@ -16,6 +16,8 @@ struct Login: View {
     
     @StateObject var viewModel: LoginViewModel = LoginViewModel()
     
+    @State private var presentSignUp: Bool = false
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 40) {
@@ -54,14 +56,14 @@ struct Login: View {
             Text(viewModel.message)
                 .foregroundColor(.init(hex: 0x721c24))
             
-            TextFieldWithIcon(icon: "person.fill", placer: "username@example.com", content: $username, contentType: .emailAddress)
+            TextFieldWithIcon(icon: "person.fill", placer: "youremail@example.com", content: $username, contentType: .emailAddress)
             
             TextFieldWithIcon(icon: "key.fill", placer: "password", content: $password, contentType: .password)
             
             Button(action: {
                 viewModel.login(username: username, password: password)
             }, label: {
-                Text("Đăng nhập")
+                Text("   Đăng nhập  ")
                     .robotoBold(size: 15)
             })
             .buttonStyle(BaseButtonStyle(size: .largeH))
@@ -81,7 +83,10 @@ struct Login: View {
                 .foregroundColor(.init(hex: 0x2A66FD))
         }
         .onTapGesture(count: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/, perform: {
-            print("did tap to register")
+            presentSignUp.toggle()
+        })
+        .fullScreenCover(isPresented: $presentSignUp, content: {
+            SignUp()
         })
     }
     
@@ -123,17 +128,17 @@ struct TextFieldWithIcon: View {
                 .frame(width: 20, height: 20)
             
             if contentType == .password {
-                SecureField("password", text: $content)
+                SecureField(placer, text: $content)
             } else {
                 TextField(placer, text: $content)
             }
         }
         .padding(10)
         .background(
-          RoundedRectangle(cornerRadius: 20)
+          RoundedRectangle(cornerRadius: 25)
             .strokeBorder(borderColor, lineWidth: 1)
       )
-        
+        .foregroundColor(borderColor)
     }
     
     var borderColor: Color {

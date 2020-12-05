@@ -134,6 +134,7 @@
 		84783C74254DAECC0043F625 /* UpdateUBViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84783C73254DAECC0043F625 /* UpdateUBViewModel.swift */; };
 		847BBAC62521EEB900E0500D /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847BBAC52521EEB900E0500D /* AppManager.swift */; };
 		8482E42B25403E69003DE823 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E42A25403E69003DE823 /* ImageLoader.swift */; };
+		84961057257B2039003AE110 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961056257B2039003AE110 /* StringExtension.swift */; };
 		84A61CA5254C0A3F00B50FE8 /* NavigationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A61CA4254C0A3E00B50FE8 /* NavigationState.swift */; };
 		84A61CB0254C148700B50FE8 /* PassthroughtEB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A61CAF254C148700B50FE8 /* PassthroughtEB.swift */; };
 		84A61CC1254C51DE00B50FE8 /* NetworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A61CC0254C51DE00B50FE8 /* NetworkViewModel.swift */; };
@@ -330,6 +331,7 @@
 		84783C73254DAECC0043F625 /* UpdateUBViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUBViewModel.swift; sourceTree = "<group>"; };
 		847BBAC52521EEB900E0500D /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		8482E42A25403E69003DE823 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		84961056257B2039003AE110 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		84A61CA4254C0A3E00B50FE8 /* NavigationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationState.swift; sourceTree = "<group>"; };
 		84A61CAF254C148700B50FE8 /* PassthroughtEB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughtEB.swift; sourceTree = "<group>"; };
 		84A61CC0254C51DE00B50FE8 /* NetworkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkViewModel.swift; sourceTree = "<group>"; };
@@ -735,6 +737,7 @@
 				8482E42A25403E69003DE823 /* ImageLoader.swift */,
 				842C44E2254A7A1F003C570D /* ResourceInfo.swift */,
 				84E5F33E2550F3C600ADF450 /* ColectionExtension.swift */,
+				84961056257B2039003AE110 /* StringExtension.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1117,6 +1120,7 @@
 				8401C8C1252AD18500A722CE /* StarRating.swift in Sources */,
 				8414F2632521A52E003CF799 /* NewsFeedView.swift in Sources */,
 				8401C93E252C6AB000A722CE /* DistanceText.swift in Sources */,
+				84961057257B2039003AE110 /* StringExtension.swift in Sources */,
 				842C447925480F0C003C570D /* SuggestBookCard.swift in Sources */,
 				84AA960B251B469F0029BB1E /* User.swift in Sources */,
 				8401C929252C0A1000A722CE /* RatingCriteria.swift in Sources */,

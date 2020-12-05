@@ -14,12 +14,12 @@ struct AccountController: RouteCollection {
         let authen = accounts.grouped(Account.authenticator())
         
         authen.get(use: index)
-        authen.post(use: create)
         authen.group(":accountID") { user in
             user.delete(use: delete)
         }
         
         authen.get("login", use: login)
+        authen.post("register", use: create)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[Account]> {

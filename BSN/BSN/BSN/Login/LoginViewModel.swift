@@ -47,7 +47,7 @@ class LoginViewModel: NetworkViewModel {
     
     private func observerLoggin() {
         accountManager
-            .getAccountPublisher
+            .accountPublisher
             .sink {[weak self] (ac) in
                 
                 guard let self = self else {

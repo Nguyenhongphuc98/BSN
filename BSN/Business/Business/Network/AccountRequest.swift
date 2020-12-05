@@ -29,4 +29,20 @@ class AccountRequest: ResourceRequest<EAccount> {
             }
         }
     }
+    
+    func signup(account: EAccount, publisher: PassthroughSubject<EAccount, Never>) {
+        self.setPath(resourcePath: "register")
+        
+        self.save(account) { (result) in
+            switch result {
+            case .failure:
+                let message = "There was an error register account"
+                print(message)
+                publisher.send(EAccount()) // undefine account
+                
+            case .success(let a):
+                publisher.send(a) // undefine account
+            }
+        }
+    }
 }
