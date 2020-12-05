@@ -8,6 +8,7 @@
 import Vapor
 import Fluent
 import SQLKit
+import APNS
 
 struct NotifyController: RouteCollection {
     
@@ -98,7 +99,7 @@ extension NotifyController {
     }
 }
 
-// MARK: - WebSocket
+// MARK: - WebSocket + Push notifications
 extension NotifyController {
     static func broadcast(req: Request, notify: Notify) {
         
@@ -109,8 +110,41 @@ extension NotifyController {
         _ = db.raw(sqlQuery)
             .first(decoding: Notify.GetFull.self)
             .map({ n in
-                if n != nil {
-                    SessionManager.shared.send(message: n, to: .id("notifies\(notify.receiverID)"))
+                if let no = n {
+                    
+                    SessionManager.shared.send(message: no, to: .id("notifies\(notify.receiverID)"))
+                    // Incase user not open client app
+                    // We have to push notifications
+                    var alertBody = ""
+                    let notifyType = NotifyType()
+                    switch no.notifyTypeID {
+                    case notifyType.heart:
+                        alertBody = "\(no.actorName) đã thả tim bài viết của bạn"
+                    case notifyType.breakHeart:
+                        alertBody = "\(no.actorName) đã thả trái tim tan vỡ bài viết của bạn"
+                    case notifyType.comment:
+                        alertBody = "\(no.actorName) đã bình luận bài viết bạn đang theo dõi"
+                    case notifyType.follow:
+                        alertBody = "\(no.actorName) đã theo dõi bạn"
+                    case notifyType.borrow:
+                        alertBody = "\(no.actorName) đã gửi cho bạn lời mời mượn sách"
+                    case notifyType.borrowFail:
+                        alertBody = "\(no.actorName) đã từ chối lời mượn sách của bạn"
+                    case notifyType.borrowSuccess:
+                        alertBody = "\(no.actorName) đã đồng ý lời mượn sách của bạn"
+                    case notifyType.exchange:
+                        alertBody = "\(no.actorName) đã gửi cho bạn yêu cầu đổi sách"
+                    case notifyType.exchangeFail:
+                        alertBody = "\(no.actorName) đã từ chối yêu cầu đổi sách của bạn"
+                    case notifyType.exchangeSuccess:
+                        alertBody = "\(no.actorName) đã chấp nhận yêu cầu đổi sách của bạn"
+                    default:
+                        alertBody = "Bạn có thông báo mới"
+                    }
+                    
+                    let payload = APNSwiftPayload(alert: .init(body: alertBody),sound: .normal("default"))
+                    
+                    req.apns.send(payload, to: notify.receiverID, db: req.db)
                 }
             })
     }

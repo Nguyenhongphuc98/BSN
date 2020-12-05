@@ -27,4 +27,17 @@ extension Request.APNS {
         
         return send(payload, to: device.pushToken)
     }
+    
+    func send(_ payload: APNSwiftPayload, to userID: UUID, db: Database) {
+
+        // Send push notify to all device of this user
+        _ = Device.query(on: db)
+            .filter(\.$userID == userID)
+            .all()
+            .map { devices in
+                devices.forEach { (d) in
+                    _ = send(payload, to: d.pushToken)
+                }
+            }
+    }
 }
