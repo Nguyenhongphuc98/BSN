@@ -55,4 +55,7 @@ func routes(_ app: Application) throws {
     
     //WebSocket
     try app.register(collection: WebSocketConnect())
+    
+    // Push notifications
+    try app.register(collection: DeviceController())
 }

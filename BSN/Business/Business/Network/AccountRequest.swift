@@ -30,6 +30,11 @@ class AccountRequest: ResourceRequest<EAccount> {
         }
     }
     
+    func logout() {
+        self.setPath(resourcePath: "logout")        
+        self.delete()
+    }
+    
     func signup(account: EAccount, publisher: PassthroughSubject<EAccount, Never>) {
         self.setPath(resourcePath: "register")
         

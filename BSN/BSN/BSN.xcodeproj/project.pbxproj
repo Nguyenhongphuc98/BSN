@@ -63,6 +63,7 @@
 		842C44AC2548271C003C570D /* Business.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Business.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84961051257B1B05003AE110 /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		84961059257B22B0003AE110 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		8496105B257BC959003AE110 /* BSN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BSN.entitlements; sourceTree = "<group>"; };
 		84AA95BF251AFEB70029BB1E /* Pattaya-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pattaya-Regular.ttf"; sourceTree = "<group>"; };
 		84AA95C1251B01010029BB1E /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		84AA95CA251B03680029BB1E /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -169,6 +170,7 @@
 		84FA98DB251860DB00CB92CB /* BSN */ = {
 			isa = PBXGroup;
 			children = (
+				8496105B257BC959003AE110 /* BSN.entitlements */,
 				84AA95B7251AFBD60029BB1E /* Fonts */,
 				84FA98DC251860DB00CB92CB /* BSNApp.swift */,
 				84FA98E0251860DE00CB92CB /* Assets.xcassets */,
@@ -475,9 +477,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = BSN/BSN.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = "\"BSN/Preview Content\"";
-				DEVELOPMENT_TEAM = 22G4R8NLZU;
+				DEVELOPMENT_TEAM = 5LPVUWDHDS;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = BSN/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -485,8 +489,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nguyenhongphuc98.BSN;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.phucbsn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "kn7 test profile";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -498,9 +503,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = BSN/BSN.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = "\"BSN/Preview Content\"";
-				DEVELOPMENT_TEAM = 22G4R8NLZU;
+				DEVELOPMENT_TEAM = 5LPVUWDHDS;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = BSN/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -508,8 +515,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nguyenhongphuc98.BSN;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.phucbsn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "kn7 test profile";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -28,6 +28,10 @@ public class AccountManager {
         networkRequest.login(account: account, publisher: accountPublisher)
     }
     
+    public func logout() {
+        networkRequest.logout()
+    }
+    
     public func signup(account: EAccount) {
         networkRequest.signup(account: account, publisher: accountPublisher)
     }

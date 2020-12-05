@@ -12,19 +12,19 @@ extension Request.APNS {
     // Send other objects with `APNSwiftPayload`
     func send<Notification>(_ notification: Notification, to device: Device)
     -> EventLoopFuture<Void> where Notification: APNSwiftNotification {
-        guard let pushToken = device.pushToken else {
-            return self.eventLoop.makeSucceededFuture(())
-        }
+//        guard let pushToken = device.pushToken else {
+//            return self.eventLoop.makeSucceededFuture(())
+//        }
         
-        return send(notification, to: pushToken)
+        return send(notification, to: device.pushToken)
     }
     
     // Send basic 'aps'
     func send(_ payload: APNSwiftPayload, to device: Device) -> EventLoopFuture<Void> {
-        guard let pushToken = device.pushToken else {
-            return self.eventLoop.makeSucceededFuture(())
-        }
+//        guard let pushToken = device.pushToken else {
+//            return self.eventLoop.makeSucceededFuture(())
+//        }
         
-        return send(payload, to: pushToken)
+        return send(payload, to: device.pushToken)
     }
 }

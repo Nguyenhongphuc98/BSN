@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import UserNotifications
+
 import Business
 import Interface
 
@@ -103,6 +105,14 @@ class LoginViewModel: NetworkViewModel {
                         self.appManager.appState = .inapp
                         self.logined = true
                         print("did login with user: \(u.displayname)")
+                        
+                        // Register push notifications
+                        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+                          print("Granted notifications?", granted)
+                          DispatchQueue.main.async {
+                            UIApplication.shared.registerForRemoteNotifications()
+                          }
+                        }                        
                         
                         // Reload data for new user
                         ChatViewModel.shared.prepareData()

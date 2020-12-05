@@ -23,6 +23,8 @@ class SettingViewModel: NetworkViewModel {
     }
     
     func logout() {
+        accountManager.logout()
+        
         username = ""
         password = ""
         logined = false

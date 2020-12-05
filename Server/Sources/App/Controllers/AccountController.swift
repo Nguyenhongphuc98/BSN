@@ -6,6 +6,7 @@
 //
 
 import Vapor
+import Fluent
 
 struct AccountController: RouteCollection {
     
@@ -14,11 +15,12 @@ struct AccountController: RouteCollection {
         let authen = accounts.grouped(Account.authenticator())
         
         authen.get(use: index)
-        authen.group(":accountID") { user in
-            user.delete(use: delete)
+        authen.group(":accountID") { gr in
+            gr.delete(use: delete)
         }
         
         authen.get("login", use: login)
+        authen.delete("logout", use: logout)
         authen.post("register", use: create)
     }
 
@@ -58,8 +60,27 @@ struct AccountController: RouteCollection {
             .transform(to: .ok)
     }
     
-    // Advance func
     func login(req: Request) throws -> Account {
         try req.auth.require(Account.self).asPublic()
+    }
+    
+    func logout(req: Request) throws -> EventLoopFuture<HTTPStatus> {
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        // Determine current user
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .first()
+            .unwrap(or: Abort(.forbidden))
+            .flatMap { (user)  in
+                
+                return Device.query(on: req.db)
+                    .filter(\.$userID == user.id!)
+                    .first()
+                    .unwrap(or: Abort(.notFound))
+                    .flatMap { $0.delete(on: req.db) }
+                    .transform(to: .ok)
+            }
     }
 }

@@ -6,59 +6,40 @@
 //
 
 import Vapor
+import Fluent
 import APNS
 
 struct DeviceController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         let group = routes.grouped("api", "v1", "devices")
-        //group.put("update", use: put)
+        
         group.post(use: create)
-        group.post(":id", "test-push", use: sendTestPush)
+        group.delete(":ID", use: delete)
+        
+        group.post("test-push-device",":id", use: sendTestPush)
+        group.post("test-push-token",":id", use: sendTestPushByDeviceToken)
     }
     
+    // This func should call after login success
+    // if it aleardy exist (same userid-pushtoken) -> will save failure
+    // and we don't need care
     func create(req: Request) throws -> EventLoopFuture<Device> {
-        let device = try req.content.decode(Device.self)
-        return device.save(on: req.db).map { device }
+        let newDevice = try req.content.decode(Device.self)        
+        return newDevice.save(on: req.db).map { newDevice }
     }
     
-//    func put(_ req: Request) throws -> EventLoopFuture<Response> {
-//        let updateDeviceData = try req.content.decode(UpdateDevice.self)
-//
-//        if let deviceId = updateDeviceData.id {
-//            var existingDevice: Device!
-//
-//            return Device.find(deviceId, on: req.db)
-//                .unwrap(or: Abort(.notFound))
-//                .flatMap { device in
-//                    existingDevice = device
-//
-//                    existingDevice.osVersion = updateDeviceData.osVersion
-//                    existingDevice.pushToken = updateDeviceData.pushToken
-//                    existingDevice.channels = updateDeviceData.channels?.toChannelsString() ?? ""
-//
-//                    return existingDevice.save(on: req.db).flatMap {
-//                        do {
-//                            return try existingDevice.toPublic().encodeResponse(status: .ok, for: req)
-//                        } catch {
-//                            return req.eventLoop.makeFailedFuture(error)
-//                        }
-//                    }
-//                }
-//        }
-//
-//        let newDevice = Device(system: updateDeviceData.system,
-//                               osVersion: updateDeviceData.osVersion,
-//                               pushToken: updateDeviceData.pushToken,
-//                               channels: updateDeviceData.channels)
-//        return newDevice.save(on: req.db).flatMap {
-//            do {
-//                return try newDevice.toPublic().encodeResponse(status: .created, for: req)
-//            } catch {
-//                return req.eventLoop.makeFailedFuture(error)
-//            }
-//        }
-//    }
-    
+    // This fun should call when logout device
+    // So, no notifications send to old device
+    func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {
+        return Device.find(req.parameters.get("ID"), on: req.db)
+            .unwrap(or: Abort(.notFound))
+            .flatMap { $0.delete(on: req.db) }
+            .transform(to: .ok)
+    }
+}
+
+// MARK: - Test method
+extension DeviceController {
     func sendTestPush(_ req: Request) throws -> EventLoopFuture<HTTPStatus> {
         Device.find(req.parameters.get("id"), on: req.db)
             .unwrap(or: Abort(.notFound))
@@ -68,5 +49,15 @@ struct DeviceController: RouteCollection {
                                               sound: .normal("default"))
                 return req.apns.send(payload, to: device).map { .ok }
             }
+    }
+    
+    func sendTestPushByDeviceToken(_ req: Request) throws -> EventLoopFuture<HTTPStatus> {
+        let pushToken = req.parameters.get("id")!
+        let payload = APNSwiftPayload(alert: .init(title: "Test notification",
+                                                   body: "It works!"),
+                                      sound: .normal("default"))
+        
+        return req.apns.send(payload, to: pushToken).map { .ok }
+        //return req.apns.send(payload, to: device)
     }
 }

@@ -25,15 +25,17 @@ final class Device: Model, Content {
     @Field(key: "os_version")
     var osVersion: String
     
+    // Token should be unique,
+    // Because with this app, just one token for any req get token from APNs
     @Field(key: "push_token")
-    var pushToken: String?
+    var pushToken: String
     
     @Field(key: "user_id")
     var userID: User.IDValue
     
     init() {}
     
-    init(id: UUID? = nil, system: System, osVersion: String, pushToken: String?, userID: User.IDValue ) {
+    init(id: UUID? = nil, system: System, osVersion: String, pushToken: String, userID: User.IDValue ) {
         self.id = id
         self.system = system
         self.osVersion = osVersion
