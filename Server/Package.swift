@@ -14,6 +14,9 @@ let package = Package(
         //.package(url: "https://github.com/SwifQL/VaporBridges.git", from:"1.0.0-rc"),
         //.package(url: "https://github.com/SwifQL/PostgresBridge.git", from:"1.0.0-rc"),
         .package(url: "https://github.com/vapor/websocket-kit.git", from: "2.0.0"),
+        .package(url: "https://github.com/vapor/apns", from: "1.0.0-rc"), // of Vapor, not suport certificate
+        //.package(url:"https://github.com/matthijs2704/vapor-apns.git", from: "2.1.0") // was archived
+        //.package(name: "apnswift", url: "https://github.com/kylebrowning/APNSwift.git", from: "2.1.0")
     ],
     targets: [
         .target(
@@ -25,6 +28,9 @@ let package = Package(
                 //.product(name: "VaporBridges", package: "VaporBridges"),
                 //.product(name: "PostgresBridge", package: "PostgresBridge")
                 .product(name: "WebSocketKit", package: "websocket-kit"),
+                .product(name: "APNS", package: "apns"),
+                //.product(name: "VaporAPNS", package: "vapor-apns"),
+                //.product(name: "APNSwift", package: "apnswift"),
             ],
             swiftSettings: [
                 // Enable better optimizations when building in Release configuration. Despite the use of
