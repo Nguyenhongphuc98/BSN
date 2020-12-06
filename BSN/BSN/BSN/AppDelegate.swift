@@ -14,6 +14,7 @@ import Interface
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         initializeS3()
+        UNUserNotificationCenter.current().delegate = self
         return true
     }
     
@@ -54,5 +55,24 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         AWSServiceManager.default().defaultServiceConfiguration = configuration
         
         print("Did init S3!")
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                    didReceive response: UNNotificationResponse,
+                                    withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        // open app from notifications
+        if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
+            // notify tab wil not receive sound
+            AppManager.shared.selectedIndex = response.notification.request.content.sound == nil ? 3 : 2
+            
+            // If it open from background mode,
+            // We need reload data because websocket not working this this state
+            NotifyViewModel.shared.prepareData()
+            ChatViewModel.shared.prepareData()
+        }
+        completionHandler()
     }
 }
