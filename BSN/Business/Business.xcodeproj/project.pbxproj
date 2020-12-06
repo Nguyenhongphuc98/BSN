@@ -52,6 +52,9 @@
 		8496105D257BDE0A003AE110 /* DeviceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496105C257BDE0A003AE110 /* DeviceRequest.swift */; };
 		84961060257BDE2A003AE110 /* EDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496105F257BDE2A003AE110 /* EDevice.swift */; };
 		84961063257BDF2E003AE110 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961062257BDF2E003AE110 /* DeviceManager.swift */; };
+		8496106F257D1493003AE110 /* EUserCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496106E257D1493003AE110 /* EUserCategory.swift */; };
+		84961072257D14C5003AE110 /* UserCategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961071257D14C5003AE110 /* UserCategoryRequest.swift */; };
+		84961075257D15A4003AE110 /* UserCategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961074257D15A4003AE110 /* UserCategoryManager.swift */; };
 		8496F575256D074E00A18658 /* EComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496F574256D074E00A18658 /* EComment.swift */; };
 		8496F579256D098700A18658 /* CommentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496F578256D098700A18658 /* CommentRequest.swift */; };
 		8496F57D256D0A2400A18658 /* CommentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496F57C256D0A2400A18658 /* CommentManager.swift */; };
@@ -141,6 +144,9 @@
 		8496105C257BDE0A003AE110 /* DeviceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRequest.swift; sourceTree = "<group>"; };
 		8496105F257BDE2A003AE110 /* EDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EDevice.swift; sourceTree = "<group>"; };
 		84961062257BDF2E003AE110 /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
+		8496106E257D1493003AE110 /* EUserCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EUserCategory.swift; sourceTree = "<group>"; };
+		84961071257D14C5003AE110 /* UserCategoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategoryRequest.swift; sourceTree = "<group>"; };
+		84961074257D15A4003AE110 /* UserCategoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategoryManager.swift; sourceTree = "<group>"; };
 		8496F574256D074E00A18658 /* EComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EComment.swift; sourceTree = "<group>"; };
 		8496F578256D098700A18658 /* CommentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentRequest.swift; sourceTree = "<group>"; };
 		8496F57C256D0A2400A18658 /* CommentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentManager.swift; sourceTree = "<group>"; };
@@ -237,6 +243,7 @@
 				8496F574256D074E00A18658 /* EComment.swift */,
 				84664178256E9B4100F1C030 /* EReaction.swift */,
 				8496105F257BDE2A003AE110 /* EDevice.swift */,
+				8496106E257D1493003AE110 /* EUserCategory.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -305,6 +312,7 @@
 				8496F57C256D0A2400A18658 /* CommentManager.swift */,
 				84664180256E9CCF00F1C030 /* ReactionManager.swift */,
 				84961062257BDF2E003AE110 /* DeviceManager.swift */,
+				84961074257D15A4003AE110 /* UserCategoryManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -331,6 +339,7 @@
 				8496F578256D098700A18658 /* CommentRequest.swift */,
 				8466417C256E9C0D00F1C030 /* ReactionRequest.swift */,
 				8496105C257BDE0A003AE110 /* DeviceRequest.swift */,
+				84961071257D14C5003AE110 /* UserCategoryRequest.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -479,6 +488,7 @@
 				841CEDAC255E852B007CCACC /* UserFollowManager.swift in Sources */,
 				845666C5256BB248000DA583 /* CategoryManager.swift in Sources */,
 				846D56452574D7A60010EE4E /* SocketFollow.swift in Sources */,
+				84961075257D15A4003AE110 /* UserCategoryManager.swift in Sources */,
 				841CED8F255D3555007CCACC /* ENotify.swift in Sources */,
 				845A5383255FB7790038F0A1 /* ChatRequest.swift in Sources */,
 				84A0CC34254ACDA10074CBAC /* UserBookManager.swift in Sources */,
@@ -489,6 +499,7 @@
 				841CED73255BE4F9007CCACC /* EAccount.swift in Sources */,
 				842C444F2547C240003C570D /* GoogleApiRequest.swift in Sources */,
 				841CEDA8255E83CA007CCACC /* UserFollowRequest.swift in Sources */,
+				8496106F257D1493003AE110 /* EUserCategory.swift in Sources */,
 				84A61CB8254C463D00B50FE8 /* EExchangeBook.swift in Sources */,
 				841CED89255C1DD3007CCACC /* UserManager.swift in Sources */,
 				8496F575256D074E00A18658 /* EComment.swift in Sources */,
@@ -522,6 +533,7 @@
 				84A61CD8254D13E200B50FE8 /* NoteManager.swift in Sources */,
 				841CED7D255C18A0007CCACC /* AccountManager.swift in Sources */,
 				841CEDB5255ED45C007CCACC /* EMessage.swift in Sources */,
+				84961072257D14C5003AE110 /* UserCategoryRequest.swift in Sources */,
 				84A61CB4254C461E00B50FE8 /* ExchangeBookRequest.swift in Sources */,
 				844EACC725515FE400CACEEB /* BookReviewManager.swift in Sources */,
 				845A5387255FB8F70038F0A1 /* ChatManager.swift in Sources */,

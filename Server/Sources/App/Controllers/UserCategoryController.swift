@@ -6,16 +6,20 @@
 //
 
 import Vapor
+import Fluent
 
 struct UserCategoryController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
         let userCategories = routes.grouped("api", "v1", "userCategories")
-        userCategories.get(use: index)
-        userCategories.post(use: create)
-        userCategories.group(":ID") { user in
+        let authen = userCategories.grouped(Account.authenticator())
+        authen.get(use: index)
+        authen.post(use: create)
+        authen.group(":ID") { user in
             user.delete(use: delete)
         }
+        
+        authen.get("user", ":ID", use: getCategory)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[UserCategory]> {
@@ -32,5 +36,37 @@ struct UserCategoryController: RouteCollection {
             .unwrap(or: Abort(.notFound))
             .flatMap { $0.delete(on: req.db) }
             .transform(to: .ok)
+    }
+    
+    // When get to setings we need get full info after joined
+    func getCategory(req: Request) throws -> EventLoopFuture<[UserCategory.GetFull]> {
+        
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        // Determine current user
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .first()
+            .unwrap(or: Abort(.notFound))
+            .flatMap { (user)  in
+                
+                Category.query(on: req.db)
+                    .all()
+                    .flatMapEach(on: req.eventLoop) { (c)  in
+                        
+                        return UserCategory.query(on: req.db)
+                            .filter(\.$categoryID == c.id!)
+                            .first()
+                            .map { uc in
+                                return UserCategory.GetFull(
+                                    userID: user.id!.uuidString,
+                                    categoryID: c.id!.uuidString,
+                                    categoryName: c.name,
+                                    interested: uc == nil ? false : true
+                                )
+                            }
+                    }
+            }
     }
 }

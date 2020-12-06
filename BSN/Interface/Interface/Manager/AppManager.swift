@@ -20,6 +20,7 @@ public enum AppState {
     case loading
     case login
     case inapp
+    case onboard
 }
 
 public class AppManager: ObservableObject {

@@ -11,44 +11,42 @@ public class PersonalizeViewModel: NetworkViewModel {
     
     public static var shared: PersonalizeViewModel = .init()
     
-    //private var notifyManager: NotifyManager
+    private var usercategoryManager: UserCategoryManager
     
     var categories: [Category]
     @Published var chunks: [ArraySlice<Category>]
     
+    var numSelected: Int {
+        let c = categories.filter { $0.interested == true }
+        return c.count
+    }
+    
     override init() {
-        categories = [Category(id: UUID().uuidString, name: "Kỹ năng"),
-                      Category(id: UUID().uuidString, name: "Mẹ và bé"),
-                      Category(id: UUID().uuidString, name: "Chính trị - Pháp luật"),
-                      Category(id: UUID().uuidString, name: "Công nghệ"),
-                      Category(id: UUID().uuidString, name: "Giáo khoa - Giáo trình"),
-                      Category(id: UUID().uuidString, name: "Học ngoại ngữ"),
-                      Category(id: UUID().uuidString, name: "Khoa học - Kỹ thuật"),
-                      Category(id: UUID().uuidString, name: "Kiến thức tổng hợp"),
-                      Category(id: UUID().uuidString, name: "Lịch sử"),
-                      Category(id: UUID().uuidString, name: "Nông lâm - Ngư nghiệp"),
-                      Category(id: UUID().uuidString, name: "Tham khảo"),
-                      Category(id: UUID().uuidString, name: "Gia đình"),
-                      Category(id: UUID().uuidString, name: "Tâm lý - Giới tính"),
-                      Category(id: UUID().uuidString, name: "Tôn giáo - Tâm linh"),
-                      Category(id: UUID().uuidString, name: "Văn hoá - Du lịch"),
-                      Category(id: UUID().uuidString, name: "Y học"),
-                      Category(id: UUID().uuidString, name: "Kinh tế"),
-                      Category(id: UUID().uuidString, name: "Thiếu nhi"),
-                      Category(id: UUID().uuidString, name: "Văn học"),
-                      Category(id: UUID().uuidString, name: "Thể dục - Thể thao"),
-                      Category(id: UUID().uuidString, name: "Truyện")]
+        self.categories = []
         self.chunks = []
+        self.usercategoryManager = .init()
         
         super.init()
-        //observerCategories()
-        buildChunks()
+        observerCategories()
+        prepareData()
+    }
+    
+    public func didClickupdate(isOnboard: Bool) {
+        self.isLoading = true
+        if AppManager.shared.currentAccount.isOnboard {
+            // save interested
+            // update account is onboard
+            // load data for 5 tab
+            // switch to inapp
+        } else {
+            // update interest and reload newfeed
+        }
     }
     
     public func prepareData() {
         print("did prepare data personalize VM")
         isLoading = true
-        
+        usercategoryManager.getCategoriesBy(uid: AppManager.shared.currenUID)
     }
     
     private func buildChunks() {
@@ -61,30 +59,39 @@ public class PersonalizeViewModel: NetworkViewModel {
                 length = 0
                 chunkIndex += 1
                 chunks.append([])
-                print(">>>***")
+                //print(">>>***")
             }
             
             length += category.name.count
             chunks[chunkIndex].append(category)
-            print(category.name)
-            print(length)
+            //print(category.name)
+            //print(length)
         }
+        self.objectWillChange.send()
     }
     
     private func observerCategories() {
-//        notifyManager
-//            .receiveNotifyPublisher
-//            .sink {[weak self] (n) in
-//
-//                guard let self = self else {
-//                    return
-//                }
-//
-//                DispatchQueue.main.async {
-//                    let notify = Notify(enotify: n)
-//                    self.notifies.insertUnique(item: notify)
-//                }
-//            }
-//            .store(in: &cancellables)
+        usercategoryManager
+            .categoriesPublisher
+            .sink {[weak self] (categories) in
+
+                guard let self = self else {
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    self.categories = []
+                    categories.forEach { (c) in
+                        if c.categoryName != "Không xác định" {
+                            let model = Category(id: c.categoryID, name: c.categoryName, interested: c.isInterested)
+                            self.categories.append(model)                            
+                        }                        
+                    }
+                    
+                    self.buildChunks()
+                }
+            }
+            .store(in: &cancellables)
     }
 }

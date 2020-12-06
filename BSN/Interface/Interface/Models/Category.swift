@@ -12,7 +12,7 @@ class Category: ObservableObject, Identifiable {
     var name: String
     
     // in seting interest category
-    var interested: Bool
+    @Published var interested: Bool
     
     init(id: String, name: String, interested: Bool = false) {
         self.id = id

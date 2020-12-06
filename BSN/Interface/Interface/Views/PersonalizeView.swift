@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// Using for onBoard screen
+// Or in settings
 public struct PersonalizeView: View {
     
     @StateObject var viewModel: PersonalizeViewModel = .shared
@@ -33,13 +35,12 @@ public struct PersonalizeView: View {
             title
             
             categoriesContent()
+                .embededLoadingFull(isLoading: $viewModel.isLoading)
                
             submitLabel()
             
         }
         .background(Color(hex: 0xFCFFFD))
-        .embededLoading(isLoading: $viewModel.isLoading)
-        
     }
     
     private var closeLabel: some View {
@@ -84,7 +85,7 @@ public struct PersonalizeView: View {
     
     private func submitLabel() -> some View {
         VStack {
-            Text("Chọn ít nhất 1 thể loại để tiếp tục.\n Bạn có thể thiết lập lại trong phần cài đặt")
+            Text(description)
                 .robotoBold(size: 15)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.init(hex: 0x606060))
@@ -96,9 +97,14 @@ public struct PersonalizeView: View {
                     .robotoBold(size: 15)
             })
             .buttonStyle(BaseButtonStyle(size: .largeH))
+            .disabled(viewModel.numSelected == 0)
             .padding()
             .padding(.bottom, 30)            
         }
+    }
+    
+    private var description: String {
+        viewModel.numSelected > 0 ? "Đã chọn (\(viewModel.numSelected))" : "Chọn ít nhất 1 thể loại để tiếp tục.\n Bạn có thể thiết lập lại trong phần cài đặt"
     }
     
     private func dismiss() {
@@ -115,6 +121,8 @@ struct CategoryCard: View {
     var body: some View {
         Button {
             selected.toggle()
+            category.interested = selected
+            PersonalizeViewModel.shared.objectWillChange.send()
         } label: {
             HStack {
                 Image(systemName: selected ? "checkmark.circle" : "plus")

@@ -25,3 +25,20 @@ final class UserCategory: Model {
 }
 
 extension UserCategory: Content { }
+
+extension UserCategory {
+    struct GetFull: Content {
+        
+        public var userID: String
+        public var categoryID: String
+        public var categoryName: String
+        public var isInterested: Bool
+        
+        init(userID: String, categoryID: String, categoryName: String, interested: Bool) {        
+            self.userID = userID
+            self.categoryID = categoryID
+            self.categoryName = categoryName
+            self.isInterested = interested
+        }
+    }
+}

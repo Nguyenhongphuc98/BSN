@@ -15,14 +15,18 @@ public class Account {
     
     public var password: String
     
+    public var isOnboard: Bool
+    
     public init() {
         username = ""
         password = ""
+        isOnboard = false
     }
     
-    public init(id: String? = nil, username: String, password: String) {
+    public init(id: String? = nil, username: String, password: String, isOnboard: Bool) {
         self.id = id
         self.username = username
         self.password = password
+        self.isOnboard = isOnboard
     }
 }

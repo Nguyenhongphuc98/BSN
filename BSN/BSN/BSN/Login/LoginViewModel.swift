@@ -67,7 +67,8 @@ class LoginViewModel: NetworkViewModel {
                         self.appManager.currentAccount = Account(
                             id: ac.id,
                             username: ac.username,
-                            password: ac.password
+                            password: ac.password,
+                            isOnboard: ac.isOnboarded
                         )
                         self.userManager.getUser(aid: ac.id!)
                     }
@@ -101,28 +102,38 @@ class LoginViewModel: NetworkViewModel {
                             location: u.location,
                             about: u.about
                         )
-                        
-                        self.appManager.appState = .inapp
+                                                
                         self.logined = true
                         print("did login with user: \(u.displayname)")
                         
-                        // Register push notifications
-                        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
-                          print("Granted notifications?", granted)
-                          DispatchQueue.main.async {
-                            UIApplication.shared.registerForRemoteNotifications()
-                          }
-                        }                        
-                        
-                        // Reload data for new user
-                        ChatViewModel.shared.prepareData()
-                        NotifyViewModel.shared.prepareData()
-                        ProfileViewModel.shared.forceRefeshData()
-                        ExploreBookViewModel.shared.prepareData()
-                        NewsFeedViewModel.shared.prepareData()
+                        if self.appManager.currentAccount.isOnboard {
+                            self.appManager.appState = .inapp
+                            setupData()
+                        } else {
+                            self.appManager.appState = .onboard
+                        }
                     }
                 }
             }
             .store(in: &cancellables)
     }
+}
+
+// When user login first time or login other account
+// We reset data and setup for push notifications
+func setupData() {
+    
+    // Register push notifications
+    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+      print("Granted notifications?", granted)
+      DispatchQueue.main.async {
+        UIApplication.shared.registerForRemoteNotifications()
+      }
+    }
+    // Reload data for new user
+    ChatViewModel.shared.prepareData()
+    NotifyViewModel.shared.prepareData()
+    ProfileViewModel.shared.forceRefeshData()
+    ExploreBookViewModel.shared.prepareData()
+    NewsFeedViewModel.shared.prepareData()
 }
