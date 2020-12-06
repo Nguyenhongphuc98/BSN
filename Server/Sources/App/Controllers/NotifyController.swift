@@ -142,8 +142,8 @@ extension NotifyController {
                         alertBody = "Bạn có thông báo mới"
                     }
                     
-                    let payload = APNSwiftPayload(alert: .init(body: alertBody),sound: .normal("default"))
-                    
+                    // Notifies is not essential to make sound, so let it nil
+                    let payload = APNSwiftPayload(alert: .init(body: alertBody))
                     req.apns.send(payload, to: notify.receiverID, db: req.db)
                 }
             })

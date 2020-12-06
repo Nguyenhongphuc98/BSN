@@ -8,6 +8,7 @@
 import Vapor
 import Fluent
 import SQLKit
+import APNS
 
 struct ChatController: RouteCollection {
     
@@ -60,7 +61,8 @@ struct ChatController: RouteCollection {
                         }
 
                         return currentChat.update(on: req.db).map {
-                            ChatController.broadcastChat(req: req, chatID: currentChat.id!.uuidString)
+                            // Update seen for himself, don't need to broadcast
+                            // ChatController.broadcastChat(req: req, chatID: currentChat.id!.uuidString)
                             return currentChat
                         }
                     }
@@ -190,7 +192,7 @@ extension ChatController {
     
     // Broadcast chat for users in this chat
     // Chat may be new or created before but just update because hold new message
-    static func broadcastChat(req: Request, chatID: String) {
+    static func broadcastChat(req: Request, chatID: String, senderID: String) {
                 
         let sqlQuery = SQLQueryString("SELECT c.id, c.first_user as \"firstUserID\", c.second_user as \"secondUserID\", c.first_user_seen as \"firstUserSeen\", c.second_user_seen as \"secondUserSeen\", u1.displayname as \"firstUserName\", u1.avatar as \"firstUserPhoto\", u2.displayname as \"secondUserName\", u2.avatar as \"secondUserPhoto\", m.content as \"messageContent\", m.created_at as \"messageCreateAt\", mt.name  as \"messageTypeName\" from chat as c, public.user as u1, public.user as u2, message as m, message_type as mt where c.first_user = u1.id and c.second_user = u2.id and m.chat_id = c.id and m.type_id = mt.id and m.id = (select m2.id from message as m2 where m2.chat_id = c.id order by created_at desc limit 1) and c.id = '\(raw: chatID)'");
         
@@ -202,6 +204,14 @@ extension ChatController {
                 if let c = chat {
                     SessionManager.shared.send(message: c, to: .id("chats\(c.firstUserID)"))
                     SessionManager.shared.send(message: c, to: .id("chats\(c.secondUserID)"))
+                    
+                    // Push notify to receiver
+                    let senderName = senderID == c.firstUserID ? c.firstUserName : c.secondUserName
+                    let receiverID = senderID == c.firstUserID ? c.secondUserID : c.firstUserID
+                    let payload = APNSwiftPayload(alert: .init(title: senderName,
+                                                              body: c.messageContent),
+                                                  sound: .normal("default"))
+                    req.apns.send(payload, to: UUID(uuidString: receiverID)!, db: req.db)
                 }
             }
     }

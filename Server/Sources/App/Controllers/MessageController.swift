@@ -138,7 +138,11 @@ extension MessageController {
                     // Send to inChat
                     broadcastMessage(req: req, mess: saveMess, typeName: typeName)
                     // Send to Chats
-                    ChatController.broadcastChat(req: req, chatID: saveMess.chatID!.uuidString)
+                    ChatController.broadcastChat(
+                        req: req,
+                        chatID: saveMess.chatID!.uuidString,
+                        senderID: saveMess.senderID.uuidString
+                    )
                     return saveMess
                 }
         }
