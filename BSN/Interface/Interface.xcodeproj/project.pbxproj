@@ -135,6 +135,8 @@
 		847BBAC62521EEB900E0500D /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847BBAC52521EEB900E0500D /* AppManager.swift */; };
 		8482E42B25403E69003DE823 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E42A25403E69003DE823 /* ImageLoader.swift */; };
 		84961057257B2039003AE110 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961056257B2039003AE110 /* StringExtension.swift */; };
+		84961066257CD3F2003AE110 /* PersonalizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961065257CD3F2003AE110 /* PersonalizeView.swift */; };
+		84961069257CD521003AE110 /* PersonalizeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961068257CD521003AE110 /* PersonalizeViewModel.swift */; };
 		84A61CA5254C0A3F00B50FE8 /* NavigationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A61CA4254C0A3E00B50FE8 /* NavigationState.swift */; };
 		84A61CB0254C148700B50FE8 /* PassthroughtEB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A61CAF254C148700B50FE8 /* PassthroughtEB.swift */; };
 		84A61CC1254C51DE00B50FE8 /* NetworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A61CC0254C51DE00B50FE8 /* NetworkViewModel.swift */; };
@@ -332,6 +334,8 @@
 		847BBAC52521EEB900E0500D /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		8482E42A25403E69003DE823 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		84961056257B2039003AE110 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		84961065257CD3F2003AE110 /* PersonalizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalizeView.swift; sourceTree = "<group>"; };
+		84961068257CD521003AE110 /* PersonalizeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalizeViewModel.swift; sourceTree = "<group>"; };
 		84A61CA4254C0A3E00B50FE8 /* NavigationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationState.swift; sourceTree = "<group>"; };
 		84A61CAF254C148700B50FE8 /* PassthroughtEB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughtEB.swift; sourceTree = "<group>"; };
 		84A61CC0254C51DE00B50FE8 /* NetworkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkViewModel.swift; sourceTree = "<group>"; };
@@ -652,6 +656,7 @@
 				845DB4C3252374190019C29B /* CategoryView.swift */,
 				845DB4CF252385240019C29B /* ViewFullPhoto.swift */,
 				84FB37102525622000B8581F /* ExceptionView.swift */,
+				84961065257CD3F2003AE110 /* PersonalizeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -695,6 +700,7 @@
 				8401C95F252EAAFB00A722CE /* Books */,
 				84A61CC0254C51DE00B50FE8 /* NetworkViewModel.swift */,
 				84B964F72525CBBD00F37571 /* NotifyViewModel.swift */,
+				84961068257CD521003AE110 /* PersonalizeViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1056,6 +1062,7 @@
 				845DB4BA252369950019C29B /* StrokeBorderStyle.swift in Sources */,
 				8401CA13253294D600A722CE /* AddNoteView.swift in Sources */,
 				8401C901252B2E9500A722CE /* BaseButtonStyle.swift in Sources */,
+				84961066257CD3F2003AE110 /* PersonalizeView.swift in Sources */,
 				84FB37112525622000B8581F /* ExceptionView.swift in Sources */,
 				845DB4D4252386390019C29B /* ZoomableScroolView.swift in Sources */,
 				8401C94F252C71D100A722CE /* BorrowListViewModel.swift in Sources */,
@@ -1075,6 +1082,7 @@
 				8436100025246A28009FF4BF /* PostDetailView.swift in Sources */,
 				8401C98E252F16FC00A722CE /* DeclineEoBBookViewModel.swift in Sources */,
 				8401C913252B69BF00A722CE /* RatingCell.swift in Sources */,
+				84961069257CD521003AE110 /* PersonalizeViewModel.swift in Sources */,
 				8401C89E2529BE9D00A722CE /* DismissSTOnDragModifier.swift in Sources */,
 				84AA9685251F96320029BB1E /* GlobalVariable.swift in Sources */,
 				8401C9D625306AE500A722CE /* ExchangeListViewModel.swift in Sources */,

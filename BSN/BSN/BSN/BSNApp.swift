@@ -23,13 +23,14 @@ struct BSNApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if appManager.appState == .loading {
-                Launching()
-            } else if appManager.appState == .login {
-                Login()
-            } else if appManager.appState == .inapp {
-                inapp
-            }
+//            if appManager.appState == .loading {
+//                Launching()
+//            } else if appManager.appState == .login {
+//                Login()
+//            } else if appManager.appState == .inapp {
+//                inapp
+//            }
+            PersonalizeView(onboard: true)
         }
         .onChange(of: phase) { newPhase in
             switch newPhase {

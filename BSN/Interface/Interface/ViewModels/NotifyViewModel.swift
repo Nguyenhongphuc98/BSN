@@ -10,7 +10,7 @@ import Business
 
 public class NotifyViewModel: NetworkViewModel {
     
-    public static var shared: NotifyViewModel = NotifyViewModel()
+    public static var shared: NotifyViewModel = .init()
     private var notifyManager: NotifyManager
     
     @Published var notifies: [Notify] {
