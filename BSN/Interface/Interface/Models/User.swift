@@ -15,11 +15,11 @@ public class User: ObservableObject, Identifiable {
 
     @Published public var displayname: String
 
-    public var avatar: String?
+    @Published public var avatar: String?
     
-    public var cover: String?
+    @Published public var cover: String?
     
-    public var location: String?
+    @Published public var location: String?
     
     @Published public var about: String
     

@@ -6,30 +6,29 @@
 //
 
 import Foundation
-import Business
 import Combine
+import UIKit
+import Business
 
 public class ProfileViewModel: NetworkViewModel {
     
     public static let shared: ProfileViewModel = ProfileViewModel()
     
     @Published var posts: [NewsFeed]
-    
     @Published var books: [BUserBook]
-    
     @Published public var user: User
-    
     @Published public var followed: Bool
     
     private var userBookManager: UserBookManager
-    
     private var userManager: UserManager
-    
     private var followManager: UserFollowManager
-    
     private var postManager: PostManager
     
     private var isfetched: Bool // all data fetched before
+    
+    // Upload image to S3
+    @Published var uploadProgess: Float
+    @Published var isUploading: Bool
     
     public override init() {
         user = User()
@@ -41,6 +40,9 @@ public class ProfileViewModel: NetworkViewModel {
         userManager = UserManager()
         followManager = UserFollowManager()
         postManager = PostManager()
+        
+        uploadProgess = 0
+        isUploading = false
         
         super.init()
         observerUserBookInfo()
@@ -218,5 +220,49 @@ extension ProfileViewModel {
                 }
             }
             .store(in: &cancellables)
+    }
+}
+
+// MARK: - AWS Utils
+extension ProfileViewModel {
+    func upload(image: UIImage, for type: ActionSheetType) {
+        print("start uploading image ...")
+        isUploading = true
+        objectWillChange.send()
+        AWSManager.shared.uploadImage(image: image, progress: {[weak self] ( uploadProgress) in
+            
+            guard let strongSelf = self else { return }
+            strongSelf.uploadProgess = Float(uploadProgress)
+            print("uploading: \(uploadProgress)")
+            
+        }) {[weak self] (uploadedFileUrl, error) in
+            
+            guard let strongSelf = self else { return }
+            if let finalPath = uploadedFileUrl as? String {
+                 
+                // Update current display data
+                // Send to update server side
+                if type == .Avatar {
+                    AppManager.shared.currentUser.avatar = finalPath
+                    strongSelf.userManager.updateUser(user: EUser(
+                        id: AppManager.shared.currenUID,
+                        avatar: finalPath
+                    ))
+                } else {
+                    AppManager.shared.currentUser.cover = finalPath
+                    strongSelf.userManager.updateUser(user: EUser(
+                        id: AppManager.shared.currenUID,
+                        cover: finalPath
+                    ))
+                }
+            } else {
+                //strongSelf.photoUrl = ""
+                strongSelf.resourceInfo = .image_upload_fail
+                strongSelf.showAlert = true
+                print("\(String(describing: error?.localizedDescription))")
+            }
+            strongSelf.isUploading = false
+            strongSelf.objectWillChange.send()
+        }
     }
 }

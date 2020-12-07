@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+// showing action sheet
+enum ActionSheetType {
+    case Avatar
+    case Cover
+}
+
 public struct ProfileView: View, PopToable {
     
     // User will display on profile
@@ -27,6 +33,13 @@ public struct ProfileView: View, PopToable {
     @State private var isShowPostDetail: Bool = false
     @ObservedObject private var selectedNews: NewsFeed = NewsFeed()
     
+    @State private var showingActionSheet: Bool = false
+    @State private var typeOfActionSheet: ActionSheetType = .Avatar
+    @State private var showingViewFull: Bool = false
+    
+    // Change cover or photo
+    @State var showPhotoPicker: Bool = false
+    
     public init(uid: String? = nil, vm: ProfileViewModel) {
         self.userID = uid
         self._viewModel = StateObject(wrappedValue: vm)
@@ -40,33 +53,25 @@ public struct ProfileView: View, PopToable {
                 ScrollViewReader { value in
                     VStack {
                         ZStack(alignment: .topLeading) {
+                            // Can't let all sheet in same level
+                            // so break it to child views
                             userInfo
+                                .fullScreenCover(isPresented: $showingViewFull) {
+                                    ZoomableScrollImage(url: typeOfActionSheet == .Avatar ? viewModel.user.avatar! : viewModel.user.cover!) {
+                                        self.showingViewFull.toggle()
+                                    }
+                                }
                             
-                            // Avatar
-                            VStack() {
-                                CircleImageOptions(image: viewModel.user.avatar, diameter: 80)
-                                    .id(viewModel.user.avatar ?? UUID().uuidString)
-                                    .padding(.top, 115)
-                                    .padding(.leading)
-                                
-                                Spacer()
-                            }
+                            avatar
+                                .sheet(isPresented: $showPhotoPicker) {
+                                    ImagePicker(picker: $showPhotoPicker) { img in
+                                        //viewModel.photo = data
+                                        viewModel.upload(image: img, for: typeOfActionSheet)
+                                    }
+                                }
                             
                             if userID == nil {
-                                HStack {
-                                    Spacer()
-                                    NavigationLink(
-                                        destination: SettingView(),
-                                        label: {
-                                            Image(systemName: "gearshape.fill")
-                                                .font(.system(size: 20))
-                                                .padding(10)
-                                                .background(Color.init(hex: 0xEFEFEF))
-                                                .cornerRadius(25)
-                                                .shadow(radius: 3)
-                                        })
-                                        .padding()
-                                }
+                                settingLabel
                             }
                         }
                         
@@ -74,6 +79,7 @@ public struct ProfileView: View, PopToable {
                     }
                 }
             }
+           
             
             if viewModel.isLoading {
                 Loading()
@@ -81,14 +87,40 @@ public struct ProfileView: View, PopToable {
         }
         .navigationBarTitle(Text("Trang cá nhân"), displayMode: .inline)
         .onAppear(perform: viewAppeared)
+        .actionSheet(isPresented: $showingActionSheet) {
+            ActionSheet(title: Text("Lựa chọn hành động với ảnh"), buttons: actionSheetButton)
+        }
+        .alert(isPresented: $viewModel.showAlert, content: alert)
     }
     
-    var userInfo: some View {
+    private var actionSheetButton: [Alert.Button] {
+        if userID == nil {
+            // Profile of himself
+            return [
+                .default(Text("Xem ảnh")) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        showingViewFull.toggle()
+                    }
+                },
+                .default(Text("Cập nhật ảnh mới")) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        showPhotoPicker.toggle()
+                    }
+                },
+                .cancel()
+            ]
+        } else {
+            // Guest
+            return [
+                .default(Text("Xem ảnh")) { showingViewFull.toggle() },
+                .cancel()
+            ]
+        }
+    }
+    
+    private var userInfo: some View {
         VStack {
-            // Cover
-            BSNImage(urlString: viewModel.user.cover, tempImage: "cover")
-                .frame(width: UIScreen.screenWidth ,height: 180)
-                .clipped()
+            cover
             
             // Name and description
             HStack {
@@ -139,7 +171,62 @@ public struct ProfileView: View, PopToable {
         }
     }
     
-    var posts: some View {
+    private var avatar: some View {
+        VStack() {
+            ZStack {
+                CircleImageOptions(image: viewModel.user.avatar, diameter: 80)
+                    .id(viewModel.user.avatar ?? UUID().uuidString)
+                    .padding(.top, 115)
+                    .padding(.leading)
+                    .onTapGesture {
+                        typeOfActionSheet = .Avatar
+                        showingActionSheet = true
+                    }
+                
+                if viewModel.isUploading && typeOfActionSheet == .Avatar {
+                    uploadImageProgess
+                }
+            }
+      
+            Spacer()
+        }
+    }
+    
+    private var cover: some View {
+        ZStack {
+            BSNImage(urlString: viewModel.user.cover, tempImage: "cover")
+                .frame(width: UIScreen.screenWidth ,height: 180)
+                .id(viewModel.user.cover ?? UUID().uuidString)
+                .clipped()
+                .onTapGesture {
+                    typeOfActionSheet = .Cover
+                    showingActionSheet = true
+                }
+            
+            if viewModel.isUploading && typeOfActionSheet == .Cover {
+                uploadImageProgess
+            }
+        }
+    }
+    
+    private var settingLabel: some View {
+        HStack {
+            Spacer()
+            NavigationLink(
+                destination: SettingView(),
+                label: {
+                    Image(systemName: "gearshape.fill")
+                        .font(.system(size: 20))
+                        .padding(10)
+                        .background(Color.init(hex: 0xEFEFEF))
+                        .cornerRadius(25)
+                        .shadow(radius: 3)
+                })
+                .padding()
+        }
+    }
+    
+    private var posts: some View {
         List {
             ForEach(viewModel.posts) { p in
                 VStack {
@@ -159,7 +246,7 @@ public struct ProfileView: View, PopToable {
         .padding(.bottom)
     }
     
-    var books: some View {
+    private var books: some View {
         ZStack(alignment: .trailing) {
             BBookGrid(models: viewModel.books, style: .mybook)
                 .id("bbookgrid")
@@ -192,11 +279,11 @@ public struct ProfileView: View, PopToable {
         }
     }
     
-    var foregroundFollowBtn: Color {
+    private var foregroundFollowBtn: Color {
         viewModel.followed ? .blue : .gray
     }
     
-    func dinamicContent(proxy: ScrollViewProxy) -> some View {
+    private func dinamicContent(proxy: ScrollViewProxy) -> some View {
         VStack {
             Segment(tabNames: ["   Bài viết   ", "   Tủ sách   "], focusIndex: $selectedSegment) {
                 proxy.scrollTo("des", anchor: .top)
@@ -226,6 +313,19 @@ public struct ProfileView: View, PopToable {
         }
         .frame(width: 0, height: 0)
         .opacity(0)
+    }
+    
+    private var uploadImageProgess: some View {
+        ProgressView(value: viewModel.uploadProgess, total: 1)
+            .progressViewStyle(CircularProgressViewStyle())
+    }
+    
+    private func alert() -> Alert {
+        return Alert(
+            title: Text("Kết quả"),
+            message: Text(viewModel.resourceInfo.des()),
+            dismissButton: .default(Text("OK"))
+        )
     }
     
     private func viewAppeared() {
