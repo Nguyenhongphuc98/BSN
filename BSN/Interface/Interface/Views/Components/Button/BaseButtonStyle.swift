@@ -68,6 +68,26 @@ public enum ButtonType {
     }
 }
 
+struct BaseButton: View {
+    
+    let configuration: ButtonStyle.Configuration
+    
+    var size: ButtonSize = .small
+    
+    var type: ButtonType = .primary
+    
+    @Environment(\.isEnabled) private var isEnabled: Bool
+    
+    var body: some View {
+        configuration.label
+            .foregroundColor(type.forceground())
+            .padding(.vertical, size.getV())
+            .padding(.horizontal, size.getH())
+            .background(RoundedRectangle(cornerRadius: 5).fill(isEnabled ? type.background().opacity(configuration.isPressed ? 0.7 : 1) : Color.gray))
+            .clipped()
+    }
+}
+
 // MARK: - Button Style
 public struct BaseButtonStyle: ButtonStyle {
     
@@ -81,26 +101,23 @@ public struct BaseButtonStyle: ButtonStyle {
     }
     
     public func makeBody(configuration: ButtonStyle.Configuration) -> some View {
-        MyButton(configuration: configuration, size: size, type: type)
+        BaseButton(configuration: configuration, size: size, type: type)
+    }
+}
+
+public struct RoundButtonStyle: ButtonStyle {
+    
+    var size: ButtonSize
+    
+    var type: ButtonType
+    
+    public init(size: ButtonSize = .small, type: ButtonType = .primary) {
+        self.size = size
+        self.type = type
     }
     
-    struct MyButton: View {
-        
-        let configuration: ButtonStyle.Configuration
-        
-        var size: ButtonSize = .small
-        
-        var type: ButtonType = .primary
-        
-        @Environment(\.isEnabled) private var isEnabled: Bool
-        
-        var body: some View {
-            configuration.label
-                .foregroundColor(type.forceground())
-                .padding(.vertical, size.getV())
-                .padding(.horizontal, size.getH())
-                .background(RoundedRectangle(cornerRadius: 5).fill(isEnabled ? type.background().opacity(configuration.isPressed ? 0.7 : 1) : Color.gray))
-                .clipped()
-        }
+    public func makeBody(configuration: ButtonStyle.Configuration) -> some View {
+        BaseButton(configuration: configuration, size: size, type: type)
+            .clipShape(Capsule())
     }
 }

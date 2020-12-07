@@ -35,30 +35,32 @@ public class PersonalizeViewModel: NetworkViewModel {
         super.init()
         observerCategories()
         observerUpdateCategories()
-        prepareData()
+        //prepareData()
     }
     
     public func didClickupdate(isOnboard: Bool) {
         self.isLoading = true
+        
+        // Any where, we also update user categories
+        let c = categories.filter { $0.interested == true }
+        let eucs = c.map { $0.toUerCategory() }
+        usercategoryManager.updateUsercategories(userCategories: eucs)
+
         if isOnboard {
             // save interested
             // update account is onboard
             // load data for 5 tab
             // switch to inapp
-            let c = categories.filter { $0.interested == true }
-            let eucs = c.map { $0.toUerCategory() }
-            usercategoryManager.updateUsercategories(userCategories: eucs)
+
             let ea = AppManager.shared.currentAccount.buildUpdate(isOnboard: true)
             accountManager.updateAccount(account: ea)
-            
-        } else {
-            // update interest and reload newfeed
         }
     }
     
     public func prepareData() {
         print("did prepare data personalize VM")
         isLoading = true
+        self.categories = []
         usercategoryManager.getCategoriesBy(uid: AppManager.shared.currenUID)
     }
     

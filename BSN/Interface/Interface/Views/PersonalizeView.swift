@@ -41,6 +41,8 @@ public struct PersonalizeView: View {
         }
         .background(Color(hex: 0xFCFFFD))
         .alert(isPresented: $viewModel.showAlert, content: alert)
+        .navigationBarTitle("Cài đặt")
+        .navigationBarHidden(true)
         .onAppear(perform: viewAppeared)
     }
     
@@ -55,6 +57,7 @@ public struct PersonalizeView: View {
 
             Spacer()
         }
+        .padding()
     }
     
     private var title: some View {
@@ -75,6 +78,7 @@ public struct PersonalizeView: View {
                     HStack {
                         ForEach(categories) { c in
                             CategoryCard(category: c, selected: c.interested)
+                                .id("\(c.id)\(c.interested)")
                         }
                     }
                 }
@@ -97,10 +101,9 @@ public struct PersonalizeView: View {
                 Text("     \(onboard ? "  Tiếp tục  " : "Lưu thay đổi")     ")
                     .robotoBold(size: 15)
             })
-            .buttonStyle(BaseButtonStyle(size: .largeH))
+            .buttonStyle(RoundButtonStyle(size: .largeH))
             .disabled(viewModel.numSelected == 0)
-            .padding()
-            .padding(.bottom, 30)            
+            .padding(.bottom, 20)
         }
     }
     
@@ -125,6 +128,7 @@ public struct PersonalizeView: View {
     }
     
     func viewAppeared() {
+        viewModel.prepareData()
         viewModel.didUpdateUserCategories = {
             if onboard {
                 setupData()
@@ -138,7 +142,7 @@ public struct PersonalizeView: View {
 
 struct CategoryCard: View {
     
-    @StateObject var category: Category
+    @ObservedObject var category: Category
     
     @State var selected: Bool = false
     

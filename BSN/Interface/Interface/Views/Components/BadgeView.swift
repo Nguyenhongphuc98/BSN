@@ -30,7 +30,7 @@ public struct BadgeView: View {
                 .foregroundColor(.white)
                 .font(Font.system(size: 12))
         }
-        .frame(width: 15, height: 15)
+        .frame(width: 18, height: 18)
         .opacity(numUnread == 0 ? 0 : (app.keyboardHeight == 0 ? 1.0 : 0)) // when keyboard show, tabview will auto hidden, we should clear this sign
         .allowsTightening(false)
     }

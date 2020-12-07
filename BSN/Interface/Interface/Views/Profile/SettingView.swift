@@ -26,7 +26,9 @@ struct SettingView: View {
                     
                     VStack(alignment: .leading) {
                         Text(appManager.currentUser.displayname).pattaya(size: 18)
-                        Text(appManager.currentUser.about).robotoLightItalic(size: 13)
+                        if appManager.currentUser.about != "" {
+                            Text(appManager.currentUser.about).robotoLightItalic(size: 13)
+                        }
                     }
                 }
             }
@@ -35,19 +37,30 @@ struct SettingView: View {
                 TextField("Nhập tên mới", text: $appManager.currentUser.displayname)
                 TextField("Thêm mô tả", text: $appManager.currentUser.about)
                 
+                
                 Button(action: {
                     print("did click update")
                 }, label: {
-                    TextWithIcon(icon: "dock.arrow.down.rectangle", text: "Cập nhật", foreground: 0xc90c61)
+                    HStack {
+                        Spacer()
+                        Text("Cập nhật")
+                        Spacer()
+                    }
                 })
             }
             
             Section {
-                TextWithIcon(icon: "heart.fill", text: "Thể loại yêu thích", foreground: 0xff00bb)
+                NavigationLink(destination: PersonalizeView(onboard: false)) {
+                    TextWithIcon(icon: "heart.fill", text: "Thể loại yêu thích", foreground: 0xff00bb)
+                }
                 
                 TextWithIcon(icon: "apps.ipad", text: "Chủ đề", foreground: 0x009dff)
                 
                 TextWithIcon(icon: "textformat", text: "Ngôn ngữ", foreground: 0x26ad1a)
+                
+                NavigationLink(destination: PersonalizeView(onboard: false)) {
+                    TextWithIcon(icon: "lock.fill", text: "Mật khẩu", foreground: 0xc90c61)
+                }
             }
             
             Section {
@@ -58,9 +71,12 @@ struct SettingView: View {
                 })
             }
         }
+        .resignKeyboardOnDragGesture()
         .background(Color(.secondarySystemBackground))
         .navigationTitle(Text("Cài đặt"))
         .navigationBarBackButtonHidden(true)
+        .navigationBarTitle("Cài đặt")
+        .navigationBarHidden(false)
         .navigationBarItems(leading: backButton)
         .alert(isPresented: $showAlertLogout, content: alert)
     }

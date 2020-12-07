@@ -80,7 +80,7 @@ struct SignUp: View {
                 Text("       Đăng ký       ")
                     .robotoBold(size: 15)
             })
-            .buttonStyle(BaseButtonStyle(size: .largeH))
+            .buttonStyle(RoundButtonStyle(size: .largeH))
             .padding()
             .disabled(disableRegister)
         }

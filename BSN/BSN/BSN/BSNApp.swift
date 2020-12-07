@@ -104,6 +104,7 @@ struct BSNApp: App {
             }
         }
     }
+    
     func configureAppearance() {
         
         UITextView.appearance().backgroundColor = .clear

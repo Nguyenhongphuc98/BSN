@@ -66,7 +66,7 @@ struct Login: View {
                 Text("   Đăng nhập  ")
                     .robotoBold(size: 15)
             })
-            .buttonStyle(BaseButtonStyle(size: .largeH))
+            .buttonStyle(RoundButtonStyle(size: .largeH))
             .disabled(disableLogin)
         }
         .padding(.horizontal)
