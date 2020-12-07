@@ -39,7 +39,7 @@ struct SettingView: View {
                 
                 
                 Button(action: {
-                    print("did click update")
+                    viewModel.updateInfo(displayName: appManager.currentUser.displayname, about: appManager.currentUser.about)
                 }, label: {
                     HStack {
                         Spacer()
@@ -47,6 +47,7 @@ struct SettingView: View {
                         Spacer()
                     }
                 })
+                .alert(isPresented: $viewModel.showAlert, content: updateInfoAlert)
             }
             
             Section {
@@ -69,16 +70,18 @@ struct SettingView: View {
                 }, label: {
                     TextWithIcon(icon: "arrowshape.turn.up.backward.fill", text: "Đăng xuất", foreground: 0xc90c61)
                 })
+                .alert(isPresented: $showAlertLogout, content: logoutAlert)
             }
         }
         .resignKeyboardOnDragGesture()
+        .embededLoading(isLoading: $viewModel.isLoading)
         .background(Color(.secondarySystemBackground))
         .navigationTitle(Text("Cài đặt"))
         .navigationBarBackButtonHidden(true)
         .navigationBarTitle("Cài đặt")
         .navigationBarHidden(false)
         .navigationBarItems(leading: backButton)
-        .alert(isPresented: $showAlertLogout, content: alert)
+        
     }
     
     private var backButton: some View {
@@ -89,7 +92,7 @@ struct SettingView: View {
         }
     }
     
-    func alert() -> Alert {
+    func logoutAlert() -> Alert {
         return Alert(
             title: Text("Thông báo"),
             message: Text(" Bạn sẽ tiếp tục đăng xuất?"),
@@ -98,6 +101,14 @@ struct SettingView: View {
                 viewModel.logout()
             },
             secondaryButton: .cancel(Text("Huỷ bỏ"))
+        )
+    }
+    
+    func updateInfoAlert() -> Alert {
+        return Alert(
+            title: Text("Kết quả"),
+            message: Text(viewModel.resourceInfo.des()),
+            dismissButton: .default(Text("OK"))
         )
     }
     

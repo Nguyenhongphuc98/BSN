@@ -165,7 +165,7 @@ extension ProfileViewModel {
                         self.user = User(
                             id: u.id!,
                             username: "unknow",
-                            displayname: u.displayname,
+                            displayname: u.displayname!,
                             avatar: u.avatar,
                             cover: u.cover,
                             location: u.location,

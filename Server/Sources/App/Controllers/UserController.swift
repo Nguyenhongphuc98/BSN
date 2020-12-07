@@ -12,14 +12,16 @@ struct UserController: RouteCollection {
     
     func boot(routes: RoutesBuilder) throws {
         let users = routes.grouped("api" ,"v1", "users")
-        users.get(use: index)
-        users.post(use: create)
-        users.group(":ID") { group in
+        let authen = users.grouped(Account.authenticator())
+        authen.get(use: index)
+        authen.post(use: create)
+        authen.group(":ID") { group in
             group.delete(use: delete)
             group.get(use: get)
+            group.put(use: update)
         }
         
-        users.get("search", use: search)
+        authen.get("search", use: search)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[User]> {
@@ -55,5 +57,33 @@ struct UserController: RouteCollection {
             .filter(\.$accountID == aid)
             .first()
             .unwrap(or: Abort(.notFound))
+    }
+    
+    func update(req: Request) throws -> EventLoopFuture<User> {
+        let newUser = try! req.content.decode(User.Update.self)
+        
+        guard let uid: UUID = req.parameters.get("ID") else {
+            throw Abort(.badRequest)
+        }
+        
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        return User
+            .query(on: req.db)
+            .filter(\.$id == uid)
+            .filter(\.$accountID == account.id!) // Curren user can update info of him
+            .first()
+            .unwrap(or: Abort(.forbidden))
+            .flatMap { user in
+                
+                user.displayname = newUser.displayname != nil ? newUser.displayname! : user.displayname
+                user.about = newUser.about != nil ? newUser.about! : user.about
+                user.avatar = newUser.avatar != nil ? newUser.avatar! : user.avatar
+                user.cover = newUser.cover != nil ? newUser.cover! : user.cover
+                user.location = newUser.location != nil ? newUser.location! : user.location
+                
+                return user.update(on: req.db).map { user }
+            }
     }
 }

@@ -9,7 +9,7 @@ public struct EUser: Codable {
     
     public var id: String?
     
-    public var displayname: String
+    public var displayname: String?
     
     public var avatar: String?
         
@@ -19,7 +19,7 @@ public struct EUser: Codable {
         
     public var about: String?
         
-    public var accountID: String
+    public var accountID: String?
         
     public var createdAt: String?
         
@@ -28,7 +28,7 @@ public struct EUser: Codable {
         self.accountID = "undefine"
     }
     
-    public init(id: String? = nil, displayname: String, avatar: String? = nil, cover: String? = nil, location: String? = nil, about: String? = nil, accountID: String) {
+    public init(id: String? = nil, displayname: String? = nil, avatar: String? = nil, cover: String? = nil, location: String? = nil, about: String? = nil, accountID: String? = nil) {
         
         self.id = id
         self.displayname = displayname

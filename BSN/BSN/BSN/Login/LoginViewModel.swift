@@ -95,7 +95,7 @@ class LoginViewModel: NetworkViewModel {
                         self.appManager.currentUser = User(
                             id: u.id!,
                             username: self.appManager.currentAccount.username,
-                            displayname: u.displayname,
+                            displayname: u.displayname!,
                             avatar: u.avatar,
                             cover: u.cover,
                             location: u.location,

@@ -56,3 +56,14 @@ final class User: Model {
 }
 
 extension User: Content { }
+
+extension User {
+    struct Update: Content {
+        var id: String?
+        var displayname: String?
+        var avatar: String?
+        var cover: String?
+        var location: String?
+        var about: String?
+    }
+}

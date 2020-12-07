@@ -43,4 +43,21 @@ class UserRequest: ResourceRequest<EUser> {
             }
         }
     }
+    
+    func updateUser(user: EUser, publisher: PassthroughSubject<EUser, Never>) {
+        self.setPath(resourcePath: user.id!)
+        
+        self.update(user) { result in
+            switch result {
+            case .failure:
+                let message = "There was an error update user"
+                print(message)
+                publisher.send(EUser())
+                
+            case .success(let u):
+                print("update user success!")
+                publisher.send(u)
+            }
+        }
+    }
 }
