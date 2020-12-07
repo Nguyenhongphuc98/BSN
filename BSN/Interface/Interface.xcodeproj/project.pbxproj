@@ -137,6 +137,8 @@
 		84961057257B2039003AE110 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961056257B2039003AE110 /* StringExtension.swift */; };
 		84961066257CD3F2003AE110 /* PersonalizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961065257CD3F2003AE110 /* PersonalizeView.swift */; };
 		84961069257CD521003AE110 /* PersonalizeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961068257CD521003AE110 /* PersonalizeViewModel.swift */; };
+		8496107A257E1456003AE110 /* ChangePassWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961079257E1455003AE110 /* ChangePassWordView.swift */; };
+		8496107D257E1488003AE110 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496107C257E1488003AE110 /* ChangePasswordViewModel.swift */; };
 		84A61CA5254C0A3F00B50FE8 /* NavigationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A61CA4254C0A3E00B50FE8 /* NavigationState.swift */; };
 		84A61CB0254C148700B50FE8 /* PassthroughtEB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A61CAF254C148700B50FE8 /* PassthroughtEB.swift */; };
 		84A61CC1254C51DE00B50FE8 /* NetworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A61CC0254C51DE00B50FE8 /* NetworkViewModel.swift */; };
@@ -336,6 +338,8 @@
 		84961056257B2039003AE110 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		84961065257CD3F2003AE110 /* PersonalizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalizeView.swift; sourceTree = "<group>"; };
 		84961068257CD521003AE110 /* PersonalizeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalizeViewModel.swift; sourceTree = "<group>"; };
+		84961079257E1455003AE110 /* ChangePassWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePassWordView.swift; sourceTree = "<group>"; };
+		8496107C257E1488003AE110 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
 		84A61CA4254C0A3E00B50FE8 /* NavigationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationState.swift; sourceTree = "<group>"; };
 		84A61CAF254C148700B50FE8 /* PassthroughtEB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughtEB.swift; sourceTree = "<group>"; };
 		84A61CC0254C51DE00B50FE8 /* NetworkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkViewModel.swift; sourceTree = "<group>"; };
@@ -527,6 +531,7 @@
 				8401CA2E2532FB2C00A722CE /* UpdateUBView.swift */,
 				8401CA322533056200A722CE /* SubmitExchangeBookView.swift */,
 				841CED9D255D67AD007CCACC /* SettingView.swift */,
+				84961079257E1455003AE110 /* ChangePassWordView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -541,6 +546,7 @@
 				8401CA36253305F900A722CE /* SubmitExchangeBookViewModel.swift */,
 				84783C73254DAECC0043F625 /* UpdateUBViewModel.swift */,
 				841CEDA0255D7356007CCACC /* SettingViewModel.swift */,
+				8496107C257E1488003AE110 /* ChangePasswordViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -995,6 +1001,7 @@
 				842C44E3254A7A1F003C570D /* ResourceInfo.swift in Sources */,
 				8401C8AB252AB45700A722CE /* ExploreBookViewModel.swift in Sources */,
 				8401C97E252F037A00A722CE /* DateExtension.swift in Sources */,
+				8496107D257E1488003AE110 /* ChangePasswordViewModel.swift in Sources */,
 				8401CA0B2531B48D00A722CE /* Note.swift in Sources */,
 				8414F25725219B7E003CF799 /* StickyButton.swift in Sources */,
 				84411A162523310B00AE31D8 /* QuoteEditor.swift in Sources */,
@@ -1030,6 +1037,7 @@
 				84A61CB0254C148700B50FE8 /* PassthroughtEB.swift in Sources */,
 				8401CA1B25329FC300A722CE /* SearchBookViewModel.swift in Sources */,
 				8401C8C9252B045400A722CE /* Segment.swift in Sources */,
+				8496107A257E1456003AE110 /* ChangePassWordView.swift in Sources */,
 				843610132524811D009FF4BF /* CommentCard.swift in Sources */,
 				8401C930252C1C4D00A722CE /* RatingViewModel.swift in Sources */,
 				8436100425246A8C009FF4BF /* PostDetailViewModel.swift in Sources */,

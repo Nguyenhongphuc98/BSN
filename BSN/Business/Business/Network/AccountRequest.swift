@@ -6,14 +6,13 @@
 //
 import Combine
 
+public var globalAuthorization = ""
 class AccountRequest: ResourceRequest<EAccount> {
-    
-    static var authorization: String = ""
     
     func login(account: EAccount, publisher: PassthroughSubject<EAccount, Never>) {
         self.setPath(resourcePath: "login")
         let encodeStr = "\(account.username):\(account.password!)".data(using: .utf8)?.base64EncodedString()
-        AccountRequest.authorization = "Basic " + encodeStr!
+        globalAuthorization = "Basic " + encodeStr!
         
         self.get(isAll: false) { result in
             

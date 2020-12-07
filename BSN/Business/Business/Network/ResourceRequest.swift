@@ -61,7 +61,7 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
         
         var urlRequest = URLRequest(url: resourceURL)
         urlRequest.httpMethod = "get"
-        urlRequest.addValue(AccountRequest.authorization, forHTTPHeaderField: "Authorization")
+        urlRequest.addValue(globalAuthorization, forHTTPHeaderField: "Authorization")
         
         let dataTask = URLSession.shared
             .dataTask(with: urlRequest) { data, _, _ in
@@ -101,7 +101,7 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
     func delete() {
         var urlRequest = URLRequest(url: resourceURL)
         urlRequest.httpMethod = "DELETE"
-        urlRequest.addValue(AccountRequest.authorization, forHTTPHeaderField: "Authorization")
+        urlRequest.addValue(globalAuthorization, forHTTPHeaderField: "Authorization")
         let dataTask = URLSession.shared.dataTask(with: urlRequest)
         dataTask.resume()
     }
@@ -112,7 +112,7 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
             var urlRequest = URLRequest(url: resourceURL)
             urlRequest.httpMethod = method
             urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            urlRequest.addValue(AccountRequest.authorization, forHTTPHeaderField: "Authorization")
+            urlRequest.addValue(globalAuthorization, forHTTPHeaderField: "Authorization")
             urlRequest.httpBody = try JSONEncoder().encode(resourceToSave)
             
             print("url: \(urlRequest)")
@@ -149,8 +149,8 @@ extension ResourceRequest {
             
             var urlRequest = URLRequest(url: resourceURL)
             urlRequest.httpMethod = "post"
-            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            urlRequest.addValue(AccountRequest.authorization, forHTTPHeaderField: "Authorization")
+            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")            
+            urlRequest.addValue(globalAuthorization, forHTTPHeaderField: "Authorization")
             urlRequest.httpBody = try JSONEncoder().encode(resourcesToSave)
             
             print("url: \(urlRequest)")

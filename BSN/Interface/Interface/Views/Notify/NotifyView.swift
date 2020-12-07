@@ -45,7 +45,7 @@ public struct NotifyView: View {
         }
         .padding(.top)
         .embededLoadingFull(isLoading: $viewModel.isLoading)
-        .onAppear(perform: viewAppeared)
+        .onAppear(perform: viewAppeared)       
     }
     
     func viewAppeared() {

@@ -58,7 +58,7 @@ struct SettingView: View {
                 
                 TextWithIcon(icon: "textformat", text: "Ngôn ngữ", foreground: 0x26ad1a)
                 
-                NavigationLink(destination: PersonalizeView(onboard: false)) {
+                NavigationLink(destination: ChangePassWordView()) {
                     TextWithIcon(icon: "lock.fill", text: "Mật khẩu", foreground: 0xc90c61)
                 }
             }

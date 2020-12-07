@@ -294,25 +294,25 @@
 		84C8CB71253EDACE004D5CD0 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				846C40B2255013A30045BCD4 /* BusinessConfigure.swift */,
+				841CED7C255C18A0007CCACC /* AccountManager.swift */,
 				848E1057253EE65C003C89C8 /* BookManager.swift */,
-				84A0CC33254ACDA10074CBAC /* UserBookManager.swift */,
-				84A61CBB254C4CCD00B50FE8 /* ExchangeBookManager.swift */,
-				84A61CD7254D13E200B50FE8 /* NoteManager.swift */,
 				844EACC625515FE400CACEEB /* BookReviewManager.swift */,
 				841C3E4B25593DF5000393AA /* BorrowBookManager.swift */,
-				841CED7C255C18A0007CCACC /* AccountManager.swift */,
-				841CED88255C1DD3007CCACC /* UserManager.swift */,
-				841CED96255D36C8007CCACC /* NotifyManager.swift */,
-				841CEDAB255E852B007CCACC /* UserFollowManager.swift */,
-				845A537A255ED7F60038F0A1 /* MessageManager.swift */,
-				845A5386255FB8F70038F0A1 /* ChatManager.swift */,
+				846C40B2255013A30045BCD4 /* BusinessConfigure.swift */,
 				845666C4256BB248000DA583 /* CategoryManager.swift */,
-				845666D2256BBB97000DA583 /* PostManager.swift */,
+				845A5386255FB8F70038F0A1 /* ChatManager.swift */,
 				8496F57C256D0A2400A18658 /* CommentManager.swift */,
-				84664180256E9CCF00F1C030 /* ReactionManager.swift */,
 				84961062257BDF2E003AE110 /* DeviceManager.swift */,
+				84A61CBB254C4CCD00B50FE8 /* ExchangeBookManager.swift */,
+				845A537A255ED7F60038F0A1 /* MessageManager.swift */,
+				84A61CD7254D13E200B50FE8 /* NoteManager.swift */,
+				841CED96255D36C8007CCACC /* NotifyManager.swift */,
+				845666D2256BBB97000DA583 /* PostManager.swift */,
+				84664180256E9CCF00F1C030 /* ReactionManager.swift */,
+				84A0CC33254ACDA10074CBAC /* UserBookManager.swift */,
 				84961074257D15A4003AE110 /* UserCategoryManager.swift */,
+				841CEDAB255E852B007CCACC /* UserFollowManager.swift */,
+				841CED88255C1DD3007CCACC /* UserManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";

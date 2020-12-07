@@ -66,7 +66,7 @@ class LoginViewModel: NetworkViewModel {
                         self.appManager.currentAccount = Account(
                             id: ac.id,
                             username: ac.username,
-                            password: ac.password!,
+                            password: self.password, // password was save on device
                             isOnboard: ac.isOnboarded!
                         )
                         self.userManager.getUser(aid: ac.id!)
