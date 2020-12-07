@@ -30,13 +30,14 @@ final class Account: Model {
         self.id = id
         self.username = username
         self.password = password
-        self.isOnboarded = false
+        self.isOnboarded = isOnboard
     }
 }
 
 extension Account: Content { }
 
 extension Account {
+    
     func asPublic() -> Account {
         return Account(
             id: self.id,
@@ -53,6 +54,12 @@ extension Account {
         var username: String // in this case, we using email
         var password: String
         var confirmPassword: String
+    }
+    
+    struct Update: Content {
+        var username: String
+        var password: String?
+        var isOnboarded: Bool?
     }
 }
 

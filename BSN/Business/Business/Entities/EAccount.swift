@@ -9,8 +9,8 @@ public struct EAccount: Codable {
     
     public var id: String?
     public var username: String
-    public var password: String
-    public var isOnboarded: Bool
+    public var password: String?
+    public var isOnboarded: Bool?
     
     // in case create new account
     public var name: String?
@@ -23,7 +23,7 @@ public struct EAccount: Codable {
         isOnboarded = false
     }
     
-    public init(id: String? = nil,name: String? = nil, username: String, password: String, confirmPass: String? = nil, isOnboarded: Bool = false) {
+    public init(id: String? = nil, name: String? = nil, username: String, password: String? = nil, confirmPass: String? = nil, isOnboarded: Bool? = nil) {
         
         self.id = id
         self.name = name

@@ -9,13 +9,11 @@ public struct EUserCategory: Codable {
     
     public var userID: String
     public var categoryID: String
-    public var categoryName: String
-    public var isInterested: Bool
+    public var categoryName: String?
+    public var isInterested: Bool?
     
-    init(userID: String, categoryID: String, categoryName: String, interested: Bool) {
+    public init(userID: String, categoryID: String) {
         self.userID = userID
-        self.categoryID = categoryID
-        self.categoryName = categoryName
-        self.isInterested = interested
+        self.categoryID = categoryID        
     }
 }

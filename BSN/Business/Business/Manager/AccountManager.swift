@@ -35,4 +35,8 @@ public class AccountManager {
     public func signup(account: EAccount) {
         networkRequest.signup(account: account, publisher: accountPublisher)
     }
+    
+    public func updateAccount(account: EAccount) {
+        networkRequest.updateAccount(account: account, publisher: accountPublisher)
+    }
 }

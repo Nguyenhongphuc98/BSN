@@ -43,6 +43,7 @@ public class NotifyViewModel: NetworkViewModel {
     public func prepareData() {
         print("did prepare data notifies VM")
         isLoading = true
+        currentPage = 0
         notifies = []
         notifyManager.getNotifies(page: 0, regisgerID: AppManager.shared.currenUID)
     }

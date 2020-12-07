@@ -79,7 +79,7 @@ public class ProfileViewModel: NetworkViewModel {
     
     func reloadPostNUserbook(uid: String? = nil) {
         self.books = []
-        self.posts = []
+        self.posts = []        
         userBookManager.getUserBooks(uid: uid ?? self.user.id)
         postManager.getPersonalNewestPosts(page: 0, uid: uid ?? self.user.id)
     }

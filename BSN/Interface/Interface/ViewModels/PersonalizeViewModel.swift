@@ -5,6 +5,8 @@
 //  Created by Phucnh on 12/6/20.
 //
 
+import UserNotifications
+import UIKit
 import Business
 
 public class PersonalizeViewModel: NetworkViewModel {
@@ -12,6 +14,7 @@ public class PersonalizeViewModel: NetworkViewModel {
     public static var shared: PersonalizeViewModel = .init()
     
     private var usercategoryManager: UserCategoryManager
+    private var accountManager: AccountManager
     
     var categories: [Category]
     @Published var chunks: [ArraySlice<Category>]
@@ -21,23 +24,33 @@ public class PersonalizeViewModel: NetworkViewModel {
         return c.count
     }
     
+    public var didUpdateUserCategories: (() -> Void)?
+    
     override init() {
         self.categories = []
         self.chunks = []
         self.usercategoryManager = .init()
+        self.accountManager = .init()
         
         super.init()
         observerCategories()
+        observerUpdateCategories()
         prepareData()
     }
     
     public func didClickupdate(isOnboard: Bool) {
         self.isLoading = true
-        if AppManager.shared.currentAccount.isOnboard {
+        if isOnboard {
             // save interested
             // update account is onboard
             // load data for 5 tab
             // switch to inapp
+            let c = categories.filter { $0.interested == true }
+            let eucs = c.map { $0.toUerCategory() }
+            usercategoryManager.updateUsercategories(userCategories: eucs)
+            let ea = AppManager.shared.currentAccount.buildUpdate(isOnboard: true)
+            accountManager.updateAccount(account: ea)
+            
         } else {
             // update interest and reload newfeed
         }
@@ -84,7 +97,7 @@ public class PersonalizeViewModel: NetworkViewModel {
                     self.categories = []
                     categories.forEach { (c) in
                         if c.categoryName != "Không xác định" {
-                            let model = Category(id: c.categoryID, name: c.categoryName, interested: c.isInterested)
+                            let model = Category(id: c.categoryID, name: c.categoryName!, interested: c.isInterested!)
                             self.categories.append(model)                            
                         }                        
                     }
@@ -93,5 +106,60 @@ public class PersonalizeViewModel: NetworkViewModel {
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    private func observerUpdateCategories() {
+        usercategoryManager
+            .updatePublisher
+            .sink {[weak self] (statusCode) in
+
+                guard let self = self else {
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    if statusCode == 200 {
+                        self.didUpdateUserCategories?()
+                        // This mean observer of try to select in onbopard
+                        if AppManager.shared.currentAccount.isOnboard == false {
+                            AppManager.shared.currentAccount.isOnboard = true
+                            setupData()
+                        } else {
+                            // Reload newfeed because interest categories change
+                            NewsFeedViewModel.shared.prepareData()
+                        }
+                                                
+                    } else {
+                        self.resourceInfo = .update_fail
+                        self.showAlert = true
+                    }
+                }
+            }
+            .store(in: &cancellables)
+    }
+}
+
+// When user login first time or login other account
+// We reset data and setup for push notifications
+public func setupData() {
+    
+    setupNotifications()
+    
+    // Reload data for new user
+    ChatViewModel.shared.prepareData()
+    NotifyViewModel.shared.prepareData()
+    ProfileViewModel.shared.forceRefeshData()
+    ExploreBookViewModel.shared.prepareData()
+    NewsFeedViewModel.shared.prepareData()
+}
+
+public func setupNotifications() {
+    // Register push notifications
+    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+      print("Granted notifications?", granted)
+      DispatchQueue.main.async {
+        UIApplication.shared.registerForRemoteNotifications()
+      }
     }
 }

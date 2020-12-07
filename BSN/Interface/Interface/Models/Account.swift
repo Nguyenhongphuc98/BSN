@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Business
 
 public class Account {
     
@@ -28,5 +29,9 @@ public class Account {
         self.username = username
         self.password = password
         self.isOnboard = isOnboard
+    }
+    
+    public func buildUpdate(password: String? = nil, isOnboard: Bool? = nil) -> EAccount {
+        EAccount(username: self.username, password: password, isOnboarded: isOnboard)
     }
 }

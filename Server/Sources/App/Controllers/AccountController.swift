@@ -22,6 +22,7 @@ struct AccountController: RouteCollection {
         authen.get("login", use: login)
         authen.delete("logout", use: logout)
         authen.post("register", use: create)
+        authen.put(use: update)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[Account]> {
@@ -52,6 +53,31 @@ struct AccountController: RouteCollection {
                     .map { return account }
             }
     }
+    
+    // update onboard
+    // or change password
+    func update(req: Request) throws -> EventLoopFuture<Account> {
+        
+        let updateAccount = try req.content.decode(Account.Update.self)
+        
+        // Authen
+        let account = try req.auth.require(Account.self)
+               
+        return Account.find(account.id!, on: req.db)
+            .unwrap(or: Abort(.forbidden))
+            .flatMap { (account)  in
+                // we only can update 2 filed
+                if updateAccount.isOnboarded != nil {
+                    account.isOnboarded = updateAccount.isOnboarded!
+                }
+                if updateAccount.password != nil {
+                    account.password = try! Bcrypt.hash(updateAccount.password!)
+                }
+                return account.update(on: req.db).map {
+                    account
+                }
+            }
+    }
 
     func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {
         return Account.find(req.parameters.get("accountID"), on: req.db)
@@ -61,7 +87,8 @@ struct AccountController: RouteCollection {
     }
     
     func login(req: Request) throws -> Account {
-        try req.auth.require(Account.self).asPublic()
+        let ac = try req.auth.require(Account.self)
+        return ac.asPublic()
     }
     
     func logout(req: Request) throws -> EventLoopFuture<HTTPStatus> {

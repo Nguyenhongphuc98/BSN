@@ -140,3 +140,37 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
         }
     }
 }
+
+// MARK: - Advance Request
+extension ResourceRequest {
+    // save mutil objects
+    func save(_ resourcesToSave: [ResourceType], completion: @escaping (SaveResult<Int>) -> Void) {
+        do {
+            
+            var urlRequest = URLRequest(url: resourceURL)
+            urlRequest.httpMethod = "post"
+            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            urlRequest.addValue(AccountRequest.authorization, forHTTPHeaderField: "Authorization")
+            urlRequest.httpBody = try JSONEncoder().encode(resourcesToSave)
+            
+            print("url: \(urlRequest)")
+            
+            let dataTask = URLSession.shared
+                .dataTask(with: urlRequest) { data, response, _ in
+                    
+                    guard let httpResponse = response as? HTTPURLResponse,
+                          httpResponse.statusCode == 200 else {
+                        completion(.failure)
+                        return
+                    }
+                    
+                    completion(.success(httpResponse.statusCode))                    
+                }
+            
+            dataTask.resume()
+            
+        } catch {
+            completion(.failure)
+        }
+    }
+}

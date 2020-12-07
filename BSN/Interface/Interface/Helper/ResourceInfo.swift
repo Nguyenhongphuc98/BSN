@@ -17,6 +17,7 @@ public enum ResourceInfo: String {
     case invalid_category
     case image_upload_fail
     case signup_success
+    case update_fail
     
     public func des() -> String {
         switch self {
@@ -38,6 +39,8 @@ public enum ResourceInfo: String {
             return "Không thể tải ảnh lên, thử lại sau"
         case .signup_success:
             return "Đăng ký tài khoản thành công!"
+        case .update_fail:
+            return "Không thể cập nhật!"
         }
     }
 }

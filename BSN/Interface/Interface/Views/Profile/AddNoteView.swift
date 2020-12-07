@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Add new node or update exist node
 struct AddNoteView: View {
     
     @EnvironmentObject var viewModel: MyBookDetailViewModel

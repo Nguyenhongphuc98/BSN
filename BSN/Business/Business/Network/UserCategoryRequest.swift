@@ -22,4 +22,21 @@ class UserCategoryRequest: ResourceRequest<EUserCategory> {
             }
         }
     }
+    
+    func updateCategories(userCategories: [EUserCategory], publisher: PassthroughSubject<Int, Never>) {
+        self.setPath(resourcePath: "user")
+        
+        self.save(userCategories) { result in
+            switch result {
+            case .failure:
+                let message = "There was an error update userCategories"
+                print(message)
+                publisher.send(401) // 401 Unauthorized
+                
+            case .success(let status):
+                print("update userCategories success")
+                publisher.send(status)
+            }
+        }
+    }
 }

@@ -37,10 +37,11 @@ public struct PersonalizeView: View {
             categoriesContent()
                 .embededLoadingFull(isLoading: $viewModel.isLoading)
                
-            submitLabel()
-            
+            submitLabel()            
         }
         .background(Color(hex: 0xFCFFFD))
+        .alert(isPresented: $viewModel.showAlert, content: alert)
+        .onAppear(perform: viewAppeared)
     }
     
     private var closeLabel: some View {
@@ -73,7 +74,7 @@ public struct PersonalizeView: View {
                 ForEach(viewModel.chunks, id: \.self) { categories in
                     HStack {
                         ForEach(categories) { c in
-                            CategoryCard(category: c, selected: false)
+                            CategoryCard(category: c, selected: c.interested)
                         }
                     }
                 }
@@ -91,7 +92,7 @@ public struct PersonalizeView: View {
                 .foregroundColor(.init(hex: 0x606060))
            
             Button(action: {
-                
+                viewModel.didClickupdate(isOnboard: onboard)
             }, label: {
                 Text("     \(onboard ? "  Tiếp tục  " : "Lưu thay đổi")     ")
                     .robotoBold(size: 15)
@@ -107,8 +108,31 @@ public struct PersonalizeView: View {
         viewModel.numSelected > 0 ? "Đã chọn (\(viewModel.numSelected))" : "Chọn ít nhất 1 thể loại để tiếp tục.\n Bạn có thể thiết lập lại trong phần cài đặt"
     }
     
+    func alert() -> Alert {
+        return Alert(
+            title: Text("Kết quả"),
+            message: Text(viewModel.resourceInfo.des()),
+            primaryButton: .default(Text("Thử lại")) {
+                viewModel.didClickupdate(isOnboard: onboard)
+            },
+            secondaryButton: .cancel(Text("Huỷ bỏ")) {
+                dismiss()
+            })
+    }
+    
     private func dismiss() {
         presentationMode.wrappedValue.dismiss()
+    }
+    
+    func viewAppeared() {
+        viewModel.didUpdateUserCategories = {
+            if onboard {
+                setupData()
+                AppManager.shared.appState = .inapp
+            } else {
+                dismiss()
+            }
+        }
     }
 }
 

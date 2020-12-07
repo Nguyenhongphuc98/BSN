@@ -12,7 +12,7 @@ class AccountRequest: ResourceRequest<EAccount> {
     
     func login(account: EAccount, publisher: PassthroughSubject<EAccount, Never>) {
         self.setPath(resourcePath: "login")
-        let encodeStr = "\(account.username):\(account.password)".data(using: .utf8)?.base64EncodedString()
+        let encodeStr = "\(account.username):\(account.password!)".data(using: .utf8)?.base64EncodedString()
         AccountRequest.authorization = "Basic " + encodeStr!
         
         self.get(isAll: false) { result in
@@ -47,6 +47,23 @@ class AccountRequest: ResourceRequest<EAccount> {
                 
             case .success(let a):
                 publisher.send(a) // undefine account
+            }
+        }
+    }
+    
+    func updateAccount(account: EAccount, publisher: PassthroughSubject<EAccount, Never>) {
+        self.resetPath()
+        
+        self.update(account) { result in
+            switch result {
+            case .failure:
+                let message = "There was an error update account"
+                print(message)
+                publisher.send(EAccount())
+                
+            case .success(let a):
+                print("update account success!")
+                publisher.send(a)
             }
         }
     }

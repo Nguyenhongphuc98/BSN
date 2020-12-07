@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UserNotifications
 
 import Business
 import Interface
@@ -67,8 +66,8 @@ class LoginViewModel: NetworkViewModel {
                         self.appManager.currentAccount = Account(
                             id: ac.id,
                             username: ac.username,
-                            password: ac.password,
-                            isOnboard: ac.isOnboarded
+                            password: ac.password!,
+                            isOnboard: ac.isOnboarded!
                         )
                         self.userManager.getUser(aid: ac.id!)
                     }
@@ -117,23 +116,4 @@ class LoginViewModel: NetworkViewModel {
             }
             .store(in: &cancellables)
     }
-}
-
-// When user login first time or login other account
-// We reset data and setup for push notifications
-func setupData() {
-    
-    // Register push notifications
-    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
-      print("Granted notifications?", granted)
-      DispatchQueue.main.async {
-        UIApplication.shared.registerForRemoteNotifications()
-      }
-    }
-    // Reload data for new user
-    ChatViewModel.shared.prepareData()
-    NotifyViewModel.shared.prepareData()
-    ProfileViewModel.shared.forceRefeshData()
-    ExploreBookViewModel.shared.prepareData()
-    NewsFeedViewModel.shared.prepareData()
 }

@@ -20,6 +20,7 @@ struct UserCategoryController: RouteCollection {
         }
         
         authen.get("user", ":ID", use: getCategory)
+        authen.post("user", use: updateCategory)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[UserCategory]> {
@@ -57,6 +58,7 @@ struct UserCategoryController: RouteCollection {
                         
                         return UserCategory.query(on: req.db)
                             .filter(\.$categoryID == c.id!)
+                            .filter(\.$userID == user.id!)
                             .first()
                             .map { uc in
                                 return UserCategory.GetFull(
@@ -67,6 +69,41 @@ struct UserCategoryController: RouteCollection {
                                 )
                             }
                     }
+            }
+    }
+    
+    // When user onboard or update in settings
+    // The main action is, delete old, save new
+    func updateCategory(req: Request) throws -> EventLoopFuture<HTTPStatus> {
+        
+        let userCategories = try req.content.decode([UserCategory].self)
+        
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        // Determine current user
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .filter(\.$id == userCategories[0].userID) // Jus update of himself
+            .first()
+            .unwrap(or: Abort(.forbidden))
+            .flatMap { (user)  in
+                
+                // First, we delete all old register category before
+                return UserCategory.query(on: req.db)
+                    .filter(\.$userID == user.id!)
+                    .all()
+                    .flatMapEach(on: req.eventLoop, { (uc)  in
+                        uc.delete(on: req.db)
+                    })
+                    .map({ _ in
+                        _ = userCategories.map { itm  in
+
+                            _ = itm.save(on: req.db)
+                            // Should we wait for it save success?
+                        }
+                    })
+                    .transform(to: HTTPStatus.ok)
             }
     }
 }

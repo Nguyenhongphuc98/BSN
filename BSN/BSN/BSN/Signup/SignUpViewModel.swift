@@ -50,7 +50,7 @@ class SignUpViewModel: NetworkViewModel {
         }
         
         isLoading = true
-        let a = EAccount(name: displayname, username: username, password: password, confirmPass: confirmPass)
+        let a = EAccount(name: displayname, username: username, password: password, confirmPass: confirmPass, isOnboarded: false)
         accountManager.signup(account: a)
     }
     

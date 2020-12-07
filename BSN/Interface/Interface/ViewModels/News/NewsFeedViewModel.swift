@@ -36,6 +36,7 @@ public class NewsFeedViewModel: NetworkViewModel {
     public func prepareData() {
         // load newest posts at page 0
         isLoading = true
+        currentPage = 0
         newsData = []
         postManager.getNewestPosts(page: 0)
     }

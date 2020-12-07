@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Business
 
 class Category: ObservableObject, Identifiable {
     var id: String
@@ -18,6 +19,10 @@ class Category: ObservableObject, Identifiable {
         self.id = id
         self.name = name
         self.interested = interested
+    }
+    
+    func toUerCategory() -> EUserCategory {
+        return EUserCategory(userID: AppManager.shared.currenUID, categoryID: id)
     }
 }
 
