@@ -109,6 +109,10 @@ class LoginViewModel: NetworkViewModel {
                             self.appManager.appState = .inapp
                             setupData()
                         } else {
+                            LocationManager.shared.updateLocation()
+                            LocationManager.shared.didUpdateLocation = { (location, des) in
+                                print(">>> Did get: \(location)-\(des)")
+                            }
                             self.appManager.appState = .onboard
                         }
                     }
