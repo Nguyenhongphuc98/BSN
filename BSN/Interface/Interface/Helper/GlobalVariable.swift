@@ -23,8 +23,18 @@ func caculateDistance(rawLocation: String) -> Float {
 func getDistanceFromLatLonInKm(lat1: Float, lon1: Float) -> Float {
     
     // get current locaton of this user
-    let lat2: Float = 10.878117
-    let lon2: Float = 106.806465
+//    let lat2: Float = 10.878117
+//    let lon2: Float = 106.806465
+    let location = AppManager.shared.currentUser.location ?? "0-0- "
+    let los = location.split(separator: "-")
+    let lat2 = Float(los[0])!
+    let lon2 = Float(los[1])!
+    
+    // if 1 in 2 user not setup location (0-0)
+    // We should return 0 to indicate that no distance can caculate
+    if lat1 * lat2 * lon1 * lon2 == 0 {
+        return 0
+    }
     
     let R: Float = 6371; // Radius of the earth in km
     let dLat = deg2rad(deg: lat2 - lat1)  // deg2rad below

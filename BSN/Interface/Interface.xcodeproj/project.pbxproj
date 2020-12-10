@@ -140,6 +140,7 @@
 		8496107A257E1456003AE110 /* ChangePassWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961079257E1455003AE110 /* ChangePassWordView.swift */; };
 		8496107D257E1488003AE110 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496107C257E1488003AE110 /* ChangePasswordViewModel.swift */; };
 		8496108125806904003AE110 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8496108025806904003AE110 /* LocationManager.swift */; };
+		849610842581C06E003AE110 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849610832581C06E003AE110 /* LocationView.swift */; };
 		84A61CA5254C0A3F00B50FE8 /* NavigationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A61CA4254C0A3E00B50FE8 /* NavigationState.swift */; };
 		84A61CB0254C148700B50FE8 /* PassthroughtEB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A61CAF254C148700B50FE8 /* PassthroughtEB.swift */; };
 		84A61CC1254C51DE00B50FE8 /* NetworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A61CC0254C51DE00B50FE8 /* NetworkViewModel.swift */; };
@@ -342,6 +343,7 @@
 		84961079257E1455003AE110 /* ChangePassWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePassWordView.swift; sourceTree = "<group>"; };
 		8496107C257E1488003AE110 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
 		8496108025806904003AE110 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		849610832581C06E003AE110 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		84A61CA4254C0A3E00B50FE8 /* NavigationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationState.swift; sourceTree = "<group>"; };
 		84A61CAF254C148700B50FE8 /* PassthroughtEB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughtEB.swift; sourceTree = "<group>"; };
 		84A61CC0254C51DE00B50FE8 /* NetworkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkViewModel.swift; sourceTree = "<group>"; };
@@ -534,6 +536,7 @@
 				8401CA322533056200A722CE /* SubmitExchangeBookView.swift */,
 				841CED9D255D67AD007CCACC /* SettingView.swift */,
 				84961079257E1455003AE110 /* ChangePassWordView.swift */,
+				849610832581C06E003AE110 /* LocationView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1027,6 +1030,7 @@
 				8401C8A22529C8DD00A722CE /* RichMessageEditor.swift in Sources */,
 				8401C8A7252AB3C900A722CE /* ExploreBookView.swift in Sources */,
 				8414F243252187C3003CF799 /* NewsFeed.swift in Sources */,
+				849610842581C06E003AE110 /* LocationView.swift in Sources */,
 				843E522A252708FA00B16995 /* Message.swift in Sources */,
 				843E522E25270CD000B16995 /* ChatViewModel.swift in Sources */,
 				842C44B525484650003C570D /* BBookCard.swift in Sources */,

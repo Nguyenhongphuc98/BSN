@@ -47,6 +47,7 @@ struct AccountController: RouteCollection {
                     username: create.username,
                     displayname: create.name,
                     cover: "https://farm4.staticflickr.com/3692/10621312106_02476d5c63_o.jpg", // default cover
+                    location: "0-0- ", // default location
                     accountID: account.id!)
                 
                 return user.save(on: req.db)

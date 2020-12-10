@@ -10,11 +10,13 @@ import Business
 
 public typealias updateLocationHandler = (String, String) -> Void
 
-public class LocationManager: NSObject, CLLocationManagerDelegate {
+public class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     var manager: CLLocationManager
-    var location: CLLocation
-    var locationDes: String
+    @Published public var location: CLLocation
+    @Published public var locationDes: String
+    
+    @Published public var permissionDenied: Bool
     
     private var userManager: UserManager
     
@@ -27,11 +29,13 @@ public class LocationManager: NSObject, CLLocationManagerDelegate {
         userManager = .init()
         location = CLLocation(latitude: 0, longitude: 0)
         locationDes = ""
+        permissionDenied = false
         
         super.init()
         
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.delegate = self
+        permissionDenied = manager.authorizationStatus == .restricted || manager.authorizationStatus == .denied
     }
     
     public func updateLocation() {
@@ -54,10 +58,10 @@ public class LocationManager: NSObject, CLLocationManagerDelegate {
                         let fl = placemarks?[0]
                         self.locationDes = ""
                         if let sublocality = fl?.subLocality {
-                            self.locationDes += "\(sublocality),"
+                            self.locationDes += "\(sublocality), "
                         }
                         if let locality = fl?.locality {
-                            self.locationDes += "\(locality),"
+                            self.locationDes += "\(locality), "
                         }
                         if let administrativeArea = fl?.administrativeArea {
                             self.locationDes += "\(administrativeArea)"
@@ -77,6 +81,10 @@ public class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        permissionDenied = manager.authorizationStatus == .restricted || manager.authorizationStatus == .denied       
+    }
+    
     public func updateToSever(location: String? = nil) {
         let user = EUser(
             id: AppManager.shared.currenUID,
@@ -85,5 +93,6 @@ public class LocationManager: NSObject, CLLocationManagerDelegate {
                
         userManager.updateUser(user: user)
         AppManager.shared.currentUser.location = location ?? "Địa chỉ Không xác định"
+        AppManager.shared.objectWillChange.send()
     }
 }

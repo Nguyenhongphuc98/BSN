@@ -51,11 +51,15 @@ struct SettingView: View {
             }
             
             Section {
+                NavigationLink(destination: LocationView()) {
+                    TextWithIcon(icon: "mappin.and.ellipse", text: "Vị trí của bạn", foreground: 0x009dff)
+                }
+                
                 NavigationLink(destination: PersonalizeView(onboard: false)) {
                     TextWithIcon(icon: "heart.fill", text: "Thể loại yêu thích", foreground: 0xff00bb)
                 }
                 
-                TextWithIcon(icon: "apps.ipad", text: "Chủ đề", foreground: 0x009dff)
+                //TextWithIcon(icon: "apps.ipad", text: "Chủ đề", foreground: 0x009dff)
                 
                 TextWithIcon(icon: "textformat", text: "Ngôn ngữ", foreground: 0x26ad1a)
                 
