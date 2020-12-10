@@ -109,9 +109,12 @@ class LoginViewModel: NetworkViewModel {
                             self.appManager.appState = .inapp
                             setupData()
                         } else {
+                            // Incase user login first time,
+                            // We should update location to server
                             LocationManager.shared.updateLocation()
                             LocationManager.shared.didUpdateLocation = { (location, des) in
-                                print(">>> Did get: \(location)-\(des)")
+                                let fullLocation = "\(location)-\(des)"
+                                LocationManager.shared.updateToSever(location: fullLocation)
                             }
                             self.appManager.appState = .onboard
                         }

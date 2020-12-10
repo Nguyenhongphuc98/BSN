@@ -6,6 +6,7 @@
 //
 
 import CoreLocation
+import Business
 
 public typealias updateLocationHandler = (String, String) -> Void
 
@@ -15,12 +16,15 @@ public class LocationManager: NSObject, CLLocationManagerDelegate {
     var location: CLLocation
     var locationDes: String
     
+    private var userManager: UserManager
+    
     public static var shared: LocationManager = .init()
     
     public var didUpdateLocation: updateLocationHandler?
     
     override init() {
         manager = .init()
+        userManager = .init()
         location = CLLocation(latitude: 0, longitude: 0)
         locationDes = ""
         
@@ -38,12 +42,7 @@ public class LocationManager: NSObject, CLLocationManagerDelegate {
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let l = locations.first {
             manager.stopUpdatingLocation()
-            location = l
-            AppManager.shared.currentUser.location = "\(location.coordinate.latitude)-\(location.coordinate.longitude)- "
-
-            print("<><>: \(location.coordinate.latitude)")
-            print("<><>: \(location.coordinate.longitude)")
-
+            location = l            
 
             let geocoder = CLGeocoder()
 
@@ -52,26 +51,39 @@ public class LocationManager: NSObject, CLLocationManagerDelegate {
                 l,
                 completionHandler: { (placemarks, error) in
                     if error == nil {
-                        let firstLocation = placemarks?[0]
-                        print("country\(firstLocation?.country)")
-                        print("administrativeArea\(firstLocation?.administrativeArea)")
-                        print("subLocality\(firstLocation?.subLocality)")
-                        print("locality\(firstLocation?.locality)")
-                        print("subLocality\(firstLocation?.subLocality)")
-                        print("thoroughfare\(firstLocation?.thoroughfare)")
-                        print("subThoroughfare\(firstLocation?.subThoroughfare)")
+                        let fl = placemarks?[0]
+                        self.locationDes = ""
+                        if let sublocality = fl?.subLocality {
+                            self.locationDes += "\(sublocality),"
+                        }
+                        if let locality = fl?.locality {
+                            self.locationDes += "\(locality),"
+                        }
+                        if let administrativeArea = fl?.administrativeArea {
+                            self.locationDes += "\(administrativeArea)"
+                        }
                         
-                        self.didUpdateLocation?("\(l.coordinate.latitude)-\(l.coordinate.longitude)", firstLocation?.description ?? "undefine")
+                        self.didUpdateLocation?("\(l.coordinate.latitude)-\(l.coordinate.longitude)", self.locationDes)
                     }
                     else {
                         // An error occurred during geocoding.
                         print("<><>: An error occurred during geocoding")
-                        self.didUpdateLocation?("undefine", "undefine")   
+                        self.didUpdateLocation?("0-0", "undefine")
                     }
                 })
 
         } else {
             location = CLLocation(latitude: 0, longitude: 0)
         }
+    }
+    
+    public func updateToSever(location: String? = nil) {
+        let user = EUser(
+            id: AppManager.shared.currenUID,
+            location: location
+        )
+               
+        userManager.updateUser(user: user)
+        AppManager.shared.currentUser.location = location ?? "Địa chỉ Không xác định"
     }
 }

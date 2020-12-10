@@ -8,7 +8,7 @@
 import Foundation
 
 let hostIp = "192.168.0.102:8080"
-//let hostIp = "10.45.94.73:8080"
+//let hostIp = "10.45.231.255:8080"
 let wsInChatApi = "ws://\(hostIp)/inchat/listen/" // + ChatID
 let wsChatsApi = "ws://\(hostIp)/chats/listen/"   // + ReceiverID
 let wsCommentsOfPostApi = "ws://\(hostIp)/commentsOfPost/listen/"   // + PostID
