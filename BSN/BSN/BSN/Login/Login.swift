@@ -38,8 +38,13 @@ struct Login: View {
                         .robotoBold(size: 15)
                         .foregroundColor(.init(hex: 0xBDBDBD))
                     
-                    Image(systemName: "applelogo")
-                        .font(.system(size: 44))
+                    Button {
+                        viewModel.loginWithFacebook()
+                    } label: {
+                        Image("fblogo")
+                            .resizable()
+                            .frame(width: 55, height: 55)
+                    }
                     
                     registerText()
                 }

@@ -2,14 +2,25 @@ PODS:
   - Alamofire (5.4.0)
   - AlamofireImage (4.1.0):
     - Alamofire (~> 5.1)
-  - AWSCore (2.19.1)
-  - AWSS3 (2.19.1):
-    - AWSCore (= 2.19.1)
+  - AWSCore (2.20.0)
+  - AWSS3 (2.20.0):
+    - AWSCore (= 2.20.0)
+  - FBSDKCoreKit (8.2.0):
+    - FBSDKCoreKit/Basics (= 8.2.0)
+    - FBSDKCoreKit/Core (= 8.2.0)
+  - FBSDKCoreKit/Basics (8.2.0)
+  - FBSDKCoreKit/Core (8.2.0):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (8.2.0):
+    - FBSDKLoginKit/Login (= 8.2.0)
+  - FBSDKLoginKit/Login (8.2.0):
+    - FBSDKCoreKit (~> 8.2.0)
   - SwiftyJSON (4.3.0)
 
 DEPENDENCIES:
   - AlamofireImage (~> 4.1)
   - AWSS3
+  - FBSDKLoginKit
   - SwiftyJSON (~> 4.0)
 
 SPEC REPOS:
@@ -18,15 +29,19 @@ SPEC REPOS:
     - AlamofireImage
     - AWSCore
     - AWSS3
+    - FBSDKCoreKit
+    - FBSDKLoginKit
     - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
-  AWSCore: 55c154ae27efc5c98bdc30a0eeea5a35d10a2ab5
-  AWSS3: 2272253b098d07803af8dd20ce6ce7302bcffb47
+  AWSCore: e8748f1d2e97874ff5638fe7c3c31431ad223b4a
+  AWSS3: ad208d641f06eaf57e01db2071c09c9e50e17b0f
+  FBSDKCoreKit: 4afd6ff53d8133a433dbcda44451c9498f8c6ce4
+  FBSDKLoginKit: 7181765f2524d7ebf82d9629066c8e6caafc99d0
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: 6eb491b71bda65a3e35a5a131befb41c832c121d
+PODFILE CHECKSUM: b4104f064b7b353ce1a3b3cf88a1c9fa40689aea
 
 COCOAPODS: 1.10.0

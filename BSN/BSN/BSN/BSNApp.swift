@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Interface
+import FBSDKCoreKit
 
 @main
 struct BSNApp: App {
@@ -27,6 +28,9 @@ struct BSNApp: App {
                 Launching()
             } else if appManager.appState == .login {
                 Login()
+                    .onOpenURL { (url) in
+                        ApplicationDelegate.shared.application(UIApplication.shared, open: url, sourceApplication: nil, annotation: UIApplication.OpenURLOptionsKey.annotation)
+                    }
             } else if appManager.appState == .onboard {
                 PersonalizeView(onboard: true)
             } else if appManager.appState == .inapp {

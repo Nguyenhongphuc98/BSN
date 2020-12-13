@@ -27,5 +27,5 @@ target 'BSN' do
   
   pod 'AlamofireImage', '~> 4.1'
   pod 'SwiftyJSON', '~> 4.0'
-  #pod 'FBSDKLoginKit'
+  pod 'FBSDKLoginKit'
 end

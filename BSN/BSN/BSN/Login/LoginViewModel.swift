@@ -9,6 +9,7 @@ import SwiftUI
 
 import Business
 import Interface
+import FBSDKLoginKit
 
 class LoginViewModel: NetworkViewModel {
     
@@ -25,6 +26,9 @@ class LoginViewModel: NetworkViewModel {
     @AppStorage("password") var password: String = ""
     
     @AppStorage("logined") var logined: Bool = false // it was login before
+    
+    // FB lofin
+    var manager: LoginManager = .init()
     
     override init() {
         message = ""
@@ -122,5 +126,32 @@ class LoginViewModel: NetworkViewModel {
                 }
             }
             .store(in: &cancellables)
+    }
+}
+
+// Social login (facebook)
+extension LoginViewModel {
+    func loginWithFacebook() {
+        manager.logIn(permissions: ["public_profile", "email"], from: nil) { (result, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+                return
+            }
+            
+            if !result!.isCancelled {
+                // login success
+                let request = GraphRequest(graphPath: "me", parameters: ["fields":"email"])
+                request.start { (_, res, _) in
+                    guard let profileData = res as? [String: Any] else {
+                        return
+                    }
+                    let email = profileData["email"] as? String
+                    let accessToken = AccessToken.current
+                    let id = profileData["id"] //The app user's App-Scoped User ID. This ID is unique to the app and cannot be used by other apps.
+                    print("did login with email: \(email) token: \(accessToken!.tokenString) id: \(id)")
+                }
+            }
+                                        
+        }
     }
 }
