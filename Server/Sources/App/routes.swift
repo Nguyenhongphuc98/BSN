@@ -58,4 +58,7 @@ func routes(_ app: Application) throws {
     
     // Push notifications
     try app.register(collection: DeviceController())
+    
+    // Social
+    try app.register(collection: FacebookController())
 }
