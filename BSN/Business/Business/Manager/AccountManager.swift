@@ -28,6 +28,10 @@ public class AccountManager {
         networkRequest.login(account: account, publisher: accountPublisher)
     }
     
+    public func loginWithFacebook(account: EAccount) {
+        networkRequest.loginWithFacebook(account: account, publisher: accountPublisher)
+    }
+    
     public func logout() {
         networkRequest.logout()
     }

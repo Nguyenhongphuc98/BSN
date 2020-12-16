@@ -72,27 +72,27 @@ struct FacebookController: RouteCollection {
     let g_app_id = "795451491037217"
     
     func boot(routes: RoutesBuilder) throws {
-        let facebooks = routes.grouped("api", "v1", "facebook")
-        facebooks.post("login", use: login)
+        let facebooks = routes.grouped("api", "v1", "accounts")
+        facebooks.post("loginFacebook", use: login)
     }
 
     // Try to login
     // Incase failure, return account with undefine username
     // Although password will be update any thime we login
-    // Because algorithm has Bcrypt can has to dif value
+    // Because algorithm has Bcrypt can hash to dif value
     // But with authen algotithm, we can mark it as same value
     func login(req: Request) throws -> EventLoopFuture<Account> {
                 
-        let facebook = try req.content.decode(Facebook.self)
+        let facebook = try req.content.decode(Account.Update.self)
         
         // First, try to check this account is exist
         return Account.query(on: req.db)
-            .filter(\.$username == facebook.uid)
+            .filter(\.$username == facebook.username)
             .first()
             .flatMap { (account) -> EventLoopFuture<Account> in
                  if let newAccount = account {
                      // happy path, user login fb before and this token validate in our system
-                    let hasedToken = try! Bcrypt.hash(facebook.token)
+                    let hasedToken = try! Bcrypt.hash(facebook.password!)
                      if newAccount.password == hasedToken {
                         return req.eventLoop.makeSucceededFuture(newAccount.asPublic())
                      } else {
@@ -103,7 +103,7 @@ struct FacebookController: RouteCollection {
                         return VerifyFacebookToken(req: req, facebook: facebook)
                              .flatMap { (valid) -> EventLoopFuture<Account> in
                                 if valid {
-                                    newAccount.password = try! Bcrypt.hash(facebook.token)
+                                    newAccount.password = try! Bcrypt.hash(facebook.password!)
                                     return newAccount.update(on: req.db).map { newAccount.asPublic() }
                                 } else {
                                     let undefine = Account(username: "undefine", password: "undefine")
@@ -130,9 +130,9 @@ struct FacebookController: RouteCollection {
             }
     }
     
-    func VerifyFacebookToken(req: Request, facebook: Facebook) -> EventLoopFuture<Bool> {
+    func VerifyFacebookToken(req: Request, facebook: Account.Update) -> EventLoopFuture<Bool> {
         // ex: https://graph.facebook.com/debug_token?input_token=EAALTdXuPMCEBAO9ljnXpK3YL5R357lr3eeCIromZC1CJrFoE0Nl1DUh8i3QrvP0vfCk88IUgfLgM9uAoWrdhAVLIr08C8PEgiRumtQMwKr7ZAr0P3jP481ezl4kVjQm2HitjtrUBfb4UQYJZBys2wefHBOAAyxTe8eRn5Xbo7y80GLRSL2waN3ZCHfg5gyc7j2Ld91ZBrVLCbXsxGdmEeWq6ZClDgXpdkD3TQtcc7N8wZDZ&access_token=795451491037217|sX8JVTKAX4p3LoRbROY_aGPSFqA
-        let resourceURL = "https://graph.facebook.com/debug_token?input_token=\(facebook.token)&access_token=\(g_access_token)"
+        let resourceURL = "https://graph.facebook.com/debug_token?input_token=\(facebook.password!)&access_token=\(g_access_token)"
         let uri = URI(unicodeScalarLiteral: resourceURL.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
       
         return req.client.get(uri).flatMapThrowing { res in
@@ -149,22 +149,22 @@ struct FacebookController: RouteCollection {
                 return false
             }
             // It have to belong to our app and of uid loging
-            if user_id == facebook.uid && app_id == g_app_id {
+            if user_id == facebook.username && app_id == g_app_id {
                 return true
             }
             return false
         })
     }
     
-    func saveAccount(req: Request, facebook: Facebook) -> EventLoopFuture<Account> {
+    func saveAccount(req: Request, facebook: Account.Update) -> EventLoopFuture<Account> {
         let account = Account(
-            username: facebook.uid,
-            password: try! Bcrypt.hash(facebook.token)
+            username: facebook.username,
+            password: try! Bcrypt.hash(facebook.password!)
         )
         return account.save(on: req.db)
             .flatMap {
                 // Get user info from facebook
-                let resourceURL = "https://graph.facebook.com/\(facebook.uid)?fields=id,name,picture&access_token=\(facebook.token)"
+                let resourceURL = "https://graph.facebook.com/\(facebook.username)?fields=id,name,picture&access_token=\(facebook.password!)"
                 let uri = URI(string: resourceURL)
               
                 return req.client.get(uri).flatMapThrowing { res in
@@ -172,11 +172,25 @@ struct FacebookController: RouteCollection {
                 }
                 .flatMap({ (json)  in
                     
+                    // Ex response data:
+                    //                    {
+                    //                        id: "1819986271482622",
+                    //                        name: "Nguyễn Hồng Phúc",
+                    //                        picture: {
+                    //                            data: {
+                    //                                height: 50,
+                    //                                is_silhouette: false,
+                    //                                url: "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1819986271482622&height=50&width=50&ext=1610635057&hash=AeSvejAas3hOzY8VhJU",
+                    //                                width: 50
+                    //                            }
+                    //                        }
+                    //                    }
+                    
                     let name = json["name"].string!
                     let picture = json["picture"]["data"]["url"].string ?? "undeifine"
                     
                     let user = User(
-                        username: facebook.uid,
+                        username: facebook.username,
                         displayname: name,
                         avatar: picture,
                         cover: "https://farm4.staticflickr.com/3692/10621312106_02476d5c63_o.jpg", // default cover
@@ -191,8 +205,8 @@ struct FacebookController: RouteCollection {
     }
 }
 
-struct FbResItem: Content {
-    var app_id: String?
-    var user_id: String?
-    var is_valid: Bool
-}
+//struct FbResItem: Content {
+//    var app_id: String?
+//    var user_id: String?
+//    var is_valid: Bool
+//}

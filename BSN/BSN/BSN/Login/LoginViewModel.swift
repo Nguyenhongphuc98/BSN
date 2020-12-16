@@ -62,7 +62,7 @@ class LoginViewModel: NetworkViewModel {
                 DispatchQueue.main.async {
                     self.isLoading = false
                     
-                    if ac.id == "undefine" {
+                    if ac.id == nil || ac.id == "undefine" {
                         self.message = "Tài khoản hoặc mật khẩu không đúng"
                         self.appManager.appState = .login
                     } else {
@@ -92,7 +92,7 @@ class LoginViewModel: NetworkViewModel {
                 DispatchQueue.main.async {
                     self.isLoading = false
                     
-                    if u.id == "undefine" {
+                    if u.id == nil || u.id == "undefine" {
                         self.resourceInfo = .notfound
                         self.showAlert.toggle()
                     } else {
@@ -132,6 +132,8 @@ class LoginViewModel: NetworkViewModel {
 // Social login (facebook)
 extension LoginViewModel {
     func loginWithFacebook() {
+        self.isLoading = true
+        
         manager.logIn(permissions: ["public_profile", "email"], from: nil) { (result, error) in
             if error != nil {
                 print(error!.localizedDescription)
@@ -145,10 +147,16 @@ extension LoginViewModel {
                     guard let profileData = res as? [String: Any] else {
                         return
                     }
-                    let email = profileData["email"] as? String
-                    let accessToken = AccessToken.current
-                    let id = profileData["id"] //The app user's App-Scoped User ID. This ID is unique to the app and cannot be used by other apps.
-                    print("did login with email: \(email) token: \(accessToken!.tokenString) id: \(id)")
+                    //let email = profileData["email"] as? String
+                    let accessToken = AccessToken.current?.tokenString
+                    let id: String = profileData["id"] as! String //The app user's App-Scoped User ID. This ID is unique to the app and cannot be used by other apps.
+                    //print("did login with email: \(email) token: \(accessToken!.tokenString) id: \(id)")
+                    
+                    // Authen cation to server
+                    let ea = EAccount(username: id, password: accessToken)
+                    self.username = ea.username
+                    self.password = ea.password!
+                    self.accountManager.loginWithFacebook(account: ea)
                 }
             }
                                         

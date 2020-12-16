@@ -9,10 +9,14 @@ import Combine
 public var globalAuthorization = ""
 class AccountRequest: ResourceRequest<EAccount> {
     
-    func login(account: EAccount, publisher: PassthroughSubject<EAccount, Never>) {
-        self.setPath(resourcePath: "login")
+    func setupAuthencation(account: EAccount) {
         let encodeStr = "\(account.username):\(account.password!)".data(using: .utf8)?.base64EncodedString()
         globalAuthorization = "Basic " + encodeStr!
+    }
+    
+    func login(account: EAccount, publisher: PassthroughSubject<EAccount, Never>) {
+        self.setPath(resourcePath: "login")
+        setupAuthencation(account: account)
         
         self.get(isAll: false) { result in
             
@@ -25,6 +29,23 @@ class AccountRequest: ResourceRequest<EAccount> {
                 
             case .success(let accounts):
                 publisher.send(accounts[0])
+            }
+        }
+    }
+    
+    func loginWithFacebook(account: EAccount, publisher: PassthroughSubject<EAccount, Never>) {
+        self.setPath(resourcePath: "loginFacebook")
+        setupAuthencation(account: account)
+        
+        self.save(account) { (result) in
+            switch result {
+            case .failure:
+                let message = "There was an error login with facebook"
+                print(message)
+                publisher.send(EAccount()) // undefine account
+                
+            case .success(let a):
+                publisher.send(a)
             }
         }
     }
@@ -45,7 +66,7 @@ class AccountRequest: ResourceRequest<EAccount> {
                 publisher.send(EAccount()) // undefine account
                 
             case .success(let a):
-                publisher.send(a) // undefine account
+                publisher.send(a) 
             }
         }
     }
