@@ -28,10 +28,13 @@ struct BorrowListView: View, PopToable {
             }
             
             Separator(color: .white, height: 3)
-            List {
-                ForEach(viewModel.models) { item in
-                    BorrowBookCell(model: item)
-                        .environmentObject(navState)
+            
+            ScrollView {
+                LazyVStack {
+                    ForEach(viewModel.models) { item in
+                        BorrowBookCell(model: item)
+                            .environmentObject(navState)
+                    }                    
                 }
             }
         }

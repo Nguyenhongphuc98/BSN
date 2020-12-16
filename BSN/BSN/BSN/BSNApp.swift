@@ -71,6 +71,7 @@ struct BSNApp: App {
                             .navigationBarHidden(true)
                             .environmentObject(exploreNavState)
                     }
+                    .navigationViewStyle(StackNavigationViewStyle())
                     .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .search) }
                     .tag(1)
                     

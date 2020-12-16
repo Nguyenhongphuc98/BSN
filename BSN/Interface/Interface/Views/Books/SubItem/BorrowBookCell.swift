@@ -20,15 +20,7 @@ struct BorrowBookCell: View, PopToable {
     
     var body: some View {
         HStack {
-            NavigationLink(
-                destination: SubmitRequestBorrowView(ubid: model.userBookID!).environmentObject(navState),
-                isActive: $nav,
-                label: {
-                    EmptyView()
-                })
-                .frame(width: 0, height: 0)
-            
-            CircleImage(image: model.createrPhoto, diameter: 50)
+            CircleImage(image: model.createrPhoto, diameter: 50)                
             
             VStack(alignment: .leading, spacing: 5) {
                 Text(model.createrName)
@@ -43,16 +35,20 @@ struct BorrowBookCell: View, PopToable {
                     
                     Spacer()
                     
-                    Button(action: {
-                        nav.toggle()
-                    }, label: {
-                        Text("Mượn")
-                    })
-                    .buttonStyle(BaseButtonStyle())
+                    NavigationLink(
+                        destination: SubmitRequestBorrowView(ubid: model.userBookID!).environmentObject(navState),
+                        isActive: $nav,
+                        label: {
+                            Text("Mượn")
+                        })
+                        .buttonStyle(BaseButtonStyle())
                 }
             }
         }
-        .padding(.vertical, 5)
+        .padding(10)
+        .background(Color(.secondarySystemBackground))
+        .padding(.horizontal, 10)
+        .clipShape(RoundedRectangle(cornerRadius: 15))
         .onReceive(navState.$viewName) { (viewName) in
             if viewName == self.viewName {
                 nav = false

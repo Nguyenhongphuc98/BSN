@@ -51,7 +51,8 @@ struct BUserBookCard: View, PopToable {
     
     var footer: some View {
         Group {
-            if isGuest {
+            if AppManager.shared.currenUID != model.ownerID {
+//            if isGuest {
 //                Button(action: {
 //                    print("did click borrow book")
 //                }, label: {

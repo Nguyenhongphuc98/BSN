@@ -15,45 +15,28 @@ struct BookDetailView: View, PopToable {
     // Main properties
     @StateObject var viewModel: BookDetailViewModel = BookDetailViewModel()
     
-    @State var isExpandRating: Bool = true
-    
     @Environment(\.presentationMode) var presentationMode
     
+    @State var isExpandRating: Bool = true
     @State var showRatingView: Bool = false
-    
     @State var showBorrowBook: Bool = false
-    
     @State var showExchangeBook: Bool = false
     
     var bookID: String
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            NavigationLink(
-                destination: BorrowListView(bid: bookID).environmentObject(navState),
-                isActive: $showBorrowBook,
-                label: {
-                    EmptyView()
-                })
-            
-            NavigationLink(
-                destination: ExchangeListView(bid: bookID).environmentObject(navState),
-                isActive: $showExchangeBook,
-                label: {
-                    EmptyView()
-                })
-        
             VStack() {
                 basicInfo
-                
+
                 Separator(height: 1)
                 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 10) {
                         ratingDetail
-                        
+
                         description
-                        
+
                         reviews
                     }
                 }
@@ -82,17 +65,17 @@ struct BookDetailView: View, PopToable {
         HStack(alignment: .center) {
             BSNImage(urlString: viewModel.model.cover, tempImage: "book_cover")
                 .frame(width: 90, height: 130)
-                .id(UUID())                
+                .id(viewModel.model.cover)
                 .clipShape(RoundedRectangle(cornerRadius: 4))
                 .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.gray))
             
             VStack(alignment: .leading) {
                 Text(viewModel.model.title)
                     .roboto(size: 15)
-                
+
                 Text(viewModel.model.author)
                     .robotoLight(size: 14)
-                
+
                 HStack {
                     StarRating(rating: viewModel.model.avgRating)
                         .id(UUID())
@@ -119,19 +102,21 @@ struct BookDetailView: View, PopToable {
                 }
                 
                 HStack {
-                    Button(action: {
-                        showBorrowBook = true
-                    }, label: {
-                        Text("Mượn sách")
-                    })
-                    .buttonStyle(BaseButtonStyle())
+                    NavigationLink(
+                        destination: BorrowListView(bid: bookID).environmentObject(navState),
+                        isActive: $showBorrowBook,
+                        label: {
+                            Text("Mượn sách")
+                        })
+                        .buttonStyle(BaseButtonStyle())
                     
-                    Button(action: {
-                        showExchangeBook = true
-                    }, label: {
-                        Text("  Đổi sách  ")
-                    })
-                    .buttonStyle(BaseButtonStyle())
+                    NavigationLink(
+                        destination: ExchangeListView(bid: bookID).environmentObject(navState),
+                        isActive: $showExchangeBook,
+                        label: {
+                           Text("  Đổi sách  ")
+                        })
+                        .buttonStyle(BaseButtonStyle())
                 }
             }
             
