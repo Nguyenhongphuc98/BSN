@@ -47,8 +47,8 @@ struct BorrowBookCell: View, PopToable {
         }
         .padding(10)
         .background(Color(.secondarySystemBackground))
-        .padding(.horizontal, 10)
         .clipShape(RoundedRectangle(cornerRadius: 15))
+        .padding(.horizontal, 10)        
         .onReceive(navState.$viewName) { (viewName) in
             if viewName == self.viewName {
                 nav = false

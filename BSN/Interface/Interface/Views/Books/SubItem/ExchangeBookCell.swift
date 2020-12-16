@@ -18,16 +18,6 @@ struct ExchangeBookCell: View {
     
     var body: some View {
         HStack {
-            NavigationLink(
-                destination: ExchangeBookView(ebID: model.id!) {
-                    presentationMode.wrappedValue.dismiss()
-                },
-                isActive: $nav,
-                label: {
-                    EmptyView()
-                })
-                .frame(width: 0, height: 0)
-            
             CircleImage(image: model.createrPhoto, diameter: 60)
             
             VStack(alignment: .leading, spacing: 5) {
@@ -35,12 +25,12 @@ struct ExchangeBookCell: View {
                     Image(systemName: "text.book.closed")
                     
                     Text(model.exchangeBookName)
-                        .roboto(size: 18)
+                        .roboto(size: 16)
                         .lineLimit(1)
                 }
                 
                 Text(model.createrName)
-                    .roboto(size: 18)
+                    .roboto(size: 16)
                     .lineLimit(1)
                 
                 HStack {
@@ -51,16 +41,22 @@ struct ExchangeBookCell: View {
                     
                     Spacer()
                     
-                    Button(action: {
-                        nav.toggle()
-                    }, label: {
-                        Text("Trao đổi")
-                    })
-                    .buttonStyle(BaseButtonStyle())
+                    NavigationLink(
+                        destination: ExchangeBookView(ebID: model.id!) {
+                            presentationMode.wrappedValue.dismiss()
+                        },
+                        isActive: $nav,
+                        label: {
+                            Text("Trao đổi")
+                        })
+                        .buttonStyle(BaseButtonStyle())                    
                 }
             }
         }
-        .padding(.vertical, 5)
+        .padding(10)
+        .background(Color(.secondarySystemBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 15))
+        .padding(.horizontal, 10)
     }
 }
 

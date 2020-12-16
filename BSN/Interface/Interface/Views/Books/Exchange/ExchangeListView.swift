@@ -25,9 +25,12 @@ struct ExchangeListView: View {
             }
             
             Separator(color: .white, height: 3)
-            List {
-                ForEach(viewModel.models) { item in
-                    ExchangeBookCell(model: item)
+            
+            ScrollView {
+                LazyVStack {
+                    ForEach(viewModel.models) { item in
+                        ExchangeBookCell(model: item)
+                    }
                 }
             }
         }
