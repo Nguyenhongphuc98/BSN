@@ -30,6 +30,10 @@ class ConfirmBorrowBookViewModel: NetworkViewModel {
     func didAccept() {
         let ebb = EBorrowBook(id: borrowBook.id, state: ExchangeProgess.accept.rawValue)
         bbManager.updateBorrowBook(borrowBook: ebb)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            // waiting for update new user book to profile
+            ProfileViewModel.shared.forceRefeshUB()
+        }
     }
     
     private func observerBorrowBookInfo() {
@@ -43,7 +47,7 @@ class ConfirmBorrowBookViewModel: NetworkViewModel {
                 
                 DispatchQueue.main.async { [weak self] in
                     self?.isLoading = false
-                    self?.borrowBook = BBorrowBook(ebb: bb, bindMess: true)
+                    self?.borrowBook = BBorrowBook(ebb: bb, bindMess: false)
                     self?.objectWillChange.send()
                 }
             }

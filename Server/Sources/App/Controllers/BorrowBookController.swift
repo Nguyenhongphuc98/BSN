@@ -36,6 +36,7 @@ struct BorrowBookController: RouteCollection {
         }
         
         authen.get("detail", ":ID", use: getDetail)
+        authen.get("history", use: getHistory)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[BorrowBook]> {
@@ -163,4 +164,26 @@ struct BorrowBookController: RouteCollection {
             .first(decoding: BorrowBook.GetFull.self)
             .unwrap(or: Abort(.notFound))
     }
+    
+    func getHistory(req: Request) throws -> EventLoopFuture<[BorrowBook.GetFull]> {
+        // Get history for current user
+              
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        // Determine current user
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .first()
+            .unwrap(or: Abort(.forbidden))
+            .flatMap { (u)  in
+                
+                let sqlQuery = SQLQueryString("SELECT bb.id, bb.borrower_id as \"borrowerID\", bb.state, b.title  as \"bookTitle\", bb.updated_at as \"updatedAt\", u1.displayname  as \"ownerName\", u2.displayname  as \"brorrowerName\" from borrow_book as bb, user_book as ub, public.user as u1, public.user as u2, book as b where bb.userbook_id = ub.id and ub.user_id = u1.id and ub.book_id = b.id and bb.borrower_id = u2.id order by bb.updated_at desc")
+                
+                let db = req.db as! SQLDatabase
+                return db.raw(sqlQuery)
+                    .all(decoding: BorrowBook.GetFull.self)
+            }
+    }
 }
+//SELECT bb.id, bb.borrower_id as "borrowerID", bb.state, b.title  as "bookTitle", u1.displayname  as "ownerName", u2.displayname  as "brorrowerName" from borrow_book as bb, user_book as ub, public.user as u1, public.user as u2, book as b where bb.userbook_id = ub.id and ub.user_id = u1.id and ub.book_id = b.id and bb.borrower_id = u2.id order by bb.updated_at desc

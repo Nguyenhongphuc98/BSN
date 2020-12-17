@@ -27,6 +27,24 @@ class BorrowBookRequest: ResourceRequest<EBorrowBook> {
         }
     }
     
+    func fetchHistoryBorowBook(publisher: PassthroughSubject<[EBorrowBook], Never>) {
+        self.setPath(resourcePath: "history")
+        
+        self.get { result in
+            
+            switch result {
+            case .failure(let reason):
+                print(reason)
+                var n = EBorrowBook()
+                n.bookTitle = reason
+                publisher.send([n])
+                
+            case .success(let bbs):
+                publisher.send(bbs)
+            }
+        }
+    }
+    
     func saveBorrowBook(borrowBook: EBorrowBook, publisher: PassthroughSubject<EBorrowBook, Never>) {
         self.resetPath()
         

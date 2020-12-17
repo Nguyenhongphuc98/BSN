@@ -57,6 +57,11 @@ public class ProfileViewModel: NetworkViewModel {
         reloadPostNUserbook()
     }
     
+    public func forceRefeshUB() {
+        self.books = []
+        userBookManager.getUserBooks(uid: self.user.id)
+    }
+    
     /// Fetching data from Server to fill page if it passed bookID from preView
     // This func should be call one time
     public func prepareData(uid: String?) {
@@ -140,7 +145,7 @@ extension ProfileViewModel {
                             )
                             self.books.appendUnique(item: userBook)
                         }
-                       // self.objectWillChange.send()
+                        self.objectWillChange.send()
                     }
                 }
             }

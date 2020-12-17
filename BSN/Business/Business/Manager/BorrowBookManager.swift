@@ -40,4 +40,8 @@ public class BorrowBookManager {
     public func getBorrowBook(bbid: String) {
         networkRequest.fetchBorowBook(bbid: bbid, publisher: getBorrowBookPublisher)
     }
+    
+    public func getHistoryBorrowBook() {
+        networkRequest.fetchHistoryBorowBook(publisher: getBorrowBooksPublisher)
+    }
 }

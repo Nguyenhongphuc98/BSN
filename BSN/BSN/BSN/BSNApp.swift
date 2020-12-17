@@ -67,7 +67,7 @@ struct BSNApp: App {
                     
                     NavigationView {
                         ExploreBookView()
-                            .navigationTitle("Khám phá")
+                            .navigationBarTitle("", displayMode: .inline)
                             .navigationBarHidden(true)
                             .environmentObject(exploreNavState)
                     }

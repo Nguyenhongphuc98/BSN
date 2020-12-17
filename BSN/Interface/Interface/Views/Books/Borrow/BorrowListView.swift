@@ -46,6 +46,7 @@ struct BorrowListView: View, PopToable {
         .onAppear(perform: viewAppeared)
         .onReceive(navState.$viewName) { (viewName) in
             if viewName == self.viewName {
+                navState.viewName = .undefine
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                     presentationMode.wrappedValue.dismiss()
                 }

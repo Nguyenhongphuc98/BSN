@@ -215,7 +215,7 @@ public struct ProfileView: View, PopToable {
             NavigationLink(
                 destination: SettingView(),
                 label: {
-                    Image(systemName: "gearshape.fill")
+                    Image(systemName: "ellipsis.circle.fill")
                         .font(.system(size: 20))
                         .padding(10)
                         .background(Color.init(hex: 0xEFEFEF))

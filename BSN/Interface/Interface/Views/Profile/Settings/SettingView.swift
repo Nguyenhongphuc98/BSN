@@ -51,6 +51,10 @@ struct SettingView: View {
             }
             
             Section {
+                NavigationLink(destination: HistoryView()) {
+                    TextWithIcon(icon: "clock", text: "Lịch sử", foreground: 0x26ad1a)
+                }
+                
                 NavigationLink(destination: LocationView()) {
                     TextWithIcon(icon: "mappin.and.ellipse", text: "Vị trí của bạn", foreground: 0x009dff)
                 }
@@ -58,10 +62,6 @@ struct SettingView: View {
                 NavigationLink(destination: PersonalizeView(onboard: false)) {
                     TextWithIcon(icon: "heart.fill", text: "Thể loại yêu thích", foreground: 0xff00bb)
                 }
-                
-                //TextWithIcon(icon: "apps.ipad", text: "Chủ đề", foreground: 0x009dff)
-                
-                TextWithIcon(icon: "textformat", text: "Ngôn ngữ", foreground: 0x26ad1a)
                 
                 NavigationLink(destination: ChangePassWordView()) {
                     TextWithIcon(icon: "lock.fill", text: "Mật khẩu", foreground: 0xc90c61)

@@ -24,6 +24,7 @@ public struct EBorrowBook: Codable {
     public var bookAuthor: String?
     public var bookStatus: String?
     public var brorrowerName: String?
+    public var ownerName: String?
     
     init() {
         id = "undefine"

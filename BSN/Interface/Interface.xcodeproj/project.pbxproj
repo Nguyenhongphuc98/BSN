@@ -176,6 +176,10 @@
 		84B964FC2526063F00F37571 /* CoreMessageEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B964FB2526063F00F37571 /* CoreMessageEditor.swift */; };
 		84BA7A7B256FAFE200A87CB5 /* AWSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BA7A7A256FAFE200A87CB5 /* AWSManager.swift */; };
 		84E5F33F2550F3C600ADF450 /* ColectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5F33E2550F3C600ADF450 /* ColectionExtension.swift */; };
+		84EB4EBB258AEB1100ED5750 /* HistoryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB4EBA258AEB1100ED5750 /* HistoryCard.swift */; };
+		84EB4EBE258AEB7100ED5750 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB4EBD258AEB7100ED5750 /* History.swift */; };
+		84EB4EC1258AEBAC00ED5750 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB4EC0258AEBAC00ED5750 /* HistoryView.swift */; };
+		84EB4EC6258AEDDD00ED5750 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB4EC5258AEDDD00ED5750 /* HistoryViewModel.swift */; };
 		84FA99002518616E00CB92CB /* Interface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FA98F62518616E00CB92CB /* Interface.framework */; };
 		84FA99052518616E00CB92CB /* InterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA99042518616E00CB92CB /* InterfaceTests.swift */; };
 		84FA99072518616E00CB92CB /* Interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 84FA98F92518616E00CB92CB /* Interface.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -379,6 +383,10 @@
 		84B964FB2526063F00F37571 /* CoreMessageEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMessageEditor.swift; sourceTree = "<group>"; };
 		84BA7A7A256FAFE200A87CB5 /* AWSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSManager.swift; sourceTree = "<group>"; };
 		84E5F33E2550F3C600ADF450 /* ColectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColectionExtension.swift; sourceTree = "<group>"; };
+		84EB4EBA258AEB1100ED5750 /* HistoryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCard.swift; sourceTree = "<group>"; };
+		84EB4EBD258AEB7100ED5750 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		84EB4EC0258AEBAC00ED5750 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		84EB4EC5258AEDDD00ED5750 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 		84FA98F62518616E00CB92CB /* Interface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Interface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FA98F92518616E00CB92CB /* Interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Interface.h; sourceTree = "<group>"; };
 		84FA98FA2518616E00CB92CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -534,9 +542,7 @@
 				8401CA202532B07E00A722CE /* SubmitAddBookView.swift */,
 				8401CA2E2532FB2C00A722CE /* UpdateUBView.swift */,
 				8401CA322533056200A722CE /* SubmitExchangeBookView.swift */,
-				841CED9D255D67AD007CCACC /* SettingView.swift */,
-				84961079257E1455003AE110 /* ChangePassWordView.swift */,
-				849610832581C06E003AE110 /* LocationView.swift */,
+				84EB4EB8258AEAEE00ED5750 /* Settings */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -550,8 +556,7 @@
 				8401CA242532B0BC00A722CE /* SubmitAddUBViewModel.swift */,
 				8401CA36253305F900A722CE /* SubmitExchangeBookViewModel.swift */,
 				84783C73254DAECC0043F625 /* UpdateUBViewModel.swift */,
-				841CEDA0255D7356007CCACC /* SettingViewModel.swift */,
-				8496107C257E1488003AE110 /* ChangePasswordViewModel.swift */,
+				84EB4EC3258AEDCB00ED5750 /* Settings */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -732,6 +737,7 @@
 				84A61CAF254C148700B50FE8 /* PassthroughtEB.swift */,
 				84783C70254D93720043F625 /* Undefinable.swift */,
 				845666B9256BAF6E000DA583 /* Category.swift */,
+				84EB4EBD258AEB7100ED5750 /* History.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -795,6 +801,28 @@
 				4CE52A15C970DF16267311B7 /* Pods_Interface.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		84EB4EB8258AEAEE00ED5750 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				841CED9D255D67AD007CCACC /* SettingView.swift */,
+				84961079257E1455003AE110 /* ChangePassWordView.swift */,
+				849610832581C06E003AE110 /* LocationView.swift */,
+				84EB4EBA258AEB1100ED5750 /* HistoryCard.swift */,
+				84EB4EC0258AEBAC00ED5750 /* HistoryView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		84EB4EC3258AEDCB00ED5750 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				841CEDA0255D7356007CCACC /* SettingViewModel.swift */,
+				8496107C257E1488003AE110 /* ChangePasswordViewModel.swift */,
+				84EB4EC5258AEDDD00ED5750 /* HistoryViewModel.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		84FA98EC2518616E00CB92CB = {
@@ -1037,6 +1065,7 @@
 				84AA9681251F928A0029BB1E /* ProfileView.swift in Sources */,
 				842C447425480C5C003C570D /* BSusggestBook.swift in Sources */,
 				84AA968D251F96F70029BB1E /* FullRadiusShadowButtonStyle.swift in Sources */,
+				84EB4EC6258AEDDD00ED5750 /* HistoryViewModel.swift in Sources */,
 				842C44BD25484E55003C570D /* BExchangeBook.swift in Sources */,
 				84AA9621251B480C0029BB1E /* ItemContent.swift in Sources */,
 				842C44CF254909FE003C570D /* BBookDetail.swift in Sources */,
@@ -1057,6 +1086,7 @@
 				8401C921252C086300A722CE /* RatingView.swift in Sources */,
 				8436100925246FC2009FF4BF /* BViewModifier.swift in Sources */,
 				8401C8722527590D00A722CE /* MessageCel.swift in Sources */,
+				84EB4EBE258AEB7100ED5750 /* History.swift in Sources */,
 				841CEDA1255D7356007CCACC /* SettingViewModel.swift in Sources */,
 				8401C982252F0BB600A722CE /* BorrowResultView.swift in Sources */,
 				8401C917252B6B7400A722CE /* BookDetailViewModel.swift in Sources */,
@@ -1071,6 +1101,7 @@
 				8401C9BC2530659800A722CE /* ExchangeBookCell.swift in Sources */,
 				8401C947252C6E7700A722CE /* BookStatusText.swift in Sources */,
 				84BA7A7B256FAFE200A87CB5 /* AWSManager.swift in Sources */,
+				84EB4EBB258AEB1100ED5750 /* HistoryCard.swift in Sources */,
 				844119FD2522E80500AE31D8 /* EdgeInsetsExtension.swift in Sources */,
 				8401CA072531B0C300A722CE /* BookStateText.swift in Sources */,
 				8401C8802528243A00A722CE /* NewChatView.swift in Sources */,
@@ -1130,6 +1161,7 @@
 				84360FFC2524409C009FF4BF /* ScreenExtension.swift in Sources */,
 				84AA95C5251B01C80029BB1E /* ColorExtension.swift in Sources */,
 				842C447C25480F46003C570D /* BUserBook.swift in Sources */,
+				84EB4EC1258AEBAC00ED5750 /* HistoryView.swift in Sources */,
 				842C44B2254844DA003C570D /* BUserBookCard.swift in Sources */,
 				843E5240252722D200B16995 /* DismissKeyboardOnDrag.swift in Sources */,
 				8401C986252F0C4E00A722CE /* BorrowResultViewModel.swift in Sources */,

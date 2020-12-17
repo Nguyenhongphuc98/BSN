@@ -75,5 +75,6 @@ extension BorrowBook {
         var bookAuthor: String?
         var bookStatus: String?
         var brorrowerName: String?
+        var ownerName: String?
     }
 }

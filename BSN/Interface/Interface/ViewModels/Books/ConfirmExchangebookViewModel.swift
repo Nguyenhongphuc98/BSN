@@ -35,6 +35,11 @@ class ConfirmExchangebookViewModel: NetworkViewModel {
             state: ExchangeProgess.accept.rawValue
         )
         ebManager.updateExchangeBook(eb: eeb)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            // waiting for update new user book to profile
+            ProfileViewModel.shared.forceRefeshUB()
+        }
     }
     
     private func observerEBInfo() {

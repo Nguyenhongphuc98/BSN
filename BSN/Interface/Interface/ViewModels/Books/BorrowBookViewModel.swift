@@ -54,7 +54,7 @@ class BorrowBookViewModel: NetworkViewModel {
             adress: address,
             message: message,
             statusDes: model.userbook.statusDes,
-            state: ExchangeProgess.new.rawValue
+            state: ExchangeProgess.waiting.rawValue // when created, it will wating for accept
         )
         borrowbookManager.saveBorrowBook(borrowBook: bb)
     }

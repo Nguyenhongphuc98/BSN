@@ -110,7 +110,7 @@ struct SubmitAddBookView: View {
                 title: Text("Kết quả"),
                 message: Text(viewModel.resourceInfo.des()),
                 dismissButton: .default(Text("OK")) {
-                    ProfileViewModel.shared.forceRefeshData()
+                    ProfileViewModel.shared.forceRefeshUB()
                     popToRoot()
                 })
         } else {
