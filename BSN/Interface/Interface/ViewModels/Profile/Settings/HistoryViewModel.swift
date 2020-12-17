@@ -43,6 +43,7 @@ class HistoryViewModel: NetworkViewModel {
                         if bbs[0].id != kUndefine {
                             bbs.forEach { (bb) in
                                 let model = History(
+                                    type: .borrow,
                                     id: bb.id!,
                                     title: bb.bookTitle!,
                                     borrower: bb.brorrowerName!,

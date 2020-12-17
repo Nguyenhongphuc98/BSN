@@ -89,7 +89,7 @@ struct ConfirmBorrowBookView: View {
     }
     
     private func shouldShowAction(proges: ExchangeProgess) -> Bool {
-        !(proges == .decline || proges == .accept)
+        proges == .waiting
     }
     
     private func viewAppeared() {

@@ -6,15 +6,23 @@
 //
 
 import SwiftUI
+import Business
 
-struct History: AppendUniqueAble {
+class History: ObservableObject, AppendUniqueAble {
+    
     var id: String // id of borrow or exchange
     var bookTitle: String
     var partnerName: String
     var time: Date
     var type: HistoryCardType
     
-    init(id: String, title: String, borrower: String, owner: String, requesterID: String, time: String, state: ExchangeProgess) {
+    @Published var style: HistoryCardStyle
+    
+    let bbManager: BorrowBookManager = .sharedCancel
+    
+    init(type: HistoryCardType,id: String, title: String, borrower: String, owner: String, requesterID: String, time: String, state: ExchangeProgess) {
+        
+        self.type = type
         self.id = id
         self.bookTitle = title
         self.partnerName = requesterID == AppManager.shared.currenUID ? owner : borrower
@@ -22,20 +30,30 @@ struct History: AppendUniqueAble {
         
         switch state {
         case .new:
-            type = .new
+            style = .new
         case .waiting:
-            type = requesterID == AppManager.shared.currenUID ? .uwaiting : .pwaiting
+            style = requesterID == AppManager.shared.currenUID ? .uwaiting : .pwaiting
         case .accept:
-            type = requesterID == AppManager.shared.currenUID ? .paccepted : .uaccepted
+            style = requesterID == AppManager.shared.currenUID ? .paccepted : .uaccepted
         case .decline:
-            type = requesterID == AppManager.shared.currenUID ? .pdeclined : .udeclined
+            style = requesterID == AppManager.shared.currenUID ? .pdeclined : .udeclined
         case .cancel:
-            type = requesterID == AppManager.shared.currenUID ? .ucancel : .pcancel
+            style = requesterID == AppManager.shared.currenUID ? .ucancel : .pcancel
+        }
+    }
+    
+    func cancelRequest() {
+        if type == .borrow {
+            // cancel borrow req
+            self.bbManager.cancelBorrowReq(bbId: self.id)
+            self.style = .ucancel
+        } else {
+            // cancel create exchaning or cancel req exchange
         }
     }
 }
 
-enum HistoryCardType: String {
+enum HistoryCardStyle: String {
     case new // exchange, just create
     case uwaiting // waiting for accept or decline - you
     case pwaiting // waiting for accept or decline - partner
@@ -84,4 +102,9 @@ enum HistoryCardType: String {
             return "Canceled"
         }
     }
+}
+
+enum HistoryCardType: String {
+    case borrow
+    case exchange
 }

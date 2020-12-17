@@ -61,10 +61,20 @@ class BorrowBookRequest: ResourceRequest<EBorrowBook> {
         }
     }
     
-//    func deleteReview(reviewID: String) {
-//        self.setPath(resourcePath: reviewID)
-//        self.delete()
-//    }
+    func cancelBorrowReq(bbID: String) {
+        self.setPath(resourcePath: "cancel/\(bbID)")
+        
+        self.get(isAll: false) { result in
+            
+            switch result {
+            case .failure(let reason):
+                print(reason)
+                
+            case .success(let bbs):
+                print("update success \(String(describing: bbs[0].id)) - \(String(describing: bbs[0].state))")
+            }
+        }
+    }
     
     func processChangeBorrowBookResult(result: SaveResult<EBorrowBook>, method: String, publisher: PassthroughSubject<EBorrowBook, Never>) {
         

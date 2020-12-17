@@ -20,6 +20,8 @@ public class BorrowBookManager {
     // Publisher for fetch borrowbooks by ...
     public let getBorrowBooksPublisher: PassthroughSubject<[EBorrowBook], Never>
     
+    public static let sharedCancel: BorrowBookManager = .init()
+    
     public init() {
         // Init resource URL
         networkRequest = BorrowBookRequest(componentPath: "borrowBooks/")
@@ -35,6 +37,10 @@ public class BorrowBookManager {
     
     public func updateBorrowBook(borrowBook: EBorrowBook) {
         networkRequest.updateBorrowBook(borrowBook: borrowBook, publisher: changePublisher)
+    }
+    
+    public func cancelBorrowReq(bbId: String) {
+        networkRequest.cancelBorrowReq(bbID: bbId)
     }
     
     public func getBorrowBook(bbid: String) {

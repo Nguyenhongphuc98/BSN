@@ -37,6 +37,7 @@ struct BorrowBookController: RouteCollection {
         
         authen.get("detail", ":ID", use: getDetail)
         authen.get("history", use: getHistory)
+        authen.get("cancel", ":ID", use: cancelRequest)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[BorrowBook]> {
@@ -183,6 +184,40 @@ struct BorrowBookController: RouteCollection {
                 let db = req.db as! SQLDatabase
                 return db.raw(sqlQuery)
                     .all(decoding: BorrowBook.GetFull.self)
+            }
+    }
+    
+    func cancelRequest(req: Request) throws -> EventLoopFuture<BorrowBook> {
+       
+        guard let bbIdStr: String = req.parameters.get("ID"), let bbid = UUID(uuidString: bbIdStr) else {
+            throw Abort(.badRequest)
+        }
+        
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        // Determine current user
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .first()
+            .unwrap(or: Abort(.notFound))
+            .flatMap { (user)  in
+                
+                // Cancel req dont' need notify to anyone
+                return BorrowBook
+                    .query(on: req.db)
+                    .filter(\.$id == bbid)
+                    .filter(\.$borrowerID == user.id!) // owner create this req can cancel
+                    .first()
+                    .unwrap(or: Abort(.notFound))
+                    .flatMap { bb -> EventLoopFuture<BorrowBook> in
+                        
+                        bb.state = ExchangeProgess.cancel.rawValue
+                        
+                        return bb.update(on: req.db).map {
+                            return bb
+                        }
+                    }
             }
     }
 }
