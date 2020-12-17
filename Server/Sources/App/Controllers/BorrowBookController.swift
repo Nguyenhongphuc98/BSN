@@ -179,7 +179,7 @@ struct BorrowBookController: RouteCollection {
             .unwrap(or: Abort(.forbidden))
             .flatMap { (u)  in
                 
-                let sqlQuery = SQLQueryString("SELECT bb.id, bb.borrower_id as \"borrowerID\", bb.state, b.title  as \"bookTitle\", bb.updated_at as \"updatedAt\", u1.displayname  as \"ownerName\", u2.displayname  as \"brorrowerName\" from borrow_book as bb, user_book as ub, public.user as u1, public.user as u2, book as b where bb.userbook_id = ub.id and ub.user_id = u1.id and ub.book_id = b.id and bb.borrower_id = u2.id order by bb.updated_at desc")
+                let sqlQuery = SQLQueryString("SELECT bb.id, bb.borrower_id as \"borrowerID\", bb.state, b.title  as \"bookTitle\", bb.updated_at as \"updatedAt\", u1.displayname  as \"ownerName\", u2.displayname  as \"brorrowerName\" from borrow_book as bb, user_book as ub, public.user as u1, public.user as u2, book as b where bb.userbook_id = ub.id and ub.user_id = u1.id and ub.book_id = b.id and bb.borrower_id = u2.id and (u1.id = '\(raw: u.id!.uuidString)' or u2.id = '\(raw: u.id!.uuidString)') order by bb.updated_at desc")
                 
                 let db = req.db as! SQLDatabase
                 return db.raw(sqlQuery)

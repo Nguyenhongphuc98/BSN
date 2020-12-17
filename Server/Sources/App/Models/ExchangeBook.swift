@@ -138,6 +138,7 @@ struct GetExchangeBook: Content {
     
     var secondCover: String?
     var secondBookID: String?
+    var secondUserID: String?
     
     var state: String?
     

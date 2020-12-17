@@ -27,6 +27,7 @@ struct ExchangeBookController: RouteCollection {
         authen.get("availables", ":id", use: getAvailableExs)
         authen.get("compute", ":id", use: getDetailInWatingState)
         authen.get("detail", ":id", use: getDetailAfterReqSubmited)
+        authen.get("history", use: getHistory)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[ExchangeBook]> {
@@ -324,6 +325,27 @@ struct ExchangeBookController: RouteCollection {
                             .unwrap(or: Abort(.notFound))
                             .map { $0 }
                     }
+            }
+    }
+    
+    func getHistory(req: Request) throws -> EventLoopFuture<[GetExchangeBook]> {
+        // Get history for current user
+              
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        // Determine current user
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .first()
+            .unwrap(or: Abort(.forbidden))
+            .flatMap { (u)  in
+                
+                let sqlQuery = SQLQueryString("SELECT eb.id, eb.state, u1.id as \"firstUserID\", u1.displayname as \"firstOwnerName\", b1.title as \"firstTitle\", u2.id as \"secondUserID\", u2.displayname as \"secondOwnerName\", b2.title as \"secondTitle\" FROM exchange_book as eb, user_book as ub1, public.user as u1, book as b1, user_book as ub2, public.user as u2, book as b2 WHERE eb.first_user_book_id = ub1.id and ub1.user_id = u1.id and ub1.book_id = b1.id and eb.second_user_book_id = ub2.id and ub2.user_id = u2.id and ub2.book_id = b2.id and (u1.id = '\(raw: u.id!.uuidString)' or u2.id = '\(raw: u.id!.uuidString)') order by eb.updated_at desc")
+                
+                let db = req.db as! SQLDatabase
+                return db.raw(sqlQuery)
+                    .all(decoding: GetExchangeBook.self)
             }
     }
 }
