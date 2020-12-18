@@ -150,6 +150,8 @@ struct GetExchangeBook: Content {
     
     var message: String?
     
+    var updatedAt: String?
+    
     init(id: String? = nil, firstubid: String? = nil, secondubid: String? = nil, firstTitle: String, firstAuthor: String, firstCover: String? = nil, location: String? = nil, secondTitle: String? = nil, secondAuthor: String? = nil, firstOwnerName: String? = nil, firstStatus: String? = nil, firstStatusDes: String? = nil, secondStatus: String? = nil, secondStatusDes: String? = nil, secondCover: String? = nil, state: String? = nil) {
         
         self.id = id

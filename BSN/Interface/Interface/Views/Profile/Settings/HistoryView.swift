@@ -33,9 +33,15 @@ struct HistoryView: View {
     
     private var borrow: some View {
         ScrollView {
-            LazyVStack {
-                ForEach(viewModel.borrowModels) { item in
-                    HistoryCard(model: item)
+            if viewModel.borrowModels.isEmpty {
+                Text("Chưa có lịch sử mượn sách")
+                    .robotoLightItalic(size: 13)
+                    .padding()
+            } else {
+                LazyVStack {
+                    ForEach(viewModel.borrowModels) { item in
+                        HistoryCard(model: item)
+                    }
                 }
             }
         }
@@ -43,9 +49,15 @@ struct HistoryView: View {
     
     private var exchange: some View {
         ScrollView {
-            LazyVStack {
-                ForEach(viewModel.borrowModels) { item in
-                    HistoryCard(model: item)
+            if viewModel.borrowModels.isEmpty {
+                Text("Chưa có lịch sử đổi sách")
+                    .robotoLightItalic(size: 13)
+                    .padding()
+            } else {
+                LazyVStack {
+                    ForEach(viewModel.exchangeModels) { item in
+                        HistoryCard(model: item)
+                    }
                 }
             }
         }

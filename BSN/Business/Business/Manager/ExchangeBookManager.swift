@@ -54,4 +54,8 @@ public class ExchangeBookManager {
     public func getDetailExchangeBook(ebid: String) {
         resourceRequest.fetchDetailExchangeBook(ebid: ebid, publisher: getExchangeBookPublisher)
     }
+    
+    public func getHistoryExchangeBook() {
+        resourceRequest.fetchHistoryExchangeBook(publisher: getExchangeBooksPublisher)
+    }
 }

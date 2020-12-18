@@ -72,6 +72,24 @@ class ExchangeBookRequest: ResourceRequest<EExchangeBook> {
         }
     }
     
+    func fetchHistoryExchangeBook(publisher: PassthroughSubject<[EExchangeBook], Never>) {
+        self.setPath(resourcePath: "history")
+        
+        self.get { result in
+            
+            switch result {
+            case .failure(let reason):
+                print(reason)
+                let eb = EExchangeBook()
+                eb.firstOwnerName = reason
+                publisher.send([eb])
+                
+            case .success(let ebs):
+                publisher.send(ebs)
+            }
+        }
+    }
+    
     func saveExchangeBook(eb: EExchangeBook, publisher: PassthroughSubject<EExchangeBook, Never>) {
         self.resetPath()
         

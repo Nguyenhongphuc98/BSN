@@ -11,12 +11,14 @@ import Business
 class HistoryViewModel: NetworkViewModel {
     
     var bbManager: BorrowBookManager
+    var ebManager: ExchangeBookManager
     
     @Published var borrowModels: [History]
     @Published var exchangeModels: [History]
     
     override init() {
         bbManager = .init()
+        ebManager = .init()
         borrowModels = []
         exchangeModels = []
         
@@ -28,6 +30,7 @@ class HistoryViewModel: NetworkViewModel {
     func fetchingHistory() {
         isLoading = true
         bbManager.getHistoryBorrowBook()
+        ebManager.getHistoryExchangeBook()
     }
     
     private func observerHistoryData() {
@@ -53,6 +56,36 @@ class HistoryViewModel: NetworkViewModel {
                                     state: ExchangeProgess(rawValue: bb.state!) ?? .accept
                                 )
                                 self.borrowModels.appendUnique(item: model)
+                            }
+                        }
+                    }
+                    self.isLoading = false
+                }
+            }
+            .store(in: &cancellables)
+        
+        ebManager
+            .getExchangeBooksPublisher
+            .sink {[weak self] (ebs) in
+
+                guard let self = self else { return }
+
+                DispatchQueue.main.async {
+
+                    if !ebs.isEmpty {
+                        if ebs[0].id != kUndefine {
+                            ebs.forEach { (eb) in
+                                let model = History(
+                                    type: .exchange,
+                                    id: eb.id!,
+                                    title: eb.firstTitle!,
+                                    borrower: eb.secondOwnerName ?? "Chưa có",
+                                    owner: eb.firstOwnerName!,
+                                    requesterID: eb.secondUserID ?? "",
+                                    time: eb.updatedAt!,
+                                    state: ExchangeProgess(rawValue: eb.state!) ?? .accept
+                                )
+                                self.exchangeModels.appendUnique(item: model)
                             }
                         }
                     }

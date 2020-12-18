@@ -60,6 +60,10 @@ public class EExchangeBook: Codable {
     
     public var secondCover: String?
     
+    public var secondUserID: String?
+    
+    public var updatedAt: String?
+    
 //    public var firstubid: String?
 //
 //    public var secondubid: String?
