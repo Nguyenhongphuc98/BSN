@@ -28,6 +28,7 @@ struct ExchangeBookController: RouteCollection {
         authen.get("compute", ":id", use: getDetailInWatingState)
         authen.get("detail", ":id", use: getDetailAfterReqSubmited)
         authen.get("history", use: getHistory)
+        authen.get("cancel", ":id", use: cancelRequest)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[ExchangeBook]> {
@@ -352,6 +353,71 @@ struct ExchangeBookController: RouteCollection {
                 let db = req.db as! SQLDatabase
                 return db.raw(sqlQuery)
                     .all(decoding: GetExchangeBook.self)
+            }
+    }
+    
+    // Cancel exchange by owner or partner req cancel
+    // Owner just can cancel when it in new state
+    func cancelRequest(req: Request) throws -> EventLoopFuture<ExchangeBook> {
+       
+        guard let ebIdStr: String = req.parameters.get("id"), let ebid = UUID(uuidString: ebIdStr) else {
+            throw Abort(.badRequest)
+        }
+        
+        // Authen
+        let account = try req.auth.require(Account.self)
+        
+        // Determine current user
+        return User.query(on: req.db)
+            .filter(\.$accountID == account.id!)
+            .first()
+            .unwrap(or: Abort(.notFound))
+            .flatMap { (user)  in
+                
+                // Cancel req dont' need notify to anyone
+                return ExchangeBook
+                    .query(on: req.db)
+                    .filter(\.$id == ebid)
+                    .first()
+                    .unwrap(or: Abort(.badRequest))
+                    .flatMap { (eb) -> EventLoopFuture<ExchangeBook> in
+                        
+                        if eb.state == ExchangeProgess.new.rawValue {
+                            // Find owner to verify and update state
+                            return UserBook.query(on: req.db)
+                                .filter(\.$id == eb.firstUserBookID!)
+                                .filter(\.$userID == user.id!)
+                                .first()
+                                .unwrap(or: Abort(.forbidden))
+                                .flatMap { (ub) -> EventLoopFuture<ExchangeBook> in
+                                    
+                                    eb.state = ExchangeProgess.cancel.rawValue
+                                    return eb.update(on: req.db).map { eb }
+                                }
+                        } else {
+                            // Find requester to verify and cancel req
+                            return UserBook.query(on: req.db)
+                                .filter(\.$id == eb.secondUserBookID ?? UUID()) //avoid someone make invalid req crash app
+                                .filter(\.$userID == user.id!)
+                                .first()
+                                .unwrap(or: Abort(.forbidden))
+                                .flatMap { (ub) -> EventLoopFuture<ExchangeBook> in
+                                    
+                                    // Create new exchange for owner
+                                    let newEb = ExchangeBook()
+                                    newEb.firstUserBookID = eb.firstUserBookID
+                                    newEb.exchangeBookID = eb.exchangeBookID
+                                    newEb.firstStatusDes = eb.firstStatusDes
+                                    newEb.state = ExchangeProgess.new.rawValue
+                                    
+                                    _ = newEb.save(on: req.db)
+                                    
+                                    eb.state = ExchangeProgess.cancel.rawValue
+                                    return eb.update(on: req.db).map { eb }
+                                }
+                        }
+                    }
+                
             }
     }
 }
