@@ -23,7 +23,7 @@ class CountTimeModel: ObservableObject {
     }
     
     func caculateDisplay() {
-        let interval = -date.timeIntervalSinceNow
+        let interval = abs(date.timeIntervalSinceNow)
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
         //print("interval: \(interval)")

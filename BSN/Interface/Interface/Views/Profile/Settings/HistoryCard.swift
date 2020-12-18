@@ -37,17 +37,17 @@ struct HistoryCard: View {
             
             Spacer()
                         
-            if model.style == .new {
-                Button(action: {
-                    model.cancelRequest()
-                }, label: {
-                    Text("Xoá")
-                })
-                .buttonStyle(BaseButtonStyle())
-                .padding(5)
-            }
+//            if model.style == .new {
+//                Button(action: {
+//                    model.cancelRequest()
+//                }, label: {
+//                    Text("Xoá")
+//                })
+//                .buttonStyle(BaseButtonStyle())
+//                .padding(5)
+//            }
 
-            if model.style == .uwaiting {
+            if model.style == .uwaiting || model.style == .new {
                 Button(action: {
                     model.cancelRequest()
                 }, label: {

@@ -127,4 +127,19 @@ class ExchangeBookRequest: ResourceRequest<EExchangeBook> {
             }
         }
     }
+    
+    func cancelExchangeReq(ebID: String) {
+        self.setPath(resourcePath: "cancel/\(ebID)")
+        
+        self.get(isAll: false) { result in
+            
+            switch result {
+            case .failure(let reason):
+                print(reason)
+                
+            case .success(let ebs):
+                print("update success \(String(describing: ebs[0].id)) - \(String(describing: ebs[0].state))")
+            }
+        }
+    }
 }

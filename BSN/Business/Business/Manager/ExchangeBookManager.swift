@@ -22,6 +22,8 @@ public class ExchangeBookManager {
     // Publisher for fetch exchange books by page
     public let getExchangeBookPublisher: PassthroughSubject<EExchangeBook, Never>
     
+    public static let sharedCancel: ExchangeBookManager = .init()
+    
     public init() {
         // Init resource URL
         resourceRequest = ExchangeBookRequest(componentPath: "exchangeBooks/")
@@ -57,5 +59,9 @@ public class ExchangeBookManager {
     
     public func getHistoryExchangeBook() {
         resourceRequest.fetchHistoryExchangeBook(publisher: getExchangeBooksPublisher)
+    }
+    
+    public func cancelExchangeReq(ebId: String) {
+        resourceRequest.cancelExchangeReq(ebID: ebId)
     }
 }

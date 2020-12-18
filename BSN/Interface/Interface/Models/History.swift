@@ -19,6 +19,7 @@ class History: ObservableObject, AppendUniqueAble {
     @Published var style: HistoryCardStyle
     
     let bbManager: BorrowBookManager = .sharedCancel
+    let ebManager: ExchangeBookManager = .sharedCancel
     
     init(type: HistoryCardType,id: String, title: String, borrower: String, owner: String, requesterID: String, time: String, state: ExchangeProgess) {
         
@@ -44,12 +45,15 @@ class History: ObservableObject, AppendUniqueAble {
     
     func cancelRequest() {
         if type == .borrow {
-            // cancel borrow req
+            /// cancel borrow req
             self.bbManager.cancelBorrowReq(bbId: self.id)
-            self.style = .ucancel
         } else {
-            // cancel create exchaning or cancel req exchange
+            /// cancel create exchaning or cancel req exchange
+            /// It process same func, depen on current user and state will be excute exactly
+            /// What we want
+            self.ebManager.cancelExchangeReq(ebId: self.id)
         }
+        self.style = .ucancel
     }
 }
 
