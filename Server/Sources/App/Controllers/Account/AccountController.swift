@@ -114,12 +114,14 @@ struct AccountController: RouteCollection {
             }
     }
     
-    func resetPassword(req: Request) throws -> EventLoopFuture<HTTPStatus> {
-//        guard let emailStr = req.parameters.get("email") else {
-//            throw Abort(.badRequest)
-//        }
-        
-        //let emailAdress = BSNEmail(email: emailStr)
+    func resetPassword(req: Request) throws -> EventLoopFuture<Account> {
+
+        // Validate email
+        // check exist in system
+        // generate password and update
+        // sent new pass to email
+        // if send success, return account
+        // else return undefine account
         
         //try BSNEmail.validate(content: req)
         try BSNEmail.validate(query: req)
@@ -127,19 +129,46 @@ struct AccountController: RouteCollection {
             throw Abort(.badRequest)
         }
         
-        let email = Email(from: EmailAddress(address: "nguyenhongphuc98@gmail.com"),
-                          to: [EmailAddress(address: emailAdress)],
-                          subject: "The subject (text)",
-                          body: "This is email body.")
-
-        return req.smtp.send(email).map { result in
-            switch result {
-            case .success:
-                print("Email has been sent")
-            case .failure(let error):
-                print("Email has not been sent: \(error)")
+        // find owner of this email
+        // make sure it exist in our system
+        return Account.query(on: req.db)
+            .filter(\.$username == emailAdress)
+            .first()
+            .unwrap(or: Abort(.notFound))
+            .flatMap { (account) -> EventLoopFuture<Account> in
+                
+                User.query(on: req.db)
+                    .filter(\.$accountID == account.id!)
+                    .first()
+                    .unwrap(or: Abort(.notFound))
+                    .flatMap { (user) -> EventLoopFuture<Account> in
+                        
+                        let newPassword = generateRandomPassword(length: 8)
+                        let email = Email(from: EmailAddress(address: "nguyenhongphuc98@gmail.com"),
+                                          to: [EmailAddress(address: emailAdress)],
+                                          subject: "QUÊN MẬT KHẨU - SE",
+                                          body: " Xin chào \(user.displayname)! \n Mật khẩu mới của bạn là: \(newPassword).\n Bạn có thể đăng nhập và thay đổi mật khẩu trong phần cài đặt.")
+                        
+                        // update new password for user
+                        account.password = try! Bcrypt.hash(newPassword)
+                        _ = account.update(on: req.db)
+                        
+                        return req.smtp.send(email).flatMap({ result -> EventLoopFuture<Account> in
+                            switch result {
+                            case .success:
+                                print("Email has been sent")
+                            case .failure(let error):
+                                print("Email has not been sent: \(error)")
+                                account.username = "undefine"
+                            }
+                            return req.eventLoop.makeSucceededFuture(account.asPublic())
+                        })
+                    }
             }
-        }
-        .transform(to: .ok)    
     }
+}
+
+func generateRandomPassword(length: Int) -> String {
+  let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+  return String((0..<length).map{ _ in letters.randomElement()! })
 }
