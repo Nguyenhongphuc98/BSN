@@ -110,6 +110,15 @@
         }
       },
       {
+        "package": "Smtp",
+        "repositoryURL": "https://github.com/Mikroservices/Smtp.git",
+        "state": {
+          "branch": null,
+          "revision": "822092f7c25595483b3412cc7a9b58fd94716454",
+          "version": "2.1.4"
+        }
+      },
+      {
         "package": "sql-kit",
         "repositoryURL": "https://github.com/vapor/sql-kit.git",
         "state": {

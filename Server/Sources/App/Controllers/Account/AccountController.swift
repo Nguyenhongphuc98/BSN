@@ -7,6 +7,7 @@
 
 import Vapor
 import Fluent
+import Smtp
 
 struct AccountController: RouteCollection {
     
@@ -23,6 +24,7 @@ struct AccountController: RouteCollection {
         authen.delete("logout", use: logout)
         authen.post("register", use: create)
         authen.put(use: update)
+        authen.get("reset", use: resetPassword)
     }
 
     func index(req: Request) throws -> EventLoopFuture<[Account]> {
@@ -110,5 +112,34 @@ struct AccountController: RouteCollection {
                     .flatMap { $0.delete(on: req.db) }
                     .transform(to: .ok)
             }
+    }
+    
+    func resetPassword(req: Request) throws -> EventLoopFuture<HTTPStatus> {
+//        guard let emailStr = req.parameters.get("email") else {
+//            throw Abort(.badRequest)
+//        }
+        
+        //let emailAdress = BSNEmail(email: emailStr)
+        
+        //try BSNEmail.validate(content: req)
+        try BSNEmail.validate(query: req)
+        guard let emailAdress: String = req.query["email"] else {
+            throw Abort(.badRequest)
+        }
+        
+        let email = Email(from: EmailAddress(address: "nguyenhongphuc98@gmail.com"),
+                          to: [EmailAddress(address: emailAdress)],
+                          subject: "The subject (text)",
+                          body: "This is email body.")
+
+        return req.smtp.send(email).map { result in
+            switch result {
+            case .success:
+                print("Email has been sent")
+            case .failure(let error):
+                print("Email has not been sent: \(error)")
+            }
+        }
+        .transform(to: .ok)    
     }
 }

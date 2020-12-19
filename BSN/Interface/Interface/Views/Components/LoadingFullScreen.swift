@@ -10,7 +10,7 @@ import SwiftUI
 struct LoadingFullScreen: View {
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .center) {
             HStack() {
                 Spacer()
                 VStack {
@@ -18,9 +18,8 @@ struct LoadingFullScreen: View {
                 }
             }            
             .background(Color.white)
-            
+                        
             CircleLoading(frame: CGSize(width: 40, height: 40))
-                .position(x: UIScreen.screenWidth / 2 - 20, y: UIScreen.screenHeight / 2 - 20)
         }
     }
 }
@@ -38,7 +37,7 @@ struct CircleLoading: View {
             .stroke(AngularGradient(gradient: .init(colors: [._primary, .white]), center: .center), style: StrokeStyle(lineWidth: 3, lineCap: .round))
             .frame(width: frame.width, height: frame.height)
             .rotationEffect(.init(radians: animate ? 360 : 0))
-            .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
+            .animation(Animation.easeIn(duration: 3).repeatForever(autoreverses: false))
             .onAppear(perform: self.viewAppead)
             .onDisappear(perform: self.viewDisAppead)
     }

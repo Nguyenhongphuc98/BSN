@@ -18,6 +18,12 @@ let package = Package(
         //.package(url:"https://github.com/matthijs2704/vapor-apns.git", from: "2.1.0") // was archived
         //.package(name: "apnswift", url: "https://github.com/kylebrowning/APNSwift.git", from: "2.1.0")
         .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "4.0.0"),
+        //.package(url: "https://github.com/IBM-Swift/Swift-SMTP", from: "5.1.200"),
+        //.package(url: "https://github.com/onevcat/Hedwig.git", from: "1.1.0"),
+        //.package(url: "https://github.com/PerfectlySoft/Perfect-SMTP.git", from: "3.1.1"),
+        //.package(url: "https://github.com/LiveUI/MailCore.git", from: "3.1.0"),
+        //.package(url: "https://github.com/Kitura-Next/Swift-SMTP", from: "5.1.4"),
+        .package(url: "https://github.com/Mikroservices/Smtp.git", from: "2.1.4")
     ],
     targets: [
         .target(
@@ -33,6 +39,12 @@ let package = Package(
                 //.product(name: "VaporAPNS", package: "vapor-apns"),
                 //.product(name: "APNSwift", package: "apnswift"),
                 .product(name: "SwiftyJSON", package: "SwiftyJSON"),
+                //.product(name: "SwiftSMTP", package: "Swift-SMTP"),
+                //.product(name: "PerfectSMTP", package: "Perfect-SMTP"),
+                //.product(name: "MailCore", package: "MailCore"),
+                //.product(name: "SwiftSMTP", package: "Swift-SMTP"),
+                .product(name: "Smtp", package: "Smtp")
+                
             ],
             swiftSettings: [
                 // Enable better optimizations when building in Release configuration. Despite the use of

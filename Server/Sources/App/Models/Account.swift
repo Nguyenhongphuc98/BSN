@@ -79,3 +79,19 @@ extension Account: ModelAuthenticatable {
         try Bcrypt.verify(password, created: self.password)
     }
 }
+
+struct BSNEmail: Content {
+    var email: String
+}
+
+extension BSNEmail: Validatable {
+    /// See `Validatable`.
+    static func validations(_ validations: inout Validations) {
+        validations.add("email", as: String.self, is: .email)
+    }
+//    static func validations() throws -> Validations<BSNEmail> {
+//        var validations = Validations(BSNEmail.self)
+//        try validations.add(\.email, .email)
+//        return validations
+//    }
+}

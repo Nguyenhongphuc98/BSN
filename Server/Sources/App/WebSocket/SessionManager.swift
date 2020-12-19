@@ -48,6 +48,9 @@ class SessionManager {
             listeners?.append(listener)
         }
         
+        if sessions[targetID] == nil {
+            print("add new target - nil")
+        }
         sessions[targetID] = listeners
         
         print("Did connect target: \(targetID)")
