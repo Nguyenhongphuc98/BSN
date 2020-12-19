@@ -25,16 +25,7 @@ struct SignUp: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 40) {
-                HStack {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.system(size: 35))
-                    }
-   
-                    Spacer()
-                }
+                closeBtn
                 
                 title
                 
@@ -50,13 +41,26 @@ struct SignUp: View {
         .alert(isPresented: $viewModel.showAlert, content: alert)
     }
     
+    private var closeBtn: some View {
+        HStack {
+            Button {
+                dismiss()
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.system(size: 35))
+            }
+
+            Spacer()
+        }
+    }
+    
     private var title: some View {
         VStack(spacing: 5) {
             Text("Tạo tài khoản mới")
                 .robotoBold(size: 25)
             
             Text("Tạo tài khoản để kết nối vời những người yêu sách")
-                .robotoBold(size: 15)
+                .robotoItalic(size: 15)
                 .foregroundColor(.init(hex: 0xBDBDBD))
         }
     }
@@ -117,7 +121,7 @@ struct SignUp: View {
     }
     
     private func dismiss() {
-        presentationMode.wrappedValue.dismiss()
+        withAnimation { presentationMode.wrappedValue.dismiss() }
     }
 }
 

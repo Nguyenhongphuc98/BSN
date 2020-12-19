@@ -87,4 +87,28 @@ class AccountRequest: ResourceRequest<EAccount> {
             }
         }
     }
+    
+    func resetPassword(email: String, publisher: PassthroughSubject<EAccount, Never>) {
+        self.setPath(resourcePath: "reset", params: ["email":email])
+        
+        self.get(isAll: false) { result in
+            
+            switch result {
+            case .failure(let reason):
+                print(reason)
+                var a = EAccount()
+                a.username = reason
+                publisher.send(a)
+                
+            case .success(let accounts):
+                var a = accounts[0]
+                if a.username == "undefine" {
+                    // update account success but can't send email
+                    a.id = "undefine"
+                    a.username = "Can't send reset password to this email"
+                }
+                publisher.send(a)
+            }
+        }
+    }
 }

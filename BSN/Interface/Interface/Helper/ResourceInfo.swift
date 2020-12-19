@@ -18,6 +18,7 @@ public enum ResourceInfo: String {
     case image_upload_fail
     case signup_success
     case update_fail
+    case resetpass_success
     
     public func des() -> String {
         switch self {
@@ -41,6 +42,8 @@ public enum ResourceInfo: String {
             return "Đăng ký tài khoản thành công!"
         case .update_fail:
             return "Không thể cập nhật!"
+        case .resetpass_success:
+            return "Mât khẩu mới đã được gửi tới email, vui lòng kiểm tra hòm thư!"
         }
     }
 }

@@ -43,4 +43,8 @@ public class AccountManager {
     public func updateAccount(account: EAccount) {
         networkRequest.updateAccount(account: account, publisher: accountPublisher)
     }
+    
+    public func resetPassword(recover email: String) {
+        networkRequest.resetPassword(email: email, publisher: accountPublisher)
+    }
 }

@@ -31,6 +31,8 @@
 		84AA95DF251B03E60029BB1E /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AA95DB251B03E60029BB1E /* Roboto-ThinItalic.ttf */; };
 		84AA969B252031780029BB1E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84AA969A252031780029BB1E /* LaunchScreen.storyboard */; };
 		84BA7B44256FE76400A87CB5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BA7B43256FE76400A87CB5 /* AppDelegate.swift */; };
+		84C51FFB258E416F00708E64 /* ResetPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C51FFA258E416F00708E64 /* ResetPass.swift */; };
+		84C51FFD258E42F600708E64 /* ResetPassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C51FFC258E42F600708E64 /* ResetPassViewModel.swift */; };
 		84FA98DD251860DB00CB92CB /* BSNApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FA98DC251860DB00CB92CB /* BSNApp.swift */; };
 		84FA98E1251860DE00CB92CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84FA98E0251860DE00CB92CB /* Assets.xcassets */; };
 		84FA98E4251860DE00CB92CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84FA98E3251860DE00CB92CB /* Preview Assets.xcassets */; };
@@ -79,6 +81,8 @@
 		84AA95DB251B03E60029BB1E /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
 		84AA969A252031780029BB1E /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84BA7B43256FE76400A87CB5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		84C51FFA258E416F00708E64 /* ResetPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPass.swift; sourceTree = "<group>"; };
+		84C51FFC258E42F600708E64 /* ResetPassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPassViewModel.swift; sourceTree = "<group>"; };
 		84FA98D9251860DB00CB92CB /* BSN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BSN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FA98DC251860DB00CB92CB /* BSNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BSNApp.swift; sourceTree = "<group>"; };
 		84FA98E0251860DE00CB92CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -149,6 +153,15 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		84C51FF9258E415000708E64 /* ResetPass */ = {
+			isa = PBXGroup;
+			children = (
+				84C51FFA258E416F00708E64 /* ResetPass.swift */,
+				84C51FFC258E42F600708E64 /* ResetPassViewModel.swift */,
+			);
+			path = ResetPass;
+			sourceTree = "<group>";
+		};
 		84FA98D0251860DB00CB92CB = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +194,7 @@
 				84961054257B1B1E003AE110 /* Launching */,
 				84BA7B43256FE76400A87CB5 /* AppDelegate.swift */,
 				84961055257B1B3A003AE110 /* Signup */,
+				84C51FF9258E415000708E64 /* ResetPass */,
 			);
 			path = BSN;
 			sourceTree = "<group>";
@@ -344,9 +358,11 @@
 				84961052257B1B05003AE110 /* SignUp.swift in Sources */,
 				84BA7B44256FE76400A87CB5 /* AppDelegate.swift in Sources */,
 				8496105A257B22B0003AE110 /* SignUpViewModel.swift in Sources */,
+				84C51FFD258E42F600708E64 /* ResetPassViewModel.swift in Sources */,
 				84FA98DD251860DB00CB92CB /* BSNApp.swift in Sources */,
 				841CED6F255BCFC3007CCACC /* Login.swift in Sources */,
 				841CED8D255C2EB5007CCACC /* LaunchingViewModel.swift in Sources */,
+				84C51FFB258E416F00708E64 /* ResetPass.swift in Sources */,
 				841CED71255BDAC4007CCACC /* LoginViewModel.swift in Sources */,
 				841CED7B255BED15007CCACC /* Launching.swift in Sources */,
 			);

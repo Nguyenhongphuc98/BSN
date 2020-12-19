@@ -10,30 +10,30 @@ import Interface
 
 struct Login: View {
     
-    @State var username: String = ""
+    @StateObject var viewModel: LoginViewModel = .init()
     
+    @State var username: String = ""
     @State var password: String = ""
     
-    @StateObject var viewModel: LoginViewModel = LoginViewModel()
-    
     @State private var presentSignUp: Bool = false
+    @State private var presentfogetPass: Bool = false
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 40) {
+            VStack(spacing: 30) {
                 Spacer()
                 VStack {
                     Image("lauchlogo")
                         .resizable()
-                        .frame(width: 100, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
+                        .frame(width: 75, height: 75)
                     
-                    Text("Chào mừng đến với LoveBook!")
-                        .robotoBold(size: 18)
+                    Text("Chào mừng đến với SE!")
+                        .pattaya(size: 20)
                 }
                 
                 manualLogin()
                 
-                VStack(spacing: 20) {
+                VStack(spacing: 15) {
                     Text("Hoặc kết nối bằng")
                         .robotoBold(size: 15)
                         .foregroundColor(.init(hex: 0xBDBDBD))
@@ -57,13 +57,29 @@ struct Login: View {
     }
     
     private func manualLogin() -> some View {
-        VStack(spacing: 15) {
+        VStack(spacing: 5) {
             Text(viewModel.message)
                 .foregroundColor(.init(hex: 0x721c24))
             
             TextFieldWithIcon(icon: "person.fill", placer: "youremail@example.com", content: $username, contentType: .emailAddress)
+                .padding(.vertical, 15)
             
             TextFieldWithIcon(icon: "key.fill", placer: "password", content: $password, contentType: .password)
+            
+            HStack {
+                Spacer()
+                Button {
+                    presentfogetPass.toggle()
+                } label: {
+                    Text("Quên mật khẩu?")
+                        .robotoItalic(size: 13)
+                        .foregroundColor(._primary)
+                        .padding(.trailing, 20)
+                }
+                .fullScreenCover(isPresented: $presentfogetPass, content: {
+                    ResetPass()
+                })
+            }
             
             Button(action: {
                 viewModel.login(username: username, password: password)
@@ -71,6 +87,7 @@ struct Login: View {
                 Text("   Đăng nhập  ")
                     .robotoBold(size: 15)
             })
+            .padding()
             .buttonStyle(RoundButtonStyle(size: .largeH))
             .disabled(disableLogin)
         }
