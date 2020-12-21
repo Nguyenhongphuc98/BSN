@@ -266,7 +266,11 @@ public struct ProfileView: View, PopToable {
     
     private var books: some View {
         ZStack(alignment: .trailing) {
-            BBookGrid(models: viewModel.books, style: .mybook)
+            BBookGrid(
+                models: viewModel.books,
+                style: .mybook,
+                isGuest: !(self.userID == nil || self.userID == AppManager.shared.currenUID)
+            )
                 .id("bbookgrid")
                 .padding(.bottom)
             

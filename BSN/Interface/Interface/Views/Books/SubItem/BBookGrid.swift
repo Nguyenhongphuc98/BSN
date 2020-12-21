@@ -18,6 +18,8 @@ struct BBookGrid: View {
     
     var style: BookGridItemStyle
     
+    var isGuest: Bool = false
+    
     var columns: [GridItem] = [
         GridItem(.flexible(), spacing: 0),
         GridItem(.flexible(), spacing: 0)
@@ -33,7 +35,7 @@ struct BBookGrid: View {
             LazyVGrid(columns: columns, content: {
                 ForEach(models) { book in
                     if style == .mybook {
-                        BUserBookCard(model: book as! BUserBook)
+                        BUserBookCard(model: book as! BUserBook, isGuest: isGuest)
                             .environmentObject(navState)
                     } else {
                         SuggestBookCard(model: book as! BSusggestBook)                           

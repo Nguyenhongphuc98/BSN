@@ -36,12 +36,14 @@ public class ExploreBookViewModel: SearchBookViewModel {
         print("did prepare data explore book VM")
         // load favorite book
         // load page 0 exchange book
-        loadExchangeBooks(page: 0)
+        loadExchangeBooks()
         loadTopBooks(page: 1) // using defaul paginate so it begin with 1 index
     }
     
-    func loadExchangeBooks(page: Int) {
-        ebManager.getNewestExchangeBooks(page: page)
+    func loadExchangeBooks() {
+        // defaul just load page 0
+        self.exchangeBooks = []
+        ebManager.getNewestExchangeBooks(page: 0)
     }
     
     func loadTopBooks(page: Int) {

@@ -208,8 +208,9 @@ extension ChatController {
                     // Push notify to receiver
                     let senderName = senderID == c.firstUserID ? c.firstUserName : c.secondUserName
                     let receiverID = senderID == c.firstUserID ? c.secondUserID : c.firstUserID
+                    let content = c.messageTypeName != "text" ? c.messageTypeName : c.messageContent
                     let payload = APNSwiftPayload(alert: .init(title: senderName,
-                                                              body: c.messageContent),
+                                                              body: content),
                                                   sound: .normal("default"))
                     req.apns.send(payload, to: UUID(uuidString: receiverID)!, db: req.db)
                 }

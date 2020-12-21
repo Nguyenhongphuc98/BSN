@@ -10,11 +10,10 @@ import SwiftUI
 class BUserBook: BBook {
     
     var ownerName: String?
-    
     var ownerID: String?
+    var bookID: String
     
     @Published var status: BookStatus?
-    
     @Published var state: BookState?
     
     var statusDes: String
@@ -25,6 +24,7 @@ class BUserBook: BBook {
         status = .likeNew
         state = .available
         statusDes = ""
+        bookID = ""
         super.init()
     }
     
@@ -32,6 +32,7 @@ class BUserBook: BBook {
         self.status = .new
         self.state = .available
         self.statusDes = ""
+        self.bookID = ""
         
         super.init()
         
@@ -44,13 +45,14 @@ class BUserBook: BBook {
         self.cover = cover ?? "book_cover"
     }
     
-    init(ubid: String? = nil, uid: String? = nil, ownerName: String? = nil, status: String? = nil, title: String, author: String, state: String? = nil, cover: String? = nil, des: String? = nil) {
+    init(ubid: String? = nil, bookID: String = "", uid: String? = nil, ownerName: String? = nil, status: String? = nil, title: String, author: String, state: String? = nil, cover: String? = nil, des: String? = nil) {
         
         self.ownerID = uid
         self.ownerName = ownerName
         self.status = BookStatus(rawValue: status ?? "new")
         self.state = BookState(rawValue: state ?? "available")
         self.statusDes = des ?? "Không có mô tả tình trạng"
+        self.bookID = bookID
         
         super.init()
         

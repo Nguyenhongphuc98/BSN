@@ -37,7 +37,7 @@ public class ProfileViewModel: NetworkViewModel {
         books = []
         followed = false
         isfetched = false       
-        userBookManager = UserBookManager.shared
+        userBookManager = .init()
         userManager = UserManager()
         followManager = UserFollowManager()
         postManager = PostManager()
@@ -154,6 +154,7 @@ extension ProfileViewModel {
                             
                             let userBook = BUserBook(
                                 ubid: ub.id!,
+                                bookID: ub.bookID!,
                                 uid: ub.userID!,
                                 status: ub.status,
                                 title: ub.title!,
