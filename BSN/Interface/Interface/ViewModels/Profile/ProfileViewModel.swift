@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import UIKit
 import Business
+import SwiftUI
 
 public class ProfileViewModel: NetworkViewModel {
     
@@ -109,6 +110,23 @@ public class ProfileViewModel: NetworkViewModel {
         DispatchQueue.main.async {
             self.posts.insertUnique(item: news)
             self.objectWillChange.send()
+        }
+    }
+    
+    func deletePost(pid: String) {
+        willDeletePost(pid: pid)
+        NewsFeedViewModel.shared.willDeletePost(pid: pid)
+        postManager.deletePost(postID: pid)
+    }
+    
+    func willDeletePost(pid: String) {
+        guard let index = posts.firstIndex(where: { $0.id == pid }) else {
+            return
+        }
+        
+        withAnimation {
+            _ = posts.remove(at: index)
+            objectWillChange.send()
         }
     }
 }

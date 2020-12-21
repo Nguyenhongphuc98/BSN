@@ -50,6 +50,7 @@ class SessionManager {
         
         if sessions[targetID] == nil {
             print("add new target - nil")
+            sessions[targetID] = []
         }
         sessions[targetID] = listeners
         

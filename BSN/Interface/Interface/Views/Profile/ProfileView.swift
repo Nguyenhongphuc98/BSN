@@ -230,14 +230,32 @@ public struct ProfileView: View, PopToable {
         List {
             ForEach(viewModel.posts) { p in
                 VStack {
-                    NewsFeedCard(
-                        model: p,
-                        didRequestGoToDetail: {
-                            selectedNews.clone(from: p)
-                            isShowPostDetail = true
+                    ZStack(alignment: .topTrailing) {
+                        
+                        NewsFeedCard(
+                            model: p,
+                            didRequestGoToDetail: {
+                                selectedNews.clone(from: p)
+                                isShowPostDetail = true
+                            }
+                        ).id(UUID())
+                        
+                        if p.owner.id == AppManager.shared.currenUID {
+                            // More button
+                            Menu {
+                                Button {
+                                    viewModel.deletePost(pid: p.id)
+                                } label: {
+                                    Text("Xoá bài viết")
+                                }
+                            }
+                            label: {
+                                // More button
+                                Image(systemName: "ellipsis").padding()
+                            }
                         }
-                    )
-                        .id(UUID())
+                    }
+                    
                     Separator()
                 }
             }

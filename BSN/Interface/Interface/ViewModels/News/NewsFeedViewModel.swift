@@ -42,6 +42,12 @@ public class NewsFeedViewModel: NetworkViewModel {
     }
     
     func deletePost(pid: String) {
+        willDeletePost(pid: pid)
+        ProfileViewModel.shared.willDeletePost(pid: pid)
+        postManager.deletePost(postID: pid)
+    }
+    
+    func willDeletePost(pid: String) {
         guard let index = newsData.firstIndex(where: { $0.id == pid }) else {
             return
         }
@@ -50,7 +56,6 @@ public class NewsFeedViewModel: NetworkViewModel {
             _ = newsData.remove(at: index)
             objectWillChange.send()
         }
-        postManager.deletePost(postID: pid)
     }
     
     func loadMoreIfNeeded(item: NewsFeed) {
