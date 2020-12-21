@@ -41,18 +41,20 @@ class SessionManager {
     
     func connect(to targetID: String, listener: WebSocket) {
         
-        var listeners = sessions[targetID]
-        if  listeners == nil {
-            listeners = [listener]
-        } else {
-            listeners?.append(listener)
+        self.lock.withLockVoid {
+            var listeners = sessions[targetID]
+            if  listeners == nil {
+                listeners = [listener]
+            } else {
+                listeners?.append(listener)
+            }
+            
+            if sessions[targetID] == nil {
+                print("add new target - nil")
+                sessions[targetID] = []
+            }
+            sessions[targetID] = listeners
         }
-        
-        if sessions[targetID] == nil {
-            print("add new target - nil")
-            sessions[targetID] = []
-        }
-        sessions[targetID] = listeners
         
         print("Did connect target: \(targetID)")
         _ = listener.onClose.always { [weak self, weak listener] _ in
@@ -66,8 +68,10 @@ class SessionManager {
         guard var listeners = sessions[session] else {
             return
         }
-        listeners = listeners.filter { $0 !== listener }
-        sessions[session] = listeners        
+        self.lock.withLockVoid {            
+            listeners = listeners.filter { $0 !== listener }
+            sessions[session] = listeners
+        }
     }
     
     func send<T: Codable>(message: T, to sendOption: WebSocketSendOption) {

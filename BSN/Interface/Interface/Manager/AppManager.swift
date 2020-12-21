@@ -48,7 +48,7 @@ public class AppManager: ObservableObject {
     }
     
     public init() {
-        self.selectedIndex = 4
+        self.selectedIndex = 0
         self.currentAccount = Account()
         self.currentUser = User()
         self.navBarTitle = "SEB"

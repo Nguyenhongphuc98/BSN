@@ -132,7 +132,6 @@ class LoginViewModel: NetworkViewModel {
 // Social login (facebook)
 extension LoginViewModel {
     func loginWithFacebook() {
-        self.isLoading = true
         
         manager.logIn(permissions: ["public_profile", "email"], from: nil) { (result, error) in
             if error != nil {
@@ -141,10 +140,14 @@ extension LoginViewModel {
             }
             
             if !result!.isCancelled {
-                // login success
+                // login success from facebook
+                
+                self.isLoading = true
                 let request = GraphRequest(graphPath: "me", parameters: ["fields":"email"])
                 request.start { (_, res, _) in
                     guard let profileData = res as? [String: Any] else {
+                        self.isLoading = false
+                        self.message = "Bạn chưa được cấp quyền truy cập thông tin cá nhân"
                         return
                     }
                     //let email = profileData["email"] as? String
@@ -159,7 +162,6 @@ extension LoginViewModel {
                     self.accountManager.loginWithFacebook(account: ea)
                 }
             }
-                                        
         }
     }
 }
