@@ -17,7 +17,7 @@ let package = Package(
         .package(url: "https://github.com/vapor/apns", from: "1.0.0-rc"), // of Vapor, not suport certificate
         //.package(url:"https://github.com/matthijs2704/vapor-apns.git", from: "2.1.0") // was archived
         //.package(name: "apnswift", url: "https://github.com/kylebrowning/APNSwift.git", from: "2.1.0")
-        .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "4.0.0"),
+        //.package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "4.0.0"), // error when deploy, internal
         //.package(url: "https://github.com/IBM-Swift/Swift-SMTP", from: "5.1.200"),
         //.package(url: "https://github.com/onevcat/Hedwig.git", from: "1.1.0"),
         //.package(url: "https://github.com/PerfectlySoft/Perfect-SMTP.git", from: "3.1.1"),
@@ -38,7 +38,7 @@ let package = Package(
                 .product(name: "APNS", package: "apns"),
                 //.product(name: "VaporAPNS", package: "vapor-apns"),
                 //.product(name: "APNSwift", package: "apnswift"),
-                .product(name: "SwiftyJSON", package: "SwiftyJSON"),
+                //.product(name: "SwiftyJSON", package: "SwiftyJSON"),
                 //.product(name: "SwiftSMTP", package: "Swift-SMTP"),
                 //.product(name: "PerfectSMTP", package: "Perfect-SMTP"),
                 //.product(name: "MailCore", package: "MailCore"),

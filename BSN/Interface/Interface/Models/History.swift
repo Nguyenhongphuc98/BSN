@@ -52,6 +52,10 @@ class History: ObservableObject, AppendUniqueAble {
             /// It process same func, depen on current user and state will be excute exactly
             /// What we want
             self.ebManager.cancelExchangeReq(ebId: self.id)
+            // Update UI to sync
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                ExploreBookViewModel.shared.loadExchangeBooks()
+            }
         }
         self.style = .ucancel
     }

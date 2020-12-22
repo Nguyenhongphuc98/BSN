@@ -60,7 +60,7 @@
 
 import Vapor
 import Fluent
-import SwiftyJSON
+//import SwiftyJSON
 
 struct FacebookController: RouteCollection {
     
@@ -135,14 +135,17 @@ struct FacebookController: RouteCollection {
         let resourceURL = "https://graph.facebook.com/debug_token?input_token=\(facebook.password!)&access_token=\(g_access_token)"
         let uri = URI(unicodeScalarLiteral: resourceURL.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
       
-        return req.client.get(uri).flatMapThrowing { res in
-            try JSON(data: res.body!.getData(at: res.body!.readerIndex, length: res.body!.capacity)!)
+        return req.client.get(uri).flatMapThrowing { res -> FbResItem in
+            //try JSON(data: res.body!.getData(at: res.body!.readerIndex, length: res.body!.capacity)!)
+            //try res.content.decode(FbResItem.self)
+            let data = try res.body!.getData(at: res.body!.readerIndex, length: res.body!.capacity)
+            return try JSONDecoder().decode(FbResItem.self, from: data)
         }
-        .map({ (json)  in
+        .map({ (fbRes)  in
             
-            let app_id = json["data"]["app_id"].string
-            let user_id = json["data"]["user_id"].string
-            let is_valid = json["data"]["is_valid"].bool!
+            let app_id = fbRes.data.app_id
+            let user_id = fbRes.data.user_id
+            let is_valid = fbRes.data.is_valid
             
             // This token is valid of facebook
             guard is_valid else {
@@ -154,6 +157,22 @@ struct FacebookController: RouteCollection {
             }
             return false
         })
+//        .map({ (json)  in
+//
+//            let app_id = json["data"]["app_id"].string
+//            let user_id = json["data"]["user_id"].string
+//            let is_valid = json["data"]["is_valid"].bool!
+//
+//            // This token is valid of facebook
+//            guard is_valid else {
+//                return false
+//            }
+//            // It have to belong to our app and of uid loging
+//            if user_id == facebook.username && app_id == g_app_id {
+//                return true
+//            }
+//            return false
+//        })
     }
     
     func saveAccount(req: Request, facebook: Account.Update) -> EventLoopFuture<Account> {
@@ -167,10 +186,26 @@ struct FacebookController: RouteCollection {
                 let resourceURL = "https://graph.facebook.com/\(facebook.username)?fields=id,name,picture&access_token=\(facebook.password!)"
                 let uri = URI(string: resourceURL)
               
-                return req.client.get(uri).flatMapThrowing { res in
-                    try JSON(data: res.body!.getData(at: res.body!.readerIndex, length: res.body!.capacity)!)
+                return req.client.get(uri).flatMapThrowing { res -> UserResponse in
+                    //try JSON(data: res.body!.getData(at: res.body!.readerIndex, length: res.body!.capacity)!)
+                    //try res.content.decode(UserResponse.self)
+                    let data = try res.body!.getData(at: res.body!.readerIndex, length: res.body!.capacity)
+                    return try JSONDecoder().decode(UserResponse.self, from: data)
                 }
-                .flatMap({ (json)  in
+                .flatMap { userResponse in
+                    let user = User(
+                        username: facebook.username,
+                        displayname: userResponse.name,
+                        avatar: userResponse.url,
+                        cover: "https://farm4.staticflickr.com/3692/10621312106_02476d5c63_o.jpg", // default cover
+                        location: "0-0- ", // default location
+                        accountID: account.id!
+                    )
+                    
+                    return user.save(on: req.db)
+                        .map { return account.asPublic() }
+                }
+                //.flatMap({ (json)  in
                     
                     // Ex response data:
                     //                    {
@@ -186,27 +221,60 @@ struct FacebookController: RouteCollection {
                     //                        }
                     //                    }
                     
-                    let name = json["name"].string!
-                    let picture = json["picture"]["data"]["url"].string ?? "undeifine"
-                    
-                    let user = User(
-                        username: facebook.username,
-                        displayname: name,
-                        avatar: picture,
-                        cover: "https://farm4.staticflickr.com/3692/10621312106_02476d5c63_o.jpg", // default cover
-                        location: "0-0- ", // default location
-                        accountID: account.id!
-                    )
-                    
-                    return user.save(on: req.db)
-                        .map { return account.asPublic() }
-                })
+//                    let name = json["name"].string!
+//                    let picture = json["picture"]["data"]["url"].string ?? "undeifine"
+//
+//
+//                    let user = User(
+//                        username: facebook.username,
+//                        displayname: name,
+//                        avatar: picture,
+//                        cover: "https://farm4.staticflickr.com/3692/10621312106_02476d5c63_o.jpg", // default cover
+//                        location: "0-0- ", // default location
+//                        accountID: account.id!
+//                    )
+//
+//                    return user.save(on: req.db)
+//                        .map { return account.asPublic() }
+//                })
             }
     }
 }
+    
+struct FbResItem: Decodable {
+    struct Data: Decodable {
+        var app_id: String?
+        var user_id: String?
+        var is_valid: Bool
+    }
+    
+    var data: Data
+}
 
-//struct FbResItem: Content {
-//    var app_id: String?
-//    var user_id: String?
-//    var is_valid: Bool
-//}
+struct RawUserResponse: Decodable {
+    struct Picture: Decodable {
+        struct Data: Decodable {
+            var url: String
+        }
+        
+        var data: Data
+    }
+    var id: String
+    var name: String
+    var picture: Picture
+}
+
+struct UserResponse: Decodable {
+    var id: String
+    var name: String
+    var url: String
+
+    init(from decoder: Decoder) throws {
+        let rawResponse = try RawUserResponse(from: decoder)
+        
+        id = rawResponse.id
+        name = rawResponse.name
+        url = rawResponse.picture.data.url
+    }
+}
+

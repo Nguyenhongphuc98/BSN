@@ -32,7 +32,7 @@ class SubmitExchangeBookViewModel: NetworkViewModel {
         
         exchangeBookManager.saveExchangeBook(eb: eb)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            ExploreBookViewModel.shared.loadExchangeBooks(page: 0)
+            ExploreBookViewModel.shared.loadExchangeBooks()
         }
     }
     
