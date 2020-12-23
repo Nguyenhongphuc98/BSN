@@ -166,6 +166,8 @@ struct InChatView: View {
     
     func viewAppeard() {
         viewModel.fetchData(chat: chat)
+        // Force update num unread notifies for tabbar
+        AppManager.shared.updateTabbar(chats: ChatViewModel.shared.chats)
     }
 }
 

@@ -138,7 +138,7 @@ struct FacebookController: RouteCollection {
         return req.client.get(uri).flatMapThrowing { res -> FbResItem in
             //try JSON(data: res.body!.getData(at: res.body!.readerIndex, length: res.body!.capacity)!)
             //try res.content.decode(FbResItem.self)
-            let data = try res.body!.getData(at: res.body!.readerIndex, length: res.body!.capacity)
+            let data = try res.body!.getData(at: res.body!.readerIndex, length: res.body!.capacity)!
             return try JSONDecoder().decode(FbResItem.self, from: data)
         }
         .map({ (fbRes)  in
@@ -189,7 +189,7 @@ struct FacebookController: RouteCollection {
                 return req.client.get(uri).flatMapThrowing { res -> UserResponse in
                     //try JSON(data: res.body!.getData(at: res.body!.readerIndex, length: res.body!.capacity)!)
                     //try res.content.decode(UserResponse.self)
-                    let data = try res.body!.getData(at: res.body!.readerIndex, length: res.body!.capacity)
+                    let data = try res.body!.getData(at: res.body!.readerIndex, length: res.body!.capacity)!
                     return try JSONDecoder().decode(UserResponse.self, from: data)
                 }
                 .flatMap { userResponse in

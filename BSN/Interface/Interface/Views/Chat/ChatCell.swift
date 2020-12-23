@@ -81,9 +81,7 @@ struct ChatCell: View {
         showInchat = true
         chat.seen = true
         let updatechat = EChat(id: chat.id!, seen: chat.seen)
-        chatManager.updateChat(chat: updatechat)
-        // Force update num unread notifies for tabbar
-        AppManager.shared.updateTabbar(chats: ChatViewModel.shared.chats)
+        chatManager.updateChat(chat: updatechat)        
     }
 }
 

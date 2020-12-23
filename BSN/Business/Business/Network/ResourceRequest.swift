@@ -24,7 +24,7 @@ class ResourceRequest<ResourceType>  where ResourceType: Codable {
     //let baseURL = "http://localhost:8080/api/v1/"
     //let baseURL = "http://10.45.94.73:8080/api/v1/"
     //let baseURL = "http://192.168.0.102:8080/api/v1/"
-    let baseURL = "http://\(hostIp)/api/v1/"
+    let baseURL = "https://\(hostIp)/api/v1/"
     
     // Connect to a component of server
     var componentPath: String
