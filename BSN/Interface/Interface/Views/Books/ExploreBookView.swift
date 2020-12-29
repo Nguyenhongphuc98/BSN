@@ -60,6 +60,7 @@ public struct ExploreBookView: View, PopToable {
             TabView(selection: self.$selectedSegment){
                 
                 BBookGrid(models: viewModel.suggestBooks, style: .suggestbook)
+                    .tag(0)
                     .environmentObject(navState)
                 
                 ExchangeBookList(models: viewModel.exchangeBooks)
