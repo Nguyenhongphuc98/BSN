@@ -14,7 +14,7 @@ public struct ExploreBookView: View, PopToable {
     @EnvironmentObject var navState: NavigationState
     
     // Main properties
-    @StateObject var viewModel: ExploreBookViewModel = ExploreBookViewModel()
+    @StateObject var viewModel: ExploreBookViewModel = .shared
     
     @EnvironmentObject var root: AppManager
     

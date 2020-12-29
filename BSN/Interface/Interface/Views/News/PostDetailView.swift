@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PostDetailView: View {
     
-    @StateObject private var viewModel: PostDetailViewModel = PostDetailViewModel()
+    @StateObject private var viewModel: PostDetailViewModel = .init()
     
     @Environment(\.presentationMode) var presentationMode
     

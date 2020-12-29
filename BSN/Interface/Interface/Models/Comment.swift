@@ -34,7 +34,7 @@ class Comment: ObservableObject, AppendUniqueAble {
         subcomments = firstLevel ? [Comment(firstLevel: false), Comment(firstLevel: false)] : []
     }
     
-    init(id: String, parent: String, owner: User, content: String, level: Int) {
+    init(id: String, parent: String, owner: User, content: String, level: Int, cmtDate: String?) {
         self.id = id
         self.parent = parent
         self.owner = owner
@@ -42,6 +42,7 @@ class Comment: ObservableObject, AppendUniqueAble {
         self.content = content
         self.level = level
         self.subcomments = []
+        self.commentDate = Date.getDate(dateStr: cmtDate)
     }
     
     init(dummy: Bool) {

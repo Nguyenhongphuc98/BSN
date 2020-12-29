@@ -31,9 +31,6 @@ class SubmitExchangeBookViewModel: NetworkViewModel {
         )
         
         exchangeBookManager.saveExchangeBook(eb: eb)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            ExploreBookViewModel.shared.loadExchangeBooks()
-        }
     }
     
     private func setupReceiveSaveEBInfo() {
@@ -49,7 +46,14 @@ class SubmitExchangeBookViewModel: NetworkViewModel {
                 DispatchQueue.main.async {
                     self.isLoading = false
                     
-                    self.resourceInfo = (eb.id == "undefine") ? .savefailure : .success
+                    if eb.id == "undefine" {
+                        self.resourceInfo = .savefailure
+                    } else {
+                        self.resourceInfo = .success
+                        DispatchQueue.main.async {
+                            ExploreBookViewModel.shared.loadExchangeBooks()
+                        }
+                    }                   
                     self.showAlert.toggle()
                 }
             }

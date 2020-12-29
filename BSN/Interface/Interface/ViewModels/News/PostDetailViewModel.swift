@@ -25,11 +25,9 @@ class PostDetailViewModel: NetworkViewModel {
     @Published var replingName: String
     
     var numCmtFetched: Int
-    
     var currentPage: Int
     
     private var commentManager: CommentManager
-    
     private var postManager: PostManager
     
     var canLoadMore: Bool {
@@ -127,7 +125,8 @@ class PostDetailViewModel: NetworkViewModel {
             parent: ec.parentID,
             owner: User(id: ec.userID, photo: ownerSave ? AppManager.shared.currentUser.avatar : ec.userPhoto, name: ownerSave ? AppManager.shared.currentUser.displayname : ec.userName!), // nil mean curent just comment
             content: ec.content,
-            level: ec.parentID == ec.postID ? 0 : 1
+            level: ec.parentID == ec.postID ? 0 : 1,
+            cmtDate: ec.createdAt
         )
         
         if cmt.level == 0 {

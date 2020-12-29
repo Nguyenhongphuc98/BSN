@@ -28,6 +28,7 @@ struct HistoryView: View {
                     exchange.tag(1)
                 })
                 .tabViewStyle(PageTabViewStyle())
+                .embededLoadingFull(isLoading: $viewModel.isLoading)
         }
     }
     
