@@ -79,7 +79,6 @@ public struct ProfileView: View, PopToable {
                     }
                 }
             }
-           
             
             if viewModel.isLoading {
                 Loading()
@@ -194,14 +193,15 @@ public struct ProfileView: View, PopToable {
     
     private var cover: some View {
         ZStack {
-            BSNImage(urlString: viewModel.user.cover, tempImage: "cover")
-                .frame(width: UIScreen.screenWidth ,height: 180)
-                .id(viewModel.user.cover ?? UUID().uuidString)
-                .clipped()
-                .onTapGesture {
-                    typeOfActionSheet = .Cover
-                    showingActionSheet = true
-                }
+            Button {
+                typeOfActionSheet = .Cover
+                showingActionSheet = true
+            } label: {
+                BSNImage(urlString: viewModel.user.cover, tempImage: "cover")
+                    .frame(width: UIScreen.screenWidth ,height: 180)
+                    .id(viewModel.user.cover ?? UUID().uuidString)
+                    .clipped()
+            }
             
             if viewModel.isUploading && typeOfActionSheet == .Cover {
                 uploadImageProgess
