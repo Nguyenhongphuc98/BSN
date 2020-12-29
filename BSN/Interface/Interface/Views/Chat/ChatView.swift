@@ -40,6 +40,7 @@ public struct ChatView: View {
                                 displayname: c.partnerName,
                                 avatar: c.partnerPhoto)
                         )
+                        .environmentObject(root)
                     }
                     
                     if viewModel.searchChats.isEmpty {

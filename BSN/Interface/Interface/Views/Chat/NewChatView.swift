@@ -33,6 +33,7 @@ struct NewChatView: View {
                             didRequestChatTo?(u)
                             dismiss()
                         }
+                        .environmentObject(AppManager.shared)
                     }
                 }
                 
