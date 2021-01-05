@@ -17,6 +17,7 @@ public class ProfileViewModel: NetworkViewModel {
     
     @Published var posts: [NewsFeed]
     @Published var books: [BUserBook]
+    @Published var displayBooks: [BUserBook]
     @Published public var user: User
     @Published public var followed: Bool
     
@@ -27,6 +28,10 @@ public class ProfileViewModel: NetworkViewModel {
     
     private var isfetched: Bool // all data fetched before
     
+    // Search internal books
+    @Published var isFocus: Bool
+    @Published var searchText: String
+    
     // Upload image to S3
     @Published var uploadProgess: Float
     @Published var isUploading: Bool
@@ -35,12 +40,16 @@ public class ProfileViewModel: NetworkViewModel {
         user = User()
         posts = []
         books = []
+        displayBooks = []
         followed = false
         isfetched = false       
         userBookManager = .init()
         userManager = UserManager()
         followManager = UserFollowManager()
         postManager = PostManager()
+        
+        isFocus = false
+        searchText = ""
         
         uploadProgess = 0
         isUploading = false
@@ -50,6 +59,25 @@ public class ProfileViewModel: NetworkViewModel {
         observerUserInfo()
         observerUserFollow()
         observerNewestPosts()
+        setupSearchInternal()
+    }
+    
+    func setupSearchInternal() {
+        self.$isFocus.sink { (isFocus) in
+            if !isFocus {
+                self.displayBooks = self.books
+            }
+        }
+        .store(in: &cancellables)
+        
+        self.$searchText.sink { (text) in
+            if text.isEmpty {
+                self.displayBooks = self.books
+            } else {
+                self.displayBooks = self.books.filter({ $0.title.lowercased().contains(text.lowercased()) })
+            }
+        }
+        .store(in: &cancellables)
     }
     
     public func forceRefeshData() {
@@ -87,7 +115,8 @@ public class ProfileViewModel: NetworkViewModel {
     
     func reloadPostNUserbook(uid: String? = nil) {
         self.books = []
-        self.posts = []        
+        self.posts = []
+        self.displayBooks = []
         userBookManager.getUserBooks(uid: uid ?? self.user.id)
         postManager.getPersonalNewestPosts(page: 0, uid: uid ?? self.user.id)
     }
@@ -164,6 +193,9 @@ extension ProfileViewModel {
                             )
                             self.books.appendUnique(item: userBook)
                         }
+                        //if self.displayBooks.isEmpty {
+                            self.displayBooks = self.books
+                        //}
                         self.objectWillChange.send()
                     }
                 }

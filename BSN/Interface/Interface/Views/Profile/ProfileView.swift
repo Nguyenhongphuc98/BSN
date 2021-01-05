@@ -147,7 +147,7 @@ public struct ProfileView: View, PopToable {
                             .robotoLight(size: 13)
                             
                     }
-                    .padding()
+                    //.padding()
                     
                     Rectangle()
                         .fill(Color.gray)
@@ -266,13 +266,23 @@ public struct ProfileView: View, PopToable {
     
     private var books: some View {
         ZStack(alignment: .trailing) {
-            BBookGrid(
-                models: viewModel.books,
-                style: .mybook,
-                isGuest: !(self.userID == nil || self.userID == AppManager.shared.currenUID)
-            )
-                .id("bbookgrid")
-                .padding(.bottom)
+            
+            VStack {
+                SearchBar(isfocus: $viewModel.isFocus, searchText: $viewModel.searchText)
+//                    .padding(.top, 5)
+//                    .onChange(of: searchText) { _ in
+//                        viewModel.searchBook(text: searchText)
+//                    }
+                
+                BBookGrid(
+                    //models: viewModel.books,
+                    models: viewModel.displayBooks,
+                    style: .mybook,
+                    isGuest: !(self.userID == nil || self.userID == AppManager.shared.currenUID)
+                )
+                    .id("bbookgrid")
+                    .padding(.bottom)
+            }
             
             NavigationLink(
                 destination: SearchAddBookView()
@@ -309,6 +319,10 @@ public struct ProfileView: View, PopToable {
         VStack {
             Segment(tabNames: ["   Bài viết   ", "   Tủ sách   "], focusIndex: $selectedSegment) {
                 proxy.scrollTo("des", anchor: .top)
+                if self.selectedSegment == 0 {
+                    // hide keyboard in post view
+                    UIApplication.shared.endEditing(true)
+                }
             }
                 .padding(.vertical, 5)
             

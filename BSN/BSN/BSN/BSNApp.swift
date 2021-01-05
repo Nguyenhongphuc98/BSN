@@ -59,12 +59,12 @@ struct BSNApp: App {
                 TabView(selection: $appManager.selectedIndex) {
                     NavigationView {
                         NewsFeedView()
-                            .navigationTitle("Bài viết")
+                            .navigationBarTitle(Text("Bài viết"))
                             .navigationBarHidden(true)
                     }
                     .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .news) }
                     .tag(0)
-                    
+
                     NavigationView {
                         ExploreBookView()
                             .navigationBarTitle("", displayMode: .inline)
@@ -74,21 +74,21 @@ struct BSNApp: App {
                     .navigationViewStyle(StackNavigationViewStyle())
                     .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .search) }
                     .tag(1)
-                    
+
                     NavigationView {
                         ChatView()
                             .navigationBarTitle("Tin nhắn", displayMode: .large)
                     }
                     .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .chat) }
                     .tag(2)
-                    
+
                     NavigationView {
                         NotifyView()
                             .navigationBarTitle("Thông báo", displayMode: .large)
                     }
                     .tabItem { ItemContent(selectedIndex: $appManager.selectedIndex, type: .notify) }
                     .tag(3)
-                    
+
                     NavigationView {
                         ProfileView(vm: ProfileViewModel.shared)
                             .navigationBarTitle(Text("Trang cá nhân"), displayMode: .inline)
@@ -99,11 +99,11 @@ struct BSNApp: App {
                     .tag(4)
                 }
                 .environmentObject(appManager)
-                
+
                 // Badge
                 BadgeView(type: .chat)
                     .offset(x: (geometry.size.width / 2) + 5, y: -28)
-                
+
                 BadgeView(type: .notify)
                     .offset(x: (geometry.size.width / 5) * 3.5, y: -28)
             }

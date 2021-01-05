@@ -36,13 +36,16 @@ struct EmbededLoadingFullView: ViewModifier {
     @Binding var isLoading: Bool
     
     func body(content: Content) -> some View {
-        ZStack {
-            content
-            
-            if isLoading {
-                LoadingFullScreen()
+        GeometryReader(content: { geometry in
+            ZStack {
+                content
+                
+                if isLoading {
+                    LoadingFullScreen()
+                        .position(x: geometry.size.width / 2 - 20, y: geometry.size.height / 2 - 20)
+                }
             }
-        }
+        })
     }
 }
 

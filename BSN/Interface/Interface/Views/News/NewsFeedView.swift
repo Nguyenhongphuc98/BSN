@@ -12,12 +12,12 @@ public struct NewsFeedView: View {
     @EnvironmentObject var root: AppManager
     
     @StateObject var viewModel: NewsFeedViewModel = NewsFeedViewModel.shared
-    
+
     @State private var presentCPV: Bool = false
-    
+
     @State private var isShowPostDetail: Bool = false
     @State private var isShowProfile: Bool = false
-    
+
     @ObservedObject private var selectedNews: NewsFeed = NewsFeed()
     @State private var selectedUserID: String = ""
   
@@ -29,17 +29,17 @@ public struct NewsFeedView: View {
         VStack {
             navToProfileLabel
             navToPostDetailLabel
-            
+
             editor
-            
+
             Separator()
-            
+
             // News feed
             List {
                 ForEach(viewModel.newsData, id: \.self) { news in
                     VStack {
                         ZStack(alignment: .topTrailing) {
-                            
+
                             NewsFeedCard(
                                 model: news,
                                 didRequestGoToDetail: {
@@ -53,7 +53,7 @@ public struct NewsFeedView: View {
                             .onAppear(perform: {
                                 self.viewModel.loadMoreIfNeeded(item: news)
                             })
-                            
+
                             if news.owner.id == AppManager.shared.currenUID {
                                 // More button
                                 Menu {
@@ -74,11 +74,12 @@ public struct NewsFeedView: View {
                     }
                 }
                 .listRowInsets(.zero)
-            }            
+            }
             .listStyle(PlainListStyle())
-            .embededLoadingFull(isLoading: $viewModel.isLoading)
+            .embededLoadingFull(isLoading: $viewModel.isLoading)            
+            .clipped()
             .onAppear(perform: self.viewDidAppear)
-    
+
             if viewModel.isLoadmore {
                 CircleLoading(frame: CGSize(width: 20, height: 20))
             }
@@ -89,10 +90,10 @@ public struct NewsFeedView: View {
         // What's on your mind
         HStack() {
             CircleImage(image: root.currentUser.avatar, diameter: 47)
-            
+
             Text("Viết một thảo luận mới")
                 .font(.custom("Roboto-Bold", size: 13))
-            
+
             Spacer()
         }
         .padding(.top, 30)
@@ -104,7 +105,7 @@ public struct NewsFeedView: View {
             CreatePostView()
         }
     }
-    
+
     private var navToPostDetailLabel: some View {
         NavigationLink(
             destination: PostDetailView(post: selectedNews, didReact: { (post) in
@@ -117,7 +118,7 @@ public struct NewsFeedView: View {
         .frame(width: 0, height: 0)
         .opacity(0)
     }
-    
+
     private var navToProfileLabel: some View {
         NavigationLink(
             destination: ProfileView(uid: selectedUserID, vm: ProfileViewModel())
@@ -129,9 +130,9 @@ public struct NewsFeedView: View {
         .frame(width: 0, height: 0)
         .opacity(0)
     }
-   
+
     func viewDidAppear() {
-        print("news-appeard")        
+        print("news-appeard")
     }
 }
 

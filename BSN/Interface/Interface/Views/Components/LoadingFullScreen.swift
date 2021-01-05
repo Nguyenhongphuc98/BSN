@@ -36,8 +36,8 @@ struct CircleLoading: View {
             .trim(from: 0, to: 0.8)
             .stroke(AngularGradient(gradient: .init(colors: [._primary, .white]), center: .center), style: StrokeStyle(lineWidth: 3, lineCap: .round))
             .frame(width: frame.width, height: frame.height)
-            .rotationEffect(.init(degrees: animate ? 360 : 0))
-            .animation(Animation.easeIn(duration: 0.6).repeatForever(autoreverses: false))
+            .rotationEffect(.init(degrees: animate ? 360 : 0))            
+            .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
             .onAppear(perform: self.viewAppead)
     }
     
