@@ -76,8 +76,8 @@ public struct NewsFeedView: View {
                 .listRowInsets(.zero)
             }            
             .listStyle(PlainListStyle())
-            .onAppear(perform: self.viewDidAppear)
             .embededLoadingFull(isLoading: $viewModel.isLoading)
+            .onAppear(perform: self.viewDidAppear)
     
             if viewModel.isLoadmore {
                 CircleLoading(frame: CGSize(width: 20, height: 20))

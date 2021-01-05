@@ -41,7 +41,7 @@ class InChatViewModel: NetworkViewModel {
         uploadProgess = 0
         isUploading = false
         
-        isLoadmore = true
+        isLoadmore = false
         allMessageFetched = false
         currentPage = 0
         didLoadMore = false
@@ -126,6 +126,9 @@ class InChatViewModel: NetworkViewModel {
     }
     
     func markSeen() {
+        guard chat.id != nil else {
+            return
+        }
         chat.seen = true
         let updatechat = EChat(id: chat.id!, seen: chat.seen)
         updatechatManager.updateChat(chat: updatechat)
@@ -152,6 +155,13 @@ extension InChatViewModel {
                     } else {
                         
                         self.resourceInfo = .success
+                        if self.chat.id == nil {
+                            // this is first time send mess
+                            // So we need observer reply message
+                            // With text before, we register in fetching page 0
+                            self.chat.id = mess.chatID
+                            self.messageManager.connectWebSocket(chatID: self.chat.id!)
+                        }
                     }
                 }
             }
@@ -191,6 +201,8 @@ extension InChatViewModel {
                             }
                             //self.objectWillChange.send()
                         }
+                    } else {
+                        self.allMessageFetched = true
                     }
                     
                     self.isLoading = false
@@ -214,9 +226,12 @@ extension InChatViewModel {
                     
                     // This chat was text before (not new),
                     // So we need get message of this chat
-                    if chat.id! != kUndefine {
+                    if chat.id != nil && chat.id! != kUndefine {
                         self.chat.id = chat.id
                         self.fetchMessages(page: 0)
+                    } else {
+                        // no message in database, because not chated
+                        self.allMessageFetched = true
                     }
                 }
             }

@@ -11,7 +11,7 @@ struct InChatView: View {
     
     @EnvironmentObject var chat: Chat
     
-    @StateObject var viewModel: InChatViewModel = InChatViewModel()
+    @StateObject var viewModel: InChatViewModel = .init()
     
     @EnvironmentObject var root: AppManager
     

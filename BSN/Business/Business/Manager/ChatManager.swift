@@ -36,15 +36,19 @@ public class ChatManager {
         webSocket = SocketFollow()
     }
     
+    public func connectWebSocket(uid: String) {
+        webSocket.connect(url: wsChatsApi + uid)
+        webSocket.didReceiveData = { chat in
+            print("Business did receive new chat with message: \(chat.messageContent!)")
+            self.receiveChatPublisher.send(chat)
+        }
+    }
+    
     // This result should show in chat view (list recently chat)
     public func getChats(page: Int, per: Int = BusinessConfigure.newestChatsPerPage, currentUid: String) {
         if page == 0 {
             // Setup receive data for first time fetch data
-            webSocket.connect(url: wsChatsApi + currentUid)
-            webSocket.didReceiveData = { chat in
-                print("Business did receive new chat with message: \(chat.messageContent!)")
-                self.receiveChatPublisher.send(chat)
-            }
+            connectWebSocket(uid: currentUid)
         }
         networkRequest.getNewestChats(page: page, per: per, publisher: getRecentlyChatsPublisher)
     }

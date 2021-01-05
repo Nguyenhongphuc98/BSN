@@ -28,7 +28,7 @@ struct CircleLoading: View {
     
     @State private var animate: Bool = false
     
-    var frame: CGSize
+    var frame: CGSize = CGSize(width: 30, height: 30)
     
     var body: some View {
         
@@ -36,17 +36,12 @@ struct CircleLoading: View {
             .trim(from: 0, to: 0.8)
             .stroke(AngularGradient(gradient: .init(colors: [._primary, .white]), center: .center), style: StrokeStyle(lineWidth: 3, lineCap: .round))
             .frame(width: frame.width, height: frame.height)
-            .rotationEffect(.init(radians: animate ? 360 : 0))
-            .animation(Animation.easeIn(duration: 3).repeatForever(autoreverses: false))
+            .rotationEffect(.init(degrees: animate ? 360 : 0))
+            .animation(Animation.easeIn(duration: 0.6).repeatForever(autoreverses: false))
             .onAppear(perform: self.viewAppead)
-            .onDisappear(perform: self.viewDisAppead)
     }
     
     func viewAppead() {
-        animate = true
-    }
-    
-    func viewDisAppead() {
-        animate = false
+        animate.toggle()
     }
 }
