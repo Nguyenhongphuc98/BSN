@@ -9,9 +9,9 @@ import SwiftUI
 
 class BSusggestBook: BBook {
     
-    var avgRating: Float
+    @Published var avgRating: Float
     
-    var numReview: Int
+    @Published var numReview: Int
     
     override init() {
         avgRating = 3.5

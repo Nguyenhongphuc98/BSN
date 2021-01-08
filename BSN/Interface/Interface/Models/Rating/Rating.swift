@@ -8,49 +8,83 @@
 import SwiftUI
 
 // Model in review book view
-class Rating: AppendUniqueAble {
+class Rating: AppendUniqueAble, ObservableObject {
     
     var id: String
+    var title: String
+    var content: String
+    var createDate: Date
     
     var authorPhoto: String
-    
     var authorID: String
-    
-    var title: String
-    
-    var rating: Float
-    
-    var content: String
-    
-    var createDate: Date
     
     var ratingBookID: String
     
+    var writeRating: Int
+    var characterRating: Int
+    var targetRating: Int
+    var infoRating: Int
+    var avgRating: Float
+    
     init() {
-        id = "undefine"
+        id = kUndefine
+        title = ""
+        content = ""
+        createDate = Date()
+        
         authorPhoto = fakeAvatars.randomElement()!
-        authorID = UUID().uuidString
-        title = "Sách hay nên đọc"
-        rating = 4.3
-        content = fakeComments.randomElement()!
-        createDate = fakedates.randomElement()!
-        ratingBookID = UUID().uuidString
+        authorID = kUndefine
+        
+        ratingBookID = kUndefine
+        
+        writeRating = 0
+        characterRating = 0
+        targetRating = 0
+        infoRating = 0
+        avgRating = 0
     }
     
-    init(id: String? = nil, authorPhoto: String, authorID: String, title: String, rating: Float, content: String, bookID: String, createAt: String? = nil) {
+    init(id: String? = nil, authorPhoto: String, authorID: String,
+         title: String, character: Int, write: Int, target: Int,
+         info: Int, rating: Float, content: String, bookID: String,
+         createAt: String? = nil) {
 
         self.id = id ?? "undefine"
         self.authorID = authorID
         self.authorPhoto = authorPhoto
         self.title = title
-        self.rating = rating
+        
         self.content = content
         //self.createDate = Date()
         self.ratingBookID = bookID
         self.createDate = Date.getDate(dateStr: createAt)
         
+        self.writeRating = write
+        self.characterRating = character
+        self.targetRating = target
+        self.infoRating = info
+        self.avgRating = rating
+        
         // ReCheck title
         self.title = genrateAutoTitle(title: title)
+    }
+    
+    func clone(other: Rating) {
+
+        self.id = other.id
+        self.authorID = other.authorID
+        self.authorPhoto = other.authorPhoto
+        self.title = other.title
+        
+        self.content = other.content
+        self.ratingBookID = other.ratingBookID
+        self.createDate = other.createDate
+        
+        self.writeRating = other.writeRating
+        self.characterRating = other.characterRating
+        self.targetRating = other.targetRating
+        self.infoRating = other.infoRating
+        self.avgRating = other.avgRating
     }
     
     func genrateAutoTitle(title: String) -> String {
@@ -58,19 +92,37 @@ class Rating: AppendUniqueAble {
             return title
         }
         
-        if rating == 5 {
+        if avgRating == 5 {
             return "Rất hài lòng"
         }
-        else if rating >= 4 {
+        else if avgRating >= 4 {
             return "Hài lòng"
         }
-        else if rating >= 2.5 {
+        else if avgRating >= 2.5 {
             return " Bình thường"
         }
-        else if rating >= 2 {
+        else if avgRating >= 2 {
             return "Không hài lòng"
         } else {
             return "Rất không Hài lòng"
         }
+    }
+    
+    func clear() {
+        id = kUndefine
+        title = ""
+        content = ""
+        createDate = Date()
+        
+        authorPhoto = fakeAvatars.randomElement()!
+        authorID = kUndefine
+        
+        ratingBookID = kUndefine
+        
+        writeRating = 0
+        characterRating = 0
+        targetRating = 0
+        infoRating = 0
+        avgRating = 0
     }
 }

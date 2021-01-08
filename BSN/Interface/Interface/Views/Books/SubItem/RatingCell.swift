@@ -27,7 +27,7 @@ struct RatingCell: View {
                         Spacer()
                     }
                     
-                    StarRating(rating: model.rating)
+                    StarRating(rating: model.avgRating)
                 }
             }
             

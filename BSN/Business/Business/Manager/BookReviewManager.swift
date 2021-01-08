@@ -32,6 +32,10 @@ public class BookReviewManager {
     public func saveReview(review: EBookReview) {
         networkRequest.saveBookReview(bookReview: review, publisher: changePublisher)
     }
+    
+    public func updateReview(review: EBookReview) {
+        networkRequest.updateBookReview(bookReview: review, publisher: changePublisher)
+    }
 
     public func deleteReview(reivewID: String) {
         networkRequest.deleteReview(reviewID: reivewID)

@@ -13,7 +13,7 @@ struct BookDetailView: View, PopToable {
     @EnvironmentObject var navState: NavigationState
     
     // Main properties
-    @StateObject var viewModel: BookDetailViewModel = BookDetailViewModel()
+    @StateObject var viewModel: BookDetailViewModel = .init()
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -23,6 +23,7 @@ struct BookDetailView: View, PopToable {
     @State var showExchangeBook: Bool = false
     
     var bookID: String
+    @StateObject private var passthroughtRating: Rating = .init()
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -38,6 +39,8 @@ struct BookDetailView: View, PopToable {
                         description
 
                         reviews
+                        
+                        Spacer()
                     }
                 }
             }
@@ -217,11 +220,13 @@ struct BookDetailView: View, PopToable {
                     VStack {
                         ZStack(alignment: .topTrailing) {
                             RatingCell(model: review)
+                                .id(UUID())
                             
                             if review.authorID == AppManager.shared.currenUID {
                                 Menu {
                                     Button {
                                         viewModel.deleteReview(rid: review.id)
+                                        passthroughtRating.clear()
                                     } label: {
                                         Text("Xoá đánh giá")
                                     }
@@ -251,9 +256,12 @@ struct BookDetailView: View, PopToable {
         HStack {
             Spacer()
             Button(action: {
+                if let r = viewModel.getReiviewOfcurrentUser() {
+                    passthroughtRating.clone(other: r)
+                }
                 showRatingView.toggle()
             }, label: {
-                Text("Để lại đánh giá")
+                Text("\(viewModel.reviewed ? "Sửa" : "Tạo") đánh giá")
             })
             .buttonStyle(BaseButtonStyle(size:.large))
             
@@ -266,13 +274,18 @@ struct BookDetailView: View, PopToable {
         .shadow(radius: 2, y: -2)
         .sheet(isPresented: $showRatingView, content: {
             RatingView(bookName: viewModel.model.title, bookID: viewModel.model.id!) {
+                
+                // Did rating
+                passthroughtRating.clear()
                 viewModel.reloadData()
             }
+            .environmentObject(passthroughtRating)
         })
     }
     
     var backButton: some View {
         Button {
+            ExploreBookViewModel.shared.reloadTopBooks()
             presentationMode.wrappedValue.dismiss()
         } label: {
             BackWardButton()

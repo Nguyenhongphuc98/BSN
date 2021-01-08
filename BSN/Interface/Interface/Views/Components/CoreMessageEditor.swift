@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CoreMessageEditor: View {
     
-    @State private var message: String = ""
+    @State var message: String = ""
     
     var placeHolder: String
     

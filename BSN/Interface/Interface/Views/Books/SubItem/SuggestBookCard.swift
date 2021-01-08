@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SuggestBookCard: View {
     
-    var model: BSusggestBook
+    @StateObject var model: BSusggestBook
     
     @EnvironmentObject var navState: NavigationState
     
@@ -27,6 +27,7 @@ struct SuggestBookCard: View {
                         Spacer()
                     }
                 }
+                .id(UUID())
             })
     }
 }

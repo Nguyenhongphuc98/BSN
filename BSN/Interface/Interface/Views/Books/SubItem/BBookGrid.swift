@@ -36,9 +36,11 @@ struct BBookGrid: View {
                 ForEach(models) { book in
                     if style == .mybook {
                         BUserBookCard(model: book as! BUserBook, isGuest: isGuest)
+                            //.id(UUID())
                             .environmentObject(navState)
                     } else {
-                        SuggestBookCard(model: book as! BSusggestBook)                           
+                        SuggestBookCard(model: book as! BSusggestBook)
+                            .id("\(book.id)\((book as! BSusggestBook).numReview)\((book as! BSusggestBook).avgRating)")
                             .environmentObject(navState)
                     }
                 }
