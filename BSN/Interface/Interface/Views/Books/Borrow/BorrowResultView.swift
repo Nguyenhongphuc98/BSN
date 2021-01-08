@@ -43,6 +43,7 @@ struct BorrowResultView: View {
                 Text(des)
                     .roboto(size: 15)
                     .multilineTextAlignment(.center)
+                    .lineLimit(2)
                     .foregroundColor(.gray)
                     .padding()
                     .fixedSize(horizontal: false, vertical: false)

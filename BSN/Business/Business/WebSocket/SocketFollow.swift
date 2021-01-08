@@ -7,8 +7,13 @@
 
 import Foundation
 
-let hostIp = "saeb.herokuapp.com"
-//let hostIp = "10.10.239.33:8080"
+//let hostIp = "saeb.herokuapp.com"
+//let wsInChatApi = "wss://\(hostIp)/inchat/listen/" // + ChatID
+//let wsChatsApi = "wss://\(hostIp)/chats/listen/"   // + ReceiverID
+//let wsCommentsOfPostApi = "wss://\(hostIp)/commentsOfPost/listen/"   // + PostID
+//let wsNotifiesApi = "wss://\(hostIp)/notifies/listen/" // + ReceiverID
+
+let hostIp = "192.168.0.101:8080"
 let wsInChatApi = "ws://\(hostIp)/inchat/listen/" // + ChatID
 let wsChatsApi = "ws://\(hostIp)/chats/listen/"   // + ReceiverID
 let wsCommentsOfPostApi = "ws://\(hostIp)/commentsOfPost/listen/"   // + PostID
@@ -30,6 +35,7 @@ class SocketFollow<ResourceType> where ResourceType: Codable {
         self.socket = session.webSocketTask(with: URL(string: url)!)
         self.listen()
         self.socket.resume()
+        self.sendPing()
     }
     
     func listen() {
@@ -61,6 +67,18 @@ class SocketFollow<ResourceType> where ResourceType: Codable {
           didReceiveData?(sinData)
         } catch {
           print(error)
+        }
+    }
+    
+    func sendPing() {
+        self.socket.sendPing { (error) in
+            if let error = error {
+                print("Sending PING failed: \(error)")
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                self.sendPing()
+            }
         }
     }
 }

@@ -32,6 +32,7 @@ public class NotifyManager {
     
     public func getNotifies(page: Int = 0, per: Int = BusinessConfigure.notifiesPerPage, regisgerID: String) {
         if page == 0 {
+            print("setup connect websocket for notifies")
             // Setup receive data for first time fetch data
             webSocket.connect(url: wsNotifiesApi + regisgerID)
             webSocket.didReceiveData = { message in

@@ -10,17 +10,20 @@ import SwiftUI
 struct LoadingFullScreen: View {
     
     var body: some View {
-        ZStack(alignment: .center) {
-            HStack() {
-                Spacer()
-                VStack {
+        GeometryReader(content: { geometry in
+            ZStack(alignment: .center) {
+                HStack() {
                     Spacer()
+                    VStack {
+                        Spacer()
+                    }
                 }
-            }            
-            .background(Color.white)
-                        
-            CircleLoading(frame: CGSize(width: 40, height: 40))
-        }
+                .background(Color.white)
+                            
+                CircleLoading(frame: CGSize(width: 40, height: 40))
+                    .position(x: geometry.size.width / 2 - 20, y: geometry.size.height / 2 - 20)
+            }
+        })
     }
 }
 

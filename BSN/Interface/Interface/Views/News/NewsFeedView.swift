@@ -96,7 +96,7 @@ public struct NewsFeedView: View {
 
             Spacer()
         }
-        .padding(.top, 30)
+        //.padding(.top, 30)
         .padding(.horizontal)
         .onTapGesture {
             self.presentCPV.toggle()

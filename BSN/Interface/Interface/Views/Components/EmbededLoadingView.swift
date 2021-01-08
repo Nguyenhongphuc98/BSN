@@ -41,8 +41,7 @@ struct EmbededLoadingFullView: ViewModifier {
                 content
                 
                 if isLoading {
-                    LoadingFullScreen()
-                        .position(x: geometry.size.width / 2 - 20, y: geometry.size.height / 2 - 20)
+                    LoadingFullScreen()                        
                 }
             }
         })
