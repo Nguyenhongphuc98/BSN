@@ -11,48 +11,54 @@ import Business
 class MyBookDetailViewModel: NetworkViewModel {
     
     @Published var model: BUserBook
-    
     @Published var notes: [Note]
     
     private var userbookManager: UserBookManager
-    
     private var noteManager: NoteManager
+    
+    private var ubid: String
     
     override init() {
         model = BUserBook()
         notes = []
         userbookManager = UserBookManager()
         noteManager = NoteManager()
+        ubid = ""
         
         super.init()
         
         observerGetUserBook()
         observerGetNotes()
-        observerChangeNote()
+        //observerChangeNote()
     }
     
     func prepareData(ubid: String) {
         isLoading = true
+        self.ubid = ubid
         userbookManager.getUserBook(ubid: ubid)
         noteManager.getNotes(ubid: ubid)
     }
     
-    func processNote(note: Note) {
-        isLoading = true
-        // Undefine mean this is new note, we should save it
-        if note.isUndefine() {
-            noteManager.saveNote(note: ENote(userBookID: model.id, content: note.content))
-        } else {
-            noteManager.updateNote(note: ENote(id: note.id, content: note.content))
-        }
+    func reloadNotes() {
+        notes = []
+        noteManager.getNotes(ubid: ubid)
     }
+    
+//    func processNote(note: Note) {
+//        isLoading = true
+//        // Undefine mean this is new note, we should save it
+//        if note.isUndefine() {
+//            noteManager.saveNote(note: ENote(userBookID: model.id, content: note.content))
+//        } else {
+//            noteManager.updateNote(note: ENote(id: note.id, content: note.content))
+//        }
+//    }
     
     func deleteNote(note: Note) {
         notes.removeAll(where: { $0.id == note.id })
         objectWillChange.send()
         noteManager.deleteNote(noteID: note.id)
     }
-    
     
     /// User Book get from server will received at this block
     private func observerGetUserBook() {
@@ -93,9 +99,7 @@ class MyBookDetailViewModel: NetworkViewModel {
             .getNotesPublisher
             .sink {[weak self] (notes) in
                 
-                guard let self = self else {
-                    return
-                }
+                guard let self = self else { return }
                 
                 DispatchQueue.main.async {
                     self.isLoading = false
@@ -108,7 +112,14 @@ class MyBookDetailViewModel: NetworkViewModel {
                             
                             self.notes.removeAll()
                             self.notes = notes.map({ note in
-                                Note(id: note.id!, content: note.content, createAt: note.createdAt!)
+                                Note(
+                                    id: note.id!,
+                                    content: note.content,
+                                    createAt: note.createdAt!,
+                                    UBID: note.userBookID ?? kUndefine,
+                                    photo: note.photo,
+                                    page: note.pageRef
+                                )
                             })
                         }
                     }
@@ -119,40 +130,40 @@ class MyBookDetailViewModel: NetworkViewModel {
     
     /// Get save note info
     /// Using for Add note View, update a note
-    private func observerChangeNote() {
-        noteManager
-            .changePublisher
-            .sink {[weak self] (note) in
-                
-                guard let self = self else {
-                    return
-                }
-                
-                DispatchQueue.main.async {
-                    self.isLoading = false
-                    
-                    if note.id == "undefine" {
-                        self.resourceInfo = .savefailure
-                    } else {
-                        
-                        self.resourceInfo = .success
-                        let newNote = Note(id: note.id!, content: note.content, createAt: note.createdAt!)
-                        
-                        let index = self.notes.firstIndex { n in
-                            n.id == note.id
-                        }
-                        
-                        // To determine action is save or update
-                        if let i = index {
-                            self.notes.remove(at: i)
-                            self.notes.insert(newNote, at: i)
-                        } else {
-                            self.notes.append(newNote)
-                        }
-                    }
-                    self.showAlert = true
-                }
-            }
-            .store(in: &cancellables)
-    }
+//    private func observerChangeNote() {
+//        noteManager
+//            .changePublisher
+//            .sink {[weak self] (note) in
+//
+//                guard let self = self else {
+//                    return
+//                }
+//
+//                DispatchQueue.main.async {
+//                    self.isLoading = false
+//
+//                    if note.id == "undefine" {
+//                        self.resourceInfo = .savefailure
+//                    } else {
+//
+//                        self.resourceInfo = .success
+//                        let newNote = Note(id: note.id!, content: note.content, createAt: note.createdAt!)
+//
+//                        let index = self.notes.firstIndex { n in
+//                            n.id == note.id
+//                        }
+//
+//                        // To determine action is save or update
+//                        if let i = index {
+//                            self.notes.remove(at: i)
+//                            self.notes.insert(newNote, at: i)
+//                        } else {
+//                            self.notes.append(newNote)
+//                        }
+//                    }
+//                    self.showAlert = true
+//                }
+//            }
+//            .store(in: &cancellables)
+//    }
 }

@@ -90,8 +90,7 @@ struct MyBookDetailView: View {
                             }
               
                             Button {
-                                passthroughtNote.content = note.content
-                                passthroughtNote.id = note.id
+                                passthroughtNote.clone(note: note)
                                 showAddNoteView.toggle()
                             } label: {
                                 Text("Sửa bài học")
@@ -107,8 +106,9 @@ struct MyBookDetailView: View {
                 HStack {
                     Spacer()
                     Button(action: {
+                        // When create new, we just need ubid
+                        passthroughtNote.UBID = viewModel.model.id!
                         showAddNoteView.toggle()
-                        
                     }, label: {
                         Image(systemName: "plus")
                             .font(.system(size: 35))
@@ -122,7 +122,9 @@ struct MyBookDetailView: View {
                 .padding(.horizontal)
                 .padding(.bottom)
                 .sheet(isPresented: $showAddNoteView, content: {
-                    AddNoteView()
+                    AddNoteView(didRating: {
+                        viewModel.reloadNotes()
+                    })
                         .environmentObject(viewModel)
                         .environmentObject(passthroughtNote)
                 })
