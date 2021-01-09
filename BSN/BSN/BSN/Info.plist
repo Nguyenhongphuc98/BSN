@@ -66,6 +66,7 @@
 	<string>Please allow to check distance with other user</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Pridi-Regular.ttf</string>
 		<string>Pattaya-Regular.ttf</string>
 		<string>Roboto-Regular.ttf</string>
 		<string>Roboto-Black.ttf</string>

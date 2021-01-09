@@ -9,6 +9,10 @@ import SwiftUI
 
 extension Text {
     
+    public func pridi(size: CGFloat) -> Self {
+        self.font(.custom("Pridi-Regular", size: size))
+    }
+    
     public func roboto(size: CGFloat) -> Self {
         self.font(.custom("Roboto-Regular", size: size))
     }

@@ -11,9 +11,18 @@ struct NoteCard: View {
     
     var model: Note
     
+    @State private var showingViewFull: Bool = false
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             HStack {
+                Text(model.page ?? "*")
+                    .pridi(size: 18)
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(.white)
+                    .background(Color.init(hex: 0x52BA13))
+                    .clipShape(Circle())
+                
                 Text(model.createDate.getDateStr(format: "MMM d, yyyy"))
                     .robotoBold(size: 17)
                     .foregroundColor(._primary)
@@ -21,6 +30,23 @@ struct NoteCard: View {
             }
                 
             Text(model.content)
+                .pridi(size: 16)
+            
+            if let url = model.photoUrl, !url.isEmpty {
+                Button(action: {
+                    self.showingViewFull.toggle()
+                }, label: {
+                    BSNImage(urlString: url, tempImage: "unavailable")
+                        .frame(maxHeight: 150)
+                        .clipped()
+                        .padding(2)
+                })
+                   .fullScreenCover(isPresented: $showingViewFull) {
+                    ZoomableScrollImage(url: model.photoUrl) {
+                            self.showingViewFull.toggle()
+                        }
+                    }
+            }
         }
         .padding()
         .background(Color.init(hex: 0xF2F8FB))

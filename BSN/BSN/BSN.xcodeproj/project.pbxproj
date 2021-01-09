@@ -14,6 +14,7 @@
 		841CED8D255C2EB5007CCACC /* LaunchingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CED8C255C2EB5007CCACC /* LaunchingViewModel.swift */; };
 		842C44AD2548271C003C570D /* Business.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842C44AC2548271C003C570D /* Business.framework */; };
 		842C44AE2548271C003C570D /* Business.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 842C44AC2548271C003C570D /* Business.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		847ECD7F25A9AB87001B12A0 /* Pridi-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 847ECD7E25A9AB86001B12A0 /* Pridi-Regular.ttf */; };
 		84961052257B1B05003AE110 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961051257B1B05003AE110 /* SignUp.swift */; };
 		8496105A257B22B0003AE110 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961059257B22B0003AE110 /* SignUpViewModel.swift */; };
 		84AA95C0251AFEB70029BB1E /* Pattaya-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AA95BF251AFEB70029BB1E /* Pattaya-Regular.ttf */; };
@@ -63,6 +64,7 @@
 		841CED7A255BED15007CCACC /* Launching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launching.swift; sourceTree = "<group>"; };
 		841CED8C255C2EB5007CCACC /* LaunchingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchingViewModel.swift; sourceTree = "<group>"; };
 		842C44AC2548271C003C570D /* Business.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Business.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		847ECD7E25A9AB86001B12A0 /* Pridi-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pridi-Regular.ttf"; sourceTree = "<group>"; };
 		84961051257B1B05003AE110 /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		84961059257B22B0003AE110 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		8496105B257BC959003AE110 /* BSN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BSN.entitlements; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 		84AA95B7251AFBD60029BB1E /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				847ECD7E25A9AB86001B12A0 /* Pridi-Regular.ttf */,
 				84AA95BF251AFEB70029BB1E /* Pattaya-Regular.ttf */,
 				84AA95C1251B01010029BB1E /* Roboto-Regular.ttf */,
 				84AA95D0251B03680029BB1E /* Roboto-Black.ttf */,
@@ -303,6 +306,7 @@
 				84AA95D1251B03680029BB1E /* Roboto-Bold.ttf in Resources */,
 				84AA95C2251B01010029BB1E /* Roboto-Regular.ttf in Resources */,
 				84FA98E1251860DE00CB92CB /* Assets.xcassets in Resources */,
+				847ECD7F25A9AB87001B12A0 /* Pridi-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -137,6 +137,7 @@
 		847ECD7225A951D2001B12A0 /* AddNoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847ECD7125A951D2001B12A0 /* AddNoteViewModel.swift */; };
 		847ECD7625A95A16001B12A0 /* ImageWithCloseBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847ECD7525A95A16001B12A0 /* ImageWithCloseBtn.swift */; };
 		847ECD7925A95F43001B12A0 /* CaptureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847ECD7825A95F43001B12A0 /* CaptureImageView.swift */; };
+		847ECD7C25A9A736001B12A0 /* Pridi-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 847ECD7B25A9A736001B12A0 /* Pridi-Regular.ttf */; };
 		8482E42B25403E69003DE823 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8482E42A25403E69003DE823 /* ImageLoader.swift */; };
 		84961057257B2039003AE110 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961056257B2039003AE110 /* StringExtension.swift */; };
 		84961066257CD3F2003AE110 /* PersonalizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84961065257CD3F2003AE110 /* PersonalizeView.swift */; };
@@ -348,6 +349,7 @@
 		847ECD7125A951D2001B12A0 /* AddNoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteViewModel.swift; sourceTree = "<group>"; };
 		847ECD7525A95A16001B12A0 /* ImageWithCloseBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWithCloseBtn.swift; sourceTree = "<group>"; };
 		847ECD7825A95F43001B12A0 /* CaptureImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureImageView.swift; sourceTree = "<group>"; };
+		847ECD7B25A9A736001B12A0 /* Pridi-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pridi-Regular.ttf"; sourceTree = "<group>"; };
 		8482E42A25403E69003DE823 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		84961056257B2039003AE110 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		84961065257CD3F2003AE110 /* PersonalizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalizeView.swift; sourceTree = "<group>"; };
@@ -789,6 +791,7 @@
 		84AA969D252053E70029BB1E /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				847ECD7B25A9A736001B12A0 /* Pridi-Regular.ttf */,
 				84AA96A3252054820029BB1E /* Pattaya-Regular.ttf */,
 				84AA96A4252054820029BB1E /* Roboto-Black.ttf */,
 				84AA96A9252054820029BB1E /* Roboto-BlackItalic.ttf */,
@@ -993,6 +996,7 @@
 				84AA96B5252054820029BB1E /* Roboto-Regular.ttf in Resources */,
 				84AA96B9252054820029BB1E /* Roboto-Light.ttf in Resources */,
 				84AA96B3252054820029BB1E /* Roboto-LightItalic.ttf in Resources */,
+				847ECD7C25A9A736001B12A0 /* Pridi-Regular.ttf in Resources */,
 				84AA96B7252054820029BB1E /* Roboto-MediumItalic.ttf in Resources */,
 				84AA96AF252054820029BB1E /* Roboto-ThinItalic.ttf in Resources */,
 				84AA96AD252054820029BB1E /* Roboto-BoldItalic.ttf in Resources */,

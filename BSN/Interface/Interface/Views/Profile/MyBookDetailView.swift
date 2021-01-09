@@ -12,9 +12,7 @@ struct MyBookDetailView: View {
     @StateObject var viewModel: MyBookDetailViewModel = MyBookDetailViewModel()
     
     @State private var showAddNoteView: Bool = false
-    
     @State private var expansedNotes: Bool = true
-    
     @State private var expansedStatusDes: Bool = true
     
     @Environment(\.presentationMode) var presentationMode
@@ -23,6 +21,7 @@ struct MyBookDetailView: View {
     @ObservedObject private var passthroughtNote: Note = Note()
     
     var ubid: String
+    
     
     var body: some View {
         ScrollView {
@@ -78,6 +77,7 @@ struct MyBookDetailView: View {
             VStack {
                 ForEach(viewModel.notes) { note in
                     ZStack(alignment: .topTrailing) {
+
                         NoteCard(model: note)
                             .padding(.vertical, 5)
                             .padding(.horizontal, 5)
