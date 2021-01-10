@@ -11,11 +11,12 @@ import SwiftUI
 // And when receive notify exchange result
 struct ConfirmExchangeBookView: View {
     
-    @StateObject var viewModel: ConfirmExchangebookViewModel = ConfirmExchangebookViewModel()
+    @StateObject var viewModel: ConfirmExchangebookViewModel = .init()
     
     @Environment(\.presentationMode) var presentationMode
     
-    @State private var showDeclineView: Bool = false
+    @State private var showResponseRequestView: Bool = false
+    @State private var isAccept: Bool = false
     
     var resultView: Bool = false
     
@@ -47,6 +48,10 @@ struct ConfirmExchangeBookView: View {
                 TextWithIconInfo(icon: "clock", title: "Địa chỉ giao dịch", content: viewModel.exchangeBook.transactionInfo.adress)
                 
                 TextWithIconInfo(icon: "clock.arrow.circlepath", title: "Lời nhắn", content: viewModel.exchangeBook.transactionInfo.message)
+                
+                if resultView {
+                    TextWithIconInfo(icon: "paperplane.circle.fill", title: "Nội dung phản hồi", content: "\(viewModel.exchangeBook.transactionInfo.message) Ngày")
+                }
                
                 Spacer(minLength: 30)
                 
@@ -68,8 +73,8 @@ struct ConfirmExchangeBookView: View {
             .navigationBarHidden(false)
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: backButton)
-            .sheet(isPresented: $showDeclineView, content: {
-                ResponseEoBBookView(isBorrow: false, targetID: viewModel.exchangeBook.id!) {
+            .sheet(isPresented: $showResponseRequestView, content: {
+                ResponseEoBBookView(isAccept: isAccept, isBorrow: false, targetID: viewModel.exchangeBook.id!) {
                     dismiss()
                 }
             })
@@ -101,27 +106,30 @@ struct ConfirmExchangeBookView: View {
     }
     
     var des: String {
-        if viewModel.exchangeBook.transactionInfo.progess == .accept {
+        //if viewModel.exchangeBook.transactionInfo.progess == .accept {
             return "Chúng tôi đã tạo cho bạn một cuộc trò chuyện, đi tới mục tin nhắn để trao đổi cụ thể hơn về việc đổi sách"
-        } else {
-            return "\"\(viewModel.exchangeBook.transactionInfo.message)\""
-        }
+//        } else {
+//            return "\"\(viewModel.exchangeBook.transactionInfo.message)\""
+//        }
     }
     
     var confirmAction: some View {
         HStack(spacing: 30) {
             Button(action: {
-                self.showDeclineView = true
+                self.isAccept = false
+                self.showResponseRequestView = true
             }, label: {
                 Text("   Từ chối   ")
             })
             .buttonStyle(BaseButtonStyle(size: .large,type: .secondary))
             
             Button(action: {
-                viewModel.didAccept()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    dismiss()
-                }
+//                viewModel.didAccept()
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+//                    dismiss()
+//                }
+                self.isAccept = true
+                self.showResponseRequestView = true
             }, label: {
                 Text("   Đồng ý   ")
             })
@@ -131,19 +139,21 @@ struct ConfirmExchangeBookView: View {
     
     var resultAction: some View {
         VStack {
-            Text(des)
-                .roboto(size: 15)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.gray)
-                .padding()
-                .fixedSize(horizontal: false, vertical: false)
+            if viewModel.exchangeBook.transactionInfo.progess == .accept {
+                Text(des)
+                    .roboto(size: 15)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.gray)
+                    .padding()
+                    .fixedSize(horizontal: false, vertical: false)
+            }
             
-                Button(action: {
-                    dismiss()
-                }, label: {
-                    Text("    Quay lại    ")
-                })
-                .buttonStyle(BaseButtonStyle(size: .large))
+            Button(action: {
+                dismiss()
+            }, label: {
+                Text("    Quay lại    ")
+            })
+            .buttonStyle(BaseButtonStyle(size: .large))
         }
     }
     

@@ -29,18 +29,18 @@ class ConfirmExchangebookViewModel: NetworkViewModel {
         ebManager.getDetailExchangeBook(ebid: ebID)
     }
     
-    func didAccept() {
-        let eeb = EExchangeBook(
-            id: exchangeBook.id,
-            state: ExchangeProgess.accept.rawValue
-        )
-        ebManager.updateExchangeBook(eb: eeb)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            // waiting for update new user book to profile
-            ProfileViewModel.shared.forceRefeshUB()
-        }
-    }
+//    func didAccept() {
+//        let eeb = EExchangeBook(
+//            id: exchangeBook.id,
+//            state: ExchangeProgess.accept.rawValue
+//        )
+//        ebManager.updateExchangeBook(eb: eeb)
+//
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//            // waiting for update new user book to profile
+//            ProfileViewModel.shared.forceRefeshUB()
+//        }
+//    }
     
     private func observerEBInfo() {
         /// Get exchange book info (full)
@@ -75,7 +75,7 @@ class ConfirmExchangebookViewModel: NetworkViewModel {
                                 secondAuthor: eb.secondAuthor!,
                                 secondCover: eb.secondCover,
                                 adress: eb.adress!,
-                                message: eb.message!
+                                message: eb.responseMessage ?? (eb.message ?? "") // show result will using reponse message
                             )
                             // Mark != nil to allow show this book in confirm view
                             self.exchangeBook.wantChangeBook?.id = "undefine"

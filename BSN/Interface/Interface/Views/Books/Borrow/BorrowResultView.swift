@@ -18,7 +18,7 @@ struct BorrowResultView: View {
     var bbid: String
     
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: true) {
             VStack(alignment: .center, spacing: 20) {
                 Text(title)
                     .foregroundColor(titleforeground)
@@ -50,33 +50,22 @@ struct BorrowResultView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 
-    //            if viewModel.borrowBook.transactionInfo.progess == .accept {
-    //                Button(action: {
-    //
-    //                }, label: {
-    //                    Text("Đi tới tin nhắn")
-    //                })
-    //                .buttonStyle(BaseButtonStyle(size: .large))
-    //            } else {
-                    
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("     Quay lại     ")
-                    })
-                    .buttonStyle(BaseButtonStyle(size: .large))
-                //}
-                
-                Spacer(minLength: 200)
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Text("     Quay lại     ")
+                })
+                .buttonStyle(BaseButtonStyle(size: .large))
+                .padding(.bottom)
             }
-            .embededLoadingFull(isLoading: $viewModel.isLoading)
             .padding(.horizontal)
         }
+        .embededLoadingFull(isLoading: $viewModel.isLoading)
         .navigationBarTitle("Kết quả mượn sách", displayMode: .inline)
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
-        .transition(.scale)
+        //.transition(.scale)
         .onAppear(perform: viewAppeared)
     }
     
