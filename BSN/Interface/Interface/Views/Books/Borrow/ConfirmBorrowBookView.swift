@@ -12,13 +12,14 @@ struct ConfirmBorrowBookView: View {
     
     var bbid: String
     
-    @StateObject var viewModel: ConfirmBorrowBookViewModel = ConfirmBorrowBookViewModel()
+    @StateObject var viewModel: ConfirmBorrowBookViewModel = .init()
     
     var formater: String = "EEEE, MMM d, yyyy"
     
     @Environment(\.presentationMode) var presentationMode
     
-    @State private var showDeclineView: Bool = false
+    @State private var showResponseRequestView: Bool = false
+    @State private var isAccept: Bool = false
     
     var body: some View {
         VStack(alignment: .center) {
@@ -45,15 +46,18 @@ struct ConfirmBorrowBookView: View {
             if shouldShowAction(proges: viewModel.borrowBook.transactionInfo.progess) {
                 HStack(spacing: 30) {
                     Button(action: {
-                        showDeclineView.toggle()
+                        isAccept = false
+                        showResponseRequestView.toggle()
                     }, label: {
                         Text("   Từ Chối   ")
                     })
                     .buttonStyle(BaseButtonStyle(size: .large, type: .secondary))
                     
                     Button(action: {
-                        viewModel.didAccept()
-                        dismiss()
+//                        viewModel.didAccept()
+//                        dismiss()
+                        isAccept = true
+                        showResponseRequestView.toggle()
                     }, label: {
                         Text("   Đồng ý   ")
                     })
@@ -72,8 +76,8 @@ struct ConfirmBorrowBookView: View {
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
-        .sheet(isPresented: $showDeclineView, content: {
-            DeclineEoBBookView(isBorrow: true, targetID: bbid) {
+        .sheet(isPresented: $showResponseRequestView, content: {
+            ResponseEoBBookView(isAccept: isAccept, isBorrow: true, targetID: bbid) {
                 dismiss()
             }
         })

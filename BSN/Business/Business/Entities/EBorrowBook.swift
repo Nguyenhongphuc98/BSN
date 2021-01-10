@@ -26,11 +26,13 @@ public struct EBorrowBook: Codable {
     public var brorrowerName: String?
     public var ownerName: String?
     
+    public var responseMessage: String?
+    
     init() {
         id = "undefine"
     }
     
-    public init(id: String? = nil, userBookID: String? = nil, borrowerID: String? = nil, borrowDate:  Date? = nil, borrowDays: Int? = 0, adress: String? = nil, message: String? = nil, statusDes: String? = nil, state: String? = nil) {
+    public init(id: String? = nil, userBookID: String? = nil, borrowerID: String? = nil, borrowDate:  Date? = nil, borrowDays: Int? = 0, adress: String? = nil, message: String? = nil, responseMessage: String? = nil, statusDes: String? = nil, state: String? = nil) {
         
         let isoformatter = ISO8601DateFormatter.init()
         
@@ -43,5 +45,6 @@ public struct EBorrowBook: Codable {
         self.message = message
         self.statusDes = statusDes
         self.state = state
+        self.responseMessage = responseMessage
     }
 }

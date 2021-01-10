@@ -68,6 +68,8 @@ public class EExchangeBook: Codable {
 //
 //    public var secondubid: String?
     
+    public var responseMessage: String?
+    
     public init() {
         self.id = "undefine"
         self.firstUserBookID = "undefine"
@@ -77,8 +79,8 @@ public class EExchangeBook: Codable {
     
     public init(id: String? = nil, firstUserBookID: String? = nil, exchangeBookID: String? = nil,
                 secondUserBookID: String? = nil, adress: String? = nil, message: String? = nil,
-                firstStatusDes: String? = nil, secondStatusDes: String? = nil, state: String,
-                firstTitle: String? = nil, firstAuthor: String? = nil, firstCover: String? = nil, location: String? = nil, secondTitle: String? = nil, secondAuthor: String? = nil, firstOwnerName: String? = nil, secondStatus: String? = nil) {
+                responseMessage: String? = nil, firstStatusDes: String? = nil, secondStatusDes: String? = nil, state: String, firstTitle: String? = nil, firstAuthor: String? = nil,
+                firstCover: String? = nil, location: String? = nil, secondTitle: String? = nil, secondAuthor: String? = nil, firstOwnerName: String? = nil, secondStatus: String? = nil) {
         
         self.id = id
         self.firstUserBookID = firstUserBookID
@@ -101,5 +103,6 @@ public class EExchangeBook: Codable {
         
 //        self.firstubid = firstubid
 //        self.secondubid = secondubid
+        self.responseMessage = responseMessage
     }
 }

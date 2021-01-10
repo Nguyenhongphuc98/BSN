@@ -51,7 +51,8 @@ class BBorrowBook: ObservableObject, Identifiable {
         )
     }
     
-    init(ebb: EBorrowBook, bindMess: Bool = false) {
+    // Show borrow result or view detail of borrow request
+    init(ebb: EBorrowBook, forResult: Bool) {
         self.id = ebb.id
         self.userbook = BUserBook(
             ownerName: ebb.brorrowerName,
@@ -60,14 +61,14 @@ class BBorrowBook: ObservableObject, Identifiable {
             author: ebb.bookAuthor!,
             state: BookState.unknown.rawValue, // in this case we don't care this value
             cover: ebb.bookCover,
-            des: bindMess ? ebb.message! : ebb.statusDes!
+            des: ebb.statusDes!
         )
         
         transactionInfo = BTransactionInfo(
             exchangeDate: Date.getDate(dateStr: ebb.borrowDate),
             numDay: ebb.borrowDays,
             adress: ebb.adress!,
-            message: ebb.message!,
+            message: forResult ? (ebb.responseMessage ?? "Trống") : (ebb.message ?? "Không có lời nhắn"),
             progess: ExchangeProgess(rawValue: ebb.state!)!
         )
     }

@@ -46,8 +46,8 @@
 		8401C97E252F037A00A722CE /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C97D252F037A00A722CE /* DateExtension.swift */; };
 		8401C982252F0BB600A722CE /* BorrowResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C981252F0BB600A722CE /* BorrowResultView.swift */; };
 		8401C986252F0C4E00A722CE /* BorrowResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C985252F0C4E00A722CE /* BorrowResultViewModel.swift */; };
-		8401C98A252F152400A722CE /* DeclineEoBBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C989252F152400A722CE /* DeclineEoBBookView.swift */; };
-		8401C98E252F16FC00A722CE /* DeclineEoBBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C98D252F16FC00A722CE /* DeclineEoBBookViewModel.swift */; };
+		8401C98A252F152400A722CE /* ResponseEoBBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C989252F152400A722CE /* ResponseEoBBookView.swift */; };
+		8401C98E252F16FC00A722CE /* ResponseEoBBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C98D252F16FC00A722CE /* ResponseEoBBookViewModel.swift */; };
 		8401C99E252FFEFF00A722CE /* ExchangeBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C99D252FFEFF00A722CE /* ExchangeBookView.swift */; };
 		8401C9A62530034500A722CE /* ExchangeBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C9A52530034500A722CE /* ExchangeBookViewModel.swift */; };
 		8401C9B22530514800A722CE /* ConfirmExchangeBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8401C9B12530514800A722CE /* ConfirmExchangeBookView.swift */; };
@@ -259,8 +259,8 @@
 		8401C97D252F037A00A722CE /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		8401C981252F0BB600A722CE /* BorrowResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorrowResultView.swift; sourceTree = "<group>"; };
 		8401C985252F0C4E00A722CE /* BorrowResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorrowResultViewModel.swift; sourceTree = "<group>"; };
-		8401C989252F152400A722CE /* DeclineEoBBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclineEoBBookView.swift; sourceTree = "<group>"; };
-		8401C98D252F16FC00A722CE /* DeclineEoBBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclineEoBBookViewModel.swift; sourceTree = "<group>"; };
+		8401C989252F152400A722CE /* ResponseEoBBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseEoBBookView.swift; sourceTree = "<group>"; };
+		8401C98D252F16FC00A722CE /* ResponseEoBBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseEoBBookViewModel.swift; sourceTree = "<group>"; };
 		8401C99D252FFEFF00A722CE /* ExchangeBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeBookView.swift; sourceTree = "<group>"; };
 		8401C9A52530034500A722CE /* ExchangeBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeBookViewModel.swift; sourceTree = "<group>"; };
 		8401C9B12530514800A722CE /* ConfirmExchangeBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmExchangeBookView.swift; sourceTree = "<group>"; };
@@ -436,7 +436,7 @@
 				8401C8A6252AB3C900A722CE /* ExploreBookView.swift */,
 				8401C8DC252B1B7500A722CE /* BookDetailView.swift */,
 				8401C920252C086300A722CE /* RatingView.swift */,
-				8401C989252F152400A722CE /* DeclineEoBBookView.swift */,
+				8401C989252F152400A722CE /* ResponseEoBBookView.swift */,
 				8401C8D4252B0D1B00A722CE /* ExchangeBookList.swift */,
 				8401C9AB253050B900A722CE /* Borrow */,
 				8401C9AE253050D900A722CE /* Exchange */,
@@ -493,7 +493,7 @@
 				8401C965252EAB9A00A722CE /* BorrowBookViewModel.swift */,
 				8401C975252EFB6B00A722CE /* ConfirmBorrowBookViewModel.swift */,
 				8401C985252F0C4E00A722CE /* BorrowResultViewModel.swift */,
-				8401C98D252F16FC00A722CE /* DeclineEoBBookViewModel.swift */,
+				8401C98D252F16FC00A722CE /* ResponseEoBBookViewModel.swift */,
 				8401C9A52530034500A722CE /* ExchangeBookViewModel.swift */,
 				8401C9D525306AE500A722CE /* ExchangeListViewModel.swift */,
 				842A7C832564CFD50007E343 /* ConfirmExchangebookViewModel.swift */,
@@ -1062,7 +1062,7 @@
 				84411A2D2523409E00AE31D8 /* TextExtension.swift in Sources */,
 				847BBAC62521EEB900E0500D /* AppManager.swift in Sources */,
 				84B964FC2526063F00F37571 /* CoreMessageEditor.swift in Sources */,
-				8401C98A252F152400A722CE /* DeclineEoBBookView.swift in Sources */,
+				8401C98A252F152400A722CE /* ResponseEoBBookView.swift in Sources */,
 				842C44CB25490392003C570D /* BAvailableTransaction.swift in Sources */,
 				841CEDB0255EB331007CCACC /* Chat.swift in Sources */,
 				842C44C82548FA01003C570D /* BExchangeBookFull.swift in Sources */,
@@ -1146,7 +1146,7 @@
 				8482E42B25403E69003DE823 /* ImageLoader.swift in Sources */,
 				8401C8D5252B0D1B00A722CE /* ExchangeBookList.swift in Sources */,
 				8436100025246A28009FF4BF /* PostDetailView.swift in Sources */,
-				8401C98E252F16FC00A722CE /* DeclineEoBBookViewModel.swift in Sources */,
+				8401C98E252F16FC00A722CE /* ResponseEoBBookViewModel.swift in Sources */,
 				8401C913252B69BF00A722CE /* RatingCell.swift in Sources */,
 				84961069257CD521003AE110 /* PersonalizeViewModel.swift in Sources */,
 				8401C89E2529BE9D00A722CE /* DismissSTOnDragModifier.swift in Sources */,

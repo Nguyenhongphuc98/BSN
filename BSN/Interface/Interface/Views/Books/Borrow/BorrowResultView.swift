@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BorrowResultView: View {
     
-    @StateObject var viewModel: BorrowResultViewModel = BorrowResultViewModel()
+    @StateObject var viewModel: BorrowResultViewModel = .init()
     
     var formater: String = "EEEE, MMM d, yyyy"
     
@@ -24,8 +24,7 @@ struct BorrowResultView: View {
                     .foregroundColor(titleforeground)
                     .font(.system(size: 22))
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .fixedSize(horizontal: false, vertical: false)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.vertical)
                 
                 BorrowBookHeader(model: viewModel.borrowBook.userbook, isRequest: false, isShowForOwner: false)
@@ -37,16 +36,19 @@ struct BorrowResultView: View {
                     TextWithIconInfo(icon: "clock", title: "Thời điểm mượn", content: viewModel.borrowBook.transactionInfo.exchangeDate!.getDateStr(format: formater))
                     
                     TextWithIconInfo(icon: "clock.arrow.circlepath", title: "Thời gian mượn", content: "\(viewModel.borrowBook.transactionInfo.numDay!) Ngày")
+                    
+                    TextWithIconInfo(icon: "paperplane.circle.fill", title: "Nội dung phản hồi", content: "\(viewModel.borrowBook.transactionInfo.message) Ngày")
                 }
                 .padding(.horizontal)
                 
-                Text(des)
-                    .roboto(size: 15)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .foregroundColor(.gray)
-                    .padding()
-                    .fixedSize(horizontal: false, vertical: false)
+                if viewModel.borrowBook.transactionInfo.progess == .accept {
+                    Text(des)
+                        .roboto(size: 15)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.gray)
+                        .padding()
+                        .fixedSize(horizontal: false, vertical: true)
+                }
                 
     //            if viewModel.borrowBook.transactionInfo.progess == .accept {
     //                Button(action: {
@@ -65,7 +67,7 @@ struct BorrowResultView: View {
                     .buttonStyle(BaseButtonStyle(size: .large))
                 //}
                 
-                Spacer()
+                Spacer(minLength: 200)
             }
             .embededLoadingFull(isLoading: $viewModel.isLoading)
             .padding(.horizontal)
@@ -97,11 +99,11 @@ struct BorrowResultView: View {
     }
     
     var des: String {
-        if viewModel.borrowBook.transactionInfo.progess == .accept {
+//        if viewModel.borrowBook.transactionInfo.progess == .accept {
             return "Chúng tôi đã tạo cho bạn một cuộc trò chuyện, di chuyển vào mục tin nhắn để trao đổi cụ thể hơn về việc mượn sách"
-        } else {
-            return "\"\(viewModel.borrowBook.transactionInfo.message)\""
-        }
+//        } else {
+//            return "\"\(viewModel.borrowBook.transactionInfo.message)\""
+//        }
     }
     
     private func viewAppeared() {

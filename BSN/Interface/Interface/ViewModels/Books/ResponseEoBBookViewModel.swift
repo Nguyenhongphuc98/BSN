@@ -8,7 +8,7 @@
 import SwiftUI
 import Business
 
-class DeclineEoBBookViewModel: ObservableObject {
+class ResponseEoBBookViewModel: ObservableObject {
     
     @Published var declineMessage: String
     
@@ -30,7 +30,7 @@ class DeclineEoBBookViewModel: ObservableObject {
             // Message (as reason) and state
             let ebb = EBorrowBook(
                 id: targetID,
-                message: declineMessage,
+                responseMessage: declineMessage,
                 state: ExchangeProgess.decline.rawValue
             )
             borrowBookManager.updateBorrowBook(borrowBook: ebb)
@@ -38,8 +38,31 @@ class DeclineEoBBookViewModel: ObservableObject {
             // Exchange
             let eeb = EExchangeBook(
                 id: targetID,
-                message: declineMessage,
+                responseMessage: declineMessage,
                 state: ExchangeProgess.decline.rawValue
+            )
+            exchangeBookManager.updateExchangeBook(eb: eeb)
+        }
+    }
+    
+    // We assume it will update success
+    // Don't care result
+    func processAccept(isborrow: Bool, targetID: String) {
+        if isborrow {
+            // Just care id to find info
+            // Message (as reason) and state
+            let ebb = EBorrowBook(
+                id: targetID,
+                responseMessage: declineMessage,
+                state: ExchangeProgess.accept.rawValue
+            )
+            borrowBookManager.updateBorrowBook(borrowBook: ebb)
+        } else {
+            // Exchange
+            let eeb = EExchangeBook(
+                id: targetID,
+                responseMessage: declineMessage,
+                state: ExchangeProgess.accept.rawValue
             )
             exchangeBookManager.updateExchangeBook(eb: eeb)
         }

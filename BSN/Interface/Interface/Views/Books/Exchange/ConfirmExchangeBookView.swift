@@ -69,7 +69,7 @@ struct ConfirmExchangeBookView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: backButton)
             .sheet(isPresented: $showDeclineView, content: {
-                DeclineEoBBookView(isBorrow: false, targetID: viewModel.exchangeBook.id!) {
+                ResponseEoBBookView(isBorrow: false, targetID: viewModel.exchangeBook.id!) {
                     dismiss()
                 }
             })
