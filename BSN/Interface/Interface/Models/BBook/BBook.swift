@@ -13,6 +13,7 @@ enum BookState: String, CaseIterable, Equatable {
     case available //to be borrowed
     case reading
     case exchanged
+    case waitExchange
     case unknown
 
     func des() -> String {
@@ -25,6 +26,8 @@ enum BookState: String, CaseIterable, Equatable {
             return "Đang đọc"
         case .exchanged:
             return "Đã trao đổi"
+        case .waitExchange:
+            return "Đang chờ trao đổi"
         case .unknown:
             return "Không xác định"
         }

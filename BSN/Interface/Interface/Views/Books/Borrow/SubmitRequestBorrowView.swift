@@ -115,6 +115,7 @@ struct SubmitRequestBorrowView: View {
     
     private func popToBookDetail() {
         self.navState.popTo(viewName: .bookDetail)
+        self.dismiss()
     }
 }
 

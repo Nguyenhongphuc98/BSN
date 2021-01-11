@@ -46,7 +46,8 @@ struct BUserBookCard: View, PopToable {
     }
     
     var navigateView: AnyView {
-        isGuest ? .init(BookDetailView(bookID: model.bookID).environmentObject(navState)) : .init(MyBookDetailView(ubid: model.id!))
+        //isGuest ? .init(BookDetailView(bookID: model.bookID).environmentObject(navState)) : .init(MyBookDetailView(ubid: model.id!))
+        isGuest ? .init(GuestBookDetailView(ubid: model.id!).environmentObject(navState)) : .init(MyBookDetailView(ubid: model.id!))
     }
     
     var footer: some View {

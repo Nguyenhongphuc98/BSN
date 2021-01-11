@@ -10,7 +10,7 @@ import SwiftUI
 // List available exhange for special book
 struct ExchangeListView: View {
     
-    @StateObject var viewModel: ExchangeListViewModel = ExchangeListViewModel()
+    @StateObject var viewModel: ExchangeListViewModel = .init()
     
     @Environment(\.presentationMode) var presentationMode
     

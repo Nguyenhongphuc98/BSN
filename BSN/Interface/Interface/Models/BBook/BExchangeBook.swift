@@ -23,18 +23,18 @@ class BExchangeBook: ObservableObject, AppendUniqueAble {
     var distance: Float
     
     init() {
-        id = UUID().uuidString
+        id = kUndefine
         needChangeBook = BUserBook()
         wantChangeBook = BUserBook()
         wantChangeBID = UUID().uuidString
         distance = 456
     }
     
-    init(id: String? = nil, firstubid: String? = nil, secondubid: String? = nil, firstTitle: String, firstAuthor: String, firstCover: String, partnerLocation: String, sencondTitle: String, secondAuthor: String) {
+    init(id: String? = nil, firstubid: String? = nil, secondubid: String? = nil, firstTitle: String, firstAuthor: String, firstCover: String, partnerLocation: String, sencondTitle: String, secondAuthor: String, secondCover: String? = nil) {
         
         self.id = id
         needChangeBook = BUserBook(ubid: firstubid, title: firstTitle, author: firstAuthor, cover: firstCover)
-        wantChangeBook = BUserBook(ubid: secondubid, title: sencondTitle, author: secondAuthor)
+        wantChangeBook = BUserBook(ubid: secondubid, title: sencondTitle, author: secondAuthor, cover: secondCover)
         distance = 0
         self.distance = caculateDistance(rawLocation: partnerLocation)
     }

@@ -24,7 +24,7 @@ class ExchangeBookRequest: ResourceRequest<EExchangeBook> {
         }
     }
     
-    // Fetch all available exchange book have user book 1 (need change) bid
+    // Fetch all available exchange book have book 1 (need change) bid
     func fetchAvailableExchangeBooks(bid: String, publisher: PassthroughSubject<[EExchangeBook], Never>) {
         self.setPath(resourcePath: "availables/\(bid)")
 
@@ -139,6 +139,22 @@ class ExchangeBookRequest: ResourceRequest<EExchangeBook> {
                 
             case .success(let ebs):
                 print("update success \(String(describing: ebs[0].id)) - \(String(describing: ebs[0].state))")
+            }
+        }
+    }
+    
+    func fetchExchangeBookOfUB(ubid: String, publisher: PassthroughSubject<EExchangeBook, Never>) {
+        self.setPath(resourcePath: "newestofub/\(ubid)")
+
+        self.get(isAll: false) { result in
+
+            switch result {
+            case .failure:
+                let message = "There was an error fetch newest exchange book - ubid: \(ubid)"
+                print(message)
+                publisher.send(EExchangeBook())
+            case .success(let ebs):
+                publisher.send(ebs[0])
             }
         }
     }

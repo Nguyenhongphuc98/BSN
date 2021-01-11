@@ -103,6 +103,8 @@
 		8436100925246FC2009FF4BF /* BViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8436100825246FC2009FF4BF /* BViewModifier.swift */; };
 		8436100F25247DD2009FF4BF /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8436100E25247DD2009FF4BF /* Comment.swift */; };
 		843610132524811D009FF4BF /* CommentCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843610122524811D009FF4BF /* CommentCard.swift */; };
+		843DC72325ABF8B400B324A7 /* GuestBookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DC72225ABF8B400B324A7 /* GuestBookDetailView.swift */; };
+		843DC72725ABFB1E00B324A7 /* GuestBookDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DC72625ABFB1E00B324A7 /* GuestBookDetailViewModel.swift */; };
 		843E5221252707E300B16995 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E5220252707E300B16995 /* ChatView.swift */; };
 		843E5226252708AD00B16995 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E5225252708AD00B16995 /* ChatCell.swift */; };
 		843E522A252708FA00B16995 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E5229252708FA00B16995 /* Message.swift */; };
@@ -314,6 +316,8 @@
 		8436100825246FC2009FF4BF /* BViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BViewModifier.swift; sourceTree = "<group>"; };
 		8436100E25247DD2009FF4BF /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		843610122524811D009FF4BF /* CommentCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCard.swift; sourceTree = "<group>"; };
+		843DC72225ABF8B400B324A7 /* GuestBookDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestBookDetailView.swift; sourceTree = "<group>"; };
+		843DC72625ABFB1E00B324A7 /* GuestBookDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestBookDetailViewModel.swift; sourceTree = "<group>"; };
 		843E5220252707E300B16995 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		843E5225252708AD00B16995 /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
 		843E5229252708FA00B16995 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -547,6 +551,7 @@
 			children = (
 				84AA9680251F928A0029BB1E /* ProfileView.swift */,
 				8401C9F32531AB7100A722CE /* MyBookDetailView.swift */,
+				843DC72225ABF8B400B324A7 /* GuestBookDetailView.swift */,
 				8401CA12253294D600A722CE /* AddNoteView.swift */,
 				8401CA1625329C5700A722CE /* SearchAddBookView.swift */,
 				8401CA202532B07E00A722CE /* SubmitAddBookView.swift */,
@@ -562,6 +567,7 @@
 			children = (
 				84AA95EE251B45320029BB1E /* ProfileViewModel.swift */,
 				8401C9FC2531ABF200A722CE /* MyBookDetailViewModel.swift */,
+				843DC72625ABFB1E00B324A7 /* GuestBookDetailViewModel.swift */,
 				8401CA1A25329FC300A722CE /* SearchBookViewModel.swift */,
 				8401CA242532B0BC00A722CE /* SubmitAddUBViewModel.swift */,
 				8401CA36253305F900A722CE /* SubmitExchangeBookViewModel.swift */,
@@ -1064,6 +1070,7 @@
 				84B964FC2526063F00F37571 /* CoreMessageEditor.swift in Sources */,
 				8401C98A252F152400A722CE /* ResponseEoBBookView.swift in Sources */,
 				842C44CB25490392003C570D /* BAvailableTransaction.swift in Sources */,
+				843DC72725ABFB1E00B324A7 /* GuestBookDetailViewModel.swift in Sources */,
 				841CEDB0255EB331007CCACC /* Chat.swift in Sources */,
 				842C44C82548FA01003C570D /* BExchangeBookFull.swift in Sources */,
 				84B964F82525CBBD00F37571 /* NotifyViewModel.swift in Sources */,
@@ -1092,6 +1099,7 @@
 				8401CA1B25329FC300A722CE /* SearchBookViewModel.swift in Sources */,
 				8401C8C9252B045400A722CE /* Segment.swift in Sources */,
 				8496107A257E1456003AE110 /* ChangePassWordView.swift in Sources */,
+				843DC72325ABF8B400B324A7 /* GuestBookDetailView.swift in Sources */,
 				843610132524811D009FF4BF /* CommentCard.swift in Sources */,
 				8401C930252C1C4D00A722CE /* RatingViewModel.swift in Sources */,
 				8436100425246A8C009FF4BF /* PostDetailViewModel.swift in Sources */,

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyBookDetailView: View {
     
-    @StateObject var viewModel: MyBookDetailViewModel = MyBookDetailViewModel()
+    @StateObject var viewModel: MyBookDetailViewModel = .init()
     
     @State private var showAddNoteView: Bool = false
     @State private var expansedNotes: Bool = true

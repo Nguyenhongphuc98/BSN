@@ -10,7 +10,7 @@ import SwiftUI
 // Create new exchange book from user book shel
 struct SubmitExchangeBookView: View {
     
-    @StateObject private var viewModel = SubmitExchangeBookViewModel()
+    @StateObject private var viewModel: SubmitExchangeBookViewModel = .init()
     
     @EnvironmentObject private var navState: NavigationState
     

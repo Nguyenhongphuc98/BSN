@@ -64,4 +64,8 @@ public class ExchangeBookManager {
     public func cancelExchangeReq(ebId: String) {
         resourceRequest.cancelExchangeReq(ebID: ebId)
     }
+    
+    public func getNewestExchangeBookOfUB(ubid: String) {
+        resourceRequest.fetchExchangeBookOfUB(ubid: ubid, publisher: getExchangeBookPublisher)
+    }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UpdateUBView: View {
     
-    @StateObject var viewModel: UpdateUBViewModel = UpdateUBViewModel()
+    @StateObject var viewModel: UpdateUBViewModel = .init()
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -42,7 +42,8 @@ struct UpdateUBView: View {
                 }
                 
                 Picker("Trạng thái", selection: $viewModel.bState) {
-                    ForEach(BookState.allCases, id: \.self) {
+                    ForEach(BookState.allCases.filter({ $0 != .exchanged && $0 != .waitExchange })
+                            , id: \.self) {
                         Text("\($0.des())")
                     }
                 }
