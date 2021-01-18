@@ -11,16 +11,13 @@ struct CreatePostView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @StateObject var viewModel: CreatePostViewModel = CreatePostViewModel()
+    @StateObject var viewModel: CreatePostViewModel = .init()
     
     @State var showCategory: Bool = false
-    
     @State var showQuote: Bool = false
-    
     @State var showPhotoPicker: Bool = false
     
     @State var content: String = ""
-    
     @State var quote: String = ""
     
     var body: some View {
@@ -79,7 +76,7 @@ struct CreatePostView: View {
     }
     
     private var editor: some View {
-        VStack {
+        VStack(alignment: .center) {
             if showQuote {
                 QuoteEditor(message: $quote)
             }
@@ -87,28 +84,37 @@ struct CreatePostView: View {
             EditorWithPlaceHolder(text: $content, placeHolder: "Chia sẻ cảm xúc của bạn ngay nào", forceground: .black, font: "Roboto-Regular")
                 .padding()
             
-            if !viewModel.photoUrl.isEmpty {
-                ZStack(alignment: .topTrailing) {
-                    BSNImage(urlString: viewModel.photoUrl, tempImage: "unavailable")
-                        .frame(width: 170, height: 120)
-                        .cornerRadius(5)
-                    
-                    Button(action: {
-                        self.viewModel.photoUrl = ""
-                        self.viewModel.objectWillChange.send()
-                    }) {
-                        Image(systemName: "xmark")
-                            .foregroundColor(.white)
-                            .padding(10)
-                            .background(Color.blue)
-                            .clipShape(Circle())
+            GeometryReader { geometry in
+                ScrollView(.horizontal, showsIndicators: true) {
+                    HStack(alignment: .center) {
+                        ForEach(viewModel.photos, id: \.self) { photo in
+                            ZStack(alignment: .topTrailing) {
+                                BSNImage(urlString: photo, tempImage: "unavailable")
+                                    .frame(width: 170, height: 120)
+                                    .cornerRadius(5)
+                                    .clipped()
+                                
+                                Button(action: {
+                                    self.viewModel.remove(photo: photo)
+                                }) {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.white)
+                                        .padding(10)
+                                        .background(Color.blue)
+                                        .clipShape(Circle())
+                                }
+                            }
+                        }
                     }
+                    .padding(.horizontal)
+                    .frame(minWidth: geometry.size.width)
+                    .frame(height: geometry.size.height)
                 }
-            }
         }
     }
-    
-    private var footer: some View {
+}
+
+private var footer: some View {
         HStack {
             Button {
                 self.showCategory.toggle()
@@ -166,7 +172,7 @@ struct CreatePostView: View {
                 }
             }
             .buttonStyle(StrokeBorderStyle())
-            .disabled(!viewModel.photoUrl.isEmpty)
+            .disabled(viewModel.isUploading)
             .sheet(isPresented: $showPhotoPicker) {
                 ImagePicker(picker: $showPhotoPicker) { img in
                     //viewModel.photo = data

@@ -11,7 +11,7 @@ public struct NewsFeedView: View {
     
     @EnvironmentObject var root: AppManager
     
-    @StateObject var viewModel: NewsFeedViewModel = NewsFeedViewModel.shared
+    @StateObject var viewModel: NewsFeedViewModel = .shared
 
     @State private var presentCPV: Bool = false
 
@@ -96,8 +96,9 @@ public struct NewsFeedView: View {
 
             Spacer()
         }
-        //.padding(.top, 30)
+        .padding(.top, 10)
         .padding(.horizontal)
+        .background(Color.white)
         .onTapGesture {
             self.presentCPV.toggle()
         }

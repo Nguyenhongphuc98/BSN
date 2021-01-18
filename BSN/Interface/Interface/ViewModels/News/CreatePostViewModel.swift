@@ -10,7 +10,7 @@ import Business
 
 class CreatePostViewModel: NetworkViewModel {
     
-    @Published var photoUrl: String
+    @Published var photos: [String]
     @Published var category: Category
     
     // Upload image to S3
@@ -22,7 +22,7 @@ class CreatePostViewModel: NetworkViewModel {
     var didSaveSuccess: (() -> Void)?
     
     override init() {
-        photoUrl = ""
+        photos = []
         category = Category(id: kUndefine, name: "Chọn chủ đề")
         uploadProgess = 0
         isUploading = false
@@ -52,9 +52,17 @@ class CreatePostViewModel: NetworkViewModel {
             authorID: AppManager.shared.currenUID,
             quote: quote.isEmpty ? nil : quote,
             content: content,
-            photo: photoUrl.isEmpty ? nil : photoUrl
+            photo: photos.joined(separator: ";")
         )
         postManager.savePost(post: p)
+    }
+    
+    func remove(photo: String) {
+        let temp = photos.filter { $0 != photo }
+        withAnimation {
+            self.photos = temp
+            self.objectWillChange.send()
+        }
     }
 }
 
@@ -71,11 +79,11 @@ extension CreatePostViewModel {
                 
                 DispatchQueue.main.async {
                     self.isLoading = false
-                    self.photoUrl = ""
                     if p.id == kUndefine {
                         self.resourceInfo =  .savefailure
                         self.showAlert = true
                     } else {
+                        self.photos.removeAll()
                         let newsfeed = NewsFeed(
                             id: p.id!,
                             category: self.category,
@@ -109,7 +117,10 @@ extension CreatePostViewModel {
             
             guard let strongSelf = self else { return }
             if let finalPath = uploadedFileUrl as? String {
-                strongSelf.photoUrl = finalPath
+                
+                withAnimation {
+                    strongSelf.photos.append(finalPath)
+                }
             } else {
                 //strongSelf.photoUrl = ""
                 strongSelf.resourceInfo = .image_upload_fail
