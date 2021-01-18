@@ -13,14 +13,13 @@ class Comment: ObservableObject, AppendUniqueAble {
     
     // post ID
     var parent: String
-    
     var owner: User
-    
     var commentDate: Date
-    
     var content: String
-    
     var level: Int
+    
+    var photo: String?
+    var sticker: String?
     
     @Published var subcomments: [Comment]
     
@@ -34,13 +33,15 @@ class Comment: ObservableObject, AppendUniqueAble {
         subcomments = firstLevel ? [Comment(firstLevel: false), Comment(firstLevel: false)] : []
     }
     
-    init(id: String, parent: String, owner: User, content: String, level: Int, cmtDate: String?) {
+    init(id: String, parent: String, owner: User, content: String, level: Int, cmtDate: String?, photo: String? = nil, sticker: String? = nil) {
         self.id = id
         self.parent = parent
         self.owner = owner
         self.commentDate = Date()
         self.content = content
         self.level = level
+        self.photo = photo
+        self.sticker = sticker
         self.subcomments = []
         self.commentDate = Date.getDate(dateStr: cmtDate)
     }

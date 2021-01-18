@@ -35,6 +35,13 @@ struct PostDetailView: View {
         VStack {
             if viewModel.post != nil {
                 postContent
+                
+                // Progess bar (uploading)
+                if viewModel.isUploading {
+                    ProgressView("Đang xử lý ảnh", value: viewModel.uploadProgess, total: 1)
+                        .progressViewStyle(LinearProgressViewStyle())
+                        .padding()
+                }
             } else {
                 ExceptionView(sign: "exclamationmark.circle", message: "Bài viết đã bị gỡ bỏ!")
             }
@@ -119,6 +126,30 @@ struct PostDetailView: View {
     
     var commentBox: some View {
         VStack(spacing: 1) {
+            
+            // Thumnail image when upload image for comment
+            HStack {
+                if !viewModel.uploadedPhoto.isEmpty {
+                    ImageWithCloseBtn(
+                        photoUrl: $viewModel.uploadedPhoto,
+                        frame: CGSize(width: 100, height: 80),
+                        didClose: {
+                            viewModel.objectWillChange.send()
+                        })
+                }
+                
+                if !viewModel.uploadedSticker.isEmpty {
+                    ImageWithCloseBtn(
+                        photoUrl: $viewModel.uploadedSticker,
+                        frame: CGSize(width: 100, height: 80),
+                        isRemote: false,
+                        didClose: {
+                           viewModel.objectWillChange.send()
+                       })
+                }
+                Spacer()
+            }
+            
             if !viewModel.replingComment.isDummy() {
                 HStack(spacing: 0) {
                     Text("Bạn đang trả lời \(viewModel.replingName)...")
@@ -140,11 +171,30 @@ struct PostDetailView: View {
                 }
             }
             
-            CoreMessageEditor(placeHolder: "Nhập bình luận") { (message) in
-                viewModel.didComment(message: message)
-            }
+//            CoreMessageEditor(placeHolder: "Nhập bình luận") { (message) in
+//                viewModel.didComment(message: message)
+//            }
+            //editorBox
+            RichMessageEditor(didChat: { (type, message) in
+                // if type == text mean submit chat
+                // else we just pick sticker
+                if type == .sticker {
+                    viewModel.uploadedSticker = message
+                    viewModel.uploadedPhoto = ""
+                    viewModel.objectWillChange.send()
+                } else {
+                    viewModel.didComment(message: message)
+                }
+            }, didPickPhoto: { (img) in
+                viewModel.uploadedSticker = ""
+                viewModel.upload(image: img)
+            }, didExpand: { expand, type in
+                 
+            })
+            .background(Color.white)
+            .padding(.top, 5)
         }
-        .padding(.horizontal)
+        //.padding(.horizontal)
         .padding(.vertical, 8)
     }
     

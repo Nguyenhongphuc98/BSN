@@ -24,6 +24,13 @@ class PostDetailViewModel: NetworkViewModel {
     // the name of user be commented
     @Published var replingName: String
     
+    // Upload image to S3
+    @Published var uploadProgess: Float
+    @Published var isUploading: Bool
+    @Published var uploadedPhoto: String
+    
+    @Published var uploadedSticker: String
+    
     var numCmtFetched: Int
     var currentPage: Int
     
@@ -41,6 +48,12 @@ class PostDetailViewModel: NetworkViewModel {
         commentManager = CommentManager()
         postManager = PostManager()
         comments = []
+        
+        uploadProgess = 0
+        isUploading = false
+        uploadedPhoto = ""
+        uploadedSticker = ""
+        
         numCmtFetched = 0
         currentPage = 0
         print("Did init post detail viewModel")
@@ -86,7 +99,9 @@ class PostDetailViewModel: NetworkViewModel {
             userID: AppManager.shared.currenUID,
             postID: postID,
             parentID: parent,
-            content: finalMessage
+            content: finalMessage,
+            photo: self.uploadedPhoto.isEmpty ? nil : self.uploadedPhoto,
+            sticker: self.uploadedSticker.isEmpty ? nil : self.uploadedSticker
         )
         
         isLoadingComment = true
@@ -126,7 +141,9 @@ class PostDetailViewModel: NetworkViewModel {
             owner: User(id: ec.userID, photo: ownerSave ? AppManager.shared.currentUser.avatar : ec.userPhoto, name: ownerSave ? AppManager.shared.currentUser.displayname : ec.userName!), // nil mean curent just comment
             content: ec.content,
             level: ec.parentID == ec.postID ? 0 : 1,
-            cmtDate: ec.createdAt
+            cmtDate: ec.createdAt,
+            photo: ec.photo,
+            sticker: ec.sticker
         )
         
         if cmt.level == 0 {
@@ -177,7 +194,9 @@ extension PostDetailViewModel {
                         
                         // save comment will newest, and don't add to top
                         self.addComment(ec: ec, ownerSave: true, addToTop: false)
-                        self.post?.numComment += 1                       
+                        self.post?.numComment += 1
+                        self.uploadedPhoto = ""
+                        self.uploadedSticker = ""
                         self.objectWillChange.send()
                     }
                 }
@@ -249,5 +268,37 @@ extension PostDetailViewModel {
                 }
             }
             .store(in: &cancellables)
+    }
+}
+
+// MARK: - AWS Utils
+extension PostDetailViewModel {
+    func upload(image: UIImage) {
+        print("start uploading image ...")
+        isUploading = true
+        objectWillChange.send()
+        AWSManager.shared.uploadImage(image: image, progress: {[weak self] ( uploadProgress) in
+            
+            guard let strongSelf = self else { return }
+            strongSelf.uploadProgess = Float(uploadProgress)
+            print("uploading: \(uploadProgress)")
+            
+        }) {[weak self] (uploadedFileUrl, error) in
+            
+            guard let strongSelf = self else { return }
+            if let finalPath = uploadedFileUrl as? String {
+                
+                withAnimation {
+                    strongSelf.uploadedPhoto = finalPath
+                }
+            } else {
+                //strongSelf.photoUrl = ""
+                strongSelf.resourceInfo = .image_upload_fail
+                strongSelf.showAlert = true
+                print("\(String(describing: error?.localizedDescription))")
+            }
+            strongSelf.isUploading = false
+            strongSelf.objectWillChange.send()
+        }
     }
 }

@@ -51,6 +51,8 @@ struct CommentCard: View {
                     }
                 }
                 
+                image
+                
                 replyButton
                 
                 if showSubcomments {
@@ -58,6 +60,7 @@ struct CommentCard: View {
                 }
             }
             .padding(.trailing, 10)
+            .padding(.leading, 20)
             .font(.custom("Roboto-Light", size: 13))
             .fixedSize(horizontal: false, vertical: true)
             
@@ -67,7 +70,7 @@ struct CommentCard: View {
                 seperator
             }
         }
-        .padding(.leading, 30)
+        .padding(.leading, 20)
         .background(Color.white)
     }
     
@@ -123,6 +126,24 @@ struct CommentCard: View {
             }
             .buttonStyle(BorderlessButtonStyle())
         }
+    }
+    
+    private var image: some View {
+        Group {
+            if model.sticker != nil {
+                Image(model.sticker!, bundle: interfaceBundle)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 90)
+            }
+            
+            if model.photo != nil {
+                BSNImage(urlString: model.photo, tempImage: "unavailable")
+                    .frame(height: 150)
+            }
+        }
+        .clipped()
+        .clipShape(RoundedRectangle(cornerRadius: 15))
     }
     
     var expanseW: some View {

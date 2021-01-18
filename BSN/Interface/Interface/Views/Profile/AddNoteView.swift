@@ -122,7 +122,9 @@ struct AddNoteView: View {
                     }
                     
                 } else {
-                    ImageWithCloseBtn(photoUrl: $viewModel.photoUrl)
+                    ImageWithCloseBtn(photoUrl: $viewModel.photoUrl, didClose: {
+                        viewModel.objectWillChange.send()
+                    })
                 }
             }
         }
