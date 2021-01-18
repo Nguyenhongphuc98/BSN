@@ -60,15 +60,7 @@ struct NewsFeedCard: View {
                 .fixedSize(horizontal: false, vertical: false)
                 .padding(2)
             
-            // Photo
-            if model.photo != nil {
-                BSNImage(urlString: model.photo, tempImage: "unavailable")
-                    .frame(maxHeight: 200)
-                    .clipped()
-                    .padding(2)
-                    .allowsHitTesting(false)
-                    .overlay(tapableImageArea)
-            }
+            NewsPhotosGrid(photos: model.photos)
             
             actionComponent
         }
@@ -154,5 +146,31 @@ struct NewsFeedCard: View {
 struct NewsFeedCard_Previews: PreviewProvider {
     static var previews: some View {
         NewsFeedCard(model: NewsFeed())
+    }
+}
+
+struct NewsPhotosGrid: View {
+    
+    var photos: [String]
+    
+    var columns: [GridItem] = [
+        GridItem(.adaptive(minimum: 150), spacing: 5)
+    ]
+
+    var body: some View {
+        if photos.count == 1 {
+            BSNImage(urlString: photos[0], tempImage: "unavailable")
+                .frame(maxHeight: 200)
+                .clipped()
+                .padding(2)
+        } else {
+            LazyVGrid(columns: columns, content: {
+                ForEach(photos, id: \.self) { photo in
+                    BSNImage(urlString: photo, tempImage: "unavailable")
+                        .clipped()
+                        .padding(2)
+                }
+            })
+        }
     }
 }

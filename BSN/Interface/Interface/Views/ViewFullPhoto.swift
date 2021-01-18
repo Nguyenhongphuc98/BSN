@@ -19,7 +19,7 @@ struct ViewFullPhoto: View {
     
     var body: some View {
         ZStack(alignment: .leading) {
-            ZoomableScrollImage(url: newFeed.photo!) {
+            ZoomableScrollImage(url: newFeed.photos[0]) {
                 self.dismiss()
             }
             

@@ -22,7 +22,7 @@ class NewsFeed: ObservableObject, AppendUniqueAble {
     var postTime: Date
     var category: Category
     var quote: String?
-    var photo: String? // url to photo
+    var photos: [String] // url to photo
     
     @Published var numHeart: Int
     @Published var numBeakHeart: Int
@@ -49,8 +49,9 @@ class NewsFeed: ObservableObject, AppendUniqueAble {
         let r = Int.random(in: 1...2)
         if r == 1 {
             quote = "Nhân quả đừng đợi thấy mới tin."
+            photos = []
         } else {
-            photo = "news1"
+            photos = ["news1"]
         }
         
         numHeart = 89
@@ -67,7 +68,7 @@ class NewsFeed: ObservableObject, AppendUniqueAble {
         self.content = content
         
         self.quote = quote
-        self.photo = photo
+        self.photos = photo == nil ? [] : photo!.split(separator: ";") as [String]
         
         numHeart = 0
         numBeakHeart = 0
@@ -82,7 +83,7 @@ class NewsFeed: ObservableObject, AppendUniqueAble {
         
         content = post.content
         quote = post.quote
-        photo = post.photo
+        photos = post.photo == nil ? [] : post.photo!.components(separatedBy: ";")
         
         numHeart = post.numHeart!
         numBeakHeart = post.numBreakHeart!
@@ -102,7 +103,7 @@ class NewsFeed: ObservableObject, AppendUniqueAble {
         
         content = news.content
         quote = news.quote
-        photo = news.photo
+        photos = news.photos
         
         numHeart = news.numHeart
         numBeakHeart = news.numBeakHeart
