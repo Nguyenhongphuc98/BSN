@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Using for present photo of newsfeed card
 struct ViewFullPhoto: View {
     
     //var data: Data
@@ -15,13 +16,22 @@ struct ViewFullPhoto: View {
     
     var newFeed: NewsFeed
     
+    @State var index: Int = 0
+    
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         ZStack(alignment: .leading) {
-            ZoomableScrollImage(url: newFeed.photos[0]) {
-                self.dismiss()
+                        
+            TabView(selection: $index) {
+                ForEach(0..<newFeed.photos.count, id: \.self) { index in
+                    ZoomableScrollImage(url: newFeed.photos[index]) {
+                        self.dismiss()
+                    }
+                    .tag(index)
+                }
             }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
             
             VStack(alignment: .leading) {
                 Spacer()

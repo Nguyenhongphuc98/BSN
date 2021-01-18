@@ -53,7 +53,8 @@ struct ZoomableScrollImage: View {
                                 withAnimation(.spring()) {
                                     // Out screen or go back origin position
                                     if scale == 1 {
-                                        if abs(offset.x) > 80 || abs(offset.y) > 80 {
+                                        //if abs(offset.x) > 80 || abs(offset.y) > 80 {
+                                        if abs(offset.y) > 80 {
                                             didRequestOutScreen?()
                                         }
                                         

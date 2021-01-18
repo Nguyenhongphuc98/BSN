@@ -68,7 +68,7 @@ class NewsFeed: ObservableObject, AppendUniqueAble {
         self.content = content
         
         self.quote = quote
-        self.photos = photo == nil ? [] : photo!.split(separator: ";") as [String]
+        self.photos = photo == nil ? [] : photo!.components(separatedBy: ";")
         
         numHeart = 0
         numBeakHeart = 0

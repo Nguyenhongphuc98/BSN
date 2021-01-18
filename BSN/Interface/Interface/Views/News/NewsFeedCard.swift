@@ -11,8 +11,6 @@ struct NewsFeedCard: View {
     
     @ObservedObject var model: NewsFeed
     
-    @State private var presentPhoto: Bool = false
-    
     var isDetail: Bool = false
     
     var didRequestGoToDetail: (() -> Void)?
@@ -60,15 +58,12 @@ struct NewsFeedCard: View {
                 .fixedSize(horizontal: false, vertical: false)
                 .padding(2)
             
-            NewsPhotosGrid(photos: model.photos)
+            NewsPhotosGrid(news: model)
             
             actionComponent
         }
         .padding()
         .background(Color.white)
-        .fullScreenCover(isPresented: $presentPhoto) {
-            ViewFullPhoto(newFeed: model)
-        }
     }
     
     private var avatar: some View {
@@ -128,19 +123,19 @@ struct NewsFeedCard: View {
         }
     }
     
-    private var tapableImageArea: some View {
-        VStack {
-            Rectangle()
-                .fill(Color.black.opacity(0.0001))
-                .onTapGesture {
-                    self.presentPhoto.toggle()
-                }
-
-            Rectangle()
-                .frame(height: 10)
-        }
-        .foregroundColor(.clear)
-    }
+//    private var tapableImageArea: some View {
+//        VStack {
+//            Rectangle()
+//                .fill(Color.black.opacity(0.0001))
+//                .onTapGesture {
+//                    self.presentPhoto.toggle()
+//                }
+//
+//            Rectangle()
+//                .frame(height: 10)
+//        }
+//        .foregroundColor(.clear)
+//    }
 }
 
 struct NewsFeedCard_Previews: PreviewProvider {
@@ -151,26 +146,51 @@ struct NewsFeedCard_Previews: PreviewProvider {
 
 struct NewsPhotosGrid: View {
     
-    var photos: [String]
+    var news: NewsFeed
     
     var columns: [GridItem] = [
-        GridItem(.adaptive(minimum: 150), spacing: 5)
+        GridItem(.adaptive(minimum: 150))
     ]
 
+    @State private var presentPhoto: Bool = false
+    @State private var selectedIndex: Int = 0
+    
     var body: some View {
-        if photos.count == 1 {
-            BSNImage(urlString: photos[0], tempImage: "unavailable")
-                .frame(maxHeight: 200)
-                .clipped()
-                .padding(2)
-        } else {
-            LazyVGrid(columns: columns, content: {
-                ForEach(photos, id: \.self) { photo in
-                    BSNImage(urlString: photo, tempImage: "unavailable")
+        Group {
+            if news.photos.count == 1 {
+                Button {
+                    selectedIndex = 0
+                    presentPhoto.toggle()
+                } label: {
+                    genImage(photo: news.photos[0])
+                        .frame(maxHeight: 200)
                         .clipped()
-                        .padding(2)
                 }
-            })
+                .buttonStyle(BorderlessButtonStyle())
+                .padding(2)
+            } else {
+                LazyVGrid(columns: columns, content: {
+                    ForEach(0..<news.photos.count, id: \.self) { index in
+                        Button {
+                            selectedIndex = index
+                            presentPhoto = true
+                        } label: {
+                            genImage(photo: news.photos[index])
+                                .frame(maxWidth: 168, maxHeight: 150)
+                                .clipped()
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                    }
+                })
+                .clipped()
+            }
         }
+        .fullScreenCover(isPresented: $presentPhoto) {
+            ViewFullPhoto(newFeed: news, index: selectedIndex)
+        }
+    }
+    
+    func genImage(photo: String) -> some View {
+        BSNImage(urlString: photo, tempImage: "unavailable")
     }
 }
