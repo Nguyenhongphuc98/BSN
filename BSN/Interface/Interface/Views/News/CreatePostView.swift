@@ -15,10 +15,14 @@ struct CreatePostView: View {
     
     @State var showCategory: Bool = false
     @State var showQuote: Bool = false
-    @State var showPhotoPicker: Bool = false
+    //@State var showPhotoPicker: Bool = false
     
     @State var content: String = ""
     @State var quote: String = ""
+    
+    @State var showActionSheet: Bool = false
+    @State var showImageCapture: Bool = false
+    @State var imageSource: ImageSourceType = .gallery
     
     var body: some View {
         ZStack {
@@ -90,7 +94,7 @@ struct CreatePostView: View {
                         ForEach(viewModel.photos, id: \.self) { photo in
                             ZStack(alignment: .topTrailing) {
                                 BSNImage(urlString: photo, tempImage: "unavailable")
-                                    .frame(width: 170, height: 120)
+                                    .frame(width: 120, height: 90)
                                     .cornerRadius(5)
                                     .clipped()
                                 
@@ -114,7 +118,7 @@ struct CreatePostView: View {
     }
 }
 
-private var footer: some View {
+    private var footer: some View {
         HStack {
             Button {
                 self.showCategory.toggle()
@@ -161,7 +165,9 @@ private var footer: some View {
             
             Button {
                 print("did tap")
-                showPhotoPicker.toggle()
+                //showPhotoPicker.toggle()
+                //showImageCapture.toggle()
+                showActionSheet.toggle()
             } label: {
                 HStack {
                     Image(systemName: "photo")
@@ -173,13 +179,36 @@ private var footer: some View {
             }
             .buttonStyle(StrokeBorderStyle())
             .disabled(viewModel.isUploading)
-            .sheet(isPresented: $showPhotoPicker) {
-                ImagePicker(picker: $showPhotoPicker) { img in
-                    //viewModel.photo = data
-                    viewModel.upload(image: img)
+            .actionSheet(isPresented: $showActionSheet) {
+                ActionSheet(title: Text("Lựa chọn hành động với ảnh"), buttons: actionSheetButton)
+            }
+            .sheet(isPresented: $showImageCapture) {
+                CaptureImageView(isShown: $showImageCapture, source: imageSource) { (uiimage) in
+                    print("did get image...")
+                    viewModel.upload(image: uiimage)
                 }
             }
+//            .sheet(isPresented: $showPhotoPicker) {
+//                ImagePicker(picker: $showPhotoPicker) { img in
+//                    //viewModel.photo = data
+//                    viewModel.upload(image: img)
+//                }
+//            }
         }
+    }
+    
+    private var actionSheetButton: [Alert.Button] {
+        [
+            .default(Text("Chụp ảnh mới")) {
+                imageSource = .camera
+                showImageCapture.toggle()
+            },
+            .default(Text("Chọn từ thư viện")) {
+                imageSource = .gallery
+                showImageCapture.toggle()
+            },
+            .cancel()
+        ]
     }
     
     private func alert() -> Alert {

@@ -149,6 +149,7 @@ struct PostDetailView: View {
                 }
                 Spacer()
             }
+            .padding(.leading, 30)
             
             if !viewModel.replingComment.isDummy() {
                 HStack(spacing: 0) {

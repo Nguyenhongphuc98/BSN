@@ -16,7 +16,7 @@ struct ViewFullPhoto: View {
     
     var newFeed: NewsFeed
     
-    @State var index: Int = 0
+    @Binding var index: Int
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -59,8 +59,8 @@ struct ViewFullPhoto: View {
     }
 }
 
-struct ViewFullPhoto_Previews: PreviewProvider {
-    static var previews: some View {
-        ViewFullPhoto(newFeed: NewsFeed())
-    }
-}
+//struct ViewFullPhoto_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ViewFullPhoto(newFeed: NewsFeed())
+//    }
+//}

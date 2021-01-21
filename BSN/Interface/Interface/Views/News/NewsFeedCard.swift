@@ -174,6 +174,7 @@ struct NewsPhotosGrid: View {
                         Button {
                             selectedIndex = index
                             presentPhoto = true
+                            print("did select index: \(index)")
                         } label: {
                             genImage(photo: news.photos[index])
                                 .frame(maxWidth: 168, maxHeight: 150)
@@ -186,7 +187,7 @@ struct NewsPhotosGrid: View {
             }
         }
         .fullScreenCover(isPresented: $presentPhoto) {
-            ViewFullPhoto(newFeed: news, index: selectedIndex)
+            ViewFullPhoto(newFeed: news, index: $selectedIndex)
         }
     }
     

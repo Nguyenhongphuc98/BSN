@@ -60,18 +60,20 @@ struct EditorWithPlaceHolder: View {
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            TextEditor(text: self.$text)
-                .bFont(name: font, size: 13)
-                .foregroundColor(forcegroundColor)
-                //.background(Color.pink)
-            
             if text == "" {
                 Text(placeHolder)
                     .bFont(name: font, size: 13)
                     .foregroundColor(.gray)
                     .padding(4)
                     .padding(.top, 6)
+                    .disabled(true)
+                    .allowsHitTesting(false)
             }
+            
+            TextEditor(text: self.$text)
+                .bFont(name: font, size: 13)
+                .foregroundColor(forcegroundColor)
+                //.background(Color.pink)            
         }
         .padding(.leading, 10)
         .background(bg)

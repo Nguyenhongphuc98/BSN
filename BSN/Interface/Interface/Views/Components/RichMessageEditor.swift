@@ -23,7 +23,11 @@ struct RichMessageEditor: View {
     
     @State var showStickersBar: Bool = false
     
-    @State var showImagePicker: Bool = false
+    //@State var showImagePicker: Bool = false
+    
+    @State var showActionSheet: Bool = false
+    @State var showImageCapture: Bool = false
+    @State var imageSource: ImageSourceType = .gallery
     
     @EnvironmentObject var root: AppManager
     
@@ -33,7 +37,9 @@ struct RichMessageEditor: View {
         VStack(spacing: 0) {
             HStack {
                 Button(action: {
-                    showImagePicker.toggle()
+                    //showImagePicker.toggle()
+                    //showImageCapture.toggle()
+                    showActionSheet.toggle()
                 }, label: {
                     Image(systemName: "photo.fill")
                         .resizable()
@@ -70,11 +76,33 @@ struct RichMessageEditor: View {
         }
         .animation(.easeIn)
         .onAppear(perform: viewAppeared)
-        .sheet(isPresented: $showImagePicker) {
-            ImagePicker(picker: $showImagePicker) { img in
-                didPickPhoto?(img)
+//        .sheet(isPresented: $showImagePicker) {
+//            ImagePicker(picker: $showImagePicker) { img in
+//                didPickPhoto?(img)
+//            }
+//        }
+        .actionSheet(isPresented: $showActionSheet) {
+            ActionSheet(title: Text("Lựa chọn hành động với ảnh"), buttons: actionSheetButton)
+        }
+        .sheet(isPresented: $showImageCapture) {
+            CaptureImageView(isShown: $showImageCapture, source: imageSource) { (uiimage) in
+                didPickPhoto?(uiimage)
             }
         }
+    }
+    
+    private var actionSheetButton: [Alert.Button] {
+        [
+            .default(Text("Chụp ảnh mới")) {
+                imageSource = .camera
+                showImageCapture.toggle()
+            },
+            .default(Text("Chọn từ thư viện")) {
+                imageSource = .gallery
+                showImageCapture.toggle()
+            },
+            .cancel()
+        ]
     }
     
     private func viewAppeared() {

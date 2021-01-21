@@ -15,6 +15,8 @@ struct CommentCard: View {
     
     @State private var isShowProfile: Bool = false
     
+    @State private var showingViewFull: Bool = false
+    
     @EnvironmentObject var pdViewModel: PostDetailViewModel
     
     // Reply in subcomment of 'Comment' and who be reppled is 'String'
@@ -138,8 +140,18 @@ struct CommentCard: View {
             }
             
             if model.photo != nil {
-                BSNImage(urlString: model.photo, tempImage: "unavailable")
-                    .frame(height: 150)
+                Button(action: {
+                    showingViewFull.toggle()
+                }, label: {
+                    BSNImage(urlString: model.photo, tempImage: "unavailable")
+                        .frame(height: 150)
+                })
+                .buttonStyle(PlainButtonStyle())
+                .fullScreenCover(isPresented: $showingViewFull) {
+                    ZoomableScrollImage(url: model.photo!) {
+                        self.showingViewFull.toggle()
+                    }
+                }
             }
         }
         .clipped()
