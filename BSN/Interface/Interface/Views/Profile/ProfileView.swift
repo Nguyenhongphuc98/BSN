@@ -317,13 +317,22 @@ public struct ProfileView: View, PopToable {
     
     private func dinamicContent(proxy: ScrollViewProxy) -> some View {
         VStack {
-            Segment(tabNames: ["   Bài viết   ", "   Tủ sách   "], focusIndex: $selectedSegment) {
+//            Segment(tabNames: ["   Bài viết   ", "   Tủ sách   "], focusIndex: $selectedSegment) {
+//                proxy.scrollTo("des", anchor: .top)
+//                if self.selectedSegment == 0 {
+//                    // hide keyboard in post view
+//                    UIApplication.shared.endEditing(true)
+//                }
+//            }
+            Segment(tabNames: ["   Bài viết   ", "   Tủ sách   "], focusIndex: $selectedSegment, didChangeIndex: {
                 proxy.scrollTo("des", anchor: .top)
                 if self.selectedSegment == 0 {
                     // hide keyboard in post view
                     UIApplication.shared.endEditing(true)
+                } else {
+                    ProfileViewModel.shared.forceRefeshUB()
                 }
-            }
+            })
                 .padding(.vertical, 5)
             
             TabView(selection: self.$selectedSegment) {

@@ -54,7 +54,14 @@ public struct ExploreBookView: View, PopToable {
     
     private var viewNormalMode: some View {
         VStack {
-            Segment(tabNames: ["Được yêu thích", "Đang trao đổi"], focusIndex: $selectedSegment)
+            Segment(tabNames: ["Được yêu thích", "Đang trao đổi"], focusIndex: $selectedSegment, didChangeIndex: {
+                // Force reload when tap in segment
+                if selectedSegment == 0 {
+                    ExploreBookViewModel.shared.reloadTopBooks()
+                } else {
+                    ExploreBookViewModel.shared.loadExchangeBooks()
+                }
+            })
                 .padding(.vertical, 5)
             
             TabView(selection: self.$selectedSegment){

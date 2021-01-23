@@ -19,7 +19,7 @@ public class NewsFeedViewModel: NetworkViewModel {
     
     private var postManager: PostManager
     
-    public static var shared: NewsFeedViewModel = NewsFeedViewModel()
+    public static var shared: NewsFeedViewModel = .init()
     
     override init() {
         newsData = []

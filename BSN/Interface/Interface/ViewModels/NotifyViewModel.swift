@@ -85,21 +85,21 @@ public class NotifyViewModel: NetworkViewModel {
                     self.isLoadmore = false
                     
                     if !notifies.isEmpty {
-                        var shouldReloadProfile: Bool = false
+//                        var shouldReloadProfile: Bool = false
                         if notifies[0].id == kUndefine {
                             self.message = "Có lỗi xảy ra khi tải dữ liệu!"
                         } else {
                             notifies.forEach { (n) in
                                 let notify = Notify(enotify: n)
                                 self.notifies.appendUnique(item: notify)
-                                if notify.action == .borrowSuccess || notify.action == .exchangeSuccess {
-                                    shouldReloadProfile = true // reload because we have new user book
-                                }
+//                                if notify.action == .borrowSuccess || notify.action == .exchangeSuccess {
+//                                    shouldReloadProfile = true // reload because we have new user book
+//                                }
                             }
                         }
-                        if shouldReloadProfile {
-                            ProfileViewModel.shared.forceRefeshUB()
-                        }
+//                        if shouldReloadProfile {
+//                            ProfileViewModel.shared.forceRefeshUB()
+//                        }
                     }
                     
                     // num of news < config shoud be last page
@@ -126,6 +126,11 @@ extension NotifyViewModel {
                 DispatchQueue.main.async {
                     let notify = Notify(enotify: n)
                     self.notifies.insertUnique(item: notify)
+                    
+                    // reload because we have new user book
+                    if notify.action == .borrowSuccess || notify.action == .exchangeSuccess {
+                        ProfileViewModel.shared.forceRefeshUB()
+                    }
                 }
             }
             .store(in: &cancellables)

@@ -11,12 +11,13 @@ struct Segment: View {
     
     var tabNames: [String]
     
-    @Binding var focusIndex: Int {
-        didSet {
-            print("did set")
-            didChangeIndex?()
-        }
-    }
+    @Binding var focusIndex: Int
+//    {
+//        didSet {
+//            print("did set")
+//            didChangeIndex?()
+//        }
+//    }
     
     var didChangeIndex: (() -> Void)?
     

@@ -158,16 +158,20 @@ struct NewsPhotosGrid: View {
     var body: some View {
         Group {
             if news.photos.count == 1 {
-                Button {
-                    selectedIndex = 0
-                    presentPhoto.toggle()
-                } label: {
-                    genImage(photo: news.photos[0])
-                        .frame(maxHeight: 200)
-                        .clipped()
+                if news.photos[0] == "" {
+                    EmptyView()
+                } else {
+                    Button {
+                        selectedIndex = 0
+                        presentPhoto.toggle()
+                    } label: {
+                        genImage(photo: news.photos[0])
+                            .frame(maxHeight: 200)
+                            .clipped()
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                    .padding(2)
                 }
-                .buttonStyle(BorderlessButtonStyle())
-                .padding(2)
             } else {
                 LazyVGrid(columns: columns, content: {
                     ForEach(0..<news.photos.count, id: \.self) { index in
