@@ -16,7 +16,7 @@ public class PersonalizeViewModel: NetworkViewModel {
     private var usercategoryManager: UserCategoryManager
     private var accountManager: AccountManager
     
-    var categories: [Category]
+    @Published var categories: [Category]
     @Published var chunks: [ArraySlice<Category>]
     
     var numSelected: Int {

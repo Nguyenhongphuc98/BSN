@@ -77,7 +77,13 @@ public struct PersonalizeView: View {
                 ForEach(viewModel.chunks, id: \.self) { categories in
                     HStack {
                         ForEach(categories) { c in
-                            CategoryCard(category: c, selected: c.interested)
+                            CategoryCard(
+                                category: c,
+                                selected: c.interested,
+                                didClick: { (selected) in
+                                    c.interested = selected
+                                    viewModel.objectWillChange.send()
+                                })
                                 .id("\(c.id)\(c.interested)")
                         }
                     }
@@ -146,11 +152,14 @@ struct CategoryCard: View {
     
     @State var selected: Bool = false
     
+    var didClick: ((Bool) -> Void)?
+    
     var body: some View {
         Button {
             selected.toggle()
-            category.interested = selected
-            PersonalizeViewModel.shared.objectWillChange.send()
+            //category.interested = selected
+            //PersonalizeViewModel.shared.objectWillChange.send()
+            didClick?(selected)
         } label: {
             HStack {
                 Image(systemName: selected ? "checkmark.circle" : "plus")

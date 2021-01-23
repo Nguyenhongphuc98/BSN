@@ -38,6 +38,7 @@ public class NewsFeedViewModel: NetworkViewModel {
         isLoading = true
         currentPage = 0
         newsData = []
+        allNewsFetched = false
         postManager.getNewestPosts(page: 0)
     }
     
