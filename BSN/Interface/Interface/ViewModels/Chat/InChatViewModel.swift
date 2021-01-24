@@ -130,6 +130,7 @@ class InChatViewModel: NetworkViewModel {
             return
         }
         chat.seen = true
+        ChatViewModel.shared.objectWillChange.send()
         let updatechat = EChat(id: chat.id!, seen: chat.seen)
         updatechatManager.updateChat(chat: updatechat)
     }

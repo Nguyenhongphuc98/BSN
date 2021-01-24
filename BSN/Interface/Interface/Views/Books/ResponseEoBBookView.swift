@@ -23,40 +23,44 @@ struct ResponseEoBBookView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            VStack(spacing: 20) {
-                Text("\(isAccept ? "Chấp nhận" : "Từ chối") yêu cầu \(isBorrow ? "mượn" : "đổi") sách")
-                    .robotoBold(size: 18)
-                    .padding()
-                
-                Text(des)
-                    .roboto(size: 15)
-                    .multilineTextAlignment(.center)
-                    .padding(.top)
-                
-                EditorWithPlaceHolder(text: $viewModel.declineMessage, placeHolder: "Để lại lời nhắn của bạn tại đây")
-                    .frame(height: 100)
-                    .cornerRadius(5)
-                    .padding()
-                
-                Spacer()
-                
-                Button(action: {
-                    if isAccept {
-                        viewModel.processAccept(isborrow: isBorrow, targetID: targetID)
-                    } else {
-                        viewModel.processDecline(isborrow: isBorrow, targetID: targetID)
-                    }
+                VStack(spacing: 20) {
+                    Text("\(isAccept ? "Chấp nhận" : "Từ chối") yêu cầu \(isBorrow ? "mượn" : "đổi") sách")
+                        .robotoBold(size: 18)
+                        .padding(.top)
                     
-                    didSubmit?()
-                    dismiss()
-                }, label: {
-                    Text("Hoàn tất")
-                })
-                .buttonStyle(BaseButtonStyle(size: .large))
-                
-                Spacer()
+                    ScrollView {
+                        VStack {
+                            Text(des)
+                                .roboto(size: 15)
+                                .multilineTextAlignment(.center)
+                                .padding(.top)
+                            
+                            EditorWithPlaceHolder(text: $viewModel.declineMessage, placeHolder: "Để lại lời nhắn của bạn tại đây")
+                                .frame(height: 100)
+                                .cornerRadius(5)
+                                .padding()
+                            
+                            Spacer()
+                            
+                            Button(action: {
+                                if isAccept {
+                                    viewModel.processAccept(isborrow: isBorrow, targetID: targetID)
+                                } else {
+                                    viewModel.processDecline(isborrow: isBorrow, targetID: targetID)
+                                }
+                                
+                                didSubmit?()
+                                dismiss()
+                            }, label: {
+                                Text("Hoàn tất")
+                            })
+                            .buttonStyle(BaseButtonStyle(size: .large))
+                            
+                            Spacer()
+                        }
+                }
+                .padding()
             }
-            .padding()
             
             HStack {
                 Button(action: {
