@@ -19,7 +19,9 @@ public class ProfileViewModel: NetworkViewModel {
     @Published var books: [BUserBook]
     @Published var displayBooks: [BUserBook]
     @Published public var user: User
+    
     @Published public var userFollow: EUserfollow
+    @Published public var guestFollow: EUserfollow
     
     private var userBookManager: UserBookManager
     private var userManager: UserManager
@@ -42,6 +44,7 @@ public class ProfileViewModel: NetworkViewModel {
         books = []
         displayBooks = []
         userFollow = EUserfollow()
+        guestFollow = EUserfollow()
         isfetched = false       
         userBookManager = .init()
         userManager = UserManager()
@@ -94,9 +97,23 @@ public class ProfileViewModel: NetworkViewModel {
     /// Fetching data from Server to fill page if it passed bookID from preView
     // This func should be call one time
     public func prepareData(uid: String?) {
-        guard isLoading == false, !isfetched else {
+        guard isLoading == false else {
             return
         }
+        
+        guard !isfetched else {
+            // This properties should reload because it may change from other user
+            // If not show owner profile
+            if uid != nil {
+                userFollow = EUserfollow()
+                guestFollow = EUserfollow()
+                followManager.getUserFollow(followerId: AppManager.shared.currentUser.id, userID: uid!)
+                followManager.getGuestFollow(followerId: uid!, userID: AppManager.shared.currentUser.id)
+            }
+            
+            return
+        }
+        
         isLoading = true
         
         if uid == nil || uid == AppManager.shared.currentUser.id {
@@ -108,6 +125,7 @@ public class ProfileViewModel: NetworkViewModel {
             userManager.getUser(uid: uid!)
             // Check followed?
             followManager.getUserFollow(followerId: AppManager.shared.currentUser.id, userID: uid!)
+            followManager.getGuestFollow(followerId: uid!, userID: AppManager.shared.currentUser.id)
         }
         
         reloadPostNUserbook(uid: uid)
@@ -137,6 +155,8 @@ public class ProfileViewModel: NetworkViewModel {
             // so will no longer waiting or follow
             // make unfollow request
             followManager.unfollow(followerId: AppManager.shared.currenUID, targetId: user.id)
+            userFollow = EUserfollow() // reset
+            self.objectWillChange.send()
         }
         
 //        if followed.ac {
@@ -149,6 +169,19 @@ public class ProfileViewModel: NetworkViewModel {
 //        }
         
 //        followed = !followed
+    }
+    
+    func responseGuestFollow(accepted: Bool) {
+        if accepted {
+            followManager.acceptFollowRequest(followID: guestFollow.id ?? "")
+        } else {
+            // delete follow request of guest
+            followManager.unfollow(followerId: user.id, targetId: AppManager.shared.currenUID)
+        }
+        
+        // Reset to hide response component
+        guestFollow = EUserfollow()
+        self.objectWillChange.send()
     }
     
     func addNewPostToTop(news: NewsFeed) {
@@ -270,6 +303,25 @@ extension ProfileViewModel {
                     
                     if !(uf.id == "undefine" || uf.id == nil) {
                         self.userFollow = uf
+                        self.objectWillChange.send()
+                    }
+                }
+            }
+            .store(in: &cancellables)
+        
+        // Using to know guest is request following current user
+        followManager
+            .getGuestFollowingPublisher
+            .sink {[weak self] (uf) in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    
+                    if !(uf.id == "undefine" || uf.id == nil) {
+                        self.guestFollow = uf
                         self.objectWillChange.send()
                     }
                 }

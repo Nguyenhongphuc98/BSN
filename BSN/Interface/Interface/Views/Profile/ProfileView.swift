@@ -37,6 +37,9 @@ public struct ProfileView: View, PopToable {
     @State private var typeOfActionSheet: ActionSheetType = .Avatar
     @State private var showingViewFull: Bool = false
     
+    // Accept or delete follow request of guest
+    @State private var showingResponseFollowSheet: Bool = false
+    
     // Change cover or photo
     @State var showPhotoPicker: Bool = false
     
@@ -86,13 +89,10 @@ public struct ProfileView: View, PopToable {
         }
         .navigationBarTitle(Text("Trang cá nhân"), displayMode: .inline)
         .onAppear(perform: viewAppeared)
-        .actionSheet(isPresented: $showingActionSheet) {
-            ActionSheet(title: Text("Lựa chọn hành động với ảnh"), buttons: actionSheetButton)
-        }
         .alert(isPresented: $viewModel.showAlert, content: alert)
     }
     
-    private var actionSheetButton: [Alert.Button] {
+    private var imageActionSheetButton: [Alert.Button] {
         if userID == nil {
             // Profile of himself
             return [
@@ -117,9 +117,28 @@ public struct ProfileView: View, PopToable {
         }
     }
     
+    private var followActionSheetButton: [Alert.Button] {
+        return [
+            .default(Text("Chấp nhận")) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    viewModel.responseGuestFollow(accepted: true)
+                }
+            },
+            .default(Text("Từ chối")) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    viewModel.responseGuestFollow(accepted: false)
+                }
+            },
+            .cancel()
+        ]
+    }
+    
     private var userInfo: some View {
         VStack {
             cover
+                .actionSheet(isPresented: $showingActionSheet) {
+                    ActionSheet(title: Text("Lựa chọn hành động với ảnh"), buttons: imageActionSheetButton)
+                }
             
             // Name and description
             HStack {
@@ -127,7 +146,27 @@ public struct ProfileView: View, PopToable {
                     HStack {
                         Text(viewModel.user.displayname)
                             .pattaya(size: 18)
+                            .padding(.bottom)
                         Spacer()
+                        
+                        if viewModel.guestFollow.id != kUndefine && !viewModel.guestFollow.accepted {
+                            // exist request and not accept or decline yet (decline mean no longer exist)
+                            Button(action: {
+                                self.showingResponseFollowSheet = true
+                            }, label: {
+                                HStack {
+                                    Image(systemName: "heart.circle")
+                                        .font(.system(size: 20))
+                                        .foregroundColor(.blue)
+                                    Text(" Phản hồi ")
+                                }
+                            })
+                            .buttonStyle(BaseButtonStyle(type: .secondary))
+                            .actionSheet(isPresented: $showingResponseFollowSheet) {
+                                ActionSheet(title: Text("Phản hồi yêu cầu theo dõi"), buttons: followActionSheetButton)
+                            }
+                        }
+                        
                         if userID != nil {
                             // Viewing profile other user
                             Button {

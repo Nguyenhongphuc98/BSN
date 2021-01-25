@@ -131,6 +131,10 @@ extension NotifyViewModel {
                     if notify.action == .borrowSuccess || notify.action == .exchangeSuccess {
                         ProfileViewModel.shared.forceRefeshUB()
                     }
+                    
+                    if notify.action == .acceptedFollow {
+                        NewsFeedViewModel.shared.prepareData()
+                    }
                 }
             }
             .store(in: &cancellables)
