@@ -13,13 +13,13 @@ import SwiftUI
 
 public class ProfileViewModel: NetworkViewModel {
     
-    public static let shared: ProfileViewModel = ProfileViewModel()
+    public static let shared: ProfileViewModel = .init()
     
     @Published var posts: [NewsFeed]
     @Published var books: [BUserBook]
     @Published var displayBooks: [BUserBook]
     @Published public var user: User
-    @Published public var followed: Bool
+    @Published public var userFollow: EUserfollow
     
     private var userBookManager: UserBookManager
     private var userManager: UserManager
@@ -41,7 +41,7 @@ public class ProfileViewModel: NetworkViewModel {
         posts = []
         books = []
         displayBooks = []
-        followed = false
+        userFollow = EUserfollow()
         isfetched = false       
         userBookManager = .init()
         userManager = UserManager()
@@ -122,17 +122,33 @@ public class ProfileViewModel: NetworkViewModel {
     }
     
     func processFollow() {
-        if followed == true {
-            // make unfollow request
-            followManager.unfollow(followerId: AppManager.shared.currenUID, targetId: user.id)
-        } else {
-            // make follow
+        // 1. follow
+        // 2. cancel follow req
+        // 3. unfollow
+        
+        if userFollow.id == nil || userFollow.id == kUndefine {
+            // not follow before
+            // make follow request
             let follow = EUserfollow(uid: user.id, followerId: AppManager.shared.currenUID)
             followManager.makeFollow(follow: follow)
+        } else {
+            // accepted or not
+            // we don't care. this action will remove record
+            // so will no longer waiting or follow
+            // make unfollow request
+            followManager.unfollow(followerId: AppManager.shared.currenUID, targetId: user.id)
         }
         
-        followed = !followed
-        self.objectWillChange.send()
+//        if followed.ac {
+//            // make unfollow request
+//            followManager.unfollow(followerId: AppManager.shared.currenUID, targetId: user.id)
+//        } else {
+//            // make follow
+//            let follow = EUserfollow(uid: user.id, followerId: AppManager.shared.currenUID)
+//            followManager.makeFollow(follow: follow)
+//        }
+        
+//        followed = !followed
     }
     
     func addNewPostToTop(news: NewsFeed) {
@@ -246,10 +262,15 @@ extension ProfileViewModel {
                 
                 DispatchQueue.main.async {
 
-                    if uf.id == "undefine" || uf.id == nil {
-                        self.followed = false
-                    } else {
-                        self.followed = true
+//                    if uf.id == "undefine" || uf.id == nil {
+//                        self.followed = false
+//                    } else {
+//                        self.followed = true
+//                    }
+                    
+                    if !(uf.id == "undefine" || uf.id == nil) {
+                        self.userFollow = uf
+                        self.objectWillChange.send()
                     }
                 }
             }

@@ -30,7 +30,7 @@ struct NotifyCard: View {
         case .borrow, .exchange, .borrowFail, .borrowSuccess, .exchangeFail, .exchangeSuccess:
             return "text.book.closed"
             
-        case .follow:
+        case .requestFollow, .acceptedFollow, .declineFollow:
             return "heart.circle"
         }
     }
@@ -52,11 +52,12 @@ struct NotifyCard: View {
         case .exchangeFail, .exchangeSuccess:
             return AnyView(ConfirmExchangeBookView(resultView: true, ebid: model.destinationID))
             
-        case .follow:
+        case .requestFollow, .acceptedFollow, .declineFollow:
             return AnyView(ProfileView(
                             uid: model.destinationID,
                             vm: ProfileViewModel())
-                            .environmentObject(NavigationState()))
+                            .environmentObject(NavigationState())
+            )
         }
     }
     

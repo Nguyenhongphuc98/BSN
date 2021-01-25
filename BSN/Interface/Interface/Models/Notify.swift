@@ -16,7 +16,7 @@ enum NotifyAction: String, CaseIterable {
     
     case comment
     
-    case follow
+    case requestFollow
     
     case borrow
     
@@ -30,6 +30,10 @@ enum NotifyAction: String, CaseIterable {
     
     case exchangeSuccess
     
+    case acceptedFollow
+    
+    case declineFollow
+    
     func description() -> String {
         
         var des = "Undefine"
@@ -37,13 +41,15 @@ enum NotifyAction: String, CaseIterable {
         case .heart: des = "thả tim bài viết của bạn"
         case .breakHeart: des = "thả trái tim tãn vỡ bài viết của bạn"
         case .comment: des = "bình luận bài viết bạn đang theo dõi"
-        case .follow: des = "theo dõi bạn"
+        case .requestFollow: des = "gửi yêu cầu theo dõi bạn"
         case .borrow: des = "gửi cho bạn yêu cầu mượn sách"
         case .borrowFail: des = "từ chối yêu cầu mượn sách của bạn"
         case .borrowSuccess: des = "chấp nhận yêu cầu mượn sách của bạn"
         case .exchange: des = "gửi cho bạn yêu cầu đổi sách"
         case .exchangeFail: des = "từ chối yêu cầu đổi sách của bạn"
         case .exchangeSuccess: des = "chấp nhận yêu đổi sách của bạn"
+        case .acceptedFollow: des = "chấp nhận yêu cầu theo dõi của bạn"
+        case .declineFollow: des = "từ chối yêu cầu theo dõi của bạn"
         }
         
         return des

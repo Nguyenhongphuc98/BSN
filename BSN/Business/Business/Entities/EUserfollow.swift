@@ -16,6 +16,7 @@ public struct EUserfollow: Codable {
     public var followerID: String?
     public var followerName: String?
     public var followerPhoto: String?
+    public var accepted: Bool
         
     public init() {
         self.id = "undefine"
@@ -25,11 +26,13 @@ public struct EUserfollow: Codable {
         self.followerID = "undefine"
         self.followerName = "undefine"
         self.followerPhoto = "undefine"
+        self.accepted = false
     }
     
     // using for update seen
     public init(uid: String, followerId: String) {
         self.userID = uid
         self.followerID = followerId
+        self.accepted = false
     }
 }

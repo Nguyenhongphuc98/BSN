@@ -312,7 +312,11 @@ public struct ProfileView: View, PopToable {
     }
     
     private var foregroundFollowBtn: Color {
-        viewModel.followed ? .blue : .gray
+        if viewModel.userFollow.id == nil || viewModel.userFollow.id == kUndefine {
+            return .gray
+        } else {
+            return viewModel.userFollow.accepted == true ? .blue : .yellow
+        }
     }
     
     private func dinamicContent(proxy: ScrollViewProxy) -> some View {

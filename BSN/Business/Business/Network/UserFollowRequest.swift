@@ -45,7 +45,7 @@ class UserFollowRequest: ResourceRequest<EUserfollow> {
         }
     }
     
-    func saveUserFollow(uf: EUserfollow) {
+    func saveUserFollow(uf: EUserfollow, publisher: PassthroughSubject<EUserfollow, Never>) {
         self.resetPath()
         
         self.save(uf) { (result) in
@@ -55,6 +55,7 @@ class UserFollowRequest: ResourceRequest<EUserfollow> {
                 print(message)
                 
             case .success(let u):
+                publisher.send(u)
                 print("save user-follow success with id: - \(String(describing: u.id))")
             }
         }

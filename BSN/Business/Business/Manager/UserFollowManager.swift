@@ -32,7 +32,7 @@ public class UserFollowManager {
     }
     
     public func makeFollow(follow: EUserfollow) {
-        networkRequest.saveUserFollow(uf: follow)
+        networkRequest.saveUserFollow(uf: follow, publisher: getFollowingPublisher)
     }
     
     public func unfollow(followerId: String, targetId: String) {
