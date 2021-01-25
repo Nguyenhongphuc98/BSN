@@ -30,10 +30,16 @@ final class BorrowBook: Model {
     @Field(key: "adress")
     var adress: String
     
-    // In case state is new/accept, it hold message borrower to owner
-    // other case (decline), it hold reason decline
+    // In case state is new/accept, it hold message borrower to owner\\
+    // other case (decline), it hold reason decline\\
+    
+    // This is message send to owner
     @Field(key: "message")
     var message: String
+    
+    // Message when user accept or decline
+    @Field(key: "response_message")
+    var responseMessage: String?
     
     // we auto get from userBook
     @OptionalField(key: "status_des")
@@ -76,5 +82,7 @@ extension BorrowBook {
         var bookStatus: String?
         var brorrowerName: String?
         var ownerName: String?
+        
+        var responseMessage: String?
     }
 }

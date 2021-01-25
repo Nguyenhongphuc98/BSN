@@ -21,6 +21,12 @@ final class Note: Model {
     @Field(key: "content")
     var content: String
     
+    @OptionalField(key: "page_ref")
+    var pageRef: String? // page ref (relate) to this note
+    
+    @OptionalField(key: "photo")
+    var photo: String?
+    
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
     
@@ -31,4 +37,6 @@ extension Note: Content { }
 
 struct UpdateNote: Content {
     var content: String
+    var pageRef: String?
+    var photo: String?
 }

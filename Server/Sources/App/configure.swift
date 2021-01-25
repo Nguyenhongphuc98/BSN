@@ -21,6 +21,14 @@ public func configure(_ app: Application) throws {
         database: Environment.get("DATABASE_NAME") ?? "vapor"
     ), as: .psql)
     
+//    if let databaseURL = Environment.get("DATABASE_URL") {
+//        app.databases.use(try .postgres(
+//            url: databaseURL
+//        ), as: .psql)
+//    } else {
+//        // ...
+//    }
+    
     app.http.server.configuration.hostname = "0.0.0.0"
 
     // User - account info

@@ -179,7 +179,7 @@ struct CommentController: RouteCollection {
         
         // get full info to display card
         // filter comment at level 0 (post_id same parent_id)
-        let sqlQuery = SQLQueryString("SELECT c.id, c.user_id as \"userID\", c.post_id as \"postID\", c.parent_id as \"parentID\", c.content, c.created_at as \"createdAt\", u.displayname as \"userName\", u.avatar as \"userPhoto\" FROM comment as c, public.user as u WHERE c.user_id = u.id and c.post_id = c.parent_id and c.post_id = '\(raw: pid)' order by c.created_at desc limit \(raw: per.description) offset \(raw: offset.description)")
+        let sqlQuery = SQLQueryString("SELECT c.id, c.user_id as \"userID\", c.post_id as \"postID\", c.parent_id as \"parentID\", c.content, c.photo, c.sticker, c.created_at as \"createdAt\", u.displayname as \"userName\", u.avatar as \"userPhoto\" FROM comment as c, public.user as u WHERE c.user_id = u.id and c.post_id = c.parent_id and c.post_id = '\(raw: pid)' order by c.created_at desc limit \(raw: per.description) offset \(raw: offset.description)")
         
         let db = req.db as! SQLDatabase
         return db.raw(sqlQuery)
@@ -193,7 +193,7 @@ struct CommentController: RouteCollection {
         
         // get full info to display card
         // filter comment at level 0 (post_id same parent_id)
-        let sqlQuery = SQLQueryString("SELECT c.id, c.user_id as \"userID\", c.post_id as \"postID\", c.parent_id as \"parentID\", c.content, c.created_at as \"createdAt\", u.displayname as \"userName\", u.avatar as \"userPhoto\" FROM comment as c, public.user as u WHERE c.user_id = u.id and c.parent_id = '\(raw: cmtid)'")
+        let sqlQuery = SQLQueryString("SELECT c.id, c.user_id as \"userID\", c.post_id as \"postID\", c.parent_id as \"parentID\", c.content, c.photo, c.sticker, c.created_at as \"createdAt\", u.displayname as \"userName\", u.avatar as \"userPhoto\" FROM comment as c, public.user as u WHERE c.user_id = u.id and c.parent_id = '\(raw: cmtid)'")
         
         let db = req.db as! SQLDatabase
         return db.raw(sqlQuery)
@@ -208,7 +208,7 @@ extension CommentController {
     func broadcastCommentForPost(req: Request, commentID: String) {
                 
         // Get full info to display card
-        let sqlQuery = SQLQueryString("SELECT c.id, c.user_id as \"userID\", c.post_id as \"postID\", c.parent_id as \"parentID\", c.content, c.created_at as \"createdAt\", u.displayname as \"userName\", u.avatar as \"userPhoto\" FROM comment as c, public.user as u WHERE c.user_id = u.id and c.id = '\(raw: commentID)'")
+        let sqlQuery = SQLQueryString("SELECT c.id, c.user_id as \"userID\", c.post_id as \"postID\", c.parent_id as \"parentID\", c.content, c.photo, c.sticker, c.created_at as \"createdAt\", u.displayname as \"userName\", u.avatar as \"userPhoto\" FROM comment as c, public.user as u WHERE c.user_id = u.id and c.id = '\(raw: commentID)'")
         
         let db = req.db as! SQLDatabase
         _ = db.raw(sqlQuery)

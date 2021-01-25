@@ -24,6 +24,7 @@ struct ExchangeBookController: RouteCollection {
         }
         
         authen.get("newest", use: getNewest)
+        authen.get("newestofub", ":ubid", use: getNewestAvailableOfUserBook)
         authen.get("availables", ":id", use: getAvailableExs)
         authen.get("compute", ":id", use: getDetailInWatingState)
         authen.get("detail", ":id", use: getDetailAfterReqSubmited)
@@ -44,7 +45,21 @@ struct ExchangeBookController: RouteCollection {
 
     func create(req: Request) throws -> EventLoopFuture<ExchangeBook> {
         let eb = try req.content.decode(ExchangeBook.self)
-        return eb.save(on: req.db).map { eb }
+        return eb.save(on: req.db).map {
+            // When create exchange_book, we should let userbook to state: watingexchange
+            _ = UserBook.query(on: req.db)
+                .filter(\.$id == eb.firstUserBookID!)
+                .first()
+                .unwrap(or: Abort(.forbidden))
+                .flatMap { (ub) -> EventLoopFuture<UserBook> in
+                    
+                    // When cancel, userbook will return to reading
+                    ub.state = BookState.waitExchange.rawValue
+                    return ub.update(on: req.db).map { ub }
+                }
+            
+            return eb
+        }
     }
 
     func update(req: Request) throws -> EventLoopFuture<ExchangeBook> {
@@ -73,14 +88,14 @@ struct ExchangeBookController: RouteCollection {
                     if let statusDes = newEB.secondStatusDes { eb.secondStatusDes = statusDes }
                     notifyTypeID = NotifyType().exchange
                 } else {
-                    
-                    // case 2: Decline req
+                            
+                    // Accept or decline
+                    // Setup new value for update
+                    if let message = newEB.responseMessage { eb.responseMessage = message }
                     if newEB.state == ExchangeProgess.decline.rawValue {
-                        // Setup new value for update
-                        if let message = newEB.message { eb.message = message }
+                        // case 2: Decline req
                         notifyTypeID = NotifyType().exchangeFail
                     } else {
-                        
                         // case 3: Accept
                         notifyTypeID = NotifyType().exchangeSuccess
                     }
@@ -174,6 +189,7 @@ struct ExchangeBookController: RouteCollection {
     }
     
     // advance
+    // to suggest list avalable all book
     func getNewest(req: Request) throws -> EventLoopFuture<[GetExchangeBook]> {
         
         guard let page: Int = req.query["page"] else {
@@ -319,7 +335,7 @@ struct ExchangeBookController: RouteCollection {
                     .flatMap { eb in
                     
                         let db = req.db as! SQLDatabase
-                        let sqlQuery = SQLQueryString("SELECT eb.id, eb.first_user_book_id as \"firstUserBookID\", eb.second_user_book_id as \"secondUserBookID\", eb.adress, eb.message, eb.first_status_des as \"firstStatusDes\", eb.second_status_des as \"secondStatusDes\", eb.state, u1.displayname as \"firstOwnerName\", b1.title as \"firstTitle\", b1.author as \"firstAuthor\", b1.cover as \"firstCover\", u2.displayname as \"secondOwnerName\", b2.title as \"secondTitle\", b2.author as \"secondAuthor\", b2.cover as \"secondCover\" FROM exchange_book as eb, user_book as ub1, public.user as u1, book as b1, user_book as ub2, public.user as u2, book as b2 WHERE eb.first_user_book_id = ub1.id and ub1.user_id = u1.id and ub1.book_id = b1.id and eb.second_user_book_id = ub2.id and ub2.user_id = u2.id and ub2.book_id = b2.id and eb.id = '\(raw: eb.id!.uuidString)'")
+                        let sqlQuery = SQLQueryString("SELECT eb.id, eb.first_user_book_id as \"firstUserBookID\", eb.second_user_book_id as \"secondUserBookID\", eb.adress, eb.message, eb.response_message as \"responseMessage\", eb.first_status_des as \"firstStatusDes\", eb.second_status_des as \"secondStatusDes\", eb.state, u1.displayname as \"firstOwnerName\", b1.title as \"firstTitle\", b1.author as \"firstAuthor\", b1.cover as \"firstCover\", u2.displayname as \"secondOwnerName\", b2.title as \"secondTitle\", b2.author as \"secondAuthor\", b2.cover as \"secondCover\" FROM exchange_book as eb, user_book as ub1, public.user as u1, book as b1, user_book as ub2, public.user as u2, book as b2 WHERE eb.first_user_book_id = ub1.id and ub1.user_id = u1.id and ub1.book_id = b1.id and eb.second_user_book_id = ub2.id and ub2.user_id = u2.id and ub2.book_id = b2.id and eb.id = '\(raw: eb.id!.uuidString)'")
                         
                         return db.raw(sqlQuery)
                             .first(decoding: GetExchangeBook.self)
@@ -382,6 +398,7 @@ struct ExchangeBookController: RouteCollection {
                     .unwrap(or: Abort(.badRequest))
                     .flatMap { (eb) -> EventLoopFuture<ExchangeBook> in
                         
+                        // Owner cancel
                         if eb.state == ExchangeProgess.new.rawValue {
                             // Find owner to verify and update state
                             return UserBook.query(on: req.db)
@@ -390,6 +407,10 @@ struct ExchangeBookController: RouteCollection {
                                 .first()
                                 .unwrap(or: Abort(.forbidden))
                                 .flatMap { (ub) -> EventLoopFuture<ExchangeBook> in
+                                    
+                                    // When cancel, userbook will return to reading
+                                    ub.state = BookState.reading.rawValue
+                                    _ = ub.update(on: req.db)
                                     
                                     eb.state = ExchangeProgess.cancel.rawValue
                                     return eb.update(on: req.db).map { eb }
@@ -420,6 +441,19 @@ struct ExchangeBookController: RouteCollection {
                 
             }
     }
+    
+    // for an user book, we get newest and state = new to show when so view book detail in guest mode
+    func getNewestAvailableOfUserBook(req: Request) throws -> EventLoopFuture<GetExchangeBook> {
+        
+        guard let ubid: String = req.parameters.get("ubid") else {
+            throw Abort(.badRequest)
+        }
+        
+        let sqlQuery = SQLQueryString("SELECT ex.id, bu.title as \"firstTitle\", bu.author as \"firstAuthor\", bu.cover as \"firstCover\", u.location, b.title as \"secondTitle\", b.author as \"secondAuthor\", b.cover as \"secondCover\" FROM exchange_book as ex, user_book as ub, public.user as u, book as bu, book as b where ex.first_user_book_id = ub.id and ub.user_id = u.id and ex.exchange_book_id = b.id and ub.book_id = bu.id and ex.state = 'new' and ex.first_user_book_id = '\(raw: ubid)'")
+        
+        let db = req.db as! SQLDatabase
+        return db.raw(sqlQuery)
+            .first(decoding: GetExchangeBook.self)
+            .unwrap(or: Abort(.notFound))
+    }
 }
-
-//SELECT T.*, T.firstuserid as "firstUserID", T.seconduserid as "secondUserID" FROM (SELECT * FROM (SELECT eb.id, eb.second_user_book_id as "ub2id", eb.state, eb.updated_at as "updatedAt", u1.id as "firstuserid", u1.displayname as "firstOwnerName", b1.title as "firstTitle" FROM user_book as ub1, public.user as u1, book as b1, exchange_book as eb WHERE eb.first_user_book_id = ub1.id and ub1.user_id = u1.id and ub1.book_id = b1.id order by eb.updated_at desc) L LEFT JOIN (SELECT ub2.id as "ub2id", u2.id as "seconduserid", u2.displayname as "secondOwnerName", b2.title as "secondTitle" FROM public.user as u2, book as b2, user_book as ub2 WHERE ub2.user_id = u2.id and ub2.book_id = b2.id) R ON L.ub2id = R.ub2id) T WHERE T.firstuserid = '24462eef-f473-4e0c-942a-352d3162eb9a' or T.seconduserid = '24462eef-f473-4e0c-942a-352d3162eb9a'

@@ -124,7 +124,7 @@ extension NotifyController {
                         alertBody = "\(no.actorName) đã thả trái tim tan vỡ bài viết của bạn"
                     case notifyType.comment:
                         alertBody = "\(no.actorName) đã bình luận bài viết bạn đang theo dõi"
-                    case notifyType.follow:
+                    case notifyType.requestFollow:
                         alertBody = "\(no.actorName) đã theo dõi bạn"
                     case notifyType.borrow:
                         alertBody = "\(no.actorName) đã gửi cho bạn lời mời mượn sách"

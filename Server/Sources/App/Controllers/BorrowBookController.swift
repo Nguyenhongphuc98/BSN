@@ -87,8 +87,9 @@ struct BorrowBookController: RouteCollection {
                 var notifyTypeID = NotifyType().borrowSuccess
                 
                 bb.state = newbb.state!
+                bb.responseMessage = newbb.responseMessage! // reason decline or note for accept
+                
                 if newbb.state == ExchangeProgess.decline.rawValue {
-                    bb.message = newbb.message! // reason decline
                     notifyTypeID = NotifyType().borrowFail
                 }
                 
@@ -158,7 +159,7 @@ struct BorrowBookController: RouteCollection {
         // Authen
         _ = try req.auth.require(Account.self)
         
-        let sqlQuery = SQLQueryString("SELECT bb.id, bb.userbook_id as \"userBookID\", bb.borrower_id as \"borrowerID\", bb.borrow_date as \"borrowDate\", bb.borrow_days as \"borrowDays\", bb.adress, bb.message, bb.status_des as \"statusDes\", bb.state, b.cover  as \"bookCover\", b.title  as \"bookTitle\",b.author  as \"bookAuthor\", ub.status  as \"bookStatus\", u.displayname  as \"brorrowerName\" from borrow_book as bb, user_book as ub, public.user as u, book as b where bb.userbook_id = ub.id and ub.user_id = u.id and ub.book_id = b.id and bb.id = '\(raw: id)'")
+        let sqlQuery = SQLQueryString("SELECT bb.id, bb.userbook_id as \"userBookID\", bb.borrower_id as \"borrowerID\", bb.borrow_date as \"borrowDate\", bb.borrow_days as \"borrowDays\", bb.adress, bb.message, bb.response_message as \"responseMessage\", bb.status_des as \"statusDes\", bb.state, b.cover  as \"bookCover\", b.title  as \"bookTitle\",b.author  as \"bookAuthor\", ub.status  as \"bookStatus\", u.displayname  as \"brorrowerName\" from borrow_book as bb, user_book as ub, public.user as u, book as b where bb.userbook_id = ub.id and ub.user_id = u.id and ub.book_id = b.id and bb.id = '\(raw: id)'")
         
         let db = req.db as! SQLDatabase
         return db.raw(sqlQuery)

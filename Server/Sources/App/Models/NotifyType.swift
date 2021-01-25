@@ -33,7 +33,9 @@ extension NotifyType {
     var heart: String { "6C05BF68-A710-40E3-9384-F4D613D67FA5" }
     var breakHeart: String { "5CD9D139-C3A5-4EED-8B7B-711959F8401F" }
     var comment: String { "08147F52-2A26-49C2-B64D-19C3B63C26C2" }
-    var follow: String { "CA3B21D8-A813-4AEB-9256-DF5C547F1548" }
+    var requestFollow: String { "CA3B21D8-A813-4AEB-9256-DF5C547F1548" }
+    var acceptedFollow: String { "8E2E77E2-F6DE-4F34-BF82-1A6CAEE6F51C" }
+    var declineFollow: String { "952E4CA6-5BD8-45F2-84D1-02C197870574" }
     var borrow: String { "208F948B-E3F4-4F33-98A0-0D17976180DD" }
     var borrowFail: String { "4E1B5CEB-9AE7-4860-909D-E0CF2CF5EE38" }
     var borrowSuccess: String { "40681E22-D7BA-4880-B9C0-EDED4C228FD9" }

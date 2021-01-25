@@ -17,6 +17,7 @@ struct BookReviewController: RouteCollection {
         bookReviews.post(use: create)
         bookReviews.group(":ID") { group in
             group.delete(use: delete)
+            group.put(use: update)
         }
         
         bookReviews.get("search", use: search)
@@ -87,6 +88,57 @@ struct BookReviewController: RouteCollection {
                     }
             }
             .transform(to: .ok)
+    }
+    
+    func update(req: Request) throws -> EventLoopFuture<BookReview> {
+        let newbr = try req.content.decode(BookReview.self)
+        
+        return BookReview.find(req.parameters.get("ID"), on: req.db)
+            .unwrap(or: Abort(.notFound))
+            .flatMap { br in
+                Book
+                    .find(br.bookID, on: req.db)
+                    .unwrap(or: Abort(.notFound))
+                    .flatMap { (book) -> EventLoopFuture<BookReview> in
+                        
+                        var n: Float = Float(book.numReview!)
+                        
+                        if n == 1 {
+                            // We can't div for n-1 (0)
+                            // N = 1 just simply replace with new review
+                            book.characterRating = Float(newbr.characterRating)
+                            book.writeRating = Float(newbr.writeRating)
+                            book.infoRating = Float(newbr.infoRating)
+                            book.targetRating = Float(newbr.targetRating)
+                        } else {
+                            
+                            // Remove old review
+                            book.characterRating = (book.characterRating! * n - Float(br.characterRating)) / Float(n - 1)
+                            book.writeRating = (book.writeRating! * n - Float(br.writeRating)) / Float(n - 1)
+                            book.infoRating = (book.infoRating! * n - Float(br.infoRating)) / Float(n - 1)
+                            book.targetRating = (book.targetRating! * n - Float(br.targetRating)) / Float(n - 1)
+                            book.avgRating = (book.characterRating! + book.targetRating! + book.infoRating! + book.writeRating!) / 4.0
+                                                        
+                            // Add new review
+                            n = n - 1
+                            book.characterRating = (book.characterRating! * n + Float(newbr.characterRating)) / (n + 1)
+                            book.writeRating = (book.writeRating! * n + Float(newbr.writeRating)) / (n + 1)
+                            book.infoRating = (book.infoRating! * n + Float(newbr.infoRating)) / (n + 1)
+                            book.targetRating = (book.targetRating! * n + Float(newbr.targetRating)) / (n + 1)
+                        }
+                        book.avgRating = (book.characterRating! + book.targetRating! + book.infoRating! + book.writeRating!) / 4.0
+        
+                        _ = book.update(on: req.db)
+                        
+                        br.writeRating = newbr.writeRating
+                        br.targetRating = newbr.targetRating
+                        br.infoRating = newbr.infoRating
+                        br.characterRating = newbr.characterRating
+                        br.title = newbr.title
+                        br.description = newbr.description
+                        return br.update(on: req.db).map { br }
+                    }
+            }
     }
     
     func search(req: Request) throws -> EventLoopFuture<[GetBookReview]> {

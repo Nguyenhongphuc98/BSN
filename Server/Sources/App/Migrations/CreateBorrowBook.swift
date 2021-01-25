@@ -31,3 +31,18 @@ struct CreateBorrowBook: Migration {
         return database.schema(BorrowBook.schema).delete()
     }
 }
+
+//struct AddFieldBorrowBook2: Migration {
+//    
+//    func prepare(on database: Database) -> EventLoopFuture<Void> {
+//        let borrowBook = BorrowBook()
+//        
+//        return database.schema(BorrowBook.schema)
+//            .field(borrowBook.$responseMessage.key, .string)
+//            .update()
+//    }
+//    
+//    func revert(on database: Database) -> EventLoopFuture<Void> {
+//        return database.schema(BorrowBook.schema).delete()
+//    }
+//}

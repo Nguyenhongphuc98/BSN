@@ -30,6 +30,12 @@ final class Comment: Model {
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
     
+    @Field(key: "photo")
+    var photo: String?
+    
+    @Field(key: "sticker")
+    var sticker: String?
+    
     init() { }
 }
 
@@ -46,5 +52,8 @@ extension Comment {
         
         var userPhoto: String?
         var userName: String
+        
+        var photo: String?
+        var sticker: String?
     }
 }

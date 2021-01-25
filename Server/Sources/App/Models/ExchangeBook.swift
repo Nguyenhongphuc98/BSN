@@ -74,6 +74,10 @@ final class ExchangeBook: Model, Content {
     @OptionalField(key: "message")
     var message: String?
     
+    // Message when user accept or decline
+    @Field(key: "response_message")
+    var responseMessage: String?
+    
     // we auto get from userBook
     @OptionalField(key: "first_status_des")
     var firstStatusDes: String?
@@ -151,6 +155,8 @@ struct GetExchangeBook: Content {
     var message: String?
     
     var updatedAt: String?
+    
+    var responseMessage: String?
     
     init(id: String? = nil, firstubid: String? = nil, secondubid: String? = nil, firstTitle: String, firstAuthor: String, firstCover: String? = nil, location: String? = nil, secondTitle: String? = nil, secondAuthor: String? = nil, firstOwnerName: String? = nil, firstStatus: String? = nil, firstStatusDes: String? = nil, secondStatus: String? = nil, secondStatusDes: String? = nil, secondCover: String? = nil, state: String? = nil) {
         

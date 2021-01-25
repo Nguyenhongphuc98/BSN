@@ -1,0 +1,13 @@
+
+# vapor
+Packages
+.build
+xcuserdata
+#*.xcodeproj
+DerivedData/
+.DS_Store
+.swiftpm
+db.sqlite
+
+#pods data
+BSN/Pods/*

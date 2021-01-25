@@ -13,6 +13,7 @@ enum BookState: String, CaseIterable, Equatable {
     case available //to be borrowed
     case reading
     case exchanged
+    case waitExchange
     case unknown
 }
 

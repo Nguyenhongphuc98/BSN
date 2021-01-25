@@ -38,6 +38,8 @@ struct NoteController: RouteCollection {
             .flatMap { note in
                 let newNote = try! req.content.decode(UpdateNote.self)
                 note.content = newNote.content
+                note.pageRef = newNote.pageRef
+                note.photo = newNote.photo
                 return note.update(on: req.db).map { note }
             }
     }

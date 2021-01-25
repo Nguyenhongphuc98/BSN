@@ -10,6 +10,7 @@ import Vapor
 
 final class UserFollow: Model {
     
+    // Follow just one-way
     static let schema = "user_follow"
     
     @ID(key: .id)
@@ -20,6 +21,9 @@ final class UserFollow: Model {
     
     @Field(key: "follower_id")
     var followerID: User.IDValue
+    
+    @Field(key: "accepted")
+    var accepted: Bool
     
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
@@ -41,5 +45,6 @@ extension UserFollow {
         var followerID: String?
         var followerName: String?
         var followerPhoto: String?
+        var accepted: Bool
     }
 }
