@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <link href="/styles/styles.css" rel="stylesheet" type="text/css">
+    </head>
+    
+    <body class = inline-mode>
+        <div class="header">
+            <div class="logo">
+                <img src="/images/logo.png" alt="" />
+                <p>Share and exchange books</p>
+            </div>
+            
+        </div>
+        
+        <div class = "dumpy-header">
+        </div>
+        
+        <div class="box-border">
+            <div class="title-header">
+                <img class="settings-logo" src="https://img.icons8.com/color/48/000000/bell.png" alt="">
+                <span class="title">Tạo thông báo mới</span>
+            </div>
+            <div class="form-wrapper"><div class="category-label">
+                <form action = "/admin/makenotify", method = "post">
+                    <div class="field email ">
+                        <label>Tiêu đề</label>
+                        <input name ="title" type="text" id="title" class="textbox" placeholder="Nhập tiêu đề" autocomplete="off">
+                            </div>
+                    
+                    <div class="field email ">
+                        <label>Nội dung</label>
+                        <textarea name ="content"  type="text" id="title" class="textbox" placeholder="Nhập nội dung" autocomplete="off" ></textarea>
+                    </div>
+                    
+                    <input type = "submit" class="btn blue " id="save-changes" value = "Tạo" style = "color: white"/>
+                    <form/>
+                <hr class="seperator">
+            </div>
+            </div>
+        </div>
+        
+        <div class="box-border2">
+            <span class="title">Thông báo gần đây</span>
+            
+            #for(notify in notifies):
+            <div class="card-list">
+                <div class="card-head">
+                    <div>#date(notify.createdAt)</div>
+                </div>
+                <div class="card-body">
+                    <h4>#(notify.title) </h4>
+                    <p> #(notify.content) </p>
+                </div>
+            </div>
+            #endfor
+        </div>
+    </body>
+    
+</html>

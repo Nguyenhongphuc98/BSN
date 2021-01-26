@@ -42,4 +42,5 @@ extension NotifyType {
     var exchange: String { "B5C0EA0E-EAF6-47DC-A15B-12869159F875" }
     var exchangeFail: String { "3137A160-3DA1-40AF-857C-83DD728739D4" }
     var exchangeSuccess: String { "04FF8F1C-1199-415A-A83F-282C35909D49" }
+    var adminNotify: String { "26244423-840C-4FB7-8F99-9AB2C20495EA" }
 }

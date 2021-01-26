@@ -30,16 +30,26 @@ final class Notify: Model {
     @Field(key: "seen")
     var seen: Bool
     
+    // By default title, content auto gen, but in case admin send
+    // We will need content and title
+    @Field(key: "title")
+    var title: String?
+    
+    @Field(key: "content")
+    var content: String?
+    
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
     
     init() { }
     
-    init(typeID: NotifyType.IDValue, actor: User.IDValue, receiver: User.IDValue, des: UUID) {
+    init(typeID: NotifyType.IDValue, actor: User.IDValue, receiver: User.IDValue, des: UUID, title: String? = nil, content: String? = nil) {
         self.notifyTypeID = typeID
         self.actorID = actor
         self.receiverID = receiver
         self.destionationID = des
+        self.title = title
+        self.content = content
     }
 }
 
@@ -59,10 +69,18 @@ extension Notify {
         var actorName: String
         var actorPhoto: String?
         var notifyName: String
+        
+        var title: String?
+        var content: String?
     }
     
     struct Update: Content {
         var id: String
         var seen: Bool
+    }
+    
+    struct CreateForAll: Content {
+        var title: String
+        var content: String
     }
 }

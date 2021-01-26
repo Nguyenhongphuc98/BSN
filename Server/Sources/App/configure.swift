@@ -8,11 +8,12 @@
 import Fluent
 import FluentPostgresDriver
 import Vapor
+import Leaf
 
 // configures your application
 public func configure(_ app: Application) throws {
     // uncomment to serve files from /Public folder
-    // app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
+    app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
 
     app.databases.use(.postgres(
         hostname: Environment.get("DATABASE_HOST") ?? "localhost",
@@ -73,8 +74,12 @@ public func configure(_ app: Application) throws {
     app.migrations.add(CreateDevice())
     
     //try app.autoMigrate().wait()
+    
+    // using template for web
+    app.views.use(.leaf)
 
     // register routes
     try routes(app)
     try app.configurePush()
+    
 }

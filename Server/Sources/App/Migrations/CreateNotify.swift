@@ -22,6 +22,8 @@ struct CreateNotify: Migration {
             .field(notify.$destionationID.key, .uuid)
             .field(notify.$seen.key, .bool, .sql(defaultSeen))
             .field("created_at", .datetime)
+            .field(notify.$title.key, .string)
+            .field(notify.$content.key, .string)
             .create()
     }
     
@@ -29,3 +31,22 @@ struct CreateNotify: Migration {
         return database.schema(Notify.schema).delete()
     }
 }
+//
+//struct AddtitleAndContentNotify: Migration {
+//
+//    func prepare(on database: Database) -> EventLoopFuture<Void> {
+//        let notify = Notify()
+//        return database.schema(Notify.schema)
+//            .field(notify.$title.key, .string)
+//            .field(notify.$content.key, .string)
+//            .update()
+//    }
+//
+//    func revert(on database: Database) -> EventLoopFuture<Void> {
+//        let notify = Notify()
+//        return database.schema(Notify.schema)
+//            .field(notify.$title.key, .string)
+//            .field(notify.$content.key, .string)
+//            .delete()
+//    }
+//}

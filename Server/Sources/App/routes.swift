@@ -61,4 +61,7 @@ func routes(_ app: Application) throws {
     
     // Social
     try app.register(collection: FacebookController())
+    
+    // Webapp
+    try app.register(collection: AdminController())
 }

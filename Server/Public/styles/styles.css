@@ -1,0 +1,193 @@
+.header {
+    background-color: #fff;
+    height: 60px;
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 4px 0 rgba(0,0,0,.1);
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.logo img{
+    float: left;
+    display: block;
+    padding: 10px 10px 0px 20px;
+    width: 45px;
+}
+
+.logo p{
+    float: left;
+    font-size: 40;
+    font-weight: bold;
+    display: block;
+    padding: 5px 5px;
+}
+
+textarea {
+  width: 300px;
+  height: 150px !important;
+}
+
+.box-border {
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 4px 6px 0 rgba(0,0,0,0.11);
+    padding: 24px;
+    max-width: 604px;
+    min-width: 500px;
+    margin: 64px auto 100px;
+    border-top: 6px solid #461A42;
+    background-color: #fff;
+}
+
+.box-border2 {
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 4px 6px 0 rgba(0,0,0,0.11);
+    padding: 24px;
+    width: 400px;
+    margin: 64px auto 100px;
+    background-color: #fff;
+}
+
+.inline-mode {
+    display: flex;
+    justify-content: center;
+}
+
+.dumpy-header {
+    height : 80px;
+}
+
+.title-header {
+    margin-bottom: 30px;
+}
+
+.form-wrapper .category-label {
+    margin-bottom: 10px;
+    font-weight: 600;
+    padding: 0 14px;
+    color: #393A68;
+}
+
+.form-wrapper .field {
+    position: relative;
+}
+
+.form-wrapper .field .textbox {
+    display: block;
+    font-size: 14px;
+    height: 48px;
+    padding: 0 14px;
+    width: calc(100% - 30px);
+    border-radius: 4px;
+    box-shadow: none;
+    margin: 8px 0;
+    outline: none;
+    border: 1px solid #CAD2DC;
+    color: #393A68;
+}
+
+.textbox {
+    font-size: 16px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #Adadad;
+    position: relative;
+    box-shadow: inset 0 1px 2px #ccc;
+    margin: 4px;
+    outline: none;
+}
+
+input, textarea, select, button {
+    font-family: 'Open Sans', sans-serif, Helvetica, Arial;
+}
+
+.title {
+    color: #393A68;
+    font-size: 24px;
+    margin-left: 30px;
+    vertical-align: middle;
+}
+
+.form-wrapper seperator {
+    height: 2px;
+    margin-top: 15px;
+    background-image: linear-gradient(to right, #f7f7f7 0%, #cad2dc 50%, #f7f7f7 100%);
+    border: none;
+    margin-bottom: 6px;
+}
+
+hr {
+    display: block;
+    unicode-bidi: isolate;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}
+
+.form-wrapper .btn {
+    padding: 0;
+    margin: 24px 0;
+    height: 48px;
+    width: 100%;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 16px;
+    background-color: #7D72EC;
+    box-shadow: 0 0 8px 0 rgba(0,0,0,0.1);
+    border: none;
+    opacity: 0.9;
+}
+
+btn.blue {
+    background-color: #4990E2;
+    color: #fff;
+    border: 1px solid #4990E2;
+}
+
+
+/* Recentlys notifies*/
+
+.card-list {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,.25);
+    box-shadow: 0 0 5px rgba(0,0,0,.25);
+    padding: 20px 30px;
+    border-radius: 5px;
+    display: block;
+    position: relative;
+}
+
+.card-body {
+    font-size: 14px;
+    color: #000;
+    position: relative;
+    z-index: 5;
+}
+
+.card-head {
+    font-size: 14px;
+    color: rgba(0,0,0,.5);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    z-index: 5;
+}
+
+.card-body {
+    font-size: 14px;
+    color: #000;
+    position: relative;
+    z-index: 5;
+}
