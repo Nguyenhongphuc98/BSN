@@ -80,7 +80,7 @@ struct NotifyController: RouteCollection {
             .unwrap(or: Abort(.notFound))
             .flatMap { (u)  in
                 
-                let sqlQuery = SQLQueryString("SELECT n.notify_type_id as \"notifyTypeID\", n.actor_id as \"actorID\", n.receiver_id as \"receiverID\", n.destination_id as \"destionationID\", n.created_at as \"createdAt\", n.id, u.displayname as \"actorName\", u.avatar as \"actorPhoto\", nt.name as \"notifyName\", n.seen from notify as n, public.user as u, notify_type as nt where n.actor_id = u.id and n.notify_type_id = nt.id and n.receiver_id = '\(raw: u.id!.uuidString)' order by n.created_at desc limit \(raw: per.description) offset \(raw: offset.description)")
+                let sqlQuery = SQLQueryString("SELECT n.notify_type_id as \"notifyTypeID\", n.actor_id as \"actorID\", n.receiver_id as \"receiverID\", n.destination_id as \"destionationID\", n.created_at as \"createdAt\", n.id, n.title, n.content, u.displayname as \"actorName\", u.avatar as \"actorPhoto\", nt.name as \"notifyName\", n.seen from notify as n, public.user as u, notify_type as nt where n.actor_id = u.id and n.notify_type_id = nt.id and n.receiver_id = '\(raw: u.id!.uuidString)' order by n.created_at desc limit \(raw: per.description) offset \(raw: offset.description)")
                 
                 let db = req.db as! SQLDatabase
                 return db.raw(sqlQuery)
@@ -104,7 +104,7 @@ extension NotifyController {
     static func broadcast(req: Request, notify: Notify) {
         
         // Get saved notify with full info to notify
-        let sqlQuery = SQLQueryString("SELECT n.notify_type_id as \"notifyTypeID\", n.actor_id as \"actorID\", n.receiver_id as \"receiverID\", n.destination_id as \"destionationID\", n.created_at as \"createdAt\", n.id, u.displayname as \"actorName\", u.avatar as \"actorPhoto\", nt.name as \"notifyName\", n.seen from notify as n, public.user as u, notify_type as nt where n.actor_id = u.id and n.notify_type_id = nt.id and n.id = '\(raw: notify.id!.uuidString)'")
+        let sqlQuery = SQLQueryString("SELECT n.notify_type_id as \"notifyTypeID\", n.actor_id as \"actorID\", n.receiver_id as \"receiverID\", n.destination_id as \"destionationID\", n.created_at as \"createdAt\", n.id, n.title, n.content, u.displayname as \"actorName\", u.avatar as \"actorPhoto\", nt.name as \"notifyName\", n.seen from notify as n, public.user as u, notify_type as nt where n.actor_id = u.id and n.notify_type_id = nt.id and n.id = '\(raw: notify.id!.uuidString)'")
         
         let db = req.db as! SQLDatabase
         _ = db.raw(sqlQuery)
@@ -143,7 +143,13 @@ extension NotifyController {
                     }
                     
                     // Notifies is not essential to make sound, so let it nil
-                    let payload = APNSwiftPayload(alert: .init(body: alertBody))
+                    var payload: APNSwiftPayload
+                    if no.notifyTypeID == notifyType.adminNotify {
+                        payload = APNSwiftPayload(alert: .init(title: no.title!, body: no.content!))
+                    } else {
+                        payload = APNSwiftPayload(alert: .init(body: alertBody))
+                    }
+                    
                     req.apns.send(payload, to: notify.receiverID, db: req.db)
                 }
             })
