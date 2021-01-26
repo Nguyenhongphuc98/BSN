@@ -81,6 +81,7 @@
 		841CED9E255D67AE007CCACC /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CED9D255D67AD007CCACC /* SettingView.swift */; };
 		841CEDA1255D7356007CCACC /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CEDA0255D7356007CCACC /* SettingViewModel.swift */; };
 		841CEDB0255EB331007CCACC /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841CEDAF255EB331007CCACC /* Chat.swift */; };
+		841D43CD25C0132B00C4B373 /* AdminNotifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841D43CC25C0132B00C4B373 /* AdminNotifyView.swift */; };
 		842A7C842564CFD50007E343 /* ConfirmExchangebookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842A7C832564CFD50007E343 /* ConfirmExchangebookViewModel.swift */; };
 		842C446E2547CBE4003C570D /* BBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C446D2547CBE4003C570D /* BBook.swift */; };
 		842C447425480C5C003C570D /* BSusggestBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842C447325480C5C003C570D /* BSusggestBook.swift */; };
@@ -294,6 +295,7 @@
 		841CED9D255D67AD007CCACC /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		841CEDA0255D7356007CCACC /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		841CEDAF255EB331007CCACC /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		841D43CC25C0132B00C4B373 /* AdminNotifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminNotifyView.swift; sourceTree = "<group>"; };
 		842A7C832564CFD50007E343 /* ConfirmExchangebookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmExchangebookViewModel.swift; sourceTree = "<group>"; };
 		842C446D2547CBE4003C570D /* BBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBook.swift; sourceTree = "<group>"; };
 		842C447325480C5C003C570D /* BSusggestBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BSusggestBook.swift; sourceTree = "<group>"; };
@@ -644,6 +646,7 @@
 			children = (
 				84B964EB2525C6BB00F37571 /* NotifyView.swift */,
 				84B964EF2525C6D400F37571 /* NotifyCard.swift */,
+				841D43CC25C0132B00C4B373 /* AdminNotifyView.swift */,
 			);
 			path = Notify;
 			sourceTree = "<group>";
@@ -1176,6 +1179,7 @@
 				84A61CA5254C0A3F00B50FE8 /* NavigationState.swift in Sources */,
 				841CED9E255D67AE007CCACC /* SettingView.swift in Sources */,
 				842C44BA25484DEC003C570D /* BExchangeBookCard.swift in Sources */,
+				841D43CD25C0132B00C4B373 /* AdminNotifyView.swift in Sources */,
 				8401C8DD252B1B7500A722CE /* BookDetailView.swift in Sources */,
 				8401C966252EAB9A00A722CE /* BorrowBookViewModel.swift in Sources */,
 				8401C9B22530514800A722CE /* ConfirmExchangeBookView.swift in Sources */,

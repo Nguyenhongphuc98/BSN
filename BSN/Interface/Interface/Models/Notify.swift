@@ -34,6 +34,8 @@ enum NotifyAction: String, CaseIterable {
     
     case declineFollow
     
+    case adminNotify
+    
     func description() -> String {
         
         var des = "Undefine"
@@ -50,6 +52,7 @@ enum NotifyAction: String, CaseIterable {
         case .exchangeSuccess: des = "chấp nhận yêu đổi sách của bạn"
         case .acceptedFollow: des = "chấp nhận yêu cầu theo dõi của bạn"
         case .declineFollow: des = "từ chối yêu cầu theo dõi của bạn"
+        case .adminNotify: des = ""
         }
         
         return des
@@ -57,7 +60,7 @@ enum NotifyAction: String, CaseIterable {
 }
 
 // MARK: - Notify base
-class Notify: AppendUniqueAble {
+class Notify: AppendUniqueAble, ObservableObject {
     
     var id: String
     
@@ -68,6 +71,10 @@ class Notify: AppendUniqueAble {
     var destinationID: String
     
     var createDate: Date
+    
+    // Notifuy of admin will contain this fields
+    var title: String?
+    var content: String?
     
     @Published var seen: Bool
     
@@ -87,5 +94,7 @@ class Notify: AppendUniqueAble {
         destinationID = enotify.destionationID
         createDate = Date.getDate(dateStr: enotify.createdAt)
         seen = enotify.seen
+        title = enotify.title
+        content = enotify.content
     }
 }

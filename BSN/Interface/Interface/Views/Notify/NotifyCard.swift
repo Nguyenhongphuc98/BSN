@@ -32,6 +32,9 @@ struct NotifyCard: View {
             
         case .requestFollow, .acceptedFollow, .declineFollow:
             return "heart.circle"
+            
+        case .adminNotify:
+            return "info.circle.fill"
         }
     }
     
@@ -58,6 +61,9 @@ struct NotifyCard: View {
                             vm: ProfileViewModel())
                             .environmentObject(NavigationState())
             )
+            
+        case .adminNotify:
+            return AnyView(AdminNotifyView().environmentObject(model))
         }
     }
     
@@ -75,11 +81,11 @@ struct NotifyCard: View {
                     .padding(.top, 5)
                 
                 VStack {
-                    Text(model.sender.displayname)
+                    Text(model.action == .adminNotify ? model.title! : model.sender.displayname)
                         .robotoBold(size: 15)
                         .foregroundColor(.black)
                     +
-                        Text(" đã \(model.action.description())")
+                        Text(model.action == .adminNotify ? model.content! : " đã \(model.action.description())")
                         .roboto(size: 13)
                     
                     Spacer()

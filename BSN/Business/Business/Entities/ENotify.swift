@@ -18,6 +18,9 @@ public struct ENotify: Codable {
     public var actorName: String?
     public var actorPhoto: String?
     public var notifyName: String?
+    
+    public var title: String?
+    public var content: String?
         
     public init() {
         self.id = "undefine"
