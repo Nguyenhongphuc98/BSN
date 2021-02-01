@@ -50,7 +50,7 @@ class BorrowBookViewModel: NetworkViewModel {
             userBookID: model.userbook.id,
             borrowerID: AppManager.shared.currenUID,
             borrowDate: borrowDate,
-            borrowDays: numOfDay,
+            borrowDays: numOfDay + 1,
             adress: address,
             message: message,
             statusDes: model.userbook.statusDes,

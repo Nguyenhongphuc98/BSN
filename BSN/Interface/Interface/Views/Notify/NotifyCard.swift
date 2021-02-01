@@ -85,7 +85,7 @@ struct NotifyCard: View {
                         .robotoBold(size: 15)
                         .foregroundColor(.black)
                     +
-                        Text(model.action == .adminNotify ? model.content! : " đã \(model.action.description())")
+                        Text(model.action == .adminNotify ? " \(model.content!)" : " đã \(model.action.description())")
                         .roboto(size: 13)
                     
                     Spacer()

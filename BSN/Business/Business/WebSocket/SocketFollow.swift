@@ -7,17 +7,17 @@
 
 import Foundation
 
-//let hostIp = "saeb.herokuapp.com"
-//let wsInChatApi = "wss://\(hostIp)/inchat/listen/" // + ChatID
-//let wsChatsApi = "wss://\(hostIp)/chats/listen/"   // + ReceiverID
-//let wsCommentsOfPostApi = "wss://\(hostIp)/commentsOfPost/listen/"   // + PostID
-//let wsNotifiesApi = "wss://\(hostIp)/notifies/listen/" // + ReceiverID
+let hostIp = "saeb.herokuapp.com"
+let wsInChatApi = "wss://\(hostIp)/inchat/listen/" // + ChatID
+let wsChatsApi = "wss://\(hostIp)/chats/listen/"   // + ReceiverID
+let wsCommentsOfPostApi = "wss://\(hostIp)/commentsOfPost/listen/"   // + PostID
+let wsNotifiesApi = "wss://\(hostIp)/notifies/listen/" // + ReceiverID
 
-let hostIp = "192.168.0.101:8080"
-let wsInChatApi = "ws://\(hostIp)/inchat/listen/" // + ChatID
-let wsChatsApi = "ws://\(hostIp)/chats/listen/"   // + ReceiverID
-let wsCommentsOfPostApi = "ws://\(hostIp)/commentsOfPost/listen/"   // + PostID
-let wsNotifiesApi = "ws://\(hostIp)/notifies/listen/" // + ReceiverID
+//let hostIp = "192.168.0.101:8080"
+//let wsInChatApi = "ws://\(hostIp)/inchat/listen/" // + ChatID
+//let wsChatsApi = "ws://\(hostIp)/chats/listen/"   // + ReceiverID
+//let wsCommentsOfPostApi = "ws://\(hostIp)/commentsOfPost/listen/"   // + PostID
+//let wsNotifiesApi = "ws://\(hostIp)/notifies/listen/" // + ReceiverID
 
 class SocketFollow<ResourceType> where ResourceType: Codable {
     

@@ -14,6 +14,8 @@ class CategoryViewModel: NetworkViewModel {
     
     private var categoryManager: CategoryManager
     
+    public static var shared: CategoryViewModel = .init()
+    
     override init() {
         categories = []
         categoryManager = CategoryManager()

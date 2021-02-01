@@ -13,11 +13,9 @@ public class ExploreBookViewModel: SearchBookViewModel {
     public static var shared: ExploreBookViewModel = ExploreBookViewModel()
     
     @Published var suggestBooks: [BSusggestBook]
-    
     @Published var exchangeBooks: [BExchangeBook]
     
     private var ebManager: ExchangeBookManager
-    
     private var bookManager: BookManager
     
     public override init() {

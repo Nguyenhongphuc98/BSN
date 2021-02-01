@@ -11,7 +11,7 @@ struct CategoryView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @StateObject var viewModel: CategoryViewModel = CategoryViewModel()
+    @StateObject var viewModel: CategoryViewModel = .shared
     
     var didSelect: ((Category) -> Void)?
     

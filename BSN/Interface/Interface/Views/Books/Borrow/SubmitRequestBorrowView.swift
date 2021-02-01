@@ -106,6 +106,7 @@ struct SubmitRequestBorrowView: View {
     
     private func viewAppeared() {
         print("Submit borrow book appeared")
+        self.navState.viewName = .undefine
         viewModel.prepareData(ubid: ubid)
     }
     

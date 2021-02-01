@@ -66,7 +66,12 @@ public struct ExploreBookView: View, PopToable {
             
             TabView(selection: self.$selectedSegment){
                 
-                BBookGrid(models: viewModel.suggestBooks, style: .suggestbook)
+                ZStack(alignment: .bottomLeading) {
+                    BBookGrid(models: viewModel.suggestBooks, style: .suggestbook)
+                    TopBookCategory(didSelect: { id in
+                        print("did select id: \(id)")
+                    })
+                }
                     .tag(0)
                     .environmentObject(navState)
                 
@@ -122,7 +127,7 @@ public struct ExploreBookView: View, PopToable {
     
     private func viewAppeared() {
         print("explore appeard")
-        viewModel.prepareData()
+        //viewModel.prepareData()
     }
 }
 
