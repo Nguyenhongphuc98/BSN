@@ -58,9 +58,10 @@ public class BookManager {
         booksRequest.fetchBook(bookID: bookID, publisher: getBookPublisher)
     }
     
-    public func fetchTopBooks(page: Int, per: Int = BusinessConfigure.topBooksPerPage) {
+    public func fetchTopBooks(categoryID: String = "", page: Int, per: Int = BusinessConfigure.topBooksPerPage) {
         print("Did start fetch top book id")
-        booksRequest.fetchTopBooks(page: page, per: per, publisher: getBooksPublisher)
+        // Empty categoryId mean we don't depend on category, get all
+        booksRequest.fetchTopBooks(categoryID: categoryID, page: page, per: per, publisher: getBooksPublisher)
     }
     
     public func fetchBook(isbn: String) {

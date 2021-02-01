@@ -70,6 +70,7 @@ public struct ExploreBookView: View, PopToable {
                     BBookGrid(models: viewModel.suggestBooks, style: .suggestbook)
                     TopBookCategory(didSelect: { id in
                         print("did select id: \(id)")
+                        viewModel.reloadTopBooks(categoryID: id)
                     })
                 }
                     .tag(0)

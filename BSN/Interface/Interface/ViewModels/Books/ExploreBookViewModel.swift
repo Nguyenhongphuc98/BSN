@@ -37,7 +37,7 @@ public class ExploreBookViewModel: SearchBookViewModel {
         self.exchangeBooks = []
         self.suggestBooks = []
         loadExchangeBooks()
-        loadTopBooks(page: 1) // using defaul paginate so it begin with 1 index
+        loadTopBooks(categoryID: "", page: 1) // using defaul paginate so it begin with 1 index
     }
     
     func loadExchangeBooks() {
@@ -46,14 +46,14 @@ public class ExploreBookViewModel: SearchBookViewModel {
         ebManager.getNewestExchangeBooks(page: 0)
     }
     
-    func reloadTopBooks() {
+    func reloadTopBooks(categoryID: String = "") {
         // defaul just load page 1 - defaul
         self.suggestBooks = []
-        loadTopBooks(page: 1)
+        loadTopBooks(categoryID: categoryID, page: 1)
     }
     
-    func loadTopBooks(page: Int) {
-        bookManager.fetchTopBooks(page: page)
+    func loadTopBooks(categoryID: String, page: Int) {
+        bookManager.fetchTopBooks(categoryID: categoryID, page: page)
     }
     
     private func setupReceiveEBs() {
