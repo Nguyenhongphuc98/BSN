@@ -15,20 +15,20 @@ public func configure(_ app: Application) throws {
     // uncomment to serve files from /Public folder
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
 
-    app.databases.use(.postgres(
-        hostname: Environment.get("DATABASE_HOST") ?? "localhost",
-        username: Environment.get("DATABASE_USERNAME") ?? "vapor",
-        password: Environment.get("DATABASE_PASSWORD") ?? "password",
-        database: Environment.get("DATABASE_NAME") ?? "vapor"
-    ), as: .psql)
-    
-//    if let databaseURL = Environment.get("DATABASE_URL") {
-//        app.databases.use(try .postgres(
-//            url: databaseURL
-//        ), as: .psql)
-//    } else {
-//        // ...
-//    }
+//    app.databases.use(.postgres(
+//        hostname: Environment.get("DATABASE_HOST") ?? "localhost",
+//        username: Environment.get("DATABASE_USERNAME") ?? "vapor",
+//        password: Environment.get("DATABASE_PASSWORD") ?? "password",
+//        database: Environment.get("DATABASE_NAME") ?? "vapor"
+//    ), as: .psql)
+//
+    if let databaseURL = Environment.get("DATABASE_URL") {
+        app.databases.use(try .postgres(
+            url: databaseURL
+        ), as: .psql)
+    } else {
+        // ...
+    }
     
     app.http.server.configuration.hostname = "0.0.0.0"
 

@@ -53,12 +53,27 @@ struct BookController: RouteCollection {
     }
     
     func getTopRating(req: Request) throws -> EventLoopFuture<[Book]> {
-        return Book.query(on: req.db)
-            .sort(\.$avgRating, .descending)
-            .paginate(for: req)
-            .map { page in
-                return page.items
-            }
+        
+        guard let term: String = req.query["category"] else {
+            throw Abort(.badRequest)
+        }
+        
+        if term == "undefine" || term == "" {
+            return Book.query(on: req.db)
+                .sort(\.$avgRating, .descending)
+                .paginate(for: req)
+                .map { page in
+                    return page.items
+                }
+        } else {
+            return Book.query(on: req.db)
+                .filter(\.$categoryID == UUID(term)!)
+                .sort(\.$avgRating, .descending)
+                .paginate(for: req)
+                .map { page in
+                    return page.items
+                }
+        }
     }
     
     // Advance function

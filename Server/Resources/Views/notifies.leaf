@@ -12,6 +12,7 @@
                 <p>Share and exchange books</p>
             </div>
             
+            <a class="logout-btn" href="/join" target="_blank">Đăng xuất</a>
         </div>
         
         <div class = "dumpy-header">

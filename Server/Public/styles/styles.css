@@ -191,3 +191,22 @@ btn.blue {
     position: relative;
     z-index: 5;
 }
+
+
+/**/
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: top;
+    font-size: 14px;
+    color: #ea0000;
+    height: 40px;
+    line-height: 36px;
+    padding: 0 16px;
+    margin: 8px 8px 8px 0px;
+    text-decoration: none;
+    border-radius: 8px;
+    background-color: rgb(228 121 121 / 20%);
+    transition: all 0.14s ease-in-out;
+    flex: none;
+    font-weight: 600;
